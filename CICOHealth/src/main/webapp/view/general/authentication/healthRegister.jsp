@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index.jsp
-    Created on : Feb 7, 2023, 7:18:25 AM
+    Document   : health-register
+    Created on : Feb 9, 2023, 7:59:42 AM
     Author     : Pham Nhat Quang CE170036 (FPTU CANTHO)
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Test GitLab!!!!</h1>
+        <h1>Hello World!</h1>
     </body>
 </html>
