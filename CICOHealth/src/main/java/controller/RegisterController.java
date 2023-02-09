@@ -55,7 +55,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
         request.getRequestDispatcher("/view/general/authentication/register.jsp").forward(request, response);
     }
 
@@ -70,9 +70,15 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        request.getRequestDispatcher("/view/register.jsp").forward(request, response);
+        String registerHealth = request.getParameter("healthReg");
+        if (registerHealth.equals("true")){
+            request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request,response);
+        }
+        else{
+            
+        }
     }
+    
 
     /**
      * Returns a short description of the servlet.
