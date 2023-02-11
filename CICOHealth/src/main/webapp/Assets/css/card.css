@@ -145,3 +145,14 @@ img {
         margin-bottom: 750px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .card-container{
+        margin-bottom: 800px;
+    }
+}
+@media screen and (max-width: 375px){
+    .card-container{
+        margin-bottom: 850px;
+    }
+}
