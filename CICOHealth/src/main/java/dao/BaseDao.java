@@ -17,36 +17,36 @@ public abstract class BaseDao {
     /**
      * Connection to database
      */
-    protected Connection con = null;
+    protected Connection connection = null;
 
     /**
      * Move query from Netbeans to SQl
      */
-    protected PreparedStatement ps = null;
+    protected PreparedStatement preparedStatement = null;
 
     /**
      * Save query result
      */
-    protected ResultSet rs = null;
+    protected ResultSet resultSet = null;
 
     protected void closeConnections() {
-        if (rs != null) {
+        if (resultSet != null) {
             try {
-                rs.close();
+                resultSet.close();
             } catch (SQLException e) {
                 /* Ignored */
             }
         }
-        if (ps != null) {
+        if (preparedStatement != null) {
             try {
-                ps.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 /* Ignored */
             }
         }
-        if (con != null) {
+        if (connection != null) {
             try {
-                con.close();
+                connection.close();
             } catch (SQLException e) {
                 /* Ignored */
             }
