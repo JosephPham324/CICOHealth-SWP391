@@ -45,12 +45,12 @@ function updateNutritionGoal(){
     document.getElementById("numFat").value = (tdee * .2 / 9).toFixed(1);
     document.getElementById("numCarb").value = (tdee * .5 / 4).toFixed(1);
 }
-
 let numAge = document.getElementById("numAge");
 let numWeight = document.getElementById("numWeight");
 let numHeight = document.getElementById("numHeight");
 let radGender = document.getElementsByName("radGender_0");
 let activityLevel = document.getElementById("selectActiveness");
+updateNutritionGoal();
 
 //Add event listener to input fields
 numAge.addEventListener("change", updateNutritionGoal);

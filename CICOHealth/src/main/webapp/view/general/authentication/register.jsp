@@ -21,39 +21,45 @@
                 justify-content:center;
             }
         </style>
-        <title>JSP Page</title>
+        <title>Register</title>
     </head>
     <body>
         <form action="register" method="post">
             <div class="form-group row">
                 <label for="txtUsername" class="col-4 col-form-label">Username</label> 
                 <div class="col-8">
-                    <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
+                    <input required="required" id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="txtPassword" class="col-4 col-form-label">Password</label> 
                 <div class="col-8">
-                    <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="text" class="form-control" aria-describedby="txtPasswordHelpBlock"> 
+                    <input required="required" id="txtPassword" name="txtPassword" placeholder="Enter password" type="password" class="form-control" aria-describedby="txtPasswordHelpBlock"> 
                     <span id="txtPasswordHelpBlock" class="form-text text-muted">Password must be between 6 to 20 characters!</span>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="txtFirstName" class="col-4 col-form-label">First name</label> 
                 <div class="col-8">
-                    <input id="txtFirstName" name="txtFirstName" placeholder="Enter your first name" type="text" class="form-control">
+                    <input required = "required" id="txtFirstName" name="txtFirstName" placeholder="Enter your first name" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="txtLastName" class="col-4 col-form-label">Last name</label> 
                 <div class="col-8">
-                    <input id="txtLastName" name="txtLastName" placeholder="Enter your last name" type="text" class="form-control">
+                    <input required="required" id="txtLastName" name="txtLastName" placeholder="Enter your last name" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="txtEmail" class="col-4 col-form-label">Email</label> 
                 <div class="col-8">
-                    <input id="txtEmail" name="txtEmail" placeholder="Enter your email address" type="text" class="form-control">
+                    <input required="required" id="txtEmail" name="txtEmail" placeholder="Enter your email address" type="text" class="form-control">
+                </div>
+            </div> 
+            <div class="form-group row">
+                <label for="txtPhone" class="col-4 col-form-label">Phone</label> 
+                <div class="col-8">
+                    <input required="required" id="txtPhone" name="txtPhone" placeholder="Enter your email address" type="text" class="form-control">
                 </div>
             </div> 
             <input type ="hidden" name="healthReg" value="true" id="register-health">
@@ -63,5 +69,6 @@
                 </div>
             </div>
         </form>
+        <script src="/CICOHealth/assets/scripts/register.js"></script>
     </body>
 </html>

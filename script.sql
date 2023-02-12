@@ -15,7 +15,7 @@ CREATE TABLE [user] (
 
 CREATE TABLE login (
     userID varchar(10) PRIMARY KEY NOT NULL REFERENCES [user](userID),
-    username varchar(255) NOT NULL,
+    username varchar(255) NOT NULL UNIQUE,
     passwordHash varchar(255) NOT NULL,
     passwordSalt varchar(255) NOT NULL,
     GoogleID varchar(30) NULL,

@@ -1,15 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
+import bean.HealthInfo;
+import bean.Login;
+import bean.User;
+import dao.HealthInfoDao;
+import dao.LoginDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.AuthenticationLogic;
 
 /**
  *
@@ -71,14 +77,64 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String registerHealth = request.getParameter("healthReg");
-        if (registerHealth.equals("true")){
-            request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request,response);
+        if (registerHealth == null) {
+            response.sendRedirect("/register");
         }
-        else{
-            
+        if (registerHealth.equals("true")) {
+            request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request, response);
+        } else {
+            //Login info parameters
+            String username = request.getParameter("txtUsername");
+            String password = request.getParameter("txtPassword");
+            //User info parameters
+            String firstName = request.getParameter("txtFirstName");
+            String lastName = request.getParameter("txtLastName");
+            String email = request.getParameter("txtEmail");
+            String phone = request.getParameter("txtPhone");
+            //Health info parameters
+            int age = Integer.parseInt(request.getParameter("numAge"));
+            String gender = request.getParameter("radGender");
+            double height = Double.parseDouble(request.getParameter("numHeight"));
+            double weight = Double.parseDouble(request.getParameter("numWeight"));
+            int activity = Integer.parseInt(request.getParameter("selectActiveness"));
+            //Daily nutrition goal paramters
+            double TDEE = Double.parseDouble(request.getParameter("numTDEE"));
+            double protein = Double.parseDouble(request.getParameter("numProtein"));
+            double fat = Double.parseDouble(request.getParameter("numFat"));
+            double carb = Double.parseDouble(request.getParameter("numCarb"));
+
+            //Regsiter logic
+            UserDao userDao = new UserDao();
+            LoginDao loginDao = new LoginDao();
+            HealthInfoDao healthDao = new HealthInfoDao();
+            String userID = userDao.createID();
+
+            User user = new User(userID, firstName, lastName, email, phone);
+            Login login;
+            HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity, (int) TDEE, (int) TDEE, protein, fat, carb);
+
+            AuthenticationLogic authLogic = new AuthenticationLogic();
+            String passwordSalt = authLogic.getLoginSalt(username, password);
+            String passwordHash = null;
+
+            try {
+                passwordHash = authLogic.encryptPassword(password, passwordSalt);
+            } catch (Exception ex) {
+                Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (passwordHash != null) {
+                login = new Login(userID, username, passwordHash, passwordSalt, null, false);
+                try {
+                    userDao.insertUserInfo(user);
+                    loginDao.insertLoginInfo(login);
+                    healthDao.insertHealthInfo(healthInfo);
+                } catch (SQLException ex) {
+                    response.sendRedirect("/register?status=fail");
+                }
+                response.sendRedirect("/CICOHealth");
+            }
         }
     }
-    
 
     /**
      * Returns a short description of the servlet.

@@ -153,4 +153,7 @@ public class User implements Serializable {
         return "bean.User[ userID=" + userID + " ]";
     }
     
+    public String getUserRole(){
+        return this.userID.substring(2,2);
+    }
 }

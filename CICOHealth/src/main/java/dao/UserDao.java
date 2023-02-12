@@ -1,5 +1,6 @@
 package dao;
 
+import bean.User;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,4 +57,16 @@ public class UserDao extends BaseDao {
         return null;
     }
 
+    public void insertUserInfo(User user) throws SQLException {
+        String query = "INSERT INTO [user] (userID, firstName, lastName, email, phone) VALUES (?, ?, ?, ?, ?)";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        int index = 1;
+        preparedStatement.setString(index++, user.getUserID());
+        preparedStatement.setString(index++, user.getFirstName());
+        preparedStatement.setString(index++, user.getLastName());
+        preparedStatement.setString(index++, user.getEmail());
+        preparedStatement.setString(index++, user.getPhone());
+        preparedStatement.executeUpdate();
+    }
 }
