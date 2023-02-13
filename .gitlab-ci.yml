@@ -1,0 +1,6 @@
+metrics:
+  script:
+    - echo 'metric_name metric_value' > metrics.txt
+  artifacts:
+    reports:
+      metrics: metrics.txt
