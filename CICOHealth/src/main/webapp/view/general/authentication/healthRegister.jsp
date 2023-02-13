@@ -202,6 +202,6 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </form>
-    <script src="/CICOHealth/assets/scripts/healthregister.js"></script>
+    <script src="/CICOHealth/assets/scripts/healthRegister.js"></script>
   </body>
 </html>

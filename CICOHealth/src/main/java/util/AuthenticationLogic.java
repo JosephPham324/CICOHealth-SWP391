@@ -45,4 +45,8 @@ public class AuthenticationLogic {
     public String encryptPassword(String password, String salt) throws Exception {
         return Encryption.encrypt(password, getSecretKey(password, salt));
     }
+
+    public boolean verifyLogin(String enteredPassword, String passwordHash, String passwordSalt) throws Exception {
+        return encryptPassword(enteredPassword, passwordSalt).equals(passwordHash);
+    }
 }
