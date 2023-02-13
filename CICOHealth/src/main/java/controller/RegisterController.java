@@ -61,7 +61,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        //Forward to register form view
         request.getRequestDispatcher("/view/general/authentication/register.jsp").forward(request, response);
     }
 
@@ -76,13 +76,14 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Check if user has filled the health register form
         String registerHealth = request.getParameter("healthReg");
-        if (registerHealth == null) {
-            response.sendRedirect("/register");
+        if (registerHealth == null) {//If the parameter isn't found
+            response.sendRedirect("/register");//Redirect to register form
         }
-        if (registerHealth.equals("true")) {
+        if (registerHealth.equals("true")) {//If the parameter is set to true, forward to health register page
             request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request, response);
-        } else {
+        } else {//If user has filled both forms, process registration request
             //Login info parameters
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
@@ -107,29 +108,32 @@ public class RegisterController extends HttpServlet {
             UserDao userDao = new UserDao();
             LoginDao loginDao = new LoginDao();
             HealthInfoDao healthDao = new HealthInfoDao();
+            //Create a Member ID
             String userID = userDao.createID();
-
+            
+            //Model representation
             User user = new User(userID, firstName, lastName, email, phone);
             Login login;
             HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity, (int) TDEE, (int) TDEE, protein, fat, carb);
-
+            
+            //Components for encryption and authentication
             AuthenticationLogic authLogic = new AuthenticationLogic();
-            String passwordSalt = authLogic.getLoginSalt(username, password);
+            String passwordSalt = authLogic.getLoginSalt(username, password);//Get salt to encrypt password
             String passwordHash = null;
 
             try {
-                passwordHash = authLogic.encryptPassword(password, passwordSalt);
+                passwordHash = authLogic.encryptPassword(password, passwordSalt);//Encrypt password using salt
             } catch (Exception ex) {
                 Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (passwordHash != null) {
+            if (passwordHash != null) {//If encryption is successful, begin inserting data
                 login = new Login(userID, username, passwordHash, passwordSalt, null, false);
                 try {
-                    userDao.insertUserInfo(user);
-                    loginDao.insertLoginInfo(login);
-                    healthDao.insertHealthInfo(healthInfo);
+                    userDao.insertUserInfo(user);//Insert user information
+                    loginDao.insertLoginInfo(login);//Insert login information
+                    healthDao.insertHealthInfo(healthInfo);//Insert health information
                 } catch (SQLException ex) {
-                    response.sendRedirect("/register?status=fail");
+                    response.sendRedirect("/register?status=fail");//If insertion failed, redirect to view
                 }
                 response.sendRedirect("/CICOHealth");
             }
