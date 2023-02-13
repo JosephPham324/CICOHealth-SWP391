@@ -9,9 +9,9 @@ import java.sql.SQLException;
  */
 public class DBContext {
 
-    private static final String DATABASE_PREFIX = "jdbc:sqlserver://localhost:1433;databaseName=Nutrition [sa on SA]";
+    private static final String DATABASE_PREFIX = "jdbc:sqlserver://localhost:1433;databaseName=CICOHealth [sa on SA]";
     private static final String DATABASE_PORT = "1433";
-    private static final String DATABASE_NAME = "Nutrition";
+    private static final String DATABASE_NAME = "CICOHealth";
     private final String instance = "";
     private static final String USER = "sa";
     private static final String PASSWORD = "123456";

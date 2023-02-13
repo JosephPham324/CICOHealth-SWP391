@@ -27,15 +27,16 @@ public class Encryption {
         (byte) 'g', (byte) 'r', (byte) 'o', (byte) 'u', (byte) 'p', (byte) '4', (byte) 'f', (byte) 'a', (byte) '2', (byte) '2',};//To generate IvParameterSpec
 
     /**
-     * Generate secret key from password and salt
+     * Generate secret key from two string inputs
      *
-     * @param input1 Password to be used
-     * @param input2 salt to be used
-     * @return A secret key
-     * @throws NoSuchAlgorithmException exception
-     * @throws InvalidKeySpecException exception
+     * @param input1 Input 1
+     * @param input2 Input 2
+     * @return A secret key object used for encryption
+     * @throws NoSuchAlgorithmException exception When the algorithm for
+     * generating is not found.
+     * @throws InvalidKeySpecException exception When key spec is invalid
      */
-    public static SecretKey getKeyFromPassword(String input1, String input2)
+    public static SecretKey getSecretKey(String input1, String input2)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -108,20 +109,20 @@ public class Encryption {
      * Encrypt a String using Caesar Cipher
      *
      * @param text Text to be encrypted
-     * @param s Shifting value
+     * @param shift Shifting value
      * @return Encrypted String
      */
-    private static StringBuffer encryptCC(String text, int s) {
+    private static StringBuffer encryptCaesarCipher(String text, int shift) {
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
             if (Character.isUpperCase(text.charAt(i))) {
                 char ch = (char) (((int) text.charAt(i)
-                        + s - 65) % 26 + 65);
+                        + shift - 65) % 26 + 65);
                 result.append(ch);
             } else {
                 char ch = (char) (((int) text.charAt(i)
-                        + s - 97) % 26 + 97);
+                        + shift - 97) % 26 + 97);
                 result.append(ch);
             }
         }
@@ -134,17 +135,22 @@ public class Encryption {
      * @return Generated String
      */
     private static String generateSpecChar() {
-        int max = 47;
-        int min = 33;
+        int ASCIIMin = 33;//ASCII code where special characters begin
+        int ASCIIMax = 47;//ASCII code where special characters end
         String res = "";
+        //Generate a length 20 string
         for (int i = 0; i < 10; i++) {
-            int in = ((int) Math.floor(Math.random() * (max - min + 1) + min));
-            int num = ((int) Math.floor(Math.random() * (9 + 1)));
-            res += num;
-            res += (char) in;
+            int specChar = ((int) Math.floor(Math.random() * (ASCIIMax - ASCIIMin + 1) + ASCIIMin));
+            //Number character
+            int number = ((int) Math.floor(Math.random() * 10));
+            res += number;
+            res += (char) specChar;
         }
-        min = ((int) Math.floor(Math.random() * (14 + 1)));
-        return res.substring(min, min + 6);
+        //Lower bound to cut the string
+        int lowerBound = ((int) Math.floor(Math.random() * (14 + 1)));
+        int upperBound = lowerBound + 6;
+        //Return a length 6 string
+        return res.substring(lowerBound, upperBound);
     }
 
     /**
@@ -156,11 +162,14 @@ public class Encryption {
      */
     public static String generateSalt(String input1, String input2) {
         int max = 100;
-        int rand = (int) Math.floor(Math.random() * (max - 1 + 1) + 1);
+        int min = 1;
+        int rand = (int) Math.floor(Math.random() * (max - min + 1) + min);
         if (input1 == null || input2 == null || input1.length() + input2.length() < 10) {
             return "Unable to generate salt";
         }
-        String salt = encryptCC(input2 + input1, rand).toString();
+        //Encrypt the 2 inputs using Caesar Cipher
+        String salt = encryptCaesarCipher(input2 + input1, rand).toString();
+        //Cut the string and add some digits and special characters
         salt = salt.substring(0, 6) + generateSpecChar() + salt.substring(6, 11);
         System.out.println("Salt: " + salt);
         return salt;
