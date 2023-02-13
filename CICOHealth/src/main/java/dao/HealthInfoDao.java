@@ -41,6 +41,7 @@ public class HealthInfoDao extends BaseDao {
         preparedStatement.setString(index++, healthInfo.getDailyCarb() + "");
 
         preparedStatement.executeUpdate();
-
+        
+        closeConnections();
     }
 }

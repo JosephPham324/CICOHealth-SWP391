@@ -70,7 +70,10 @@ public class UserDao extends BaseDao {
             return "US" + type + "000001";
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
         }
+        closeConnections();
         return null;
     }
 
@@ -91,7 +94,8 @@ public class UserDao extends BaseDao {
         preparedStatement.setString(index++, user.getLastName());
         preparedStatement.setString(index++, user.getEmail());
         preparedStatement.setString(index++, user.getPhone());
-        
+
         preparedStatement.executeUpdate();
+        closeConnections();
     }
 }

@@ -31,5 +31,7 @@ public class LoginDao extends BaseDao {
         preparedStatement.setString(index++, login.getGoogleID());
         preparedStatement.setString(index++, login.getIsBanned() + "");
         preparedStatement.executeUpdate();
+       
+        closeConnections();
     }
 }

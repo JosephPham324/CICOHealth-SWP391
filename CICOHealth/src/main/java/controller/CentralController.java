@@ -25,7 +25,7 @@ public class CentralController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-
+        
         if (URI.endsWith("/register")) {
             request.getRequestDispatcher("RegisterController").forward(request, response);
             return;
