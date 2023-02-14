@@ -14,5 +14,6 @@
     <body>
         <h1>Welcome to CICO Health</h1>
         <a href = "register">Register!</a>
+        <a href = "login">Login!</a>
     </body>
 </html>

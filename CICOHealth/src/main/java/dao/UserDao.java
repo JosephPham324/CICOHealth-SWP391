@@ -98,4 +98,27 @@ public class UserDao extends BaseDao {
         preparedStatement.executeUpdate();
         closeConnections();
     }
+
+    public User getUser(String userID) {
+        try {
+            String query = "SELECT *\n"
+                    + "FROM [user]\n"
+                    + "WHERE userID = ?";
+            User user = null;
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = new User(resultSet.getString("userID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"));
+            };
+            return user;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
