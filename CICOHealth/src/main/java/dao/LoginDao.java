@@ -62,6 +62,7 @@ public class LoginDao extends BaseDao {
         return null;
     }
     
+    
     public String getLoginInfoByGoogle(String googleID) throws SQLException{
         String query = "SELECT userID FROM login WHERE GoogleID = ?";
         if (googleID == null){
