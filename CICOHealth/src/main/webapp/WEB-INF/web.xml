@@ -4,16 +4,16 @@
         <welcome-file>/view/general/index.jsp</welcome-file>
     </welcome-file-list>
     <!--To BE USED LATER-->
-    <!--    <filter>
-            <filter-name>RequestFilter</filter-name>
-            <filter-class>filter.RequestFilter</filter-class>
-        </filter>
-        <filter-mapping>
-            <filter-name>RequestFilter</filter-name>
-            <url-pattern>/*</url-pattern>
-        </filter-mapping>
-    -->     
-<!--    <servlet>
+<!--    <filter>
+        <filter-name>RequestFilter</filter-name>
+        <filter-class>filter.RequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+         
+    <!--    <servlet>
         <servlet-name>CentralController</servlet-name>
         <servlet-class>controller.CentralController</servlet-class>
     </servlet>

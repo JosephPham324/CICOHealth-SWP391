@@ -31,7 +31,41 @@ public class LoginDao extends BaseDao {
         preparedStatement.setString(index++, login.getGoogleID());
         preparedStatement.setString(index++, login.getIsBanned() + "");
         preparedStatement.executeUpdate();
-       
         closeConnections();
+    }
+    
+    public String getLoginInfoByGoogle(String googleID) throws SQLException{
+        String query = "SELECT userID FROM login WHERE GoogleID = ?";
+        if (googleID == null){
+            return null;
+        }
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, googleID);
+        resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()){
+            String id = resultSet.getString("userID");
+            closeConnections();
+            return id;
+        }
+        closeConnections();
+        return null;
+    }
+        public String getLoginInfoByUsername(String username) throws SQLException{
+        String query = "SELECT userID FROM login WHERE username = ?";
+        if (username == null){
+            return null;
+        }
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, username);
+        resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()){
+            String id = resultSet.getString("userID");
+            closeConnections();
+            return id;
+        }
+        closeConnections();
+        return null;
     }
 }
