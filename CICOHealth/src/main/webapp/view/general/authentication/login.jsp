@@ -23,6 +23,9 @@
                 align-items:center;
                 justify-content:center;
             }
+            .cbRemember {
+                font-size: 14px; 
+            }
         </style>
         <form action="login" method="post">
             <div class="form-group row">
@@ -36,6 +39,11 @@
                 <div class="col-8">
                     <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="text" class="form-control" aria-describedby="txtPasswordHelpBlock"> 
                     <!--<span id="txtPasswordHelpBlock" class="form-text text-muted">Password must be between 6 to 20 characters!</span>-->
+                </div>
+            </div>
+            <div class="form-group row cbRemember">
+                <div class="offset-4 col-8">
+                    <input type="checkbox" id="remember" name="remember"> Remember Me
                 </div>
             </div>
             <div class="form-group row">
