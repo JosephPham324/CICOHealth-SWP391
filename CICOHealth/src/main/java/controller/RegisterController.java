@@ -78,8 +78,9 @@ public class RegisterController extends HttpServlet {
             throws ServletException, IOException {
         //Check if user has filled the health register form
         String registerHealth = request.getParameter("healthReg");
-        if (registerHealth == null) {//If the parameter isn't found
-            response.sendRedirect("/register");//Redirect to register form
+        if (registerHealth == null) {
+            response.sendRedirect("/register");
+            return;
         }
         if (registerHealth.equals("true")) {//If the parameter is set to true, forward to health register page
             request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request, response);
@@ -87,6 +88,7 @@ public class RegisterController extends HttpServlet {
             //Login info parameters
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
+            String googleID = request.getParameter("googleID");
             //User info parameters
             String firstName = request.getParameter("txtFirstName");
             String lastName = request.getParameter("txtLastName");
@@ -108,15 +110,35 @@ public class RegisterController extends HttpServlet {
             UserDao userDao = new UserDao();
             LoginDao loginDao = new LoginDao();
             HealthInfoDao healthDao = new HealthInfoDao();
+
+            if (googleID != null) {
+                try {
+                    if (loginDao.getLoginInfoByGoogle(googleID) != null) {
+                        response.sendRedirect("/CICOHealth/register?error=duplicateGoogle");
+                        return;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            try {
+                if (loginDao.getLoginInfoByUsername(username) != null) {
+                    response.sendRedirect("/CICOHealth/register?error=duplicateUsername");
+                    return;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             //Create a Member ID
             String userID = userDao.createID();
             
             //Model representation
             User user = new User(userID, firstName, lastName, email, phone);
             Login login;
-            HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity, (int) TDEE, (int) TDEE, protein, fat, carb);
-            
-            //Components for encryption and authentication
+            HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
+                    (int) TDEE, (int) TDEE, protein, fat, carb);
+
             AuthenticationLogic authLogic = new AuthenticationLogic();
             String passwordSalt = authLogic.getLoginSalt(username, password);//Get salt to encrypt password
             String passwordHash = null;
@@ -126,17 +148,20 @@ public class RegisterController extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (passwordHash != null) {//If encryption is successful, begin inserting data
-                login = new Login(userID, username, passwordHash, passwordSalt, null, false);
-                try {
-                    userDao.insertUserInfo(user);//Insert user information
-                    loginDao.insertLoginInfo(login);//Insert login information
-                    healthDao.insertHealthInfo(healthInfo);//Insert health information
-                } catch (SQLException ex) {
-                    response.sendRedirect("/register?status=fail");//If insertion failed, redirect to view
-                }
-                response.sendRedirect("/CICOHealth");
+            if (passwordHash == null) {
+                response.sendRedirect("/CICOHealth/register?error=hashfailure");
+                return;
             }
+            login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
+            try {
+                userDao.insertUserInfo(user);
+                loginDao.insertLoginInfo(login);
+                healthDao.insertHealthInfo(healthInfo);
+            } catch (SQLException ex) {
+                response.sendRedirect("/register?error=databasefailure");
+                return;
+            }
+            response.sendRedirect("/CICOHealth/");
         }
     }
 
