@@ -12,8 +12,8 @@
             <filter-name>RequestFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-    -->     
-<!--    <servlet>
+    -->
+    <!--    <servlet>
         <servlet-name>CentralController</servlet-name>
         <servlet-class>controller.CentralController</servlet-class>
     </servlet>
@@ -25,9 +25,17 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>controller.ProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/profile/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
