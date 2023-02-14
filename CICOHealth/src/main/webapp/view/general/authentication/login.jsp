@@ -27,7 +27,7 @@
         <form action="login" method="post" name="sign-form">
             <div class="form-group row">
                 <label for="txtUsername" class="col-4 col-form-label">Username</label> 
-                <div class="col-8">
+                <div class="col-8" id="password-field">
                     <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
                 </div>
             </div>
@@ -68,16 +68,10 @@
         <script>
             function handleCredentialResponse(response) {
                 const responsePayload = parseJwt(response.credential);
-                        username.value = chainString(responsePayload.name, " ", "") ?? "";
-                password.value = "googleLogin" + username.value;
-                document.getElementById("password-field").classList.add("d-none");
-                //Add Google ID to form
-                const form = document.getElementById("sign-form");
-                const hiddenField = document.createElement("input");
-                hiddenField.type = "hidden";
-                hiddenField.name = "googleID";
-                hiddenField.value = responsePayload.sub;
-                form.appendChild(hiddenField);
+                const formParams = {
+                   googleID = responsePayload.sub
+               };
+               post("login", formParams)
             }
 
             function parseJwt(token) {

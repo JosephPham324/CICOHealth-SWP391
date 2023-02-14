@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.AuthenticationLogic;
@@ -80,33 +81,47 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);\
-        String username = request.getParameter("txtUsername");
-        String password = request.getParameter("txtPassword");
         LoginDao loginDao = new LoginDao();
-        UserDao userDao = new UserDao();
-        util.AuthenticationLogic authentication = new AuthenticationLogic();
-        Login login = null;
-        if (username == null || password == null) {
+        String googleID = request.getParameter("googleID");
+        if (googleID != null) {
+            try {
+                String check = loginDao.getLoginInfoByGoogle(googleID);
+                if (check == null) {
+                    response.sendRedirect("/CICOHealth/login");
+                    return;
+                }
+                request.getRequestDispatcher("/view/general/index.jsp");
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            String username = request.getParameter("txtUsername");
+            String password = request.getParameter("txtPassword");
+            UserDao userDao = new UserDao();
+            util.AuthenticationLogic authentication = new AuthenticationLogic();
+            Login login = null;
+            if (username == null || password == null) {
 //            response.getWriter().write("Here");
 //            return;
-            response.sendRedirect("/CICOHealth/login?");
-        }
-        login = loginDao.getLoginInfo(username);
-        if (login == null) {
+                response.sendRedirect("/CICOHealth/login?");
+            }
+            login = loginDao.getLoginInfo(username);
+            if (login == null) {
 //            response.getWriter().write("There");
 //            return;
-            response.sendRedirect("/CICOHealth/login");
-        }
-        try {
-            response.getWriter().write(""+authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
-            if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())){
-                User user = userDao.getUser(login.getUserID());
-                request.getSession().setAttribute("user", user);
-                response.sendRedirect("/CICOHealth/");
+                response.sendRedirect("/CICOHealth/login");
             }
-            response.sendRedirect("/CICOHealth/login");
-        } catch (Exception ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
+                if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())) {
+                    User user = userDao.getUser(login.getUserID());
+                    request.getSession().setAttribute("user", user);
+                    response.sendRedirect("/CICOHealth/");
+                }
+                response.sendRedirect("/CICOHealth/login");
+            } catch (Exception ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
