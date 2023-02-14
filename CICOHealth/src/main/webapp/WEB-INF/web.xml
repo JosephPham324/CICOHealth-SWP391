@@ -4,7 +4,7 @@
         <welcome-file>/view/general/index.jsp</welcome-file>
     </welcome-file-list>
     <!--To BE USED LATER-->
-<!--    <filter>
+    <!--    <filter>
         <filter-name>RequestFilter</filter-name>
         <filter-class>filter.RequestFilter</filter-class>
     </filter>
@@ -12,7 +12,6 @@
         <filter-name>RequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
-         
     <!--    <servlet>
         <servlet-name>CentralController</servlet-name>
         <servlet-class>controller.CentralController</servlet-class>
@@ -25,11 +24,14 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserManagementController</servlet-name>
+        <servlet-class>controller.UserManagementController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
@@ -37,6 +39,10 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserManagementController</servlet-name>
+        <url-pattern>/admin/user-management</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
