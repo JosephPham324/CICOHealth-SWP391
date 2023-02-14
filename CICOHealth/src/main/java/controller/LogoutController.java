@@ -33,7 +33,7 @@ public class LogoutController extends HttpServlet {
         HttpSession session = request.getSession();
         session.invalidate();
         // Redirect the user to the home page
-        response.sendRedirect("CICOHealth");
+        response.sendRedirect("/CICOHealth");
     }
 
     /**
