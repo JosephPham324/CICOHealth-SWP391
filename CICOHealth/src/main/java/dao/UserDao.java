@@ -2,6 +2,8 @@ package dao;
 
 import bean.User;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,4 +100,56 @@ public class UserDao extends BaseDao {
         preparedStatement.executeUpdate();
         closeConnections();
     }
+    public User getUser(String userID) {
+        try {
+            String query = "SELECT *\n"
+                    + "FROM [user]\n"
+                    + "WHERE userID = ?";
+            User user = null;
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userID);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = new User(resultSet.getString("userID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+            };
+            return user;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public List<User> getAllUser() {
+        List<User> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM [user]";
+            User user = null;
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                user = new User(resultSet.getString("userID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"));
+                list.add(user);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return list;
+    }
+
 }

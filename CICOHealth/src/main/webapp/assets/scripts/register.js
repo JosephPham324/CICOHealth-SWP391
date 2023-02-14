@@ -33,26 +33,40 @@ phone.onblur = function () {
 };
 
 //Validate username
-function validateUsername() {
-  
-}
+function validateUsername() {}
 //Validate password
-function validatePassword() {
-  
-}
+function validatePassword() {}
 //Validate firstname
-function validateFirstname() {
-  
-}
+function validateFirstname() {}
 //Validate lastname
-function validateLastname() {
-  
-}
+function validateLastname() {}
 //Validate email
-function validateEmail() {
-  
-}
+function validateEmail() {}
 //Validate phone
-function validatePhone() {
-  
+function validatePhone() {}
+
+//Hide password element
+
+function handleCredentialResponse(response) {
+  // to decode the credential response.
+  const responsePayload = parseJwt(response.credential);
+
+  username.value = chainString(responsePayload.name," ","") ?? "";
+  password.value = "googleRegister" + username.value;
+  firstname.value = responsePayload.given_name ?? "";
+  lastname.value = responsePayload.family_name ?? "";
+  email.value = responsePayload.email ?? "";
+  phone.value = responsePayload.phone ?? "";
+  document.getElementsByTagName("h1")[0].innerText = "Confirm information";
+  document.getElementById("password-field").classList.add("d-none");
+  //Add Google ID to form
+  const form = document.getElementById("register-form");
+  const hiddenField = document.createElement("input");
+  hiddenField.type = "hidden";
+  hiddenField.name = "googleID";
+  hiddenField.value = responsePayload.sub;
+  form.appendChild(hiddenField);
+    
+  // console.log(formParams);
+  //  post("/CICOHealth/register", formParams);
 }
