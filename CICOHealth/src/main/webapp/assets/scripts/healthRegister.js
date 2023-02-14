@@ -27,7 +27,7 @@ function calculateTDEE() {
     1: 1.375,
     2: 1.55,
     3: 1.725,
-    4: 1.9,
+    4: 1.9
   };
   let tdee = bmr * multiplier[activityLevel];
   //Map activity level to a multiplier
