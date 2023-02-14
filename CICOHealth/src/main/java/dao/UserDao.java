@@ -107,6 +107,7 @@ public class UserDao extends BaseDao {
             User user = null;
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
+            
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 user = new User(resultSet.getString("userID"),

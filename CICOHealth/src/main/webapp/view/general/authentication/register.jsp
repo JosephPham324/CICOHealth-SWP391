@@ -158,10 +158,6 @@ pageEncoding="UTF-8"%>
       </div>
     </form>
     <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
-    <script>
-      // import { parseJwt, post } from "/CICOHealth/assets/scripts/formhandling.js";
-      
-    </script>
     <script src="/CICOHealth/assets/scripts/register.js"></script>
   </body>
 </html>

@@ -59,6 +59,7 @@ public class LoginDao extends BaseDao {
             Logger.getLogger(LoginDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         closeConnections();
+        return null;
     }
     
     public String getLoginInfoByGoogle(String googleID) throws SQLException{
