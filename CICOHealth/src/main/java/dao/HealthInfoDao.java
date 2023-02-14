@@ -44,4 +44,32 @@ public class HealthInfoDao extends BaseDao {
         
         closeConnections();
     }
+     public HealthInfo getHealthInfo(String userID) {
+        String query = "select * from [healthInfo] where userID = ?";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userID);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                HealthInfo healthInfo = new HealthInfo(resultSet.getString("userID"),
+                        resultSet.getBoolean("gender"),
+                        resultSet.getDouble("heigh"),
+                        resultSet.getDouble("weight"),
+                        resultSet.getInt("age"),
+                        resultSet.getInt("activeness"),
+                        resultSet.getInt("tdee"),
+                        resultSet.getDouble("dailyCalorie"),
+                        resultSet.getDouble("dailyProtein"),
+                        resultSet.getDouble("dailyFat"),
+                        resultSet.getDouble("dailyCarb"));
+                return healthInfo;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }    
+
+
 }
