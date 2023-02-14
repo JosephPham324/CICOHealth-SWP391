@@ -2,8 +2,6 @@ package dao;
 
 import bean.Login;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -13,12 +11,12 @@ public class LoginDao extends BaseDao {
 
     @Override
     public String createID() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new UserDao().createID();
     }
 
     @Override
     public String createID(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new UserDao().createID(type);
     }
 
     public void insertLoginInfo(Login login) throws SQLException {

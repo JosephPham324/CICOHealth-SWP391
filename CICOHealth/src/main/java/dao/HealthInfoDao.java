@@ -13,15 +13,15 @@ public class HealthInfoDao extends BaseDao {
 
     @Override
     public String createID() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new UserDao().createID();
     }
 
     @Override
     public String createID(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new UserDao().createID(type);
     }
 
-    public void insertHealthInfo(HealthInfo healthInfo) throws SQLException{
+    public void insertHealthInfo(HealthInfo healthInfo) throws SQLException {
         String query = "INSERT INTO healthInfo (userID, gender, height, weight, age, activeness, tdee, dailyCalorie, dailyProtein, dailyFat, dailyCarb) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
@@ -41,6 +41,7 @@ public class HealthInfoDao extends BaseDao {
         preparedStatement.setString(index++, healthInfo.getDailyCarb() + "");
 
         preparedStatement.executeUpdate();
-
+        
+        closeConnections();
     }
 }
