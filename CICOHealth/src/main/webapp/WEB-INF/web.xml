@@ -42,7 +42,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/logout</url-pattern>
+        <url-pattern>/log-out</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
