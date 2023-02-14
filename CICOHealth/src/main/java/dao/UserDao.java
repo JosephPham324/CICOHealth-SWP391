@@ -100,6 +100,7 @@ public class UserDao extends BaseDao {
         preparedStatement.executeUpdate();
         closeConnections();
     }
+
     public User getUser(String userID) {
         try {
             String query = "SELECT *\n"
@@ -116,12 +117,6 @@ public class UserDao extends BaseDao {
                         resultSet.getString("lastName"),
                         resultSet.getString("email"),
                         resultSet.getString("phone"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
             };
             return user;
         } catch (SQLException ex) {
@@ -129,7 +124,7 @@ public class UserDao extends BaseDao {
         }
         return null;
     }
-    
+
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         try {

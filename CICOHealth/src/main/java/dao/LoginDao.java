@@ -61,7 +61,7 @@ public class LoginDao extends BaseDao {
         closeConnections();
         return null;
     }
-    
+
     public Login getLoginInfoByID(String userID) {
         try {
             String query = "select * from [login] where userID = ?";
@@ -81,17 +81,21 @@ public class LoginDao extends BaseDao {
             return login;
         } catch (SQLException ex) {
             Logger.getLogger(LoginDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
-    public String getLoginInfoByGoogle(String googleID) throws SQLException{
+
+    public String getLoginInfoByGoogle(String googleID) throws SQLException {
         String query = "SELECT userID FROM login WHERE GoogleID = ?";
-        if (googleID == null){
+        if (googleID == null) {
             return null;
         }
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, googleID);
         resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()){
+        if (resultSet.next()) {
             String id = resultSet.getString("userID");
             closeConnections();
             return id;
@@ -99,16 +103,17 @@ public class LoginDao extends BaseDao {
         closeConnections();
         return null;
     }
-        public String getLoginInfoByUsername(String username) throws SQLException{
+
+    public String getLoginInfoByUsername(String username) throws SQLException {
         String query = "SELECT userID FROM login WHERE username = ?";
-        if (username == null){
+        if (username == null) {
             return null;
         }
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, username);
         resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()){
+        if (resultSet.next()) {
             String id = resultSet.getString("userID");
             closeConnections();
             return id;
