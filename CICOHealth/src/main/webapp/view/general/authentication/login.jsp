@@ -24,10 +24,10 @@
                 justify-content:center;
             }
         </style>
-        <form action="login" method="post">
+        <form action="login" method="post" name="sign-form">
             <div class="form-group row">
                 <label for="txtUsername" class="col-4 col-form-label">Username</label> 
-                <div class="col-8">
+                <div class="col-8" id="password-field">
                     <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
                 </div>
             </div>
@@ -43,6 +43,38 @@
                     <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
+            <div
+                id="g_id_onload"
+                data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-login_uri="http://localhost:8080/CICOHealth/login"
+                data-auto_prompt="false"
+                data-callback="handleCredentialResponse"
+                ></div>
+            <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="reactangle"
+                data-theme="filled_blue"
+                data-text="signin_with"
+                data-size="huge"
+                data-logo_alignment="left"
+                ></div>
         </form>
+
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
+        <script>
+            function handleCredentialResponse(response) {
+                const responsePayload = parseJwt(response.credential);
+                const formParams = {
+                    googleID : responsePayload.sub
+                };
+                console.log(formParams);
+                post("login", formParams);
+            }
+        </script>
+        <p id="email"></p>
     </body>
 </html>
