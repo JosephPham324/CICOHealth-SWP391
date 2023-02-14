@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -85,12 +85,16 @@ public class LoginController extends HttpServlet {
         String googleID = request.getParameter("googleID");
         if (googleID != null) {
             try {
-                String check = loginDao.getLoginInfoByGoogle(googleID);
-                if (check == null) {
+                String userID = loginDao.getLoginInfoByGoogle(googleID);
+                response.getWriter().write(googleID);
+                response.getWriter().write(userID);
+                if (userID == null) {
                     response.sendRedirect("/CICOHealth/login");
                     return;
                 }
-                request.getRequestDispatcher("/view/general/index.jsp");
+                request.getSession().setAttribute("user", new UserDao().getUser(userID));
+                response.sendRedirect("/CICOHealth/");
+                return;
             } catch (SQLException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -101,15 +105,13 @@ public class LoginController extends HttpServlet {
             util.AuthenticationLogic authentication = new AuthenticationLogic();
             Login login = null;
             if (username == null || password == null) {
-//            response.getWriter().write("Here");
-//            return;
-                response.sendRedirect("/CICOHealth/login?");
+                response.sendRedirect("/CICOHealth/login");
+                return;
             }
             login = loginDao.getLoginInfo(username);
             if (login == null) {
-//            response.getWriter().write("There");
-//            return;
                 response.sendRedirect("/CICOHealth/login");
+                return;
             }
             try {
                 response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
@@ -119,6 +121,7 @@ public class LoginController extends HttpServlet {
                     response.sendRedirect("/CICOHealth/");
                 }
                 response.sendRedirect("/CICOHealth/login");
+                return;
             } catch (Exception ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }

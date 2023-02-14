@@ -64,30 +64,15 @@
         </form>
 
         <script src="https://accounts.google.com/gsi/client" async defer></script>
-        
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script>
             function handleCredentialResponse(response) {
                 const responsePayload = parseJwt(response.credential);
                 const formParams = {
-                   googleID = responsePayload.sub
-               };
-               post("login", formParams)
-            }
-
-            function parseJwt(token) {
-                var base64Url = token.split(".")[1];
-                var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-                var jsonPayload = decodeURIComponent(
-                        window
-                        .atob(base64)
-                        .split("")
-                        .map(function (c) {
-                            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-                        })
-                        .join("")
-                        );
-
-                return JSON.parse(jsonPayload);
+                    googleID : responsePayload.sub
+                };
+                console.log(formParams);
+                post("login", formParams);
             }
         </script>
         <p id="email"></p>
