@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -98,8 +99,8 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("/CICOHealth/login");
         }
         try {
-            response.getWriter().write(""+authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
-            if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())){
+            response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
+            if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())) {
                 User user = userDao.getUser(login.getUserID());
                 request.getSession().setAttribute("user", user);
                 response.sendRedirect("/CICOHealth/");
@@ -107,6 +108,14 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("/CICOHealth/login");
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String remember = request.getParameter("remember");
+        if (remember != null) {
+            //set cookie
+
+            Cookie cookie = new Cookie("user", userDao.getUser(login.getUserID()).toString());
+            cookie.setMaxAge(60 * 60 * 24 * 7); // set the cookie's maximum age to 1 week
+            response.addCookie(cookie);
         }
     }
 
