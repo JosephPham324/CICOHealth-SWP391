@@ -37,20 +37,20 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         String URI = request.getRequestURI();
         HttpSession session = request.getSession();
-//        if (session.getAttribute("user") == null) {
-//            response.sendRedirect("/CICOHeal");
-//            return;
-//        }
-//        User user = (User) session.getAttribute("user");
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("/CICOHealth");
+            return;
+        }
+        User user = (User) session.getAttribute("user");
         if (URI.endsWith("/profile") || URI.endsWith("/userinfo")) {
             request.getRequestDispatcher("/view/user/userInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/logininfo")) {
-//            Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
-//            request.setAttribute("loginInfo", loginInfo);
+            Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
+            request.setAttribute("loginInfo", loginInfo);
             request.getRequestDispatcher("/view/user/loginInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/healthinfo")) {
-//            HealthInfo healthInfo = new HealthInfoDao().getHealthInfo(user.getUserID());
-//            request.setAttribute("healthInfo", healthInfo);
+            HealthInfo healthInfo = new HealthInfoDao().getHealthInfo(user.getUserID());
+            request.setAttribute("healthInfo", healthInfo);
             request.getRequestDispatcher("/view/user/healthInfo.jsp").forward(request, response);
         }
     }

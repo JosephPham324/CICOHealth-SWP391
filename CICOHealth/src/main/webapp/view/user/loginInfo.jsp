@@ -4,6 +4,7 @@
     Author     : vhqua
 --%>
 
+<%@page import="bean.Login"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,13 +23,15 @@
                         <li><a href="/CICOHealth/profile/healthinfo" class="sidebar-link">Health Info</a></li>
                     </ul>
                 </div>
-
+                <%
+                    Login l = (Login)request.getAttribute("loginInfo");
+                %>
                 <div class="col-9">
                     <div class="card mx-auto" style="width: 18rem;">
                         <div class="card-body">
-                            <p class="card-text">Username: </p>
-                            <p class="card-text">Password: </p>
-                            <p class="card-text">Google ID: </p>
+                            <p class="card-text">Username: <%= l.getUsername() %></p>
+                            <p class="card-text">Password: <%= l.getPasswordHash() %></p>
+                            <p class="card-text">Google ID: <%= l.getGoogleID() %></p>
                         </div>
                     </div>
                 </div>
