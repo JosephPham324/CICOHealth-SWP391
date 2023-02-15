@@ -46,11 +46,14 @@
         <servlet-class>controller.UserManagementController</servlet-class>
     </servlet>
     <!--Mappings-->
+    <servlet>
+        <servlet-name>ExerciseController</servlet-name>
+        <servlet-class>controller.ExerciseController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -66,6 +69,10 @@
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
         <url-pattern>/admin/user-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseController</servlet-name>
+        <url-pattern>/exercise</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
