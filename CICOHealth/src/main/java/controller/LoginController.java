@@ -83,6 +83,8 @@ public class LoginController extends HttpServlet {
 //        processRequest(request, response);\
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
+        String remember = request.getParameter("remember");
+
         LoginDao loginDao = new LoginDao();
         UserDao userDao = new UserDao();
         util.AuthenticationLogic authentication = new AuthenticationLogic();
@@ -109,12 +111,10 @@ public class LoginController extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String remember = request.getParameter("remember");
         if (remember != null) {
-            //set cookie
-
+            // Set the cookie to expire in 30 days
             Cookie cookie = new Cookie("user", userDao.getUser(login.getUserID()).toString());
-            cookie.setMaxAge(60 * 60 * 24 * 7); // set the cookie's maximum age to 1 week
+            cookie.setMaxAge(30 * 24 * 60 * 60);
             response.addCookie(cookie);
         }
     }
