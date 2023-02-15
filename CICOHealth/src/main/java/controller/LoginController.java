@@ -85,18 +85,19 @@ public class LoginController extends HttpServlet {
         String googleID = request.getParameter("googleID");
         if (googleID != null) {
             try {
-                String userID = loginDao.getLoginInfoByGoogle(googleID);
-                response.getWriter().write(googleID);
-                response.getWriter().write(userID);
+                String userID = null;
+                userID = loginDao.getLoginInfoByGoogle(googleID);
+//                response.getWriter().write(googleID);
+//                response.getWriter().write(""+userID);
                 if (userID == null) {
-                    response.sendRedirect("/CICOHealth/login");
+                    response.sendRedirect("/CICOHealth/login?error=nosuchuser");
                     return;
                 }
                 request.getSession().setAttribute("user", new UserDao().getUser(userID));
                 response.sendRedirect("/CICOHealth/");
-                return;
             } catch (SQLException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/CICOHealth/login?error=database");
             }
         } else {
             String username = request.getParameter("txtUsername");
