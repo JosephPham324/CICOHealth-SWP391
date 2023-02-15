@@ -1,6 +1,6 @@
 <%-- Document : register.jsp Created on : Feb 7, 2023, 7:18:37 AM Author : Pham
-Nhat Quang CE170036 (FPTU CANTHO) --%> <%@page contentType="text/html"
-pageEncoding="UTF-8"%>
+Nhat Quang CE170036 (FPTU CANTHO) --%> 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -142,7 +142,7 @@ pageEncoding="UTF-8"%>
           data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
           data-context="signup"
           data-ux_mode="popup"
-          data-login_uri="http://localhost:8080/Nutrition/register-account"
+          data-login_uri="http://localhost:8080/CICOHealth/register"
           data-auto_prompt="false"
           data-callback="handleCredentialResponse"
         ></div>

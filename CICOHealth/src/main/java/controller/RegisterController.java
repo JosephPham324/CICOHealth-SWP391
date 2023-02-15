@@ -158,7 +158,7 @@ public class RegisterController extends HttpServlet {
                 loginDao.insertLoginInfo(login);
                 healthDao.insertHealthInfo(healthInfo);
             } catch (SQLException ex) {
-                response.sendRedirect("/register?error=databasefailure");
+                response.sendRedirect("/CICOHealth/register?error=databasefailure");
                 return;
             }
             response.sendRedirect("/CICOHealth/");
