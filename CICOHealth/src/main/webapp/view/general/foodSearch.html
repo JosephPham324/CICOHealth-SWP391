@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../assets/sass/foodsearch.css" />
+    <title>Food Search</title>
+  </head>
+  <body>
+    <main>
+      <form
+        onsubmit="event.preventDefault();sendRequest(document.getElementById('foodSearchInput').value)"
+      >
+        <input type="search" name="foodSearchInput" id="foodSearchInput" />
+        <input type="submit" value="Search" />
+      </form>
+      <div class="search-results" id="search-results">
+        <div
+          class="search-result"
+          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+        >
+          <h3 class="search-result-name">hot dog</h3>
+          <div class="search-result-image">
+            <img
+              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
+              alt="food photo"
+            />
+          </div>
+          <div class="search-result-description">
+            <span class="search-result-calories">154.56</span>
+            <span class="search-result-protein">154.56</span>
+            <span class="search-result-fat">5.61</span>
+            <span class="search-result-carbs">14.09</span>
+            <span class="search-result-quantity">48</span>
+          </div>
+        </div>
+        <div
+          class="search-result"
+          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+        >
+          <h3 class="search-result-name">hot dog</h3>
+          <div class="search-result-image">
+            <img
+              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
+              alt="food photo"
+            />
+          </div>
+          <div class="search-result-description">
+            <span class="search-result-calories">154.56</span>
+            <span class="search-result-protein">154.56</span>
+            <span class="search-result-fat">5.61</span>
+            <span class="search-result-carbs">14.09</span>
+            <span class="search-result-quantity">48</span>
+          </div>
+        </div>
+        <div
+          class="search-result"
+          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+        >
+          <h3 class="search-result-name">hot dog</h3>
+          <div class="search-result-image">
+            <img
+              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
+              alt="food photo"
+            />
+          </div>
+          <div class="search-result-description">
+            <span class="search-result-calories">154.56</span>
+            <span class="search-result-protein">154.56</span>
+            <span class="search-result-fat">5.61</span>
+            <span class="search-result-carbs">14.09</span>
+            <span class="search-result-quantity">48</span>
+          </div>
+        </div>
+        <div
+          class="search-result"
+          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+        >
+          <h3 class="search-result-name">hot dog</h3>
+          <div class="search-result-image">
+            <img
+              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
+              alt="food photo"
+            />
+          </div>
+          <div class="search-result-description">
+            <span class="search-result-calories">154.56</span>
+            <span class="search-result-protein">154.56</span>
+            <span class="search-result-fat">5.61</span>
+            <span class="search-result-carbs">14.09</span>
+            <span class="search-result-quantity">48</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      /**
+       * Sends a request to the Nutritionix API to get the nutrition information for the given food(s)
+       * @param {string} query - The food(s) to search for
+       * */
+      function sendRequest(query) {
+        let request = new XMLHttpRequest();
+        let url = "https://trackapi.nutritionix.com/v2/natural/nutrients"; //The URL to send the request to
+        let body = {
+          query: query, //The food(s) to search for
+        };
+        let applicationID = "9a0d8da3"; //The application ID
+        let APIKey = "32c2215ddef1b8d9b0e9e9ea759814a7"; //The API key
+
+        request.open("POST", url, true); //Open the request
+        //Set the request headers
+        request.setRequestHeader("Content-Type", "application/json");
+        request.setRequestHeader("x-app-id", applicationID);
+        request.setRequestHeader("x-app-key", APIKey);
+        //Set the request callback
+        request.onreadystatechange = function () {
+          if (
+            request.readyState === XMLHttpRequest.DONE &&
+            request.status === 200
+          ) {
+            let response = request.responseText; //Get the response
+            response = JSON.parse(response); //Parse the response into JSON
+            let foods = response.foods; //Get the foods array
+            foods = filterFoods(foods); //Filter out duplicate foods
+            console.log(response.foods);
+            dislpayFoods(foods); //Display the foods
+            addSearchResultEventListener(); //Add the search result event listener
+            showSelected(selectedFoods);
+          }
+        };
+        request.send(JSON.stringify(body)); //Send the request
+      }
+      //Filter out duplicate foods in foods array
+      function filterFoods(foods) {
+        let filteredFoods = [];
+        for (let i = 0; i < foods.length; i++) {
+          let food = foods[i];
+          let foodName = food.food_name;
+          //Check if food already exists in filteredFoods array
+          let foodExists =
+            filteredFoods.find((food) => food.food_name === foodName) !==
+            undefined;
+          if (!foodExists) {
+            filteredFoods.push(food);
+          }
+        }
+        return filteredFoods;
+      }
+      /**
+       * Displays the foods elements
+       * @param {Array} foods
+       */
+      function dislpayFoods(foods) {
+        let searchResults = document.getElementById("search-results");
+        searchResults.innerHTML = "";
+        //Iterate through foods
+        for (let i = 0; i < foods.length; i++) {
+          //Get food data as JSON
+          let food = foods[i];
+          //Create food data object
+          let foodData = {
+            foodName: food.food_name,
+            servingWeight: food.serving_weight_grams,
+            calories: food.nf_calories,
+            protein: food.nf_protein,
+            fat: food.nf_total_fat,
+            carbs: food.nf_total_carbohydrate,
+            photo: food.photo.highres,
+          };
+          displayFoodItem(searchResults, foodData); //Display the food item
+        }
+      }
+      /**
+       * Adds a food item to the search results
+       * */
+      function displayFoodItem(searchResults, food) {
+        let html = `
+        <div
+          class="search-result"
+          data-food='${JSON.stringify(food)}'
+        >
+          <h3 class="search-result-name">${food.foodName}</h3>
+          <div class="search-result-image">
+            <img
+              src="${food.photo}"
+              alt="food photo"
+            />
+          </div>
+          <div class="search-result-description">
+            <span class="search-result-quantity">Serving: ${food.servingWeight}(g)</span>
+            <span class="search-result-calories">Cal: ${food.calories}</span>
+            <span class="search-result-protein">Protein: ${food.protein}</span>
+            <span class="search-result-fat">Fat: ${food.fat}</span>
+            <span class="search-result-carbs">Carbs: ${food.carbs}</span>
+          </div>
+        </div>
+        `;
+        searchResults.innerHTML += html;
+      }
+      //Selected foods
+      let selectedFoods = [];
+      //Function to add food to selected foods
+      function addFood(food) {
+        //Check if food is already in selected foods
+        for (let i = 0; i < selectedFoods.length; i++) {
+          if (selectedFoods[i].foodName === food.foodName) {
+            throw new Error("Food already in selected foods");
+          }
+        }
+        selectedFoods.push(food);
+        // console.log(selectedFoods);
+      }
+      //Function to remove food from selected foods
+      function removeFood(food) {
+        //Check if food is already in selected foods
+        for (let i = 0; i < selectedFoods.length; i++) {
+          if (selectedFoods[i].foodName === food.foodName) {
+            selectedFoods.splice(i, 1);
+            return;
+          }
+        }
+        throw new Error("Food not in selected foods");
+      }
+      //Function to toggle food in selected foods
+      function toggleFood(food) {
+        //Check if food is already in selected foods
+        for (let i = 0; i < selectedFoods.length; i++) {
+          if (selectedFoods[i].foodName === food.foodName) {
+            removeFood(food);
+            return false;
+          }
+        }
+        addFood(food);
+        return true;
+        console.log(selectedFoods);
+      }
+      //Function to add event listener to search results
+      function addSearchResultEventListener() {
+        let searchResults = document.getElementById("search-results");
+        //Iterate through search results
+        for (let i = 0; i < searchResults.children.length; i++) {
+          let searchResult = searchResults.children[i];
+          //Add event listener to search result
+          searchResult.addEventListener("click", function () {
+            let food = JSON.parse(this.dataset.food);
+            if (toggleFood(food) == true) {
+              this.classList.add("selected");
+            } else {
+              this.classList.remove("selected");
+            }
+            console.log(selectedFoods);
+          });
+        }
+      }
+      addSearchResultEventListener();
+      function showSelected(selectedFoods){
+        let searchResults = document.getElementById("search-results");
+        for (let i = 0; i < searchResults.children.length; i++) {
+          let searchResult = searchResults.children[i];
+          if (selectedFoods.find((food) => food.foodName === searchResult.children[0].innerText)){
+            searchResult.classList.add("selected");
+          }
+        }
+      }
+
+      //Send request of 100 common foods, separated by commas
+      //       sendRequest(`Apple
+      // Banana
+      // Orange
+      // Peach
+      // Mango
+      // Grapes
+      // Watermelon
+      // Cantaloupe
+      // Pineapple
+      // Kiwi
+      // Blueberries
+      // Strawberries
+      // Raspberries
+      // Blackberries
+      // Grapefruit
+      // Lemon
+      // Lime
+      // Avocado
+      // Tomato
+      // Cucumber
+      // Carrot
+      // Bell pepper
+      // Mushroom
+      // Potato
+      // Sweet potato
+      // Corn
+      // Broccoli
+      // Cauliflower
+      // Cabbage
+      // Spinach
+      // Lettuce
+      // Kale
+      // Onion
+      // Garlic
+      // Ginger
+      // Celery
+      // Green beans
+      // Peas
+      // Lentils
+      // Chickpeas
+      // Kidney beans
+      // Black beans
+      // Pinto beans
+      // Tuna
+      // Salmon
+      // Shrimp
+      // Chicken
+      // Turkey
+      // Beef
+      // Pork
+      // Lamb
+      // Sausage
+      // Bacon
+      // Eggs
+      // Milk
+      // Yogurt
+      // Cheese
+      // Butter
+      // Olive oil
+      // Coconut oil
+      // Canola oil
+      // Honey
+      // Maple syrup
+      // Bread
+      // Bagel
+      // Croissant
+      // Muffin
+      // Pancake
+      // Waffle
+      // Cereal
+      // Oatmeal
+      // Granola
+      // Pasta
+      // Rice
+      // Quinoa
+      // Couscous
+      // Pizza
+      // Burger
+      // Hot dog
+      // Sandwich
+      // Tacos
+      // Burritos
+      // Sushi
+      // Stir-fry
+      // Curry
+      // Soup
+      // Salad
+      // Chili
+      // Lasagna
+      // Meatloaf
+      // Roast chicken
+      // Baked potato
+      // French fries
+      // Hash browns
+      // Tater tots
+      // Fried rice
+      // Pad Thai
+      // Biryani
+      // Fried chicken
+      // Tandoori chicken.`);
+    </script>
+  </body>
+</html>
