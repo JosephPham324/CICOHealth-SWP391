@@ -89,4 +89,24 @@ main {
 }
 .search-results .search-result .search-result-button button:hover {
   transform: scale(1.05);
+}
+
+.meal-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+}
+@media screen and (max-width: 600px) {
+  .meal-form {
+    width: 100%;
+    height: 100%;
+  }
+}
+.meal-form .meal-form-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 10px 0;
 }/*# sourceMappingURL=foodsearch.css.map */

@@ -1,0 +1,179 @@
+/**
+ * Sends a request to the Nutritionix API to get the nutrition information for the given food(s)
+ * @param {string} query - The food(s) to search for
+ * */
+function sendRequest(query) {
+  let request = new XMLHttpRequest();
+  let url = "https://trackapi.nutritionix.com/v2/natural/nutrients"; //The URL to send the request to
+  let body = {
+    query: query, //The food(s) to search for
+  };
+  let applicationID = "9a0d8da3"; //The application ID
+  let APIKey = "32c2215ddef1b8d9b0e9e9ea759814a7"; //The API key
+
+  request.open("POST", url, true); //Open the request
+  //Set the request headers
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("x-app-id", applicationID);
+  request.setRequestHeader("x-app-key", APIKey);
+  //Set the request callback
+  request.onreadystatechange = function () {
+    if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+      let response = request.responseText; //Get the response
+      response = JSON.parse(response); //Parse the response into JSON
+      let foods = response.foods; //Get the foods array
+      foods = removeDuplicate(foods); //Filter out duplicate foods
+      dislpayFoods(foods); //Display the foods
+      addSearchResultEventListener(); //Add the search result event listener
+      showSelected(selectedFoods);
+    }
+  };
+  request.send(JSON.stringify(body)); //Send the request
+}
+/**
+ * Filter out duplicate foods in foods array
+ * @param {Array} foods - The foods array
+ * */
+function removeDuplicate(foods) {
+  let filteredFoods = [];
+  for (let i = 0; i < foods.length; i++) {
+    let food = foods[i];
+    let foodName = food.food_name;
+    //Check if food already exists in filteredFoods array
+    let foodExists =
+      filteredFoods.find((food) => food.food_name === foodName) !== undefined;
+    if (!foodExists) {
+      filteredFoods.push(food);
+    }
+  }
+  return filteredFoods;
+}
+/**
+ * Displays the foods elements
+ * @param {Array} foods - The foods to display
+ */
+function dislpayFoods(foods) {
+  let searchResults = document.getElementById("search-results");
+  searchResults.innerHTML = "";
+  //Iterate through foods
+  for (let i = 0; i < foods.length; i++) {
+    //Get food data as JSON
+    let food = foods[i];
+    //Create food data object
+    let foodData = {
+      foodName: food.food_name,
+      servingWeight: food.serving_weight_grams,
+      calories: food.nf_calories,
+      protein: food.nf_protein,
+      fat: food.nf_total_fat,
+      carbs: food.nf_total_carbohydrate,
+      photo: food.photo.highres,
+    };
+    displayFoodItem(searchResults, foodData); //Display the food item
+  }
+}
+/**
+ * Adds a search result element to the search results
+ * @param {HTMLElement} searchResults - The search results element
+ * @param {Object} food - The food data
+ * */
+function displayFoodItem(searchResults, food) {
+  let html = `
+    <div
+      class="search-result"
+      data-food='${JSON.stringify(food)}'
+    >
+      <h3 class="search-result-name">${food.foodName}</h3>
+      <div class="search-result-image">
+        <img
+          src="${food.photo}"
+          alt="food photo"
+        />
+      </div>
+      <div class="search-result-description">
+        <span class="search-result-quantity">Serving: ${food.servingWeight}(g)</span>
+        <span class="search-result-calories">Cal: ${food.calories}</span>
+        <span class="search-result-protein">Protein: ${food.protein}</span>
+        <span class="search-result-fat">Fat: ${food.fat}</span>
+        <span class="search-result-carbs">Carbs: ${food.carbs}</span>
+      </div>
+    </div>
+    `;
+  searchResults.innerHTML += html;
+}
+//Selected foods
+let selectedFoods = [];
+//Add food to selected foods
+function addFood(food) {
+  //Check if food is already in selected foods
+  for (let i = 0; i < selectedFoods.length; i++) {
+    if (selectedFoods[i].foodName === food.foodName) {
+      throw new Error("Food already in selected foods");
+    }
+  }
+  selectedFoods.push(food);
+  // console.log(selectedFoods);
+}
+//Remove food from selected foods
+function removeFood(food) {
+  //Check if food is already in selected foods
+  for (let i = 0; i < selectedFoods.length; i++) {
+    if (selectedFoods[i].foodName === food.foodName) {
+      selectedFoods.splice(i, 1);
+      return;
+    }
+  }
+  throw new Error("Food not in selected foods");
+}
+//Toggle food in selected foods
+function toggleFood(food) {
+  //Check if food is already in selected foods
+  for (let i = 0; i < selectedFoods.length; i++) {
+    if (selectedFoods[i].foodName === food.foodName) {
+      removeFood(food);
+      return false;
+    }
+  }
+  addFood(food);
+  return true;
+  console.log(selectedFoods);
+}
+/**
+ * Add click event listener to search results
+ * Toggle selected status of search result clicked, and add/remove food from selectedFoods
+ * */
+function addSearchResultEventListener() {
+  let searchResults = document.getElementById("search-results");
+  //Iterate through search results
+  for (let i = 0; i < searchResults.children.length; i++) {
+    let searchResult = searchResults.children[i];
+    //Add event listener to search result
+    searchResult.addEventListener("click", function () {
+      let food = JSON.parse(this.dataset.food);
+      if (toggleFood(food) == true) {
+        this.classList.add("selected");
+      } else {
+        this.classList.remove("selected");
+      }
+      console.log(selectedFoods);
+    });
+  }
+}
+addSearchResultEventListener();
+/**
+ * Add selected class to search-result elements that contain food in selectedFoods
+ * @param {Array} selectedFoods Array of selected foods
+ */
+function showSelected(selectedFoods) {
+  let searchResults = document.getElementById("search-results");
+  for (let i = 0; i < searchResults.children.length; i++) {
+    let searchResult = searchResults.children[i];
+    if (
+      selectedFoods.find(
+        (food) => food.foodName === searchResult.children[0].innerText//If a selected food has name equal to search result name
+      )
+    ) {
+      searchResult.classList.add("selected");
+    }
+  }
+}
