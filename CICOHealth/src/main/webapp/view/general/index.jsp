@@ -17,8 +17,8 @@
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <!-- Font Awesome -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/Homepage.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/card.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Homepage.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/card.css">
         <title>Home Page</title>
     </head>
 
@@ -53,7 +53,7 @@
                 </div>
                 <div class="block-card row">
                     <div class="card-body col-md-4">
-                        <img src="./img/book.png" alt="Lean.Follow.Progress." class="card-img">
+                        <img src="./assets/img/book.png" alt="Lean.Follow.Progress." class="card-img">
                         <div class="card-desc">
                             <div class="card-title">Lean.Follow.Progress.</div>
                             <div class="card-info">Keeping a food diary gives you a
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="card-body col-md-4">
-                        <img src="./img/connect.png" alt="A simplified connection" class="card-img">
+                        <img src="./assets/img/connect.png" alt="A simplified connection" class="card-img">
                         <div class="card-desc">
                             <div class="card-title">A simplified connection</div>
                             <div class="card-info">Scan barcodes, save meals and
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="card-body col-md-4">
-                        <img src="./img/move.png" alt="Stay movtivated" class="card-img">
+                        <img src="./assets/img/move.png" alt="Stay movtivated" class="card-img">
                         <div class="card-desc">
                             <div class="card-title">Stay movtivated</div>
                             <div class="card-info">Join the world's largest fitness

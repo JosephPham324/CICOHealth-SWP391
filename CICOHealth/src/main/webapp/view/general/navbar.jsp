@@ -17,6 +17,6 @@
         </ul>
     </div>
     <div class="menu-hamburger" id="menu-hamburger">
-        <img src="./img/icon.png" alt="menu-hamburger">
+        <img src="./assets/img/icon.png" alt="menu-hamburger">
     </div>
 </header>
