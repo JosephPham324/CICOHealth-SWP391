@@ -22,7 +22,7 @@ public class test {
         System.out.println(la.getPasswordSalt());
         System.out.println(la.getUsername());
         HealthInfo h = new HealthInfoDao().getHealthInfo("USME000001");
-        System.out.println(h.getAge());
+        System.out.println(h.getAge() +", " + h.getActiveness()+ ", " + h.getDailyCarb());
     }
     
 }

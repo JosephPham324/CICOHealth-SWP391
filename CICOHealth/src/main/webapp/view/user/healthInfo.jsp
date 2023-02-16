@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="bean.HealthInfo"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,15 +22,16 @@
                         <li><a href="/CICOHealth/profile/healthinfo" class="sidebar-link">Health Info</a></li>
                     </ul>
                 </div>
-                <c:set var="heatlh" value="${healthInfo}" scope="request" />
+                <c:set var="health" value="${healthInfo}" scope="request" />
+                
                 <div class="col-9">
                     <div class="card mx-auto" style="width: 18rem;">
                         <div class="card-body">
-                            <p class="card-text">gender: ${health.gender}</p>
+                            <p class="card-text">gender: ${health.gender} </p>
                             <p class="card-text">height: ${health.height}</p>
                             <p class="card-text">weight: ${health.weight}</p>
                             <p class="card-text">age: ${health.age}</p>
-                            <p class="card-text">activeness: ${health.activeness}</p>
+                            <p class="card-text">activeness: ${health.activeness} </p>
                             <p class="card-text">tdee: ${health.tdee}</p>
                             <p class="card-text">dailyCalorie: ${health.dailyCalorie}</p>
                             <p class="card-text">dailyProtein: ${health.dailyProtein}</p>

@@ -50,6 +50,7 @@ public class ProfileController extends HttpServlet {
             request.getRequestDispatcher("/view/user/loginInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/healthinfo")) {
             HealthInfo healthInfo = new HealthInfoDao().getHealthInfo(user.getUserID());
+            System.out.println(healthInfo);
             request.setAttribute("healthInfo", healthInfo);
             request.getRequestDispatcher("/view/user/healthInfo.jsp").forward(request, response);
         }
