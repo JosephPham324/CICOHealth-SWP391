@@ -56,4 +56,16 @@ public class Exercise {
     public void setCaloriesPerHour(Double caloriesPerHour) {
         this.caloriesPerHour = caloriesPerHour;
     }
+
+    public String getExerciseType() {
+        String exerciseType = exerciseID.substring(2, 4);
+        switch (exerciseType) {
+            case "CA":
+                return "Cardio";
+            case "RE":
+                return "Resistance";
+            default:
+                return null;
+        }
+    }
 }

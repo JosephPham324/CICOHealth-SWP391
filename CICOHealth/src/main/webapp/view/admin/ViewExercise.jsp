@@ -38,7 +38,7 @@
     <body>
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="nav">
-            <a href="admin" class="button" style="vertical-align:middle"><span>Back </span></a>
+            <a href="admin" class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back </span></a>
             <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
         </div>
         <div class="info-container">
@@ -47,6 +47,7 @@
                     <thead>
                         <tr style="background-color:  greenyellow">
                             <th scope="col">Exercise ID</th>
+                            <th scope="col">Exercise Type</th>
                             <th scope="col">Exercise Name</th>
                             <th scope="col">Exercise Description</th>
                             <th scope="col">Calories Per Hour</th>
@@ -58,6 +59,7 @@
                         <c:forEach var="exercise" items="${exerciseList}">
                             <tr>
                                 <td>${exercise.exerciseID}</td>
+                                <td>${exercise.getExerciseType()}</td>
                                 <td>${exercise.exerciseName}</td>
                                 <td>${exercise.exerciseDescription}</td>
                                 <td>${exercise.caloriesPerHour}</td>
