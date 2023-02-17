@@ -103,8 +103,8 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int age = Integer.parseInt(request.getParameter("numAge"));
         String userID = request.getParameter("userID");
+        int age = Integer.parseInt(request.getParameter("numAge"));
         String gender = request.getParameter("radGender");
         double height = Double.parseDouble(request.getParameter("numHeight"));
         double weight = Double.parseDouble(request.getParameter("numWeight"));
@@ -114,9 +114,8 @@ public class ProfileController extends HttpServlet {
         double protein = Double.parseDouble(request.getParameter("numProtein"));
         double fat = Double.parseDouble(request.getParameter("numFat"));
         double carb = Double.parseDouble(request.getParameter("numCarb"));
-        new HealthInfoDao().updateHealthInfo(
-                new HealthInfo(userID, Boolean.parseBoolean(gender), height, weight, age, activity, age, carb, protein, fat, carb)
-        );
+        HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
+                (int) TDEE, (int) TDEE, protein, fat, carb);
         response.sendRedirect("/CICOHealth/admin/user-management");
     }
 

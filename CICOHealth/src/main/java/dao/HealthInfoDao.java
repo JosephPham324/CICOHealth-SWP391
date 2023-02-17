@@ -76,17 +76,20 @@ public class HealthInfoDao extends BaseDao {
         try {
             String query = "UPDATE [healthInfo]\n"
                     + "SET gender = ?, age = ?, height = ?, weight = ?, activeness = ?,\n"
-                    + "dailyCalorie = ?, dailyProtein = ?, dailyFat = ?, dailyCarb = ? where userID = ?";
+                    + "tdee=?, dailyCalorie = ?, dailyProtein = ?, dailyFat = ?, dailyCarb = ? where userID = ?";
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setBoolean(1, healthInfo.getGender());
-            preparedStatement.setDouble(2, healthInfo.getHeight());
-            preparedStatement.setDouble(3, healthInfo.getWeight());
-            preparedStatement.setDouble(4, healthInfo.getDailyCalorie());
-            preparedStatement.setDouble(5, healthInfo.getDailyProtein());
-            preparedStatement.setDouble(6, healthInfo.getDailyFat());
-            preparedStatement.setDouble(7, healthInfo.getDailyCarb());
-            preparedStatement.setString(8, healthInfo.getUserID());
+            preparedStatement.setDouble(2, healthInfo.getAge());
+            preparedStatement.setDouble(3, healthInfo.getHeight());
+            preparedStatement.setDouble(4, healthInfo.getWeight());
+            preparedStatement.setInt(5, healthInfo.getActiveness());
+            preparedStatement.setInt(6, healthInfo.getActiveness());
+            preparedStatement.setDouble(7, healthInfo.getDailyCalorie());
+            preparedStatement.setDouble(8, healthInfo.getDailyProtein());
+            preparedStatement.setDouble(9, healthInfo.getDailyFat());
+            preparedStatement.setDouble(10, healthInfo.getDailyCarb());
+            preparedStatement.setString(11, healthInfo.getUserID());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
