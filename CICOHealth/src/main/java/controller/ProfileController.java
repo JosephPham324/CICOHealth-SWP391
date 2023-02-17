@@ -117,7 +117,7 @@ public class ProfileController extends HttpServlet {
         new HealthInfoDao().updateHealthInfo(
                 new HealthInfo(userID, Boolean.parseBoolean(gender), height, weight, age, activity, age, carb, protein, fat, carb)
         );
-        response.sendRedirect("/CICOHealth/admin/user-management");
+        response.sendRedirect("/CICOHealth/admin/user-management");ssss
     }
 
     /**

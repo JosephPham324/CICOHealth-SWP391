@@ -39,7 +39,7 @@ Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
 
             <div class="form-group row">
                 <div class="offset-4 col-8">
-                    <button name="submit" type="submit" class="btn btn-primary">sss
+                    <button name="submit" type="submit" class="btn btn-primary">
                         Submit
                     </button>
                 </div>
