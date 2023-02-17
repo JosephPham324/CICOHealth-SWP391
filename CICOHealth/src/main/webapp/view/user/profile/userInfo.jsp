@@ -17,12 +17,11 @@
             <div class="row">
                 <div class="col-3 bg-light pt-3">
                     <ul class="list-unstyled">
-                        <li><a href="/CICOHealth/profile/userinfo" class="sidebar-link">User Info</a></li>
-                        <li><a href="/CICOHealth/profile/logininfo" class="sidebar-link">Login Info</a></li>
-                        <li><a href="/CICOHealth/profile/healthinfo" class="sidebar-link">Health Info</a></li>
-                    </ul>
+                        <li><a href="/CICOHealth/user/profile/user-info" class="sidebar-link">User Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/login-info" class="sidebar-link">Login Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>
+                    </ul> 
                 </div>
-
                 <div class="col-9">
                     <div class="card mx-auto" style="width: 18rem;">
                         <div class="card-body">

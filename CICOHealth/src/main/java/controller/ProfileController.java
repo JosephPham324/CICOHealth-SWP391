@@ -42,17 +42,17 @@ public class ProfileController extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (URI.endsWith("/profile") || URI.endsWith("/userinfo")) {
-            request.getRequestDispatcher("/view/user/userInfo.jsp").forward(request, response);
-        } else if (URI.endsWith("/logininfo")) {
+        if (URI.endsWith("/profile/") || URI.endsWith("/user-info")) {
+            request.getRequestDispatcher("/view/user/profile/userInfo.jsp").forward(request, response);
+        } else if (URI.endsWith("/login-info")) {
             Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
             request.setAttribute("loginInfo", loginInfo);
-            request.getRequestDispatcher("/view/user/loginInfo.jsp").forward(request, response);
-        } else if (URI.endsWith("/healthinfo")) {
+            request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
+        } else if (URI.endsWith("/health-info")) {
             HealthInfo healthInfo = new HealthInfoDao().getHealthInfo(user.getUserID());
             System.out.println(healthInfo);
             request.setAttribute("healthInfo", healthInfo);
-            request.getRequestDispatcher("/view/user/healthInfo.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
         }
     }
 
