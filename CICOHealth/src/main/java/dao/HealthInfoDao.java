@@ -41,10 +41,11 @@ public class HealthInfoDao extends BaseDao {
         preparedStatement.setString(index++, healthInfo.getDailyCarb() + "");
 
         preparedStatement.executeUpdate();
-        
+
         closeConnections();
     }
-     public HealthInfo getHealthInfo(String userID) {
+
+    public HealthInfo getHealthInfo(String userID) {
         String query = "select * from [healthInfo] where userID = ?";
         connection = new DBContext().getConnection();
         try {
@@ -69,7 +70,28 @@ public class HealthInfoDao extends BaseDao {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }    
+    }
 
+    public void updateHealthInfo(HealthInfo healthInfo) {
+        try {
+            String query = "UPDATE [healthInfo]\n"
+                    + "SET gender = ?, age = ?, height = ?, weight = ?, activeness = ?,\n"
+                    + "dailyCalorie = ?, dailyProtein = ?, dailyFat = ?, dailyCarb = ? where userID = ?";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setBoolean(1, healthInfo.getGender());
+            preparedStatement.setDouble(2, healthInfo.getHeight());
+            preparedStatement.setDouble(3, healthInfo.getWeight());
+            preparedStatement.setDouble(4, healthInfo.getDailyCalorie());
+            preparedStatement.setDouble(5, healthInfo.getDailyProtein());
+            preparedStatement.setDouble(6, healthInfo.getDailyFat());
+            preparedStatement.setDouble(7, healthInfo.getDailyCarb());
+            preparedStatement.setString(8, healthInfo.getUserID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }

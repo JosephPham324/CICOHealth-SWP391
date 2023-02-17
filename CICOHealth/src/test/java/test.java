@@ -26,9 +26,7 @@ public class test {
         HealthInfo h = new HealthInfoDao().getHealthInfo("USME000001");
         System.out.println(h.getAge() +", " + h.getActiveness()+ ", " + h.getDailyCarb());
         UserDao n = new UserDao();
-        
         n.updateUserInfo(new User("USME000005", "Vo", "Hong", "qqq", "0708992832"));
-        
     }
     
 }
