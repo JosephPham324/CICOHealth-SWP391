@@ -50,6 +50,10 @@
         <jsp-file>/view/general/foodSearch.jsp</jsp-file>
     </servlet>
     <!--Mappings-->
+    <servlet>
+        <servlet-name>ExerciseManagementController</servlet-name>
+        <servlet-class>controller.ExerciseManagementController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -69,6 +73,10 @@
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
         <url-pattern>/admin/user-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseManagementController</servlet-name>
+        <url-pattern>/admin/exercise-management</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>
