@@ -64,7 +64,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
-        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/user/profile/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
