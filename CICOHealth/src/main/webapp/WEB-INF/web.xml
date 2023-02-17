@@ -45,6 +45,10 @@
         <servlet-name>UserManagementController</servlet-name>
         <servlet-class>controller.UserManagementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FoodSearch</servlet-name>
+        <jsp-file>/view/general/foodSearch.jsp</jsp-file>
+    </servlet>
     <!--Mappings-->
     <servlet>
         <servlet-name>ExerciseManagementController</servlet-name>
@@ -64,7 +68,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
-        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/user/profile/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
@@ -73,6 +77,10 @@
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>
         <url-pattern>/admin/exercise-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FoodSearch</servlet-name>
+        <url-pattern>/food-search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

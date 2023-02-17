@@ -54,7 +54,7 @@ public class HealthInfoDao extends BaseDao {
             while (resultSet.next()) {
                 HealthInfo healthInfo = new HealthInfo(resultSet.getString("userID"),
                         resultSet.getBoolean("gender"),
-                        resultSet.getDouble("heigh"),
+                        resultSet.getDouble("height"),
                         resultSet.getDouble("weight"),
                         resultSet.getInt("age"),
                         resultSet.getInt("activeness"),
