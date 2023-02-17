@@ -43,6 +43,12 @@ public class ProfileController extends HttpServlet {
         }
         User user = (User) session.getAttribute("user");
         if (URI.endsWith("/profile") || URI.endsWith("/userinfo")) {
+            String userID = request.getParameter("userid");
+            if (userID != null) {
+                request.setAttribute("user", new UserDao().getUser(userID));
+            } else {
+                request.setAttribute("user", user);
+            }
             request.getRequestDispatcher("/view/user/userInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/logininfo")) {
             Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
@@ -67,7 +73,14 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        UserDao userDao = new UserDao();
+        User user = new User(request.getParameter("userID"),
+                request.getParameter("firstName"),
+                request.getParameter("lastName"),
+                request.getParameter("email"),
+                request.getParameter("phone"));
+        userDao.updateUserInfo(user);
+        response.sendRedirect("/CICOHealth/admin/user-management");
     }
 
     /**

@@ -1,8 +1,10 @@
 
 import bean.HealthInfo;
 import bean.Login;
+import bean.User;
 import dao.HealthInfoDao;
 import dao.LoginDao;
+import dao.UserDao;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -23,6 +25,10 @@ public class test {
         System.out.println(la.getUsername());
         HealthInfo h = new HealthInfoDao().getHealthInfo("USME000001");
         System.out.println(h.getAge() +", " + h.getActiveness()+ ", " + h.getDailyCarb());
+        UserDao n = new UserDao();
+        
+        n.updateUserInfo(new User("USME000005", "Vo", "Hong", "qqq", "0708992832"));
+        
     }
     
 }
