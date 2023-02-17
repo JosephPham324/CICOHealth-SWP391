@@ -84,18 +84,23 @@ function displayFoodItem(searchResults, food) {
       data-food='${JSON.stringify(food)}'
     >
       <h3 class="search-result-name">${food.foodName}</h3>
-      <div class="search-result-image">
-        <img
-          src="${food.photo}"
-          alt="food photo"
-        />
-      </div>
-      <div class="search-result-description">
-        <span class="search-result-quantity">Serving: ${food.servingWeight}(g)</span>
-        <span class="search-result-calories">Cal: ${food.calories}</span>
-        <span class="search-result-protein">Protein: ${food.protein}</span>
-        <span class="search-result-fat">Fat: ${food.fat}</span>
-        <span class="search-result-carbs">Carbs: ${food.carbs}</span>
+      <div class="search-result-content">
+        <div class="search-result-image">
+          <img
+            src="${food.photo}"
+            alt="${food.foodName} photo"
+          />
+        </div>
+        <div class="search-result-description">
+          <span class="search-result-quantity">Serving: ${
+            food.servingWeight
+          }(g)</span>
+          <span class="search-result-calories">Kcal: ${food.calories}</span>
+          <span class="search-result-protein">Protein: ${food.protein}</span>
+          <span class="search-result-fat">Fat: ${food.fat}</span>
+          <span class="search-result-carbs">Carbs: ${food.carbs}</span>
+          <button class="search-result-button">Add</button>
+        </div>
       </div>
     </div>
     `;
@@ -155,11 +160,24 @@ function addSearchResultEventListener() {
       } else {
         this.classList.remove("selected");
       }
+      changeButtonText(this);
       console.log(selectedFoods);
     });
   }
 }
-addSearchResultEventListener();
+/**
+ * Change the text of the button in search result
+ * 
+ * @param {Element} searchResult - The search result element
+ */
+function changeButtonText(searchResult){
+  let button = searchResult.children[1].children[1].children[5];
+  if(button.innerText === "Add"){
+    button.innerText = "Remove";
+  }else{
+    button.innerText = "Add";
+  }
+}
 /**
  * Add selected class to search-result elements that contain food in selectedFoods
  * @param {Array} selectedFoods Array of selected foods
@@ -170,10 +188,65 @@ function showSelected(selectedFoods) {
     let searchResult = searchResults.children[i];
     if (
       selectedFoods.find(
-        (food) => food.foodName === searchResult.children[0].innerText//If a selected food has name equal to search result name
+        (food) => food.foodName === searchResult.children[0].innerText //If a selected food has name equal to search result name
       )
     ) {
       searchResult.classList.add("selected");
+      changeButtonText(searchResult);
     }
   }
 }
+
+//Send request of some common foods, separated by new line
+sendRequest(`Apple
+      Banana
+      Orange
+      Watermelon
+      Kiwi
+      Carrot
+      Mushroom
+      Potato
+      Sweet potato
+      Corn
+      Broccoli
+      Cauliflower
+      Cabbage
+      Spinach
+      Lettuce
+      Kale
+      Onion
+      Garlic
+      Ginger
+      Green beans
+      Peas
+      Lentils
+      Chickpeas
+      Kidney beans
+      Black beans
+      Pinto beans
+      Tuna
+      Salmon
+      Shrimp
+      Chicken
+      Eggs
+      Milk
+      Yogurt
+      Cheese
+      Honey
+      Maple syrup
+      Bread
+      Bagel
+      Oatmeal
+      Granola
+      Pasta
+      Rice
+      Quinoa
+      Couscous
+      Pizza
+      Burger
+      Hot dog
+      Sandwich
+      Tacos
+      Burritos
+      Sushi
+      Pad Thai`);
