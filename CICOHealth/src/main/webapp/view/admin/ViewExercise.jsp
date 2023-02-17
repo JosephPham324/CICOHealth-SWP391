@@ -38,7 +38,7 @@
     <body>
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="nav">
-            <a href="admin" class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back </span></a>
+            <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back </span></a>
             <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
         </div>
         <div class="info-container">
@@ -55,7 +55,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <c:forEach var="exercise" items="${exerciseList}">
                             <tr>
                                 <td>${exercise.exerciseID}</td>
@@ -63,18 +62,16 @@
                                 <td>${exercise.exerciseName}</td>
                                 <td>${exercise.exerciseDescription}</td>
                                 <td>${exercise.caloriesPerHour}</td>
-
                                 <td>
                                     <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;"></a>                                
-                                    <a  style="color: red"><i class="fa-solid fa-ban"></i></a>
+                                    <a href="/CICOHealth/admin/exercise-management?delete=true&exerciseid=${exercise.exerciseID}" style="color: red"><i class="fa-solid fa-ban"></i></a>
                                 </td>
-
                             </tr> 
                         </c:forEach>
-
                     </tbody>
                 </table>
             </div>
         </div>
+
     </body>
 </html>

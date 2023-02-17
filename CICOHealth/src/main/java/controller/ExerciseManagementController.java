@@ -18,32 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class ExerciseManagementController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ExerciseController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ExerciseController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -57,9 +31,15 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
-
-        request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
+        String delete = request.getParameter("delete");
+        String exerciseID = request.getParameter("exerciseid");
+        if (delete == null) {
+            request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
+            request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
+        } else {
+            new ExerciseDao().deleteExercise(exerciseID);
+            response.sendRedirect("/CICOHealth/admin/exercise-management");
+        }
 
     }
 

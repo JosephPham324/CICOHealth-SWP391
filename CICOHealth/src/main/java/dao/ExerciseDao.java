@@ -5,6 +5,8 @@
 package dao;
 
 import bean.Exercise;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,4 +55,17 @@ public class ExerciseDao extends BaseDao {
 
     }
 
+    public void deleteExercise(String exerciseID) {
+        try {
+            String sql = "DELETE FROM exercise WHERE EXERCISEID = ?";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, exerciseID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConnections();
+
+    }
 }
