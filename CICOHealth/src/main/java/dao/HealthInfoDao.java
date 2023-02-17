@@ -79,17 +79,21 @@ public class HealthInfoDao extends BaseDao {
                     + "tdee=?, dailyCalorie = ?, dailyProtein = ?, dailyFat = ?, dailyCarb = ? where userID = ?";
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setBoolean(1, healthInfo.getGender());
-            preparedStatement.setDouble(2, healthInfo.getAge());
-            preparedStatement.setDouble(3, healthInfo.getHeight());
-            preparedStatement.setDouble(4, healthInfo.getWeight());
-            preparedStatement.setInt(5, healthInfo.getActiveness());
-            preparedStatement.setInt(6, healthInfo.getActiveness());
-            preparedStatement.setDouble(7, healthInfo.getDailyCalorie());
-            preparedStatement.setDouble(8, healthInfo.getDailyProtein());
-            preparedStatement.setDouble(9, healthInfo.getDailyFat());
-            preparedStatement.setDouble(10, healthInfo.getDailyCarb());
-            preparedStatement.setString(11, healthInfo.getUserID());
+            int index = 1;
+            //Health info
+            preparedStatement.setString(index++, healthInfo.getUserID());
+            preparedStatement.setString(index++, (healthInfo.getGender() ? 0 + "" : 1 + ""));
+            preparedStatement.setString(index++, healthInfo.getHeight() + "");
+            preparedStatement.setString(index++, healthInfo.getWeight() + "");
+            preparedStatement.setString(index++, healthInfo.getAge() + "");
+            preparedStatement.setString(index++, healthInfo.getActiveness() + "");
+            //Nutrition goal
+            preparedStatement.setString(index++, healthInfo.getTdee() + "");
+            preparedStatement.setString(index++, healthInfo.getDailyCalorie() + "");
+            preparedStatement.setString(index++, healthInfo.getDailyProtein() + "");
+            preparedStatement.setString(index++, healthInfo.getDailyFat() + "");
+            preparedStatement.setString(index++, healthInfo.getDailyCarb() + "");
+            
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
