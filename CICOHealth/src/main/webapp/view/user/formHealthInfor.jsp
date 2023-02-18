@@ -2,11 +2,11 @@
     <label for="numHeight" class="col-4 col-form-label">Age</label>
     <div class="col-8">
         <input
-            value="20"
+            value="${health.age}"
             id="numAge"
             name="numAge"
             placeholder="Enter your age"
-            type="number"
+            type="text"
             class="form-control"
             />
     </div>

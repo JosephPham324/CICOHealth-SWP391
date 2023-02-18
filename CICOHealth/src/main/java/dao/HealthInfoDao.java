@@ -81,24 +81,24 @@ public class HealthInfoDao extends BaseDao {
             preparedStatement = connection.prepareStatement(query);
             int index = 1;
             //Health info
-            preparedStatement.setString(index++, healthInfo.getUserID());
-            preparedStatement.setString(index++, (healthInfo.getGender() ? 0 + "" : 1 + ""));
-            preparedStatement.setString(index++, healthInfo.getHeight() + "");
-            preparedStatement.setString(index++, healthInfo.getWeight() + "");
-            preparedStatement.setString(index++, healthInfo.getAge() + "");
-            preparedStatement.setString(index++, healthInfo.getActiveness() + "");
+            preparedStatement.setBoolean(index++, healthInfo.getGender());
+            preparedStatement.setInt(index++, healthInfo.getAge());
+            preparedStatement.setDouble(index++, healthInfo.getHeight());
+            preparedStatement.setDouble(index++, healthInfo.getWeight());
+            preparedStatement.setInt(index++, healthInfo.getActiveness());
             //Nutrition goal
-            preparedStatement.setString(index++, healthInfo.getTdee() + "");
-            preparedStatement.setString(index++, healthInfo.getDailyCalorie() + "");
-            preparedStatement.setString(index++, healthInfo.getDailyProtein() + "");
-            preparedStatement.setString(index++, healthInfo.getDailyFat() + "");
-            preparedStatement.setString(index++, healthInfo.getDailyCarb() + "");
-            
+            preparedStatement.setInt(index++, healthInfo.getTdee());
+            preparedStatement.setDouble(index++, healthInfo.getDailyCalorie());
+            preparedStatement.setDouble(index++, healthInfo.getDailyProtein());
+            preparedStatement.setDouble(index++, healthInfo.getDailyFat());
+            preparedStatement.setDouble(index++, healthInfo.getDailyCarb());
+            preparedStatement.setString(index++, healthInfo.getUserID());
+
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        closeConnections();
     }
 
 }

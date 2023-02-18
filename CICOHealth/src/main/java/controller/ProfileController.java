@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import bean.HealthInfo;
@@ -76,21 +72,23 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String method = request.getParameter("method");
+        String method = request.getParameter("_method");
         if (method != null) {
-            if (method.equalsIgnoreCase("put")) {
+            if ("PUT".equalsIgnoreCase(method)) {
                 doPut(request, response);
-                return;
+                response.sendRedirect("/CICOHealth/admin/user-management");
+//                doPut(request, response);
+            } else {
+                UserDao userDao = new UserDao();
+                User user = new User(request.getParameter("userID"),
+                        request.getParameter("firstName"),
+                        request.getParameter("lastName"),
+                        request.getParameter("email"),
+                        request.getParameter("phone"));
+                userDao.updateUserInfo(user);
+                response.sendRedirect("/CICOHealth/admin/user-management");
             }
         }
-        UserDao userDao = new UserDao();
-        User user = new User(request.getParameter("userID"),
-                request.getParameter("firstName"),
-                request.getParameter("lastName"),
-                request.getParameter("email"),
-                request.getParameter("phone"));
-        userDao.updateUserInfo(user);
-        response.sendRedirect("/CICOHealth/admin/user-management");
     }
 
     /**
@@ -116,7 +114,8 @@ public class ProfileController extends HttpServlet {
         double carb = Double.parseDouble(request.getParameter("numCarb"));
         HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
                 (int) TDEE, (int) TDEE, protein, fat, carb);
-        response.sendRedirect("/CICOHealth/admin/user-management");
+        new HealthInfoDao().updateHealthInfo(healthInfo);
+        return;
     }
 
     /**
