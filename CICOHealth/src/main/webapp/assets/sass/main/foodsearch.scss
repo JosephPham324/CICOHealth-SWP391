@@ -1,14 +1,43 @@
 @use "../mixins/common";
+.prevent-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  @include common.absolute-position();
+  display: none;
+  &.active {
+    display: block;
+    position: fixed;
+  }
+  & > * {
+    position: relative;
+    z-index: 5;
+  }
+  .background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include common.dimension(100vw, 100vh);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1 !important;
+  }
+}
+#meal-form {
+  @include common.flex-display(column, center, center);
+}
 main {
   @include common.dimension(100%, 100%);
 }
 //---------------------------------------------------------------------------
 .search-bar {
-  @include common.flex-display(column, center, center);
-  @include common.dimension(100%, 100%);
+  @include common.flex-display(row, center, center);
+  @include common.dimension(100%, 80px);
+  //---------------------------------------------------------------------------
   .search-bar-input {
-    input,
-    button {
+    * {
       font-size: 1.2rem;
     }
     //---------------------------------------------------------------------------
@@ -17,6 +46,19 @@ main {
       @media screen and (max-width: 600px) {
         width: 80vw;
       }
+    }
+  }
+  //---------------------------------------------------------------------------
+  button {
+    border: 0;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    * {
+      font-size: 3rem;
+    }
+    &:active {
+      transform: scale(0.95);
     }
   }
 }
@@ -100,7 +142,7 @@ main {
       background-color: aquamarine;
       &:hover {
         transform: scale(1.05);
-        background-color: lighten(rgb(17, 190, 133),20%);
+        background-color: lighten(rgb(17, 190, 133), 20%);
       }
     }
   }

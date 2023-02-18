@@ -161,20 +161,21 @@ function addSearchResultEventListener() {
         this.classList.remove("selected");
       }
       changeButtonText(this);
+      updateFoodCartButton();
       console.log(selectedFoods);
     });
   }
 }
 /**
  * Change the text of the button in search result
- * 
+ *
  * @param {Element} searchResult - The search result element
  */
-function changeButtonText(searchResult){
+function changeButtonText(searchResult) {
   let button = searchResult.children[1].children[1].children[5];
-  if(button.innerText === "Add"){
+  if (button.innerText === "Add") {
     button.innerText = "Remove";
-  }else{
+  } else {
     button.innerText = "Add";
   }
 }
@@ -193,60 +194,84 @@ function showSelected(selectedFoods) {
     ) {
       searchResult.classList.add("selected");
       changeButtonText(searchResult);
+      updateFoodCartButton();
     }
   }
 }
+function updateFoodCartButton() {
+  let foodCartButton = document.getElementById("selected-number");
+  foodCartButton.innerText = `${selectedFoods.length}`;
+}
 
 //Send request of some common foods, separated by new line
-sendRequest(`Apple
-      Banana
-      Orange
-      Watermelon
-      Kiwi
-      Carrot
-      Mushroom
-      Potato
-      Sweet potato
-      Corn
-      Broccoli
-      Cauliflower
-      Cabbage
-      Spinach
-      Lettuce
-      Kale
-      Onion
-      Garlic
-      Ginger
-      Green beans
-      Peas
-      Lentils
-      Chickpeas
-      Kidney beans
-      Black beans
-      Pinto beans
-      Tuna
-      Salmon
-      Shrimp
-      Chicken
-      Eggs
-      Milk
-      Yogurt
-      Cheese
-      Honey
-      Maple syrup
-      Bread
-      Bagel
-      Oatmeal
-      Granola
-      Pasta
-      Rice
-      Quinoa
-      Couscous
-      Pizza
-      Burger
-      Hot dog
-      Sandwich
-      Tacos
-      Burritos
-      Sushi
-      Pad Thai`);
+// sendRequest(`Apple
+//       Banana
+//       Orange
+//       Watermelon
+//       Kiwi
+//       Carrot
+//       Mushroom
+//       Potato
+//       Sweet potato
+//       Corn
+//       Broccoli
+//       Cauliflower
+//       Cabbage
+//       Spinach
+//       Lettuce
+//       Kale
+//       Onion
+//       Garlic
+//       Ginger
+//       Green beans
+//       Peas
+//       Lentils
+//       Chickpeas
+//       Kidney beans
+//       Black beans
+//       Pinto beans
+//       Tuna
+//       Salmon
+//       Shrimp
+//       Chicken
+//       Eggs
+//       Milk
+//       Yogurt
+//       Cheese
+//       Honey
+//       Maple syrup
+//       Bread
+//       Bagel
+//       Oatmeal
+//       Granola
+//       Pasta
+//       Rice
+//       Quinoa
+//       Couscous
+//       Pizza
+//       Burger
+//       Hot dog
+//       Sandwich
+//       Tacos
+//       Burritos
+//       Sushi
+//       Pad Thai`);
+
+//Food cart element
+let mealCart = document.getElementById("food-cart");
+//Display pop-ups
+function displayPopUps() {
+  let popUps = document.getElementsByClassName("pop-up");
+  for (let i = 0; i < popUps.length; i++) {
+    popUps[i].classList.add("active");
+    //Add event listener to background
+    popUps[i].children[0].addEventListener("click", function (e) {
+      this.classList.remove("active");
+    });
+  }
+}
+
+//Add event listener to food cart button
+document.getElementById("food-cart").addEventListener("click", function () {
+  displayPopUps();
+});

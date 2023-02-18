@@ -5,9 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../assets/sass/main/foodsearch.css" />
+    <!--Font awesome CDN-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Food Search</title>
   </head>
   <body>
+    <!--Pop up form-->
+    <div class="pop-up">
+      <div class="background"></div>
+      <form id="meal-form">
+        <div class="item" data-food-name="lol">
+          <span class="food-name">lol</span>
+          <span class="calories">5</span>
+          <span class="protein">5</span>
+          <span class="fat">5</span>
+          <span class="carbs">5</span>
+          <span class="serving-weight">5</span>
+          <input type="number" name="actual-weight" />
+        </div>
+        <input type="submit" value="Create Meal" />
+      </form>
+    </div>
     <main>
       <div class="search-bar">
         <form
@@ -17,195 +41,1211 @@
           <div class="search-bar-input-field">
             <input type="search" name="foodSearchInput" id="foodSearchInput" />
             <input type="submit" value="Search" />
-            <button id="food-cart">View Meal</button>
           </div>
         </form>
+        <button id="food-cart">
+          <span id="selected-number">0</span
+          ><i class="fa-solid fa-bowl-food"></i>
+        </button>
       </div>
       <div class="search-results" id="search-results">
         <div
           class="search-result"
-          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+          data-food='{"foodName":"apple","servingWeight":182,"calories":94.64,"protein":0.47,"fat":0.31,"carbs":25.13,"photo":"https://nix-tag-images.s3.amazonaws.com/384_highres.jpg"}'
         >
-          <h3 class="search-result-name">hot dog</h3>
-          <div class="search-result-image">
-            <img
-              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
-              alt="food photo"
-            />
-          </div>
-          <div class="search-result-description">
-            <span class="search-result-calories">154.56</span>
-            <span class="search-result-protein">154.56</span>
-            <span class="search-result-fat">5.61</span>
-            <span class="search-result-carbs">14.09</span>
-            <span class="search-result-quantity">48</span>
+          <h3 class="search-result-name">apple</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/384_highres.jpg"
+                alt="apple photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 182(g)</span>
+              <span class="search-result-calories">Kcal: 94.64</span>
+              <span class="search-result-protein">Protein: 0.47</span>
+              <span class="search-result-fat">Fat: 0.31</span>
+              <span class="search-result-carbs">Carbs: 25.13</span>
+              <button class="search-result-button">Add</button>
+            </div>
           </div>
         </div>
+
         <div
           class="search-result"
-          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+          data-food='{"foodName":"banana","servingWeight":118,"calories":105.02,"protein":1.29,"fat":0.39,"carbs":26.95,"photo":"https://nix-tag-images.s3.amazonaws.com/399_highres.jpg"}'
         >
-          <h3 class="search-result-name">hot dog</h3>
-          <div class="search-result-image">
-            <img
-              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
-              alt="food photo"
-            />
-          </div>
-          <div class="search-result-description">
-            <span class="search-result-calories">154.56</span>
-            <span class="search-result-protein">154.56</span>
-            <span class="search-result-fat">5.61</span>
-            <span class="search-result-carbs">14.09</span>
-            <span class="search-result-quantity">48</span>
+          <h3 class="search-result-name">banana</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/399_highres.jpg"
+                alt="banana photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 118(g)</span>
+              <span class="search-result-calories">Kcal: 105.02</span>
+              <span class="search-result-protein">Protein: 1.29</span>
+              <span class="search-result-fat">Fat: 0.39</span>
+              <span class="search-result-carbs">Carbs: 26.95</span>
+              <button class="search-result-button">Add</button>
+            </div>
           </div>
         </div>
+
         <div
           class="search-result"
-          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+          data-food='{"foodName":"orange","servingWeight":140,"calories":68.6,"protein":1.27,"fat":0.21,"carbs":17.56,"photo":"https://nix-tag-images.s3.amazonaws.com/719_highres.jpg"}'
         >
-          <h3 class="search-result-name">hot dog</h3>
-          <div class="search-result-image">
-            <img
-              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
-              alt="food photo"
-            />
-          </div>
-          <div class="search-result-description">
-            <span class="search-result-calories">154.56</span>
-            <span class="search-result-protein">154.56</span>
-            <span class="search-result-fat">5.61</span>
-            <span class="search-result-carbs">14.09</span>
-            <span class="search-result-quantity">48</span>
+          <h3 class="search-result-name">orange</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/719_highres.jpg"
+                alt="orange photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 140(g)</span>
+              <span class="search-result-calories">Kcal: 68.6</span>
+              <span class="search-result-protein">Protein: 1.27</span>
+              <span class="search-result-fat">Fat: 0.21</span>
+              <span class="search-result-carbs">Carbs: 17.56</span>
+              <button class="search-result-button">Add</button>
+            </div>
           </div>
         </div>
+
         <div
           class="search-result"
-          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"}'
+          data-food='{"foodName":"watermelon","servingWeight":286,"calories":85.8,"protein":1.74,"fat":0.43,"carbs":21.59,"photo":"https://nix-tag-images.s3.amazonaws.com/869_highres.jpg"}'
+        >
+          <h3 class="search-result-name">watermelon</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/869_highres.jpg"
+                alt="watermelon photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 286(g)</span>
+              <span class="search-result-calories">Kcal: 85.8</span>
+              <span class="search-result-protein">Protein: 1.74</span>
+              <span class="search-result-fat">Fat: 0.43</span>
+              <span class="search-result-carbs">Carbs: 21.59</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"kiwi","servingWeight":69,"calories":42.09,"protein":0.79,"fat":0.36,"carbs":10.12,"photo":"https://nix-tag-images.s3.amazonaws.com/647_highres.jpg"}'
+        >
+          <h3 class="search-result-name">kiwi</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/647_highres.jpg"
+                alt="kiwi photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 69(g)</span>
+              <span class="search-result-calories">Kcal: 42.09</span>
+              <span class="search-result-protein">Protein: 0.79</span>
+              <span class="search-result-fat">Fat: 0.36</span>
+              <span class="search-result-carbs">Carbs: 10.12</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"carrot","servingWeight":46,"calories":16.1,"protein":0.35,"fat":0.08,"carbs":3.78,"photo":"https://nix-tag-images.s3.amazonaws.com/452_highres.jpg"}'
+        >
+          <h3 class="search-result-name">carrot</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/452_highres.jpg"
+                alt="carrot photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 46(g)</span>
+              <span class="search-result-calories">Kcal: 16.1</span>
+              <span class="search-result-protein">Protein: 0.35</span>
+              <span class="search-result-fat">Fat: 0.08</span>
+              <span class="search-result-carbs">Carbs: 3.78</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"mushroom","servingWeight":12,"calories":3.36,"protein":0.26,"fat":0.06,"carbs":0.63,"photo":"https://nix-tag-images.s3.amazonaws.com/148_highres.jpg"}'
+        >
+          <h3 class="search-result-name">mushroom</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/148_highres.jpg"
+                alt="mushroom photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 12(g)</span>
+              <span class="search-result-calories">Kcal: 3.36</span>
+              <span class="search-result-protein">Protein: 0.26</span>
+              <span class="search-result-fat">Fat: 0.06</span>
+              <span class="search-result-carbs">Carbs: 0.63</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"potato","servingWeight":173,"calories":160.89,"protein":4.33,"fat":0.22,"carbs":36.59,"photo":"https://nix-tag-images.s3.amazonaws.com/752_highres.jpg"}'
+        >
+          <h3 class="search-result-name">potato</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/752_highres.jpg"
+                alt="potato photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 173(g)</span>
+              <span class="search-result-calories">Kcal: 160.89</span>
+              <span class="search-result-protein">Protein: 4.33</span>
+              <span class="search-result-fat">Fat: 0.22</span>
+              <span class="search-result-carbs">Carbs: 36.59</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"sweet potato","servingWeight":114,"calories":102.6,"protein":2.29,"fat":0.17,"carbs":23.61,"photo":"https://nix-tag-images.s3.amazonaws.com/208_highres.jpg"}'
+        >
+          <h3 class="search-result-name">sweet potato</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/208_highres.jpg"
+                alt="sweet potato photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 114(g)</span>
+              <span class="search-result-calories">Kcal: 102.6</span>
+              <span class="search-result-protein">Protein: 2.29</span>
+              <span class="search-result-fat">Fat: 0.17</span>
+              <span class="search-result-carbs">Carbs: 23.61</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"corn","servingWeight":103,"calories":98.88,"protein":3.51,"fat":1.55,"carbs":21.61,"photo":"https://nix-tag-images.s3.amazonaws.com/294_highres.jpg"}'
+        >
+          <h3 class="search-result-name">corn</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/294_highres.jpg"
+                alt="corn photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 103(g)</span>
+              <span class="search-result-calories">Kcal: 98.88</span>
+              <span class="search-result-protein">Protein: 3.51</span>
+              <span class="search-result-fat">Fat: 1.55</span>
+              <span class="search-result-carbs">Carbs: 21.61</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"broccoli","servingWeight":10,"calories":3.5,"protein":0.24,"fat":0.04,"carbs":0.72,"photo":"https://nix-tag-images.s3.amazonaws.com/363_highres.jpg"}'
+        >
+          <h3 class="search-result-name">broccoli</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/363_highres.jpg"
+                alt="broccoli photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 10(g)</span>
+              <span class="search-result-calories">Kcal: 3.5</span>
+              <span class="search-result-protein">Protein: 0.24</span>
+              <span class="search-result-fat">Fat: 0.04</span>
+              <span class="search-result-carbs">Carbs: 0.72</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"cauliflower","servingWeight":575,"calories":132.25,"protein":10.58,"fat":2.59,"carbs":23.63,"photo":"https://nix-tag-images.s3.amazonaws.com/315_highres.jpg"}'
+        >
+          <h3 class="search-result-name">cauliflower</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/315_highres.jpg"
+                alt="cauliflower photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 575(g)</span>
+              <span class="search-result-calories">Kcal: 132.25</span>
+              <span class="search-result-protein">Protein: 10.58</span>
+              <span class="search-result-fat">Fat: 2.59</span>
+              <span class="search-result-carbs">Carbs: 23.63</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"cabbage","servingWeight":75,"calories":17.25,"protein":0.95,"fat":0.05,"carbs":4.13,"photo":"https://nix-tag-images.s3.amazonaws.com/447_highres.jpg"}'
+        >
+          <h3 class="search-result-name">cabbage</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/447_highres.jpg"
+                alt="cabbage photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 75(g)</span>
+              <span class="search-result-calories">Kcal: 17.25</span>
+              <span class="search-result-protein">Protein: 0.95</span>
+              <span class="search-result-fat">Fat: 0.05</span>
+              <span class="search-result-carbs">Carbs: 4.13</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"spinach","servingWeight":180,"calories":41.4,"protein":5.35,"fat":0.47,"carbs":6.75,"photo":"https://nix-tag-images.s3.amazonaws.com/263_highres.jpg"}'
+        >
+          <h3 class="search-result-name">spinach</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/263_highres.jpg"
+                alt="spinach photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 180(g)</span>
+              <span class="search-result-calories">Kcal: 41.4</span>
+              <span class="search-result-protein">Protein: 5.35</span>
+              <span class="search-result-fat">Fat: 0.47</span>
+              <span class="search-result-carbs">Carbs: 6.75</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"lettuce","servingWeight":94,"calories":15.98,"protein":1.16,"fat":0.28,"carbs":3.09,"photo":"https://nix-tag-images.s3.amazonaws.com/657_highres.jpg"}'
+        >
+          <h3 class="search-result-name">lettuce</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/657_highres.jpg"
+                alt="lettuce photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 94(g)</span>
+              <span class="search-result-calories">Kcal: 15.98</span>
+              <span class="search-result-protein">Protein: 1.16</span>
+              <span class="search-result-fat">Fat: 0.28</span>
+              <span class="search-result-carbs">Carbs: 3.09</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"kale","servingWeight":130,"calories":36.4,"protein":2.47,"fat":0.52,"carbs":7.32,"photo":"https://nix-tag-images.s3.amazonaws.com/644_highres.jpg"}'
+        >
+          <h3 class="search-result-name">kale</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/644_highres.jpg"
+                alt="kale photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 130(g)</span>
+              <span class="search-result-calories">Kcal: 36.4</span>
+              <span class="search-result-protein">Protein: 2.47</span>
+              <span class="search-result-fat">Fat: 0.52</span>
+              <span class="search-result-carbs">Carbs: 7.32</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"onion","servingWeight":94,"calories":41.36,"protein":1.28,"fat":0.18,"carbs":9.54,"photo":"https://nix-tag-images.s3.amazonaws.com/717_highres.jpg"}'
+        >
+          <h3 class="search-result-name">onion</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/717_highres.jpg"
+                alt="onion photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 94(g)</span>
+              <span class="search-result-calories">Kcal: 41.36</span>
+              <span class="search-result-protein">Protein: 1.28</span>
+              <span class="search-result-fat">Fat: 0.18</span>
+              <span class="search-result-carbs">Carbs: 9.54</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"garlic","servingWeight":3,"calories":4.47,"protein":0.19,"fat":0.02,"carbs":0.99,"photo":"https://nix-tag-images.s3.amazonaws.com/330_highres.jpg"}'
+        >
+          <h3 class="search-result-name">garlic</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/330_highres.jpg"
+                alt="garlic photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 3(g)</span>
+              <span class="search-result-calories">Kcal: 4.47</span>
+              <span class="search-result-protein">Protein: 0.19</span>
+              <span class="search-result-fat">Fat: 0.02</span>
+              <span class="search-result-carbs">Carbs: 0.99</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"ginger","servingWeight":2,"calories":1.6,"protein":0.04,"fat":0.02,"carbs":0.36,"photo":"https://nix-tag-images.s3.amazonaws.com/776_highres.jpg"}'
+        >
+          <h3 class="search-result-name">ginger</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/776_highres.jpg"
+                alt="ginger photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 2(g)</span>
+              <span class="search-result-calories">Kcal: 1.6</span>
+              <span class="search-result-protein">Protein: 0.04</span>
+              <span class="search-result-fat">Fat: 0.02</span>
+              <span class="search-result-carbs">Carbs: 0.36</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"green beans","servingWeight":125,"calories":43.75,"protein":2.36,"fat":0.35,"carbs":9.85,"photo":"https://nix-tag-images.s3.amazonaws.com/189_highres.jpg"}'
+        >
+          <h3 class="search-result-name">green beans</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/189_highres.jpg"
+                alt="green beans photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 125(g)</span>
+              <span class="search-result-calories">Kcal: 43.75</span>
+              <span class="search-result-protein">Protein: 2.36</span>
+              <span class="search-result-fat">Fat: 0.35</span>
+              <span class="search-result-carbs">Carbs: 9.85</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"peas","servingWeight":160,"calories":134.4,"protein":8.58,"fat":0.35,"carbs":25.01,"photo":"https://nix-tag-images.s3.amazonaws.com/728_highres.jpg"}'
+        >
+          <h3 class="search-result-name">peas</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/728_highres.jpg"
+                alt="peas photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 160(g)</span>
+              <span class="search-result-calories">Kcal: 134.4</span>
+              <span class="search-result-protein">Protein: 8.58</span>
+              <span class="search-result-fat">Fat: 0.35</span>
+              <span class="search-result-carbs">Carbs: 25.01</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"lentils","servingWeight":198,"calories":229.68,"protein":17.86,"fat":0.75,"carbs":39.86,"photo":"https://nix-tag-images.s3.amazonaws.com/230_highres.jpg"}'
+        >
+          <h3 class="search-result-name">lentils</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/230_highres.jpg"
+                alt="lentils photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 198(g)</span>
+              <span class="search-result-calories">Kcal: 229.68</span>
+              <span class="search-result-protein">Protein: 17.86</span>
+              <span class="search-result-fat">Fat: 0.75</span>
+              <span class="search-result-carbs">Carbs: 39.86</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"chickpeas","servingWeight":164,"calories":268.96,"protein":14.53,"fat":4.25,"carbs":44.97,"photo":"https://nix-tag-images.s3.amazonaws.com/577_highres.jpg"}'
+        >
+          <h3 class="search-result-name">chickpeas</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/577_highres.jpg"
+                alt="chickpeas photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 164(g)</span>
+              <span class="search-result-calories">Kcal: 268.96</span>
+              <span class="search-result-protein">Protein: 14.53</span>
+              <span class="search-result-fat">Fat: 4.25</span>
+              <span class="search-result-carbs">Carbs: 44.97</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"kidney beans","servingWeight":177,"calories":224.79,"protein":15.35,"fat":0.89,"carbs":40.36,"photo":"https://nix-tag-images.s3.amazonaws.com/2179_highres.jpg"}'
+        >
+          <h3 class="search-result-name">kidney beans</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/2179_highres.jpg"
+                alt="kidney beans photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 177(g)</span>
+              <span class="search-result-calories">Kcal: 224.79</span>
+              <span class="search-result-protein">Protein: 15.35</span>
+              <span class="search-result-fat">Fat: 0.89</span>
+              <span class="search-result-carbs">Carbs: 40.36</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"black beans","servingWeight":172,"calories":227.04,"protein":15.24,"fat":0.93,"carbs":40.78,"photo":"https://nix-tag-images.s3.amazonaws.com/245_highres.jpg"}'
+        >
+          <h3 class="search-result-name">black beans</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/245_highres.jpg"
+                alt="black beans photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 172(g)</span>
+              <span class="search-result-calories">Kcal: 227.04</span>
+              <span class="search-result-protein">Protein: 15.24</span>
+              <span class="search-result-fat">Fat: 0.93</span>
+              <span class="search-result-carbs">Carbs: 40.78</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"pinto beans","servingWeight":171,"calories":244.53,"protein":15.41,"fat":1.11,"carbs":44.84,"photo":"https://nix-tag-images.s3.amazonaws.com/231_highres.jpg"}'
+        >
+          <h3 class="search-result-name">pinto beans</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/231_highres.jpg"
+                alt="pinto beans photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 171(g)</span>
+              <span class="search-result-calories">Kcal: 244.53</span>
+              <span class="search-result-protein">Protein: 15.41</span>
+              <span class="search-result-fat">Fat: 1.11</span>
+              <span class="search-result-carbs">Carbs: 44.84</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"tuna","servingWeight":85,"calories":110.5,"protein":24.78,"fat":0.5,"carbs":0,"photo":"https://nix-tag-images.s3.amazonaws.com/2992_highres.jpg"}'
+        >
+          <h3 class="search-result-name">tuna</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/2992_highres.jpg"
+                alt="tuna photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 85(g)</span>
+              <span class="search-result-calories">Kcal: 110.5</span>
+              <span class="search-result-protein">Protein: 24.78</span>
+              <span class="search-result-fat">Fat: 0.5</span>
+              <span class="search-result-carbs">Carbs: 0</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"salmon","servingWeight":227,"calories":467.62,"protein":50.17,"fat":28.03,"carbs":0,"photo":"https://nix-tag-images.s3.amazonaws.com/375_highres.jpg"}'
+        >
+          <h3 class="search-result-name">salmon</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/375_highres.jpg"
+                alt="salmon photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 227(g)</span>
+              <span class="search-result-calories">Kcal: 467.62</span>
+              <span class="search-result-protein">Protein: 50.17</span>
+              <span class="search-result-fat">Fat: 28.03</span>
+              <span class="search-result-carbs">Carbs: 0</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"shrimp","servingWeight":5,"calories":5.95,"protein":1.14,"fat":0.09,"carbs":0.08,"photo":"https://nix-tag-images.s3.amazonaws.com/204_highres.jpg"}'
+        >
+          <h3 class="search-result-name">shrimp</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/204_highres.jpg"
+                alt="shrimp photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 5(g)</span>
+              <span class="search-result-calories">Kcal: 5.95</span>
+              <span class="search-result-protein">Protein: 1.14</span>
+              <span class="search-result-fat">Fat: 0.09</span>
+              <span class="search-result-carbs">Carbs: 0.08</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"chicken","servingWeight":85,"calories":187,"protein":20.37,"fat":11.11,"carbs":0.04,"photo":"https://nix-tag-images.s3.amazonaws.com/9_highres.jpg"}'
+        >
+          <h3 class="search-result-name">chicken</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/9_highres.jpg"
+                alt="chicken photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 85(g)</span>
+              <span class="search-result-calories">Kcal: 187</span>
+              <span class="search-result-protein">Protein: 20.37</span>
+              <span class="search-result-fat">Fat: 11.11</span>
+              <span class="search-result-carbs">Carbs: 0.04</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"eggs","servingWeight":50,"calories":71.5,"protein":6.28,"fat":4.76,"carbs":0.36,"photo":"https://nix-tag-images.s3.amazonaws.com/542_highres.jpg"}'
+        >
+          <h3 class="search-result-name">eggs</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/542_highres.jpg"
+                alt="eggs photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 50(g)</span>
+              <span class="search-result-calories">Kcal: 71.5</span>
+              <span class="search-result-protein">Protein: 6.28</span>
+              <span class="search-result-fat">Fat: 4.76</span>
+              <span class="search-result-carbs">Carbs: 0.36</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"milk","servingWeight":244,"calories":122,"protein":8.05,"fat":4.83,"carbs":11.71,"photo":"https://nix-tag-images.s3.amazonaws.com/377_highres.jpg"}'
+        >
+          <h3 class="search-result-name">milk</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/377_highres.jpg"
+                alt="milk photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 244(g)</span>
+              <span class="search-result-calories">Kcal: 122</span>
+              <span class="search-result-protein">Protein: 8.05</span>
+              <span class="search-result-fat">Fat: 4.83</span>
+              <span class="search-result-carbs">Carbs: 11.71</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"yogurt","servingWeight":170,"calories":107.1,"protein":8.93,"fat":2.64,"carbs":11.97,"photo":"https://nix-tag-images.s3.amazonaws.com/186_highres.jpg"}'
+        >
+          <h3 class="search-result-name">yogurt</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/186_highres.jpg"
+                alt="yogurt photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 170(g)</span>
+              <span class="search-result-calories">Kcal: 107.1</span>
+              <span class="search-result-protein">Protein: 8.93</span>
+              <span class="search-result-fat">Fat: 2.64</span>
+              <span class="search-result-carbs">Carbs: 11.97</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"cheese","servingWeight":28,"calories":113.12,"protein":6.4,"fat":9.33,"carbs":0.87,"photo":"https://nix-tag-images.s3.amazonaws.com/1034_highres.jpg"}'
+        >
+          <h3 class="search-result-name">cheese</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1034_highres.jpg"
+                alt="cheese photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 28(g)</span>
+              <span class="search-result-calories">Kcal: 113.12</span>
+              <span class="search-result-protein">Protein: 6.4</span>
+              <span class="search-result-fat">Fat: 9.33</span>
+              <span class="search-result-carbs">Carbs: 0.87</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"honey","servingWeight":21,"calories":63.84,"protein":0.06,"fat":0,"carbs":17.3,"photo":"https://nix-tag-images.s3.amazonaws.com/20_highres.jpg"}'
+        >
+          <h3 class="search-result-name">honey</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/20_highres.jpg"
+                alt="honey photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 21(g)</span>
+              <span class="search-result-calories">Kcal: 63.84</span>
+              <span class="search-result-protein">Protein: 0.06</span>
+              <span class="search-result-fat">Fat: 0</span>
+              <span class="search-result-carbs">Carbs: 17.3</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"maple syrup","servingWeight":20,"calories":52,"protein":0.01,"fat":0.01,"carbs":13.41,"photo":"https://nix-tag-images.s3.amazonaws.com/196_highres.jpg"}'
+        >
+          <h3 class="search-result-name">maple syrup</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/196_highres.jpg"
+                alt="maple syrup photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 20(g)</span>
+              <span class="search-result-calories">Kcal: 52</span>
+              <span class="search-result-protein">Protein: 0.01</span>
+              <span class="search-result-fat">Fat: 0.01</span>
+              <span class="search-result-carbs">Carbs: 13.41</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"bread","servingWeight":29,"calories":77.14,"protein":2.57,"fat":0.97,"carbs":14.33,"photo":"https://nix-tag-images.s3.amazonaws.com/8_highres.jpg"}'
+        >
+          <h3 class="search-result-name">bread</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/8_highres.jpg"
+                alt="bread photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 29(g)</span>
+              <span class="search-result-calories">Kcal: 77.14</span>
+              <span class="search-result-protein">Protein: 2.57</span>
+              <span class="search-result-fat">Fat: 0.97</span>
+              <span class="search-result-carbs">Carbs: 14.33</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"bagel","servingWeight":105,"calories":277.2,"protein":11.09,"fat":1.39,"carbs":55,"photo":"https://nix-tag-images.s3.amazonaws.com/81_highres.jpg"}'
+        >
+          <h3 class="search-result-name">bagel</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/81_highres.jpg"
+                alt="bagel photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 105(g)</span>
+              <span class="search-result-calories">Kcal: 277.2</span>
+              <span class="search-result-protein">Protein: 11.09</span>
+              <span class="search-result-fat">Fat: 1.39</span>
+              <span class="search-result-carbs">Carbs: 55</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"oatmeal","servingWeight":234,"calories":166.14,"protein":5.94,"fat":3.56,"carbs":28.08,"photo":"https://nix-tag-images.s3.amazonaws.com/87_highres.jpg"}'
+        >
+          <h3 class="search-result-name">oatmeal</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/87_highres.jpg"
+                alt="oatmeal photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 234(g)</span>
+              <span class="search-result-calories">Kcal: 166.14</span>
+              <span class="search-result-protein">Protein: 5.94</span>
+              <span class="search-result-fat">Fat: 3.56</span>
+              <span class="search-result-carbs">Carbs: 28.08</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"granola","servingWeight":61,"calories":298.29,"protein":8.34,"fat":14.83,"carbs":32.87,"photo":"https://nix-tag-images.s3.amazonaws.com/7_highres.jpg"}'
+        >
+          <h3 class="search-result-name">granola</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/7_highres.jpg"
+                alt="granola photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 61(g)</span>
+              <span class="search-result-calories">Kcal: 298.29</span>
+              <span class="search-result-protein">Protein: 8.34</span>
+              <span class="search-result-fat">Fat: 14.83</span>
+              <span class="search-result-carbs">Carbs: 32.87</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"pasta","servingWeight":124,"calories":195.92,"protein":7.19,"fat":1.15,"carbs":38.27,"photo":"https://nix-tag-images.s3.amazonaws.com/1012_highres.jpg"}'
+        >
+          <h3 class="search-result-name">pasta</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1012_highres.jpg"
+                alt="pasta photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 124(g)</span>
+              <span class="search-result-calories">Kcal: 195.92</span>
+              <span class="search-result-protein">Protein: 7.19</span>
+              <span class="search-result-fat">Fat: 1.15</span>
+              <span class="search-result-carbs">Carbs: 38.27</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"rice","servingWeight":158,"calories":205.4,"protein":4.25,"fat":0.44,"carbs":44.51,"photo":"https://nix-tag-images.s3.amazonaws.com/784_highres.jpg"}'
+        >
+          <h3 class="search-result-name">rice</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/784_highres.jpg"
+                alt="rice photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 158(g)</span>
+              <span class="search-result-calories">Kcal: 205.4</span>
+              <span class="search-result-protein">Protein: 4.25</span>
+              <span class="search-result-fat">Fat: 0.44</span>
+              <span class="search-result-carbs">Carbs: 44.51</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"quinoa","servingWeight":92.5,"calories":111,"protein":4.07,"fat":1.78,"carbs":19.7,"photo":"https://nix-tag-images.s3.amazonaws.com/762_highres.jpg"}'
+        >
+          <h3 class="search-result-name">quinoa</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/762_highres.jpg"
+                alt="quinoa photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 92.5(g)</span>
+              <span class="search-result-calories">Kcal: 111</span>
+              <span class="search-result-protein">Protein: 4.07</span>
+              <span class="search-result-fat">Fat: 1.78</span>
+              <span class="search-result-carbs">Carbs: 19.7</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"couscous","servingWeight":157,"calories":175.84,"protein":5.95,"fat":0.25,"carbs":36.46,"photo":"https://nix-tag-images.s3.amazonaws.com/33_highres.jpg"}'
+        >
+          <h3 class="search-result-name">couscous</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/33_highres.jpg"
+                alt="couscous photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 157(g)</span>
+              <span class="search-result-calories">Kcal: 175.84</span>
+              <span class="search-result-protein">Protein: 5.95</span>
+              <span class="search-result-fat">Fat: 0.25</span>
+              <span class="search-result-carbs">Carbs: 36.46</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"pizza","servingWeight":107,"calories":284.62,"protein":12.19,"fat":10.37,"carbs":35.66,"photo":"https://nix-tag-images.s3.amazonaws.com/1060_highres.jpg"}'
+        >
+          <h3 class="search-result-name">pizza</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1060_highres.jpg"
+                alt="pizza photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 107(g)</span>
+              <span class="search-result-calories">Kcal: 284.62</span>
+              <span class="search-result-protein">Protein: 12.19</span>
+              <span class="search-result-fat">Fat: 10.37</span>
+              <span class="search-result-carbs">Carbs: 35.66</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"burger","servingWeight":226,"calories":540.14,"protein":34.28,"fat":26.56,"carbs":40.27,"photo":"https://nix-tag-images.s3.amazonaws.com/608_highres.jpg"}'
+        >
+          <h3 class="search-result-name">burger</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/608_highres.jpg"
+                alt="burger photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 226(g)</span>
+              <span class="search-result-calories">Kcal: 540.14</span>
+              <span class="search-result-protein">Protein: 34.28</span>
+              <span class="search-result-fat">Fat: 26.56</span>
+              <span class="search-result-carbs">Carbs: 40.27</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"hot dog","servingWeight":48,"calories":154.56,"protein":5.61,"fat":14.09,"carbs":1.28,"photo":"https://nix-tag-images.s3.amazonaws.com/632_highres.jpg"}'
         >
           <h3 class="search-result-name">hot dog</h3>
-          <div class="search-result-image">
-            <img
-              src="https://nix-tag-images.s3.amazonaws.com/632_thumb.jpg"
-              alt="food photo"
-            />
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/632_highres.jpg"
+                alt="hot dog photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 48(g)</span>
+              <span class="search-result-calories">Kcal: 154.56</span>
+              <span class="search-result-protein">Protein: 5.61</span>
+              <span class="search-result-fat">Fat: 14.09</span>
+              <span class="search-result-carbs">Carbs: 1.28</span>
+              <button class="search-result-button">Add</button>
+            </div>
           </div>
-          <div class="search-result-description">
-            <span class="search-result-calories">154.56</span>
-            <span class="search-result-protein">154.56</span>
-            <span class="search-result-fat">5.61</span>
-            <span class="search-result-carbs">14.09</span>
-            <span class="search-result-quantity">48</span>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"sandwich","servingWeight":58,"calories":154.86,"protein":6.22,"fat":1.88,"carbs":28.23,"photo":"https://nix-tag-images.s3.amazonaws.com/202_highres.jpg"}'
+        >
+          <h3 class="search-result-name">sandwich</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/202_highres.jpg"
+                alt="sandwich photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 58(g)</span>
+              <span class="search-result-calories">Kcal: 154.86</span>
+              <span class="search-result-protein">Protein: 6.22</span>
+              <span class="search-result-fat">Fat: 1.88</span>
+              <span class="search-result-carbs">Carbs: 28.23</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"tacos","servingWeight":102,"calories":210.12,"protein":9.44,"fat":9.95,"carbs":20.63,"photo":"https://nix-tag-images.s3.amazonaws.com/1646_highres.jpg"}'
+        >
+          <h3 class="search-result-name">tacos</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1646_highres.jpg"
+                alt="tacos photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 102(g)</span>
+              <span class="search-result-calories">Kcal: 210.12</span>
+              <span class="search-result-protein">Protein: 9.44</span>
+              <span class="search-result-fat">Fat: 9.95</span>
+              <span class="search-result-carbs">Carbs: 20.63</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"burritos","servingWeight":241,"calories":433.8,"protein":16.94,"fat":16.39,"carbs":56.32,"photo":"https://nix-tag-images.s3.amazonaws.com/1200_highres.jpg"}'
+        >
+          <h3 class="search-result-name">burritos</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1200_highres.jpg"
+                alt="burritos photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 241(g)</span>
+              <span class="search-result-calories">Kcal: 433.8</span>
+              <span class="search-result-protein">Protein: 16.94</span>
+              <span class="search-result-fat">Fat: 16.39</span>
+              <span class="search-result-carbs">Carbs: 56.32</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"sushi","servingWeight":211.07,"calories":348.54,"protein":7.81,"fat":18.75,"carbs":37.89,"photo":"https://nix-tag-images.s3.amazonaws.com/1719_highres.jpg"}'
+        >
+          <h3 class="search-result-name">sushi</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1719_highres.jpg"
+                alt="sushi photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 211.07(g)</span>
+              <span class="search-result-calories">Kcal: 348.54</span>
+              <span class="search-result-protein">Protein: 7.81</span>
+              <span class="search-result-fat">Fat: 18.75</span>
+              <span class="search-result-carbs">Carbs: 37.89</span>
+              <button class="search-result-button">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="search-result"
+          data-food='{"foodName":"pad thai","servingWeight":494.25,"calories":838.4,"protein":64.07,"fat":44.65,"carbs":45.59,"photo":"https://nix-tag-images.s3.amazonaws.com/1204_highres.jpg"}'
+        >
+          <h3 class="search-result-name">pad thai</h3>
+          <div class="search-result-content">
+            <div class="search-result-image">
+              <img
+                src="https://nix-tag-images.s3.amazonaws.com/1204_highres.jpg"
+                alt="pad thai photo"
+              />
+            </div>
+            <div class="search-result-description">
+              <span class="search-result-quantity">Serving: 494.25(g)</span>
+              <span class="search-result-calories">Kcal: 838.4</span>
+              <span class="search-result-protein">Protein: 64.07</span>
+              <span class="search-result-fat">Fat: 44.65</span>
+              <span class="search-result-carbs">Carbs: 45.59</span>
+              <button class="search-result-button">Add</button>
+            </div>
           </div>
         </div>
       </div>
     </main>
-
-    <script>
-      
-
-      //Send request of 100 common foods, separated by commas
-      //       sendRequest(`Apple
-      // Banana
-      // Orange
-      // Peach
-      // Mango
-      // Grapes
-      // Watermelon
-      // Cantaloupe
-      // Pineapple
-      // Kiwi
-      // Blueberries
-      // Strawberries
-      // Raspberries
-      // Blackberries
-      // Grapefruit
-      // Lemon
-      // Lime
-      // Avocado
-      // Tomato
-      // Cucumber
-      // Carrot
-      // Bell pepper
-      // Mushroom
-      // Potato
-      // Sweet potato
-      // Corn
-      // Broccoli
-      // Cauliflower
-      // Cabbage
-      // Spinach
-      // Lettuce
-      // Kale
-      // Onion
-      // Garlic
-      // Ginger
-      // Celery
-      // Green beans
-      // Peas
-      // Lentils
-      // Chickpeas
-      // Kidney beans
-      // Black beans
-      // Pinto beans
-      // Tuna
-      // Salmon
-      // Shrimp
-      // Chicken
-      // Turkey
-      // Beef
-      // Pork
-      // Lamb
-      // Sausage
-      // Bacon
-      // Eggs
-      // Milk
-      // Yogurt
-      // Cheese
-      // Butter
-      // Olive oil
-      // Coconut oil
-      // Canola oil
-      // Honey
-      // Maple syrup
-      // Bread
-      // Bagel
-      // Croissant
-      // Muffin
-      // Pancake
-      // Waffle
-      // Cereal
-      // Oatmeal
-      // Granola
-      // Pasta
-      // Rice
-      // Quinoa
-      // Couscous
-      // Pizza
-      // Burger
-      // Hot dog
-      // Sandwich
-      // Tacos
-      // Burritos
-      // Sushi
-      // Stir-fry
-      // Curry
-      // Soup
-      // Salad
-      // Chili
-      // Lasagna
-      // Meatloaf
-      // Roast chicken
-      // Baked potato
-      // French fries
-      // Hash browns
-      // Tater tots
-      // Fried rice
-      // Pad Thai
-      // Biryani
-      // Fried chicken
-      // Tandoori chicken.`);
-    </script>
     <script src="../../assets/scripts/foodsearch.js"></script>
   </body>
 </html>

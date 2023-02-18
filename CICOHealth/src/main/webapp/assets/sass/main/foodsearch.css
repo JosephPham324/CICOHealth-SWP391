@@ -1,5 +1,43 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
+.prevent-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  display: block;
+  position: fixed;
+}
+.pop-up > * {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .background {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+
+#meal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 main {
   width: 100%;
   height: 100%;
@@ -7,14 +45,13 @@ main {
 
 .search-bar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 80px;
 }
-.search-bar .search-bar-input input,
-.search-bar .search-bar-input button {
+.search-bar .search-bar-input * {
   font-size: 1.2rem;
 }
 .search-bar .search-bar-input input[type=search] {
@@ -24,6 +61,18 @@ main {
   .search-bar .search-bar-input input[type=search] {
     width: 80vw;
   }
+}
+.search-bar button {
+  border: 0;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+.search-bar button * {
+  font-size: 3rem;
+}
+.search-bar button:active {
+  transform: scale(0.95);
 }
 
 .search-results {
