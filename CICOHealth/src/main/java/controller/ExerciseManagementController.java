@@ -4,6 +4,7 @@
  */
 package controller;
 
+import bean.Exercise;
 import dao.ExerciseDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,10 +58,15 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
-
-        request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
-
+        String type = request.getParameter("type");
+        if (type == null) {
+            request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
+            request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
+            return;
+        }
+        if (type.equalsIgnoreCase("add")) {
+            request.getRequestDispatcher("/view/admin/addexercise.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -75,7 +81,15 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-
+        String add = request.getParameter("btnAdd");
+        if (add != null) {
+            String exerciseID = request.getParameter("exerciseID");
+            String exerciseName = request.getParameter("exerciseName");
+            String exerciseDescription = request.getParameter("exerciseDescription");
+            double caloriesPerHour = Double.parseDouble(request.getParameter("caloriesPerHour"));
+            new ExerciseDao().insertExercise(new Exercise(exerciseID, exerciseName, exerciseDescription, caloriesPerHour));
+            response.sendRedirect("/CICOHealth/admin/exercise-management");
+        }
     }
 
     /**

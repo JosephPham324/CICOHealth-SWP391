@@ -36,11 +36,13 @@
         <title>View Exercise</title>
     </head>
     <body>
+        
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="nav">
-            <a href="admin" class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back </span></a>
+            <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back </span></a>
             <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
         </div>
+        <a href="/CICOHealth/admin/exercise-management?type=add">Add new</a>
         <div class="info-container">
             <div class="info-table">            
                 <table id="info-table" class="table table-striped table-hover display">

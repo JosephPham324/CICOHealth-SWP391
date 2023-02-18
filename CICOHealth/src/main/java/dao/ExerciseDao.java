@@ -53,4 +53,20 @@ public class ExerciseDao extends BaseDao {
 
     }
 
+    public void insertExercise(Exercise exercise) {
+        String query = "INSERT INTO EXERCISE\n"
+                + "VALUES(?,?,?,?)";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, exercise.getExerciseID());
+            preparedStatement.setString(2, exercise.getExerciseName());
+            preparedStatement.setString(3, exercise.getExerciseDescription());
+            preparedStatement.setDouble(4, exercise.getCaloriesPerHour());
+            preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
