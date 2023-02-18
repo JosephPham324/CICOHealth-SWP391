@@ -64,8 +64,27 @@ public class ExerciseDao extends BaseDao {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
         }
-        closeConnections();
+    }
 
+    public void updateExercise(Exercise exercise) {
+        try {
+            String sql = "UPDATE [exercise] SET exerciseName = ?, exerciseDescription = ?, caloriesPerHour = ? "
+                    + "WHERE exerciseID = ?";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            int index = 1;
+            preparedStatement.setString(index++,exercise.getExerciseName());
+            preparedStatement.setString(index++,exercise.getExerciseDescription());
+            preparedStatement.setString(index++,exercise.getCaloriesPerHour()+"");
+            preparedStatement.setString(index++,exercise.getExerciseID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
     }
 }
