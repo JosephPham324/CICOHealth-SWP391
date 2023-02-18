@@ -41,12 +41,11 @@
     <label for="numHeight" class="col-4 col-form-label">Height (cm)</label>
     <div class="col-8">
         <input
-            value="170"
+            value="${health.height}"
             id="numHeight"
             name="numHeight"
             placeholder="Enter your height"
-            min="10"
-            type="number"
+            type="text"
             class="form-control"
             />
     </div>
@@ -55,12 +54,11 @@
     <label for="numWeight" class="col-4 col-form-label">Weight (kg)</label>
     <div class="col-8">
         <input
-            value="60.0"
+            value="${health.weight}"
             id="numWeight"
             name="numWeight"
             placeholder="Enter your weight"
-            min="0.1"
-            type="number"
+            type="text"
             class="form-control"
             />
     </div>
