@@ -111,8 +111,13 @@ public class LoginController extends HttpServlet {
                 return;
             }
             login = loginDao.getLoginInfo(username);
-            if (login == null) {
+            if (login == null ) {
                 response.sendRedirect("/CICOHealth/login");
+                return;
+            }
+            Login login1 = loginDao.getLoginInfo(username);
+            if (login1.getIsBanned() ==true) {
+                 response.sendRedirect("/CICOHealth/login");
                 return;
             }
             try {

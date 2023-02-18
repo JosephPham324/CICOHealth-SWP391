@@ -132,7 +132,7 @@ public class RegisterController extends HttpServlet {
 
             //Create a Member ID
             String userID = userDao.createID();
-            
+
             //Model representation
             User user = new User(userID, firstName, lastName, email, phone);
             Login login;

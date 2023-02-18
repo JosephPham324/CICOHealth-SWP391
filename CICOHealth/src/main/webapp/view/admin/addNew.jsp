@@ -15,6 +15,7 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <style>
             body {
                 width: 100vw;
@@ -25,15 +26,15 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                 justify-content: center;
             }
         </style>
-        <title>Register</title>
+        <title>Add</title>
     </head>
     <body>
         <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-        <form action="register" method="post" id="register-form">
+        <form action="/CICOHealth/admin/user-management" method="post" id="register-form">
             <div class="form-group row">
                 <div class="col-12">
-                    <h1 style="text-align: center;">Register</h1>
+                    <h1 style="text-align: center;">Creation Account</h1>
                 </div>
             </div>
             <div class="form-group row">
@@ -46,6 +47,7 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                         placeholder="Enter username"
                         type="text"
                         class="form-control"
+                        readonly="true"
                         />
                 </div>
             </div>
@@ -60,10 +62,9 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                         type="password"
                         class="form-control"
                         aria-describedby="txtPasswordHelpBlock"
+                        readonly="true"
                         />
-                    <span id="txtPasswordHelpBlock" class="form-text text-muted"
-                          >Password must be between 6 to 20 characters!</span
-                    >
+                    <span id="txtPasswordHelpBlock" class="form-text text-muted"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -95,31 +96,22 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="txtEmail" class="col-4 col-form-label">Email</label>
+                <label for="txtFirstName" class="col-4 col-form-label"
+                       >Type</label
+                >
                 <div class="col-8">
-                    <input
-                        required="required"
-                        id="txtEmail"
-                        name="txtEmail"
-                        placeholder="Enter your email address"
-                        type="text"
-                        class="form-control"
-                        />
+                    <select id="cars" name="cars" style="
+                            border: 0.5px solid cornflowerblue;
+                            width: 273px;
+                            height: 38px;"onchange="getValue(this)">
+                        <option value="0">---</option>
+                        <option value="1">ME</option>
+                        <option value="2">FE</option>
+                        <option value="3">AD</option>
+                    </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="txtPhone" class="col-4 col-form-label">Phone</label>
-                <div class="col-8">
-                    <input
-                        required="required"
-                        id="txtPhone"
-                        name="txtPhone"
-                        placeholder="Enter your phone number"
-                        type="text"
-                        class="form-control"
-                        />
-                </div>
-            </div>
+
             <input type="hidden" name="healthReg" value="true" id="register-health" />
             <div class="form-group row">
                 <div class="offset-4 col-8">
@@ -128,35 +120,43 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                     </button>
                 </div>
             </div>
-            <div
-                id="google-sign-up"
-                style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 10px;
-                "
-                >
-                <div
-                    id="g_id_onload"
-                    data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
-                    data-context="signup"
-                    data-ux_mode="popup"
-                    data-login_uri="http://localhost:8080/CICOHealth/register"
-                    data-auto_prompt="false"
-                    data-callback="handleCredentialResponse"
-                    ></div>
-                <div
-                    class="g_id_signin"
-                    data-type="standard"
-                    data-shape="pill"
-                    data-theme="filled_blue"
-                    data-text="signup_with"
-                    data-size="large"
-                    data-logo_alignment="left"
-                    ></div>
-            </div>
         </form>
+
+
+        <script>
+            function getValue(sel) {
+                if (sel.value === '1') {
+                    var name = $("#txtFirstName").val();
+                    var lastName = $("#txtLastName").val();
+                    var new_userID = 'ME' + name[0] + name[1] + "0000000";
+
+                    $("#txtUsername").val(new_userID);
+                    $("#txtPassword").val(new_userID);
+
+                } else if (sel.value === '2') {
+                    var name = $("#txtFirstName").val();
+                    var lastName = $("#txtLastName").val();
+                    var new_userID = 'FE' + name[0] + name[1] + "0000000";
+
+                    $("#txtUsername").val(new_userID);
+                    $("#txtPassword").val(new_userID);
+                } else if (sel.value === '3') {
+                    var name = $("#txtFirstName").val();
+                    var lastName = $("#txtLastName").val();
+                    var new_userID = 'AD' + name[0] + name[1] + "0000000";
+
+                    $("#txtUsername").val(new_userID);
+                    $("#txtPassword").val(new_userID);
+                }
+
+
+
+            }
+
+
+
+        </script>
+
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/register.js"></script>
     </body>

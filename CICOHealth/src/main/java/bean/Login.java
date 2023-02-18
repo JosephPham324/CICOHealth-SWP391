@@ -69,6 +69,15 @@ public class Login implements Serializable {
         this.isBanned = isBanned;
     }
 
+    public Login(String userID, String username, String passwordHash, String passwordSalt, boolean isBanned) {
+        this.userID = userID;
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
+        this.isBanned = isBanned;
+
+    }
+
     public String getUserID() {
         return userID;
     }
@@ -149,5 +158,5 @@ public class Login implements Serializable {
     public String toString() {
         return "bean.Login[ userID=" + userID + " ]";
     }
-    
+
 }

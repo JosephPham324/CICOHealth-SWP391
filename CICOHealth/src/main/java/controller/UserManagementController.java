@@ -4,19 +4,25 @@
  */
 package controller;
 
+import bean.Login;
+import bean.User;
+import dao.LoginDao;
+import dao.UserDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.AuthenticationLogic;
 
 /**
  *
  * @author Pham Nhat Quang CE170036 (FPTU CANTHO)
  */
 public class UserManagementController extends HttpServlet {
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -44,6 +50,57 @@ public class UserManagementController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String username = request.getParameter("txtUsername");
+        String password = request.getParameter("txtPassword");
+
+        //User info parameters
+        String firstName = request.getParameter("txtFirstName");
+        String lastName = request.getParameter("txtLastName");
+
+        //Regsiter logic
+        UserDao userDao = new UserDao();
+        LoginDao loginDao = new LoginDao();
+
+        try {
+            if (loginDao.getLoginInfoByUsername(username) != null) {
+                response.sendRedirect("/CICOHealth/register?error=duplicateUsername");
+                return;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Create a Member ID
+        String userID = userDao.createID();
+
+        //Model representation
+        User user = new User(userID, firstName, lastName);
+        Login login;
+
+        AuthenticationLogic authLogic = new AuthenticationLogic();
+        String passwordSalt = authLogic.getLoginSalt(username, password);//Get salt to encrypt password
+        String passwordHash = null;
+
+        try {
+            passwordHash = authLogic.encryptPassword(password, passwordSalt);//Encrypt password using salt
+        } catch (Exception ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (passwordHash == null) {
+            response.sendRedirect("/CICOHealth/register?error=hashfailure");
+            return;
+        }
+        login = new Login(userID, username, passwordHash, passwordSalt, false);
+        try {
+            userDao.insertUserInfo(user);
+            loginDao.insertLoginInfo(login);
+        } catch (SQLException ex) {
+            response.sendRedirect("/CICOHealth/register?error=databasefailure");
+            return;
+        }
+        response.sendRedirect("view/admin/ViewUserInfo.jsp");
+
     }
 
     /**

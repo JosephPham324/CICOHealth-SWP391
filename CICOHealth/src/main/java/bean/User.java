@@ -67,6 +67,12 @@ public class User implements Serializable {
         this.email = email;
         this.phone = phone;
     }
+    
+    public User(String userID, String firstName, String lastName) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public String getUserID() {
         return userID;
@@ -148,8 +154,8 @@ public class User implements Serializable {
     public String toString() {
         return "bean.User[ userID=" + userID + " ]";
     }
-    
-    public String getUserRole(){
-        return this.userID.substring(2,2);
+
+    public String getUserRole() {
+        return this.userID.substring(2, 2);
     }
 }

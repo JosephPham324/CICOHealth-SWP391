@@ -6,8 +6,10 @@
 
 <%@page import="java.util.List"%>
 <%@page import="bean.User"%>
+<%@page import="dto.UserDTO" %>
 <%@page import="dao.UserDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,10 +43,10 @@
     </head>
     <body>
         <div class="nav">
-            <a href="admin" class="button" style="vertical-align:middle"><span>Back </span></a>
             <h1 class="navbar-brand mx-auto">USER INFO</h1>
         </div>
         <div class="info-container">
+            <button><a href="addNew.jsp">Add</a></button>
             <div class="info-table">            
                 <table id="info-table" class="table table-striped table-hover display">
                     <thead>
@@ -59,8 +61,9 @@
                     </thead>
                     <tbody>
                         <% UserDao dao = new UserDao();
-                            List<User> users = dao.getAllUser();
-                            for (User list : users) {%>
+                            List<UserDTO> users = dao.getAllUserDTO();
+                            for (UserDTO list : users) {%>
+
                         <tr>
                             <td><%= list.getUserID()%></td>
                             <td><%= list.getFirstName()%></td>
@@ -68,9 +71,18 @@
                             <td><%= list.getEmail()%></td>
                             <td><%= list.getPhone()%></td>
                             <td>
-                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/profile/userinfo?userid=<%= list.getUserID()%>"></a>                              
-                                <a  style="color: red"
-                                    ><i class="fa-solid fa-ban"></i></a>
+                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/profile/userinfo?userid=<%= list.getUserID()%>"></a>      
+                                <c:set var = "banned" value = "<%= list.getIsBanned()%>"/>
+                                <c:choose>
+                                    <c:when test="${banned == 1}">
+                                        <a  style="color: blue"
+                                            href="/CICOHealth/banController?id=<%= list.getUserID()%>&isbanned=<%= list.getIsBanned()%>" ><i class="fa-solid fa-ban"></i></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <a  style="color: red"
+                                            href="/CICOHealth/banController?id=<%= list.getUserID()%>&isbanned=<%= list.getIsBanned()%>" ><i class="fa-solid fa-ban"></i></a>
+                                        </c:otherwise>
+                                    </c:choose>
                             </td>
                         </tr>
                         <% }%>                       
