@@ -1,7 +1,6 @@
 package dao;
 
 import bean.User;
-import dto.UserDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,19 +95,16 @@ public class UserDao extends BaseDao {
         preparedStatement.setString(index++, user.getFirstName());
         preparedStatement.setString(index++, user.getLastName());
         if (user.getEmail() != null) {
-             preparedStatement.setString(index++, user.getEmail());
-        }else{
+            preparedStatement.setString(index++, user.getEmail());
+        } else {
             preparedStatement.setString(index++, "");
         }
-            
-        if ( user.getPhone() != null) {
-             preparedStatement.setString(index++, user.getPhone());
-        }else
-        {
-            preparedStatement.setString(index++,"");
+
+        if (user.getPhone() != null) {
+            preparedStatement.setString(index++, user.getPhone());
+        } else {
+            preparedStatement.setString(index++, "");
         }
-       
-       
 
         preparedStatement.executeUpdate();
         closeConnections();
@@ -159,32 +155,7 @@ public class UserDao extends BaseDao {
         }
         return list;
     }
-    
-     public List<UserDTO> getAllUserDTO() {
-        List<UserDTO> list = new ArrayList<>();
-        try {
-            String query = "SELECT u.userID,u.firstName,u.lastName,u.email,u.phone,l.isBanned FROM [user] u left join [login] l on u.userID =l.userID";
-            UserDTO dTO = null;
-            connection = new DBContext().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                dTO = new UserDTO(resultSet.getString("userID"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getString("email"),
-                        resultSet.getString("phone"),
-                        resultSet.getInt("isBanned"));
-                list.add(dTO);
-            }
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return list;
-    }
 
-    
-    
     public void updateUserInfo(User user) {
         try {
             // Open a connection

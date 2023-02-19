@@ -4,29 +4,25 @@
  */
 package controller;
 
-import bean.Login;
-import dao.LoginDao;
-import jakarta.servlet.RequestDispatcher;
+import bean.User;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.IOException;
+import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "BanController", urlPatterns = {"/BanController"})
-public class BanController extends HttpServlet {
+@WebServlet(name = "ValidateUserController", urlPatterns = {"/ValidateUserController"})
+public class ValidateUserController extends HttpServlet {
 
-    LoginDao loginDao = new LoginDao();
+    UserDao userDao = new UserDao();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +41,10 @@ public class BanController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BanController</title>");
+            out.println("<title>Servlet ValidateUserController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BanController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ValidateUserController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,21 +62,27 @@ public class BanController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String userid = request.getParameter("id");
-            Login login = loginDao.getLoginInfoByID(userid);
-            if (login.getIsBanned()) {
-                loginDao.unbanUserByUserId(userid);
-            } else {
-                loginDao.banUserByUserId(userid);
+
+        String firstName = request.getParameter("username");
+        String lastName = request.getParameter("lastname");
+        List<User> list = userDao.getAllUser();
+        String flag = "";
+        for (User user : list) {
+            if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName)) {
+                flag = "true";
+                break;
             }
+        }
+        if (flag.equals("true")) {
             response.setContentType("text/plain"); // sets the content type
             response.setCharacterEncoding("UTF-8"); // sets the encoding
             String data = "true";
             response.getWriter().write(data);
-            // response.sendRedirect("view/admin/ViewUserInfo.jsp");
-        } catch (SQLException ex) {
-            Logger.getLogger(BanController.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            response.setContentType("text/plain"); // sets the content type
+            response.setCharacterEncoding("UTF-8"); // sets the encoding
+            String data = "false";
+            response.getWriter().write(data);
         }
     }
 
@@ -95,7 +97,6 @@ public class BanController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         processRequest(request, response);
     }
 

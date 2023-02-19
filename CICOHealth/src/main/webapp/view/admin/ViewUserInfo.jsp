@@ -6,10 +6,10 @@
 
 <%@page import="java.util.List"%>
 <%@page import="bean.User"%>
-<%@page import="dto.UserDTO" %>
 <%@page import="dao.UserDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,6 +39,16 @@
             />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/adminuserinfo.css">       
         <title>Users Info</title>
+        <style>
+
+            .banned{
+                color: red !important ;
+            }
+            .unbaned {
+                color: blue !important;
+            }
+
+        </style>
 
     </head>
     <body>
@@ -61,9 +71,8 @@
                     </thead>
                     <tbody>
                         <% UserDao dao = new UserDao();
-                            List<UserDTO> users = dao.getAllUserDTO();
-                            for (UserDTO list : users) {%>
-
+                            List<User> users = dao.getAllUser();
+                            for (User list : users) {%>
                         <tr>
                             <td><%= list.getUserID()%></td>
                             <td><%= list.getFirstName()%></td>
@@ -71,18 +80,10 @@
                             <td><%= list.getEmail()%></td>
                             <td><%= list.getPhone()%></td>
                             <td>
-                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/profile/userinfo?userid=<%= list.getUserID()%>"></a>      
-                                <c:set var = "banned" value = "<%= list.getIsBanned()%>"/>
-                                <c:choose>
-                                    <c:when test="${banned == 1}">
-                                        <a  style="color: blue"
-                                            href="/CICOHealth/banController?id=<%= list.getUserID()%>&isbanned=<%= list.getIsBanned()%>" ><i class="fa-solid fa-ban"></i></a>
-                                        </c:when>
-                                        <c:otherwise>
-                                        <a  style="color: red"
-                                            href="/CICOHealth/banController?id=<%= list.getUserID()%>&isbanned=<%= list.getIsBanned()%>" ><i class="fa-solid fa-ban"></i></a>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/profile/userinfo?userid=<%= list.getUserID()%>"></a> 
+                                <c:set var = "us" scope = "session" value = "<%= list.getUserID()%>"/>
+                                <a  class="banned" id="banned"
+                                    onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>                             
                             </td>
                         </tr>
                         <% }%>                       
@@ -90,5 +91,30 @@
                 </table>
             </div>
         </div>
+        <script>
+            function changeStatus(userId, sel) {
+                var obj = $(sel).css('color');
+                if (obj === 'rgb(255, 0, 0)') {
+                    var select = confirm("Do you want to ban this account?");
+                    $(sel).removeClass("banned");
+                    $(sel).addClass("unbaned");
+                    if (select) {
+                        $.get("/CICOHealth/banController?id=" + userId, function (data, status) {
+                            alert("banned successful");
+                        });
+                    }
+                }
+                if (obj === 'rgb(0, 0, 255)') {
+                    var select = confirm("Do you want to unban this account?");
+                    if (select) {
+                        $(sel).removeClass("unbaned");
+                        $(sel).addClass("banned");
+                        $.get("/CICOHealth/banController?id=" + userId, function (data, status) {
+                            alert("unbanned successful");
+                        });
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

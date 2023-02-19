@@ -4,8 +4,10 @@
  */
 package controller;
 
+import bean.HealthInfo;
 import bean.Login;
 import bean.User;
+import dao.HealthInfoDao;
 import dao.LoginDao;
 import dao.UserDao;
 import java.io.IOException;
@@ -57,22 +59,26 @@ public class UserManagementController extends HttpServlet {
         //User info parameters
         String firstName = request.getParameter("txtFirstName");
         String lastName = request.getParameter("txtLastName");
-
+        String option = request.getParameter("cars");
+        
+        //option is '1','2','3' then the account type will be "ME","FE","AD" respectively.
+        String type = "";
+        if (option.equals("1")) {
+            type = "ME";
+        }
+        if (option.equals("2")) {
+            type = "FE";
+        }
+        if (option.equals("3")) {
+            type = "AD";
+        }
         //Regsiter logic
         UserDao userDao = new UserDao();
         LoginDao loginDao = new LoginDao();
+        HealthInfoDao healthDao = new HealthInfoDao();
 
-        try {
-            if (loginDao.getLoginInfoByUsername(username) != null) {
-                response.sendRedirect("/CICOHealth/register?error=duplicateUsername");
-                return;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Create a Member ID
-        String userID = userDao.createID();
+        //Create a Member,Finess Expert, Admin
+        String userID = userDao.createID(type);
 
         //Model representation
         User user = new User(userID, firstName, lastName);
@@ -88,18 +94,21 @@ public class UserManagementController extends HttpServlet {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (passwordHash == null) {
-            response.sendRedirect("/CICOHealth/register?error=hashfailure");
+            response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
             return;
         }
         login = new Login(userID, username, passwordHash, passwordSalt, false);
         try {
+            HealthInfo healthInfo = new HealthInfo();
             userDao.insertUserInfo(user);
             loginDao.insertLoginInfo(login);
+            healthInfo.setUserID(userID);
+            healthDao.insertHealthInfo(healthInfo);
         } catch (SQLException ex) {
-            response.sendRedirect("/CICOHealth/register?error=databasefailure");
+            response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
             return;
         }
-        response.sendRedirect("view/admin/ViewUserInfo.jsp");
+        response.sendRedirect("/CICOHealth/view/admin/ViewUserInfo.jsp");
 
     }
 

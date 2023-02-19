@@ -1,6 +1,5 @@
-<%-- Document : register.jsp Created on : Feb 7, 2023, 7:18:37 AM Author : Pham
-Nhat Quang CE170036 (FPTU CANTHO) --%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,10 +26,13 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
             }
         </style>
         <title>Add</title>
+        <style>
+            .error{
+                display: none;
+            }
+        </style>
     </head>
     <body>
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
-
         <form action="/CICOHealth/admin/user-management" method="post" id="register-form">
             <div class="form-group row">
                 <div class="col-12">
@@ -80,6 +82,7 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                         type="text"
                         class="form-control"
                         />
+                    <i style="color: red; font-size: 12px" class="error">(*)Name has been duplicated</i>
                 </div>
             </div>
             <div class="form-group row">
@@ -96,9 +99,7 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="txtFirstName" class="col-4 col-form-label"
-                       >Type</label
-                >
+                <label for="txtFirstName" class="col-4 col-form-label">Type</label>
                 <div class="col-8">
                     <select id="cars" name="cars" style="
                             border: 0.5px solid cornflowerblue;
@@ -122,39 +123,48 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
             </div>
         </form>
 
-
         <script>
-            function getValue(sel) {
-                if (sel.value === '1') {
+            function  getValue(sel) {
+                if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
                     var name = $("#txtFirstName").val();
                     var lastName = $("#txtLastName").val();
-                    var new_userID = 'ME' + name[0] + name[1] + "0000000";
-
-                    $("#txtUsername").val(new_userID);
-                    $("#txtPassword").val(new_userID);
-
-                } else if (sel.value === '2') {
-                    var name = $("#txtFirstName").val();
-                    var lastName = $("#txtLastName").val();
-                    var new_userID = 'FE' + name[0] + name[1] + "0000000";
-
-                    $("#txtUsername").val(new_userID);
-                    $("#txtPassword").val(new_userID);
-                } else if (sel.value === '3') {
-                    var name = $("#txtFirstName").val();
-                    var lastName = $("#txtLastName").val();
-                    var new_userID = 'AD' + name[0] + name[1] + "0000000";
-
-                    $("#txtUsername").val(new_userID);
-                    $("#txtPassword").val(new_userID);
+                    var result = validateUser(name, lastName);
+                } else {
+                    $("#txtUsername").val('');
+                    $("#txtPassword").val('');
                 }
-
-
-
             }
 
-
-
+            function validateUser(username, lastname) {
+                $.get("/CICOHealth/validateUserController?username=" + username + "&lastname=" + lastname, function (data, status) {
+                    if (data === 'true') {
+                        $("i").removeClass("error");
+                        $("#cars").val(0);
+                    } else {
+                        var type = $("#cars option:selected").val();
+                        var name = $("#txtFirstName").val();
+                        var lastName = $("#txtLastName").val();
+                        if (type === '1') {
+                            $("i").addClass("error");
+                            var new_userID = 'ME' + name + lastname[0];
+                            $("#txtUsername").val(new_userID);
+                            $("#txtPassword").val(new_userID);
+                        }
+                        if (type === '2') {
+                            $("i").addClass("error");
+                            var new_userID = 'FE' + name + lastname[0];
+                            $("#txtUsername").val(new_userID);
+                            $("#txtPassword").val(new_userID);
+                        }
+                        if (type === '3') {
+                            $("i").addClass("error");
+                            var new_userID = 'AD' + name + lastname[0];
+                            $("#txtUsername").val(new_userID);
+                            $("#txtPassword").val(new_userID);
+                        }
+                    }
+                });
+            }
         </script>
 
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>

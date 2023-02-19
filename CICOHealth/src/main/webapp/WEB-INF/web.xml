@@ -50,6 +50,10 @@
         <servlet-name>UserManagementController</servlet-name>
         <servlet-class>controller.UserManagementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ValidateUserController</servlet-name>
+        <servlet-class>controller.ValidateUserController</servlet-class>
+    </servlet>
     <!--Mappings-->
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -77,6 +81,16 @@
         <servlet-name>BanController</servlet-name>
         <url-pattern>/banController</url-pattern>
     </servlet-mapping>
+    
+    
+    
+    <servlet-mapping>
+        <servlet-name>ValidateUserController</servlet-name>
+        <url-pattern>/validateUserController</url-pattern>
+    </servlet-mapping>
+    
+    
+    
     
     <session-config>
         <session-timeout>
