@@ -34,6 +34,15 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String type = request.getParameter("type");
+        if (type == null) {
+            request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
+            request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
+            return;
+        }
+        if (type.equalsIgnoreCase("add")) {
+            request.getRequestDispatcher("/view/admin/addexercise.jsp").forward(request, response);
+        }
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (!("AD").equalsIgnoreCase(user.getUserRole())) {
@@ -50,7 +59,6 @@ public class ExerciseManagementController extends HttpServlet {
             new ExerciseDao().deleteExercise(exerciseID);
             response.sendRedirect("/CICOHealth/admin/exercise-management");
         }
-
     }
 
     /**
@@ -65,6 +73,15 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String add = request.getParameter("btnAdd");
+        if (add != null) {
+            String exerciseID = request.getParameter("exerciseID");
+            String exerciseName = request.getParameter("exerciseName");
+            String exerciseDescription = request.getParameter("exerciseDescription");
+            double caloriesPerHour = Double.parseDouble(request.getParameter("caloriesPerHour"));
+            new ExerciseDao().insertExercise(new Exercise(exerciseID, exerciseName, exerciseDescription, caloriesPerHour));
+            response.sendRedirect("/CICOHealth/admin/exercise-management");
+        }
         String method = request.getParameter("_method");
         if (method!= null && method.equals("PUT")){
             doPut(request,response);
