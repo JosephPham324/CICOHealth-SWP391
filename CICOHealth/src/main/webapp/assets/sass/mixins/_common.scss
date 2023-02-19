@@ -1,0 +1,152 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/// @param {*} $direction [row]
+/// @param {*} $alignItem [normal]
+/// @param {*} $justifyContent [normal]
+@mixin flex-display(
+  $direction: row,
+  $alignItem: normal,
+  $justifyContent: normal
+) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $alignItem;
+  justify-content: $justifyContent;
+}
+
+/*Round the corners of an element*/
+//On second thought this sounds dumb, just use border-radius lol
+@mixin round-corner(
+  $top-left: 50%,
+  $top-right: 50%,
+  $bottom-right: 50%,
+  $bottom-left: 50%
+) {
+  border-radius: $top-left $top-right $bottom-right $bottom-left;
+}
+
+@mixin outline-text($outline-color: #000) {
+  text-shadow: -1px -1px 0 $outline-color, 1px -1px 0 $outline-color,
+    -1px 1px 0 $outline-color, 1px 1px 0 $outline-color;
+}
+
+/// Specify min-width and min-height of an element
+/// @param {Length} $min-width [100%]
+/// @param {Length} $min-height [100%]
+@mixin min-dimension($min-width: 100%, $min-height: 100%) {
+  min-width: $min-width;
+  min-height: $min-height;
+}
+
+/// Set the width and height of an element
+/// @param {*} $width [100%]
+/// @param {*} $height [100%]
+@mixin dimension($width: 100%, $height: 100%) {
+  width: $width;
+  height: $height;
+}
+
+/// Set the max-width and max-height of an element
+/// @param {*} $max-width [100%]
+/// @param {*} $max-height [100%]
+@mixin max-dimension($max-width: 100%, $max-height: 100%) {
+  max-width: $max-width;
+  max-height: $max-height;
+}
+
+/// Set the color and background color of an element
+/// @param {*} $color [black]
+/// @param {*} $background-color [white]
+@mixin color-and-background($color: black, $background-color: white) {
+  color: $color;
+  background-color: $background-color;
+}
+
+/// Set the font size and font weight of an element
+@mixin center-text {
+  text-align: center;
+}
+
+/// Make the font size responsive
+/// <br> The font size will be the minimum font size when the viewport width is the minimum viewport width
+/// <br> The font size will be the maximum font size when the viewport width is the maximum viewport width
+/// @param {*} $min-size Minimum font size
+/// @param {*} $max-size Maximum font size
+/// @param {*} $min-viewport-width Minimum viewport width
+/// @param {*} $max-viewport-width Maximum viewport width
+@mixin responsive-font-size(
+  $min-size,
+  $max-size,
+  $min-viewport-width,
+  $max-viewport-width
+) {
+  font-size: $min-size;
+  @media (min-width: $min-viewport-width) {
+    font-size: calc(
+      #{$min-size} + (#{$max-size} - #{$min-size}) * ((
+              100vw - #{$min-viewport-width}
+            ) / (#{$max-viewport-width} - #{$min-viewport-width}))
+    );
+  }
+  @media (min-width: $max-viewport-width) {
+    font-size: $max-size;
+  }
+}
+
+///Center an element horizontally and vertically (according to parent element)
+@mixin center-block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+///Center an element vertically (according to parent element)
+@mixin center-block-vertical {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+///Center an element horizontally (according to parent element)
+@mixin center-block-horizontal {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/// Set the opacity of an element
+/// @param {*} $opacity
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  @content;
+}
+
+/// Set the styling for a screen width breakpoint
+/// @param {Size} $breakpoint [small, medium, large]
+@mixin responsive($breakpoint) {
+  @if $breakpoint == small {
+    @media (max-width: 600px) {
+      @content;
+    }
+  }
+  @if $breakpoint == medium {
+    @media (min-width: 600px) and (max-width: 1024px) {
+      @content;
+    }
+  }
+  @if $breakpoint == large {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+/// Position an element absolutely
+/// @param {*} $top [50%] Position from the top
+/// @param {*} $left [50%] Position from the left
+@mixin absolute-position($top: 50%, $left: 50%) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  transform: translate(-$top, -$left);
+}

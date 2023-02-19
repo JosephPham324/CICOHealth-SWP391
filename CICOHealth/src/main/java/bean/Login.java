@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import util.AuthenticationLogic;
+import util.Encryption;
 
 /**
  *
@@ -44,7 +46,7 @@ public class Login implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "isGoogleLogin")
-    private boolean isGoogleLogin;
+    private String GoogleID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "isBanned")
@@ -60,12 +62,12 @@ public class Login implements Serializable {
         this.userID = userID;
     }
 
-    public Login(String userID, String username, String passwordHash, String passwordSalt, boolean isGoogleLogin, boolean isBanned) {
+    public Login(String userID, String username, String passwordHash, String passwordSalt, String GoogleID, boolean isBanned) {
         this.userID = userID;
         this.username = username;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
-        this.isGoogleLogin = isGoogleLogin;
+        this.GoogleID = GoogleID;
         this.isBanned = isBanned;
     }
 
@@ -101,12 +103,12 @@ public class Login implements Serializable {
         this.passwordSalt = passwordSalt;
     }
 
-    public boolean getIsGoogleLogin() {
-        return isGoogleLogin;
+    public String getGoogleID() {
+        return GoogleID;
     }
 
-    public void setIsGoogleLogin(boolean isGoogleLogin) {
-        this.isGoogleLogin = isGoogleLogin;
+    public void setGoogleID(String GoogleID) {
+        this.GoogleID = GoogleID;
     }
 
     public boolean getIsBanned() {
@@ -144,7 +146,8 @@ public class Login implements Serializable {
         }
         return true;
     }
-
+    
+    
     @Override
     public String toString() {
         return "bean.Login[ userID=" + userID + " ]";

@@ -4,6 +4,7 @@
     Author     : Pham Nhat Quang CE170036 (FPTU CANTHO)
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
