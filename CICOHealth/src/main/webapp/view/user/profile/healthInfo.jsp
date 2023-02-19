@@ -23,24 +23,20 @@
                     </ul>
                 </div>
                 <c:set var="health" value="${healthInfo}" scope="request" />
-                
-                <div class="col-9">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <p class="card-text">gender: ${health.gender} </p>
-                            <p class="card-text">height: ${health.height}</p>
-                            <p class="card-text">weight: ${health.weight}</p>
-                            <p class="card-text">age: ${health.age}</p>
-                            <p class="card-text">activeness: ${health.activeness} </p>
-                            <p class="card-text">tdee: ${health.tdee}</p>
-                            <p class="card-text">dailyCalorie: ${health.dailyCalorie}</p>
-                            <p class="card-text">dailyProtein: ${health.dailyProtein}</p>
-                            <p class="card-text">dailyFat: ${health.dailyFat}</p>
-                            <p class="card-text">dailyCarb: ${health.dailyCarb}</p>
+                <form action="ProfileController" method="post">
+                    <input type="text" name="_method" style="display:none" value="put">
+                    <input type="text" name="userID" style="display:none" value="${healthInfo.userID}">
+                    <%@include file="../user/formHealthInfor.jsp" %>
+                    <div class="form-group row">
+                        <div class="offset-4 col-8">
+                            <button name="submit" type="submit" class="btn btn-primary">
+                                Submit
+                            </button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
+        <script src="/CICOHealth/assets/scripts/healthRegister.js"></script>
     </body>
 </html>

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import bean.HealthInfo;
@@ -42,17 +38,26 @@ public class ProfileController extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (URI.endsWith("/profile/") || URI.endsWith("/user-info")) {
-            request.getRequestDispatcher("/view/user/profile/userInfo.jsp").forward(request, response);
-        } else if (URI.endsWith("/login-info")) {
+        if (URI.endsWith("/profile") || URI.endsWith("/userinfo")) {
+            String userID = request.getParameter("userid");
+            if (userID != null) {
+                request.setAttribute("user", new UserDao().getUser(userID));
+            } else {
+                request.setAttribute("user", user);
+            }
+            request.getRequestDispatcher("/view/user/userInfo.jsp").forward(request, response);
+        } else if (URI.endsWith("/logininfo")) {
             Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
             request.setAttribute("loginInfo", loginInfo);
-            request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
-        } else if (URI.endsWith("/health-info")) {
-            HealthInfo healthInfo = new HealthInfoDao().getHealthInfo(user.getUserID());
-            System.out.println(healthInfo);
-            request.setAttribute("healthInfo", healthInfo);
-            request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/user/loginInfo.jsp").forward(request, response);
+        } else if (URI.endsWith("/healthinfo")) {
+            String userID = request.getParameter("userid");
+            if (userID != null) {
+                request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(userID));
+            } else {
+                request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(user.getUserID()));
+            }
+            request.getRequestDispatcher("/view/user/healthInfo.jsp").forward(request, response);
         }
     }
 
@@ -67,7 +72,50 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String method = request.getParameter("_method");
+        if (method != null) {
+            if ("PUT".equalsIgnoreCase(method)) {
+                doPut(request, response);
+                response.sendRedirect("/CICOHealth/admin/user-management");
+//                doPut(request, response);
+            } else {
+                UserDao userDao = new UserDao();
+                User user = new User(request.getParameter("userID"),
+                        request.getParameter("firstName"),
+                        request.getParameter("lastName"),
+                        request.getParameter("email"),
+                        request.getParameter("phone"));
+                userDao.updateUserInfo(user);
+                response.sendRedirect("/CICOHealth/admin/user-management");
+            }
+        }
+    }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String userID = request.getParameter("userID");
+        int age = Integer.parseInt(request.getParameter("numAge"));
+        String gender = request.getParameter("radGender");
+        double height = Double.parseDouble(request.getParameter("numHeight"));
+        double weight = Double.parseDouble(request.getParameter("numWeight"));
+        int activity = Integer.parseInt(request.getParameter("selectActiveness"));
+        //Daily nutrition goal paramters
+        double TDEE = Double.parseDouble(request.getParameter("numTDEE"));
+        double protein = Double.parseDouble(request.getParameter("numProtein"));
+        double fat = Double.parseDouble(request.getParameter("numFat"));
+        double carb = Double.parseDouble(request.getParameter("numCarb"));
+        HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
+                (int) TDEE, (int) TDEE, protein, fat, carb);
+        new HealthInfoDao().updateHealthInfo(healthInfo);
+        return;
     }
 
     /**

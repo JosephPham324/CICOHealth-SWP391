@@ -17,22 +17,27 @@
             <div class="row">
                 <div class="col-3 bg-light pt-3">
                     <ul class="list-unstyled">
-                        <li><a href="/CICOHealth/user/profile/user-info" class="sidebar-link">User Info</a></li>
-                        <li><a href="/CICOHealth/user/profile/login-info" class="sidebar-link">Login Info</a></li>
-                        <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>
-                    </ul> 
+                        <li><a href="/CICOHealth/profile/userinfo?userid=${user.userID}" class="sidebar-link">User Info</a></li>
+                        <li><a href="/CICOHealth/profile/logininfo?userid=${user.userID}" class="sidebar-link">Login Info</a></li>
+                        <li><a href="/CICOHealth/profile/healthinfo?userid=${user.userID}" class="sidebar-link">Health Info</a></li>
+                    </ul>
                 </div>
-                <div class="col-9">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <p class="card-title">Firstname: <c:out value="${user.userID}"/></p>
-                            <p class="card-title">Firstname: <c:out value="${user.firstName}"/></p>
-                            <p class="card-text">Lastname: <c:out value="${user.lastName}"/></p>
-                            <p class="card-text">Email: <c:out value="${user.email}"/></p>
-                            <p class="card-text">phone: <c:out value="${user.phone}"/></p>
+                <!--//edit-->
+                <form action="ProfileController" method="post">
+                    <div class="col-9">
+                        <div class="card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                ID: <input type="text" value="${user.userID}" class="card-title" name ="userID" ><br>
+                                Firstname: <input type="text" value="${user.firstName}" class="card-title" name ="firstName"><br>
+                                Lastname: <input type="text" value="${user.lastName}" class="card-title" name ="lastName"> <br>
+                                Email: <input type="email" value="${user.email}" class="card-title" name ="email"> <br>
+                                phone: <input type="tel" value="${user.phone}" class="card-title" name ="phone"> 
+                            </div>
                         </div>
+                            <input type="submit" value="Save" name="btnSave">
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </body>
