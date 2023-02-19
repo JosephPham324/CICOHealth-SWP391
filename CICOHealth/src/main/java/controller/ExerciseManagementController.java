@@ -4,6 +4,7 @@
  */
 package controller;
 
+import bean.Exercise;
 import bean.User;
 import dao.ExerciseDao;
 import java.io.IOException;
@@ -64,7 +65,24 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String method = request.getParameter("_method");
+        if (method!= null && method.equals("PUT")){
+            doPut(request,response);
+            return;
+        }
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String exerciseID = request.getParameter("txtExerciseID");
+        String exerciseName = request.getParameter("txtExerciseName");
+        String exerciseDescription = request.getParameter("txtExerciseDescription");
+        String caloriePerHour = request.getParameter("numCaloriePerHour");
+        Exercise exercise = new Exercise(exerciseID,exerciseName,exerciseDescription,Double.parseDouble(caloriePerHour));
+        ExerciseDao exerciseDao = new ExerciseDao();
+        exerciseDao.updateExercise(exercise);
+        response.sendRedirect("/CICOHealth/admin/exercise-management");
     }
 
     /**
