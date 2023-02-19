@@ -24,31 +24,51 @@
                 justify-content:center;
             }
             .cbRemember {
-                font-size: 14px; 
+                font-size: 14px;
+            }
+
+            .card{
+                background: lightgrey;
+                border-radius: 10%;
+            }
+
+            .form-control{
+                width: 400px;
+            }
+
+            .btn {
+                width: 200px;
+            }
+            .txt-title{
+                text-align: center;
             }
         </style>
+        <button class="button btn-back"> Back </button>
         <form action="login" method="post">
-            <div class="form-group row">
-                <label for="txtUsername" class="col-4 col-form-label">Username</label> 
-                <div class="col-8">
-                    <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
+            <div class="card">
+                <h1 class="txt-title">Login</h1>
+                <div class="form-group row">
+                    <!--<label for="txtUsername" class="col-4 col-form-label">Username</label>--> 
+                    <div class="col-8 txt">
+                        <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="txtPassword" class="col-4 col-form-label">Password</label> 
-                <div class="col-8">
-                    <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="text" class="form-control" aria-describedby="txtPasswordHelpBlock"> 
-                    <!--<span id="txtPasswordHelpBlock" class="form-text text-muted">Password must be between 6 to 20 characters!</span>-->
+                <div class="form-group row">
+                    <!--<label for="txtPassword" class="col-4 col-form-label">Password</label>--> 
+                    <div class="col-8 txt">
+                        <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="text" class="form-control" aria-describedby="txtPasswordHelpBlock"> 
+                        <!--<span id="txtPasswordHelpBlock" class="form-text text-muted">Password must be between 6 to 20 characters!</span>-->
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row cbRemember">
-                <div class="offset-4 col-8">
-                    <input type="checkbox" id="remember" name="remember"> Remember Me
+                <div class="form-group row cbRemember">
+                    <div class="col-8 txt">
+                        <input type="checkbox" id="remember" name="remember"> Remember Me
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="offset-4 col-8">
-                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                <div class="form-group row">
+                    <div class="offset-3 txt">
+                        <button name="submit" type="submit" class="btn btn-light">Login</button>
+                    </div>
                 </div>
             </div>
         </form>
