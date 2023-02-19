@@ -55,26 +55,30 @@ public class ExerciseDao extends BaseDao {
 
     }
 
-<<<<<<< Updated upstream
     public void deleteExercise(String exerciseID) {
-=======
-    /**
-     * Get Exercise By Name
-     *
-     * @param name name of exercise
-     * @return ExerciseType
-     * @throws SQLException Exception of SQL
-     */
+        try {
+            String sql = "DELETE FROM exercise WHERE EXERCISEID = ?";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, exerciseID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConnections();
+    }
+
     public List getExerciseByName(String name) throws SQLException {
         try {
             String query = "SELECT *\n"
                     + "FROM [exercise]\n"
-                    + "WHERE exerciseName like ‘%’ + ? + ‘%’";
+                    + "WHERE exerciseName like '%' + ? + '%'";
             Exercise exercise = null;
             List exerciseList = new LinkedList();
 
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 exercise = new Exercise(resultSet.getString("exerciseID"),
@@ -92,20 +96,19 @@ public class ExerciseDao extends BaseDao {
     }
 
     public void insertExercise(Exercise exercise) {
-        String query = "INSERT INTO EXERCISE\n"
+        String query = "INSERT INTO EXERCISE(EXERCISEID, EXERCISENAME, EXERCISEDESCRIPTION, CALORIESPERHOUR)\n"
                 + "VALUES(?,?,?,?)";
         connection = new DBContext().getConnection();
->>>>>>> Stashed changes
         try {
-            String sql = "DELETE FROM exercise WHERE EXERCISEID = ?";
-            connection = new DBContext().getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, exerciseID);
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, exercise.getExerciseID());
+            preparedStatement.setString(2, exercise.getExerciseName());
+            preparedStatement.setString(3, exercise.getExerciseDescription());
+            preparedStatement.setDouble(4, exercise.getCaloriesPerHour());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         closeConnections();
-
     }
 }
