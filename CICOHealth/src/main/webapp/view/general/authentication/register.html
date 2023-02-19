@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+    <title>Register</title>
+  </head>
+  <body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <form action="register" method="post">
+      <div class="form-group row">
+        <label for="txtUsername" class="col-4 col-form-label">Username</label>
+        <div class="col-8">
+          <input
+            required="required"
+            id="txtUsername"
+            name="txtUsername"
+            placeholder="Enter username"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="txtPassword" class="col-4 col-form-label">Password</label>
+        <div class="col-8">
+          <input
+            required="required"
+            id="txtPassword"
+            name="txtPassword"
+            placeholder="Enter password"
+            type="password"
+            class="form-control"
+            aria-describedby="txtPasswordHelpBlock"
+          />
+          <span id="txtPasswordHelpBlock" class="form-text text-muted"
+            >Password must be between 6 to 20 characters!</span
+          >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="txtFirstName" class="col-4 col-form-label"
+          >First name</label
+        >
+        <div class="col-8">
+          <input
+            required="required"
+            id="txtFirstName"
+            name="txtFirstName"
+            placeholder="Enter your first name"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="txtLastName" class="col-4 col-form-label">Last name</label>
+        <div class="col-8">
+          <input
+            required="required"
+            id="txtLastName"
+            name="txtLastName"
+            placeholder="Enter your last name"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="txtEmail" class="col-4 col-form-label">Email</label>
+        <div class="col-8">
+          <input
+            required="required"
+            id="txtEmail"
+            name="txtEmail"
+            placeholder="Enter your email address"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="txtPhone" class="col-4 col-form-label">Phone</label>
+        <div class="col-8">
+          <input
+            required="required"
+            id="txtPhone"
+            name="txtPhone"
+            placeholder="Enter your email address"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <input type="hidden" name="healthReg" value="true" id="register-health" />
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <button name="submit" type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+      </div>
+      <div
+        id="google-sign-up"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 10px;
+        "
+      >
+        <div
+          id="g_id_onload"
+          data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
+          data-context="signup"
+          data-ux_mode="popup"
+          data-login_uri="localhost:5500/CICOHealth/view/general/authentication/register.html"
+          data-auto_prompt="false"
+          data-callback="handleCredentialResponse"
+        ></div>
+        <div
+          class="g_id_signin"
+          data-type="standard"
+          data-shape="pill"
+          data-theme="filled_blue"
+          data-text="signup_with"
+          data-size="large"
+          data-logo_alignment="left"
+        ></div>
+      </div>
+    </form>
+    <script src="/CICOHealth/assets/scripts/register.js"></script>
+    <script>
+      /**
+       * sends a request to the specified url from a form. this will change the window location.
+       * @param {string} path the path to send the post request to
+       * @param {object} params the parameters to add to the url
+       * @param {string} [method=post] the method to use on the form
+       */
+      function post(path, params, method = "post") {
+        // The rest of this code assumes you are not using a library.
+        // It can be made less verbose if you use one.
+        const form = document.createElement("form");
+        form.method = method;
+        form.action = path;
+
+        for (const key in params) {
+          if (params.hasOwnProperty(key)) {
+            const hiddenField = document.createElement("input");
+            hiddenField.type = "hidden";
+            hiddenField.name = key;
+            hiddenField.value = params[key];
+
+            form.appendChild(hiddenField);
+          }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      /**
+       * Parse a JSON Web Token into JSON object
+       * @param {string} token Token to parse
+       * @returns JSON after parsing
+       */
+      function parseJwt(token) {
+        var base64Url = token.split(".")[1];
+        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        var jsonPayload = decodeURIComponent(
+          window
+            .atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
+
+        return JSON.parse(jsonPayload);
+      }
+
+      /**
+       * Split a string using a token, then chain the result with another token
+       * @param {string} str String to chain
+       * @param {string} splitToken Token to split
+       * @param {string} chainToken Token to chain
+       * @returns Chained string after splitting
+       */
+      function chainString(str, splitToken, chainToken) {
+        return str.split(splitToken).join(chainToken);
+      }
+      function handleCredentialResponse(response) {
+        // decodeJwtResponse() is a custom function defined by you
+        // to decode the credential response.
+        const responsePayload = parseJwt(response.credential);
+        const formParams = {
+          username: chainString(
+            responsePayload.email + "_" + responsePayload.family_name,
+            " ",
+            ""
+          ),
+          password: chainString(
+            responsePayload.email + "_" + responsePayload.name,
+            " ",
+            ""
+          ),
+          firstName: responsePayload.given_name,
+          lastName: responsePayload.family_name,
+          email: responsePayload.email,
+          phone: "0123456789",
+          "google-register": "true",
+        };
+        console.log(formParams);
+        // post("register-control", formParams);
+      }
+    </script>
+  </body>
+</html>

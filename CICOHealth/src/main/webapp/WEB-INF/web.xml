@@ -1,15 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        <welcome-file>/view/general/index.jsp</welcome-file>
+    </welcome-file-list>
+    <!--To BE USED LATER-->
+    <!--    <filter>
+        <filter-name>RequestFilter</filter-name>
+        <filter-class>filter.RequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+    <!--    <servlet>
+        <servlet-name>CentralController</servlet-name>
+        <servlet-class>controller.CentralController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CentralController</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>-->
+    <!--Register-->
     <servlet>
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.RegisterController</servlet-class>
     </servlet>
-    <welcome-file-list>
-        <welcome-file>/view/index.jsp</welcome-file>
-    </welcome-file-list>
+    <!--Login-->
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controller.LoginController</servlet-class>
+    </servlet>
+    <!--Log out-->
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controller.LogoutController</servlet-class>
+    </servlet>
+    <!--Profile-->
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>controller.ProfileController</servlet-class>
+    </servlet>
+    <!--User Management-->
+    <servlet>
+        <servlet-name>UserManagementController</servlet-name>
+        <servlet-class>controller.UserManagementController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FoodSearch</servlet-name>
+        <jsp-file>/view/general/foodSearch.jsp</jsp-file>
+    </servlet>
+    <!--Mappings-->
+    <servlet>
+        <servlet-name>ExerciseManagementController</servlet-name>
+        <servlet-class>controller.ExerciseManagementController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/log-out</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/user/profile/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserManagementController</servlet-name>
+        <url-pattern>/admin/user-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseManagementController</servlet-name>
+        <url-pattern>/admin/exercise-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FoodSearch</servlet-name>
+        <url-pattern>/food-search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
