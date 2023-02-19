@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author khiem
  */
-public class ExerciseLogController extends HttpServlet {
+public class ExerciseSearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,7 +69,7 @@ public class ExerciseLogController extends HttpServlet {
                 request.setAttribute("exerciseList", exerciseList);
 
             } catch (SQLException ex) {
-                Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ExerciseSearchController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
