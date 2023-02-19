@@ -17,18 +17,19 @@
             <div class="row">
                 <div class="col-3 bg-light pt-3">
                     <ul class="list-unstyled">
-                        <li><a href="/CICOHealth/profile/userinfo" class="sidebar-link">User Info</a></li>
-                        <li><a href="/CICOHealth/profile/logininfo" class="sidebar-link">Login Info</a></li>
-                        <li><a href="/CICOHealth/profile/healthinfo" class="sidebar-link">Health Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/user-info" class="sidebar-link">User Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/login-info" class="sidebar-link">Login Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>
                     </ul>
                 </div>
                 <c:set var="health" value="${healthInfo}" scope="request" />
                 <form action="ProfileController" method="post">
-                    <input type="text" name="method" style="display:none" value="put">
-                    <%@include file="../user/formHealthInfor.jsp" %>
+                    <input type="text" name="_method" style="display:none" value="put">
+                    <input type="text" name="userID" style="display:none" value="${healthInfo.userID}">
+                    <%@include file="../formHealthInfor.jsp" %>
                     <div class="form-group row">
                         <div class="offset-4 col-8">
-                            <button name="submit" type="submit" class="btn btn-primary">
+                            <button name="btnUpdate" type="submit" class="btn btn-primary" value="updateHealth">
                                 Submit
                             </button>
                         </div>

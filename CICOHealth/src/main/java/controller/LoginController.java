@@ -87,8 +87,7 @@ public class LoginController extends HttpServlet {
             try {
                 String userID = null;
                 userID = loginDao.getLoginInfoByGoogle(googleID);
-//                response.getWriter().write(googleID);
-//                response.getWriter().write(""+userID);
+                //Check if user is banned
                 if (userID == null) {
                     response.sendRedirect("/CICOHealth/login?error=nosuchuser");
                     return;
