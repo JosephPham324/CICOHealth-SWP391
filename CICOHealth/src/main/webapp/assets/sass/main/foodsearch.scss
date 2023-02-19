@@ -15,7 +15,7 @@
     position: relative;
     z-index: 5;
   }
-  .background {
+  .overlay {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -26,7 +26,24 @@
   }
 }
 #meal-form {
+  background-color: white;
+  border-radius: 10px;
+  width: auto;
+  padding: 10px;
   @include common.flex-display(column, center, center);
+  .food-item {
+    @include common.flex-display(row, center, center);
+    .food-item-name,
+    .food-item-serving-weight,
+    .food-item-calories,
+    .food-item-protein,
+    .food-item-carbs,
+    .food-item-fat {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+  }
 }
 main {
   @include common.dimension(100%, 100%);

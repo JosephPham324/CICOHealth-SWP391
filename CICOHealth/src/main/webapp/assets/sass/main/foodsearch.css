@@ -20,7 +20,7 @@
   position: relative;
   z-index: 5;
 }
-.pop-up .background {
+.pop-up .overlay {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -32,10 +32,30 @@
 }
 
 #meal-form {
+  background-color: white;
+  border-radius: 10px;
+  width: auto;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+#meal-form .food-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#meal-form .food-item .food-item-name,
+#meal-form .food-item .food-item-serving-weight,
+#meal-form .food-item .food-item-calories,
+#meal-form .food-item .food-item-protein,
+#meal-form .food-item .food-item-carbs,
+#meal-form .food-item .food-item-fat {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 10px 0;
 }
 
 main {

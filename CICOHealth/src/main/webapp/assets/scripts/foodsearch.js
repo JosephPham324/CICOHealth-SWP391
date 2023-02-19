@@ -68,6 +68,7 @@ function dislpayFoods(foods) {
       fat: food.nf_total_fat,
       carbs: food.nf_total_carbohydrate,
       photo: food.photo.highres,
+      actualWeight: food.serving_weight_grams,
     };
     displayFoodItem(searchResults, foodData); //Display the food item
   }
@@ -141,7 +142,6 @@ function toggleFood(food) {
   }
   addFood(food);
   return true;
-  console.log(selectedFoods);
 }
 /**
  * Add click event listener to search results
@@ -155,6 +155,7 @@ function addSearchResultEventListener() {
     //Add event listener to search result
     searchResult.addEventListener("click", function () {
       let food = JSON.parse(this.dataset.food);
+      console.log(food)
       if (toggleFood(food) == true) {
         this.classList.add("selected");
       } else {
@@ -202,6 +203,7 @@ function updateFoodCartButton() {
   let foodCartButton = document.getElementById("selected-number");
   foodCartButton.innerText = `${selectedFoods.length}`;
 }
+addSearchResultEventListener();
 
 //Send request of some common foods, separated by new line
 // sendRequest(`Apple
@@ -260,18 +262,65 @@ function updateFoodCartButton() {
 //Food cart element
 let mealCart = document.getElementById("food-cart");
 //Display pop-ups
-function displayPopUps() {
-  let popUps = document.getElementsByClassName("pop-up");
-  for (let i = 0; i < popUps.length; i++) {
-    popUps[i].classList.add("active");
-    //Add event listener to background
-    popUps[i].children[0].addEventListener("click", function (e) {
-      this.classList.remove("active");
-    });
-  }
+function displayPopUp(id) {
+  let popUp = document.getElementById(id);
+  let overlay = document.querySelector(`#${id} .overlay`);
+  popUp.classList.add("active");
+  overlay.addEventListener("click", function (e) {
+    popUp.classList.remove("active");
+  });
 }
 
 //Add event listener to food cart button
-document.getElementById("food-cart").addEventListener("click", function () {
-  displayPopUps();
-});
+document.getElementById("food-cart").addEventListener("click", displayMealForm);
+
+function displayMealForm() {
+  displayPopUp("meal-pop-up");
+  let mealForm = document.getElementById("meal-form");
+  mealForm.innerHTML = "";
+  selectedFoods.forEach((food) => {
+    let elementHTML = `
+  <div class="form-group row" class="food-item">
+          <label for="weight-${food.foodName}" class="col-9 col-form-label">
+            Name:<span class="food-name">${food.foodName}</span>
+            <span class="food-item-calories">Kcal: ${food.calories}</span>
+            <span class="food-item-protein">Protein: ${food.protein}</span>
+            <span class="food-item-fat">Fat: ${food.fat}</span>
+            <span class="food-item-carbs">Carbs: ${food.carbs}</span>
+            <span class="food-item-serving-weight">Serving: ${food.servingWeight}</span>
+          </label>
+          <div class="col-3">
+            <input
+              id="weight-${food.foodName}"
+              name="weight-${food.foodName}"
+              type="number"
+              class="form-control"
+              required="required"
+              value="${food.actualWeight}"
+              oninput="updateFoodItem('${food.foodName}', this.value)"
+            />
+          </div>
+  </div>
+  `;
+    //Add food item to meal form
+    mealForm.innerHTML += elementHTML;
+  });
+  //Add submit button to meal form
+  mealForm.innerHTML += `
+  <div class="form-group row" id="submit-field">
+  <div class="offset-4 col-8">
+    <button name="submit" type="submit" class="btn btn-primary">
+      Create Meal
+    </button>
+  </div>
+  </div>
+`;
+}
+
+//Update food item in selectedFoods
+function updateFoodItem(foodName,value) {
+  let food = selectedFoods.find((food) => food.foodName === foodName);
+  //Parse value to integer
+  food.actualWeight = parseInt(value);
+  console.log(selectedFoods);
+}
