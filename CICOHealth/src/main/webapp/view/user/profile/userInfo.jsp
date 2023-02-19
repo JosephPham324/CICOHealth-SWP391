@@ -27,7 +27,7 @@
                     <div class="col-9">
                         <div class="card mx-auto" style="width: 18rem;">
                             <div class="card-body">
-                                ID: <input type="text" value="${user.userID}" class="card-title" name ="userID" ><br>
+                                <input type="text" value="${user.userID}" class="card-title" name ="userID" style="display: none"><br>
                                 Firstname: <input type="text" value="${user.firstName}" class="card-title" name ="firstName"><br>
                                 Lastname: <input type="text" value="${user.lastName}" class="card-title" name ="lastName"> <br>
                                 Email: <input type="email" value="${user.email}" class="card-title" name ="email"> <br>
