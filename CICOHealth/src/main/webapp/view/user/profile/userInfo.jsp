@@ -23,7 +23,7 @@
                     </ul>
                 </div>
                 <!--//edit-->
-                <form action="ProfileController" method="post">
+                <form action="/CICOHealth/user/profile" method="post">
                     <div class="col-9">
                         <div class="card mx-auto" style="width: 18rem;">
                             <div class="card-body">
@@ -34,7 +34,8 @@
                                 phone: <input type="tel" value="${user.phone}" class="card-title" name ="phone"> 
                             </div>
                         </div>
-                            <input type="submit" value="Save" name="btnSave">
+                        <input type="hidden" value="PUT" name="_method">
+                        <input type="submit" value="Save" name="btnSave">
                     </div>
                 </form>
 

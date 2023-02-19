@@ -41,7 +41,7 @@ public class ProfileController extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
+        if (URI.endsWith("/profile/") || URI.endsWith("/user-info")) {
             String userID = request.getParameter("userid");
             if (userID != null) {
                 request.setAttribute("user", new UserDao().getUser(userID));
@@ -94,7 +94,7 @@ public class ProfileController extends HttpServlet {
                 Login login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
                 new LoginDao().updateLoginInfo(login);
 //                doPut(request, response);
-                response.sendRedirect("/CICOHealth/profile/login-info");
+                response.sendRedirect("/CICOHealth/user/profile/login-info");
 //                doPut(request, response);
             } else {
                 UserDao userDao = new UserDao();
