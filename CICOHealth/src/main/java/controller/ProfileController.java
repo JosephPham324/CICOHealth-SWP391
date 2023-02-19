@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import bean.HealthInfo;
@@ -16,6 +12,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.AuthenticationLogic;
 
 /**
  *
@@ -42,17 +41,36 @@ public class ProfileController extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (URI.endsWith("/profile/") || URI.endsWith("/user-info")) {
+        String role = user.getUserRole();
+        String userIDRequest = request.getParameter("userid");
+        if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
+            request.setAttribute("user", new UserDao().getUser(user.getUserID()));
+            if (("AD").equalsIgnoreCase(role)) {
+                request.setAttribute("user", new UserDao().getUser(userIDRequest));
+            } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
+                response.sendRedirect("/CICOHealth/user/profile/user-info?userid=" + user.getUserID());
+                return;
+            }
             request.getRequestDispatcher("/view/user/profile/userInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/login-info")) {
-            Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
-            request.setAttribute("loginInfo", loginInfo);
+            request.setAttribute("loginInfo", new LoginDao().getLoginInfoByID(user.getUserID()));
+            if (("AD").equalsIgnoreCase(role)) {
+                request.setAttribute("loginInfo", new LoginDao().getLoginInfoByID(userIDRequest));
+            } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
+                response.sendRedirect("/CICOHealth/user/profile/login-info?userid=" + user.getUserID());
+                return;
+            }
             request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/health-info")) {
-            HealthInfo healthInfo = new HealthInfoDao().getHealthInfo(user.getUserID());
-            System.out.println(healthInfo);
-            request.setAttribute("healthInfo", healthInfo);
+            request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(user.getUserID()));
+            if (("AD").equalsIgnoreCase(role)) {
+                request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(userIDRequest));
+            } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
+                response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + user.getUserID());
+                return;
+            }
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
+
         }
     }
 
@@ -67,6 +85,71 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String method = request.getParameter("_method");
+        if (method != null) {
+            if ("PUT".equalsIgnoreCase(method)) {
+                doPut(request, response);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String check = request.getParameter("btnUpdate");
+        String userID = request.getParameter("userID");
+        switch (check) {
+            case "updateHealth":
+                int age = Integer.parseInt(request.getParameter("numAge"));
+                String gender = request.getParameter("radGender");
+                double height = Double.parseDouble(request.getParameter("numHeight"));
+                double weight = Double.parseDouble(request.getParameter("numWeight"));
+                int activity = Integer.parseInt(request.getParameter("selectActiveness"));
+                //Daily nutrition goal paramters
+                double TDEE = Double.parseDouble(request.getParameter("numTDEE"));
+                double protein = Double.parseDouble(request.getParameter("numProtein"));
+                double fat = Double.parseDouble(request.getParameter("numFat"));
+                double carb = Double.parseDouble(request.getParameter("numCarb"));
+                HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
+                        (int) TDEE, (int) TDEE, protein, fat, carb);
+                new HealthInfoDao().updateHealthInfo(healthInfo);
+                response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + userID);
+                return;
+            case "updateLogin":
+                AuthenticationLogic authenticationLogic = new AuthenticationLogic();
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                String passwordSalt = authenticationLogic.getLoginSalt(username, password);
+                String passwordHash = null;
+                String googleID = request.getParameter("googleID");
+                try {
+                    passwordHash = authenticationLogic.encryptPassword(password, passwordSalt);
+                } catch (Exception ex) {
+                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                new LoginDao().updateLoginInfo(new Login(userID, username, passwordHash, passwordSalt, googleID, false));
+                response.sendRedirect("/CICOHealth/user/profile/login-info?userid=" + userID);
+                return;
+            case "updateUser":
+                UserDao userDao = new UserDao();
+                String firstName = request.getParameter("firstName");
+                String lastName = request.getParameter("lastName");
+                String email = request.getParameter("email");
+                String phone = request.getParameter("phone");
+                User user = new User(userID, firstName, lastName, email, phone);
+                userDao.updateUserInfo(user);
+                response.sendRedirect("/CICOHealth/user/profile/user-info?userid=" + userID);
+                return;
+            default:
+                throw new AssertionError();
+        }
 
     }
 

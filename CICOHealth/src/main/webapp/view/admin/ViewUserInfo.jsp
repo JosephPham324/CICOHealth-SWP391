@@ -68,7 +68,7 @@
                             <td><%= list.getEmail()%></td>
                             <td><%= list.getPhone()%></td>
                             <td>
-                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;"></a>                                
+                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/user/profile/userinfo?userid=<%= list.getUserID()%>"></a>                              
                                 <a  style="color: red"
                                     ><i class="fa-solid fa-ban"></i></a>
                             </td>
