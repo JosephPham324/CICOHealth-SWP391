@@ -150,6 +150,6 @@ public class User implements Serializable {
     }
     
     public String getUserRole(){
-        return this.userID.substring(2,2);
+        return this.userID.substring(2,4);
     }
 }

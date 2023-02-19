@@ -5,6 +5,7 @@
 package controller;
 
 import bean.Exercise;
+import bean.User;
 import dao.ExerciseDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,38 +13,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
 public class ExerciseManagementController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ExerciseController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ExerciseController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -66,6 +42,22 @@ public class ExerciseManagementController extends HttpServlet {
         }
         if (type.equalsIgnoreCase("add")) {
             request.getRequestDispatcher("/view/admin/addexercise.jsp").forward(request, response);
+        }
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (!("AD").equalsIgnoreCase(user.getUserRole())) {
+            response.sendRedirect("/CICOHealth");
+            return;
+        }
+        
+        String delete = request.getParameter("delete");
+        String exerciseID = request.getParameter("exerciseid");
+        if (delete == null) {
+            request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
+            request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
+        } else {
+            new ExerciseDao().deleteExercise(exerciseID);
+            response.sendRedirect("/CICOHealth/admin/exercise-management");
         }
     }
 
@@ -90,6 +82,24 @@ public class ExerciseManagementController extends HttpServlet {
             new ExerciseDao().insertExercise(new Exercise(exerciseID, exerciseName, exerciseDescription, caloriesPerHour));
             response.sendRedirect("/CICOHealth/admin/exercise-management");
         }
+        String method = request.getParameter("_method");
+        if (method!= null && method.equals("PUT")){
+            doPut(request,response);
+            return;
+        }
+
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String exerciseID = request.getParameter("txtExerciseID");
+        String exerciseName = request.getParameter("txtExerciseName");
+        String exerciseDescription = request.getParameter("txtExerciseDescription");
+        String caloriePerHour = request.getParameter("numCaloriePerHour");
+        Exercise exercise = new Exercise(exerciseID,exerciseName,exerciseDescription,Double.parseDouble(caloriePerHour));
+        ExerciseDao exerciseDao = new ExerciseDao();
+        exerciseDao.updateExercise(exercise);
+        response.sendRedirect("/CICOHealth/admin/exercise-management");
     }
 
     /**

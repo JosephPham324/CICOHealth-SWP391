@@ -10,6 +10,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/profile.css"/>
         <title>Health Information</title>
     </head>
     <body>
@@ -23,24 +25,35 @@
                     </ul>
                 </div>
                 <c:set var="health" value="${healthInfo}" scope="request" />
-                
-                <div class="col-9">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <p class="card-text">gender: ${health.gender} </p>
-                            <p class="card-text">height: ${health.height}</p>
-                            <p class="card-text">weight: ${health.weight}</p>
-                            <p class="card-text">age: ${health.age}</p>
-                            <p class="card-text">activeness: ${health.activeness} </p>
-                            <p class="card-text">tdee: ${health.tdee}</p>
-                            <p class="card-text">dailyCalorie: ${health.dailyCalorie}</p>
-                            <p class="card-text">dailyProtein: ${health.dailyProtein}</p>
-                            <p class="card-text">dailyFat: ${health.dailyFat}</p>
-                            <p class="card-text">dailyCarb: ${health.dailyCarb}</p>
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <form action="ProfileController" method="post">
+                                <div class="card">
+                                    <div class="card-header">
+                                        User Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <input type="text" name="_method" style="display:none" value="put" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="userID" style="display:none" value="${healthInfo.userID}" class="form-control">
+
+                                        </div>
+                                        <%@include file="../formHealthInfor.jsp" %>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <input type="hidden" value="PUT" name="_method">
+                                        <button name="btnUpdate" type="submit" class="btn btn-light" value="updateHealth" >Submit
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="/CICOHealth/assets/scripts/healthRegister.js"></script>
     </body>
 </html>

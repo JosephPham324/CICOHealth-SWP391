@@ -30,7 +30,12 @@ public class LoginDao extends BaseDao {
         preparedStatement.setString(index++, login.getUsername());
         preparedStatement.setString(index++, login.getPasswordHash());
         preparedStatement.setString(index++, login.getPasswordSalt());
-        preparedStatement.setString(index++, login.getGoogleID());
+        if (login.getGoogleID() != null) {
+            preparedStatement.setString(index++, login.getGoogleID());
+        } else {
+            preparedStatement.setString(index++, "");
+        }
+
         preparedStatement.setString(index++, login.getIsBanned() + "");
         preparedStatement.executeUpdate();
 
@@ -84,7 +89,6 @@ public class LoginDao extends BaseDao {
         }
         return null;
     }
-    
 
     public String getLoginInfoByGoogle(String googleID) throws SQLException {
         String query = "SELECT userID FROM login WHERE GoogleID = ?";
@@ -120,5 +124,48 @@ public class LoginDao extends BaseDao {
         }
         closeConnections();
         return null;
+    }
+
+    public int banUserByUserId(String userId) throws SQLException {
+
+        String query = "update [login] set isBanned = 1 where userID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        int result = preparedStatement.executeUpdate();
+
+        closeConnections();
+
+        return result;
+    }
+
+    public int unbanUserByUserId(String userId) throws SQLException {
+        String query = "update [login] set isBanned = 0 where userID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        int result = preparedStatement.executeUpdate();
+
+        closeConnections();
+
+        return result;
+    }
+
+    public void updateLoginInfo(Login login) {
+        String query = "UPDATE [login]\n"
+                + "SET username = ?, passwordHash = ?, passwordSalt = ?\n"
+                + "WHERE userID = ?";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, login.getUsername());
+            preparedStatement.setString(2, login.getPasswordHash());
+            preparedStatement.setString(3, login.getPasswordSalt());
+            preparedStatement.setString(4, login.getUserID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

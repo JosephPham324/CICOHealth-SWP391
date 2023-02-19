@@ -94,6 +94,7 @@ public class LoginController extends HttpServlet {
                 }
                 request.getSession().setAttribute("user", new UserDao().getUser(userID));
                 response.sendRedirect("/CICOHealth/");
+                return;
             } catch (SQLException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 response.sendRedirect("/CICOHealth/login?error=database");
@@ -119,6 +120,7 @@ public class LoginController extends HttpServlet {
                     User user = userDao.getUser(login.getUserID());
                     request.getSession().setAttribute("user", user);
                     response.sendRedirect("/CICOHealth/");
+                    return;
                 }
                 response.sendRedirect("/CICOHealth/login");
                 return;
