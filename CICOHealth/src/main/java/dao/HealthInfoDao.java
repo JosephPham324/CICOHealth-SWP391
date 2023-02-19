@@ -69,6 +69,7 @@ public class HealthInfoDao extends BaseDao {
         } catch (SQLException ex) {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        closeConnections();
         return null;
     }
 

@@ -37,7 +37,7 @@ public class test {
         double protein =1999.1;
         double fat = 123124.1;
         double carb = 123123.1;
-        int age = 24;
+        int age = 226;
         HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
                 (int) TDEE, (int) TDEE, protein, fat, carb);
         new HealthInfoDao().updateHealthInfo(healthInfo);

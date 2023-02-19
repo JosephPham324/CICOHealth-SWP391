@@ -41,7 +41,7 @@ public class ProfileController extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (URI.endsWith("/profile/") || URI.endsWith("/user-info")) {
+        if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
             String userID = request.getParameter("userid");
             if (userID != null) {
                 request.setAttribute("user", new UserDao().getUser(userID));
@@ -78,23 +78,24 @@ public class ProfileController extends HttpServlet {
         String method = request.getParameter("_method");
         if (method != null) {
             if ("PUT".equalsIgnoreCase(method)) {
-                String check = request.getParameter("btnUpdateLoginInfo");
-                AuthenticationLogic authenticationLogic = new AuthenticationLogic();
-                String userID = request.getParameter("userID");
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String passwordSalt = authenticationLogic.getLoginSalt(username, password);
-                String passwordHash = null;
-                try {
-                    passwordHash = authenticationLogic.encryptPassword(password, passwordSalt);
-                } catch (Exception ex) {
-                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                String googleID = request.getParameter("googleID");
-                Login login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
-                new LoginDao().updateLoginInfo(login);
-//                doPut(request, response);
-                response.sendRedirect("/CICOHealth/user/profile/login-info");
+                doPut(request, response);
+//                String check = request.getParameter("btnUpdateLoginInfo");
+//                AuthenticationLogic authenticationLogic = new AuthenticationLogic();
+//                String userID = request.getParameter("userID");
+//                String username = request.getParameter("username");
+//                String password = request.getParameter("password");
+//                String passwordSalt = authenticationLogic.getLoginSalt(username, password);
+//                String passwordHash = null;
+//                try {
+//                    passwordHash = authenticationLogic.encryptPassword(password, passwordSalt);
+//                } catch (Exception ex) {
+//                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                String googleID = request.getParameter("googleID");
+//                Login login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
+//                new LoginDao().updateLoginInfo(login);
+////                doPut(request, response);
+//                response.sendRedirect("/CICOHealth/user/profile/login-info");
 //                doPut(request, response);
             } else {
                 UserDao userDao = new UserDao();
@@ -119,38 +120,21 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String check = null;
-        if (check != null) {
-//            AuthenticationLogic authenticationLogic = new AuthenticationLogic();
-//            String userID = request.getParameter("userID");
-//            String username = request.getParameter("username");
-//            String password = request.getParameter("password");
-//            String passwordSalt = authenticationLogic.getLoginSalt(username, password);
-//            String passwordHash = null;
-//            try {
-//                passwordHash = authenticationLogic.encryptPassword(password, passwordSalt);
-//            } catch (Exception ex) {
-//                Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            String googleID = request.getParameter("googleID");
-//            Login login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
-        } else {
-            String userID = request.getParameter("userID");
-            int age = Integer.parseInt(request.getParameter("numAge"));
-            String gender = request.getParameter("radGender");
-            double height = Double.parseDouble(request.getParameter("numHeight"));
-            double weight = Double.parseDouble(request.getParameter("numWeight"));
-            int activity = Integer.parseInt(request.getParameter("selectActiveness"));
-            //Daily nutrition goal paramters
-            double TDEE = Double.parseDouble(request.getParameter("numTDEE"));
-            double protein = Double.parseDouble(request.getParameter("numProtein"));
-            double fat = Double.parseDouble(request.getParameter("numFat"));
-            double carb = Double.parseDouble(request.getParameter("numCarb"));
-            HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
-                    (int) TDEE, (int) TDEE, protein, fat, carb);
-            new HealthInfoDao().updateHealthInfo(healthInfo);
-            return;
-        }
+        String userID = request.getParameter("userID");
+        int age = Integer.parseInt(request.getParameter("numAge"));
+        String gender = request.getParameter("radGender");
+        double height = Double.parseDouble(request.getParameter("numHeight"));
+        double weight = Double.parseDouble(request.getParameter("numWeight"));
+        int activity = Integer.parseInt(request.getParameter("selectActiveness"));
+        //Daily nutrition goal paramters
+        double TDEE = Double.parseDouble(request.getParameter("numTDEE"));
+        double protein = Double.parseDouble(request.getParameter("numProtein"));
+        double fat = Double.parseDouble(request.getParameter("numFat"));
+        double carb = Double.parseDouble(request.getParameter("numCarb"));
+        HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
+                (int) TDEE, (int) TDEE, protein, fat, carb);
+        new HealthInfoDao().updateHealthInfo(healthInfo);
+        response.sendRedirect("/CICOHealth/user/profile/health-info");
     }
 
     /**
