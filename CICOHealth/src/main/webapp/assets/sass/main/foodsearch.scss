@@ -1,0 +1,107 @@
+@use "../mixins/common";
+main {
+  @include common.dimension(100%, 100%);
+}
+//---------------------------------------------------------------------------
+.search-bar {
+  @include common.flex-display(column, center, center);
+  @include common.dimension(100%, 100%);
+  .search-bar-input {
+    input,
+    button {
+      font-size: 1.2rem;
+    }
+    //---------------------------------------------------------------------------
+    input[type="search"] {
+      width: 30vw;
+      @media screen and (max-width: 600px) {
+        width: 80vw;
+      }
+    }
+  }
+}
+//---------------------------------------------------------------------------
+.search-results {
+  display: grid;
+  @include common.responsive(large) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  @include common.responsive(medium) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include common.responsive(small) {
+    grid-template-columns: 1fr;
+  }
+
+  .search-result {
+    @include common.flex-display(column, center, center);
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    //---------------------------------------------------------------------------
+    &.selected {
+      background-color: #e0e0e0;
+    }
+    //---------------------------------------------------------------------------
+
+    &:hover {
+      transform: scale(1.05);
+    }
+    //---------------------------------------------------------------------------
+    .search-result-content {
+      @include common.dimension(100%, 100%);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      border-top: 1px dotted black;
+      padding-top: 10px;
+    }
+    .search-result-image {
+      @include common.dimension(100%, 100%);
+      img {
+        @include common.dimension(100%, 100%);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    //---------------------------------------------------------------------------
+    .search-result-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+    //---------------------------------------------------------------------------
+    .search-result-description {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 10px 0;
+      @include common.flex-display(column, normal, normal);
+      line-height: 1.2rem;
+      padding-left: 10px;
+      span {
+        border-bottom: 1px solid black;
+      }
+    }
+    //---------------------------------------------------------------------------
+    .search-result-button {
+      margin: 10px 0;
+      font-size: 1.5rem;
+      cursor: pointer;
+      @include common.dimension(100%, 100%);
+
+      border: none;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease-in-out;
+      background-color: aquamarine;
+      &:hover {
+        transform: scale(1.05);
+        background-color: lighten(rgb(17, 190, 133),20%);
+      }
+    }
+  }
+}

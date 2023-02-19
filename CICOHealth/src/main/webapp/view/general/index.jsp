@@ -16,6 +16,7 @@
         <h1>Welcome to CICO Health</h1>
         <c:choose>
             <c:when test = "${sessionScope.user != null}">
+                <a href = "/CICOHealth/user/profile/">Profile</a>
                 <a href = "log-out">Log out!</a>
             </c:when>
             <c:otherwise>
