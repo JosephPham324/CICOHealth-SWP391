@@ -1,7 +1,7 @@
 <%-- 
-    Document   : userInfo
-    Created on : Feb 14, 2023, 11:29:08 AM
-    Author     : vhqua
+Document   : userInfo
+Created on : Feb 14, 2023, 11:29:08 AM
+Author     : vhqua
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,6 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/profile.css"/>
         <title>User Information</title>
     </head>
     <body>
@@ -23,22 +25,46 @@
                     </ul>
                 </div>
                 <!--//edit-->
-                <form action="/CICOHealth/user/profile" method="post">
-                    <div class="col-9">
-                        <div class="card mx-auto" style="width: 18rem;">
-                            <div class="card-body">
-                                <input type="text" value="${user.userID}" class="card-title" name ="userID" style="display: none"><br>
-                                Firstname: <input type="text" value="${user.firstName}" class="card-title" name ="firstName"><br>
-                                Lastname: <input type="text" value="${user.lastName}" class="card-title" name ="lastName"> <br>
-                                Email: <input type="email" value="${user.email}" class="card-title" name ="email"> <br>
-                                phone: <input type="tel" value="${user.phone}" class="card-title" name ="phone"> 
-                            </div>
-                        </div>
-                        <input type="hidden" value="PUT" name="_method">
-                        <button type="submit" name="btnUpdate" value="updateUser">Save</button>
-                    </div>
-                </form>
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <form action="ProfileController" method="post">
+                                <div class="card">
+                                    <div class="card-header">
+                                        User Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <input type="text" value="${user.userID}" class="form-control" name ="userID" style="display: none">
 
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="firstName">First Name</label>
+                                            <input type="text" value="${user.firstName}" class="form-control" name ="firstName">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" value="${user.lastName}" class="form-control" name ="lastName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" value="${user.email}" class="form-control" name ="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Phone</label>
+                                            <input type="tel" value="${user.phone}" class="form-control" name ="phone">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <input type="hidden" value="PUT" name="_method">
+                                        <button type="submit" name="btnUpdate" value="updateUser" class="btn btn-light">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

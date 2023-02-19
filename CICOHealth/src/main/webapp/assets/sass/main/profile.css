@@ -1,0 +1,48 @@
+
+.card-header {
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    background-color: #000;
+    color: white;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+}
+
+.form-control {
+    height: 40px;
+    font-size: 16px;
+}
+
+.btn-light {
+    border-color: #000;
+}
+
+.btn-light:hover {
+    background-color: #000;
+    border-color: #fff;
+    color: white;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"], input[type="email"], input[type="tel"] {
+    border: none;
+    border-bottom: 2px solid #000;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+    outline: none;
+    border-bottom: 2px solid #000;
+}
+
+
