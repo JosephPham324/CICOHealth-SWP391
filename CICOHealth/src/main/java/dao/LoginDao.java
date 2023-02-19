@@ -30,7 +30,12 @@ public class LoginDao extends BaseDao {
         preparedStatement.setString(index++, login.getUsername());
         preparedStatement.setString(index++, login.getPasswordHash());
         preparedStatement.setString(index++, login.getPasswordSalt());
-        preparedStatement.setString(index++, login.getGoogleID());
+        if (login.getGoogleID() != null) {
+            preparedStatement.setString(index++, login.getGoogleID());
+        } else {
+            preparedStatement.setString(index++, "");
+        }
+
         preparedStatement.setString(index++, login.getIsBanned() + "");
         preparedStatement.executeUpdate();
 
@@ -121,6 +126,31 @@ public class LoginDao extends BaseDao {
         return null;
     }
 
+    public int banUserByUserId(String userId) throws SQLException {
+
+        String query = "update [login] set isBanned = 1 where userID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        int result = preparedStatement.executeUpdate();
+
+        closeConnections();
+
+        return result;
+    }
+
+    public int unbanUserByUserId(String userId) throws SQLException {
+        String query = "update [login] set isBanned = 0 where userID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        int result = preparedStatement.executeUpdate();
+
+        closeConnections();
+
+        return result;
+    }
+
     public void updateLoginInfo(Login login) {
         String query = "UPDATE [login]\n"
                 + "SET username = ?, passwordHash = ?, passwordSalt = ?\n"
@@ -138,5 +168,4 @@ public class LoginDao extends BaseDao {
         }
 
     }
-
 }
