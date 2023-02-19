@@ -17,9 +17,9 @@
             <div class="row">
                 <div class="col-3 bg-light pt-3">
                     <ul class="list-unstyled">
-                        <li><a href="/CICOHealth/profile/userinfo?userid=${user.userID}" class="sidebar-link">User Info</a></li>
-                        <li><a href="/CICOHealth/profile/logininfo?userid=${user.userID}" class="sidebar-link">Login Info</a></li>
-                        <li><a href="/CICOHealth/profile/healthinfo?userid=${user.userID}" class="sidebar-link">Health Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/user-info?userid=${user.userID}" class="sidebar-link">User Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/login-info?userid=${user.userID}" class="sidebar-link">Login Info</a></li>
+                        <li><a href="/CICOHealth/user/profile/health-info?userid=${user.userID}" class="sidebar-link">Health Info</a></li>
                     </ul>
                 </div>
                 <!--//edit-->

@@ -26,7 +26,7 @@
                 <form action="ProfileController" method="post">
                     <input type="text" name="_method" style="display:none" value="put">
                     <input type="text" name="userID" style="display:none" value="${healthInfo.userID}">
-                    <%@include file="../user/formHealthInfor.jsp" %>
+                    <%@include file="../formHealthInfor.jsp" %>
                     <div class="form-group row">
                         <div class="offset-4 col-8">
                             <button name="submit" type="submit" class="btn btn-primary">

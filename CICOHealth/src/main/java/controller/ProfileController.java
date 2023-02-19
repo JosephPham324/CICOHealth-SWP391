@@ -41,26 +41,26 @@ public class ProfileController extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (URI.endsWith("/profile") || URI.endsWith("/userinfo")) {
+        if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
             String userID = request.getParameter("userid");
             if (userID != null) {
                 request.setAttribute("user", new UserDao().getUser(userID));
             } else {
                 request.setAttribute("user", user);
             }
-            request.getRequestDispatcher("/view/user/userInfo.jsp").forward(request, response);
-        } else if (URI.endsWith("/logininfo")) {
+            request.getRequestDispatcher("/view/user/profile/userInfo.jsp").forward(request, response);
+        } else if (URI.endsWith("/login-info")) {
             Login loginInfo = new LoginDao().getLoginInfoByID(user.getUserID());
             request.setAttribute("loginInfo", loginInfo);
-            request.getRequestDispatcher("/view/user/loginInfo.jsp").forward(request, response);
-        } else if (URI.endsWith("/healthinfo")) {
+            request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
+        } else if (URI.endsWith("/health-info")) {
             String userID = request.getParameter("userid");
             if (userID != null) {
                 request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(userID));
             } else {
                 request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(user.getUserID()));
             }
-            request.getRequestDispatcher("/view/user/healthInfo.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
         }
     }
 
@@ -94,7 +94,7 @@ public class ProfileController extends HttpServlet {
                 Login login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
                 new LoginDao().updateLoginInfo(login);
 //                doPut(request, response);
-                response.sendRedirect("/CICOHealth/profile/logininfo");
+                response.sendRedirect("/CICOHealth/profile/login-info");
 //                doPut(request, response);
             } else {
                 UserDao userDao = new UserDao();
