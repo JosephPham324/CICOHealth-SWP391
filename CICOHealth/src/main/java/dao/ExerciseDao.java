@@ -55,7 +55,47 @@ public class ExerciseDao extends BaseDao {
 
     }
 
+<<<<<<< Updated upstream
     public void deleteExercise(String exerciseID) {
+=======
+    /**
+     * Get Exercise By Name
+     *
+     * @param name name of exercise
+     * @return ExerciseType
+     * @throws SQLException Exception of SQL
+     */
+    public List getExerciseByName(String name) throws SQLException {
+        try {
+            String query = "SELECT *\n"
+                    + "FROM [exercise]\n"
+                    + "WHERE exerciseName like ‘%’ + ? + ‘%’";
+            Exercise exercise = null;
+            List exerciseList = new LinkedList();
+
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exercise = new Exercise(resultSet.getString("exerciseID"),
+                        resultSet.getString("exerciseName"),
+                        resultSet.getString("exerciseDescription"),
+                        resultSet.getDouble("caloriesPerHour"));
+                exerciseList.add(exercise);
+            }
+            return exerciseList;
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConnections();
+        return null;
+    }
+
+    public void insertExercise(Exercise exercise) {
+        String query = "INSERT INTO EXERCISE\n"
+                + "VALUES(?,?,?,?)";
+        connection = new DBContext().getConnection();
+>>>>>>> Stashed changes
         try {
             String sql = "DELETE FROM exercise WHERE EXERCISEID = ?";
             connection = new DBContext().getConnection();

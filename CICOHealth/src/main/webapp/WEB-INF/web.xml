@@ -54,6 +54,10 @@
         <servlet-name>ExerciseManagementController</servlet-name>
         <servlet-class>controller.ExerciseManagementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExerciseLogController</servlet-name>
+        <servlet-class>controller.ExerciseLogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -81,6 +85,10 @@
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>
         <url-pattern>/food-search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseLogController</servlet-name>
+        <url-pattern>/exercise/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
