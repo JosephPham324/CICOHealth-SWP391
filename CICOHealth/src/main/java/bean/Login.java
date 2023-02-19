@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import util.AuthenticationLogic;
+import util.Encryption;
 
 /**
  *
@@ -144,7 +146,12 @@ public class Login implements Serializable {
         }
         return true;
     }
-
+    
+    public String getOriginPassword(){
+  
+        return null; 
+    }
+    
     @Override
     public String toString() {
         return "bean.Login[ userID=" + userID + " ]";
