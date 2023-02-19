@@ -3,7 +3,7 @@
     Created on : Feb 15, 2023, 8:42:00 AM
     Author     : Admin
 --%>
-
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,7 +36,7 @@
         <title>View Exercise</title>
     </head>
     <body>
-        <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+       
         <div class="nav">
             <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back </span></a>
             <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
@@ -51,7 +51,6 @@
                             <th scope="col">Exercise Name</th>
                             <th scope="col">Exercise Description</th>
                             <th scope="col">Calories Per Hour</th>
-                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
