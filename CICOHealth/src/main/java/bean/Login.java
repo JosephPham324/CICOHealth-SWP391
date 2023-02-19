@@ -147,10 +147,6 @@ public class Login implements Serializable {
         return true;
     }
     
-    public String getOriginPassword(){
-  
-        return null; 
-    }
     
     @Override
     public String toString() {

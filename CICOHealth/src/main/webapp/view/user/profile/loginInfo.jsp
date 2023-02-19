@@ -24,7 +24,6 @@
                             <form action="ProfileController" method="post">
                                 Username:<input type="text" name="username" value="${l.username}">
                                 Password<input type="text" name="password" value="${l.passwordHash}">
-
                                 <input type="text" name="_method" value="put" style="display: none">
                                 <input type="text" name="userID" value="${l.userID}" style="display: none">
                                 <input type="text" name="googleID" value="${l.googleID}" style="display: none">

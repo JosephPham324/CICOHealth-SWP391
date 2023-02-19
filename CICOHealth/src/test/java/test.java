@@ -5,6 +5,9 @@ import bean.User;
 import dao.HealthInfoDao;
 import dao.LoginDao;
 import dao.UserDao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.AuthenticationLogic;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -41,6 +44,8 @@ public class test {
         HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
                 (int) TDEE, (int) TDEE, protein, fat, carb);
         new HealthInfoDao().updateHealthInfo(healthInfo);
+        User u = n.getUser("USME000001");
+        
     }
 
 }
