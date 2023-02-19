@@ -21,9 +21,14 @@
                 <div class="col-9">
                     <div class="card mx-auto" style="width: 18rem;">
                         <div class="card-body">
-                            <p class="card-text">Username: ${l.username}</p>
-                            <p class="card-text">Password: ${l.passwordHash}</p>
-                            <p class="card-text">Google ID: ${l.googleID}</p>
+                            <form action="ProfileController" method="post">
+                                Username:<input type="text" name="username" value="${l.username}">
+                                Password<input type="text" name="password" value="${l.passwordHash}">
+                                <input type="text" name="_method" value="put" style="display: none">
+                                <input type="text" name="userID" value="${l.userID}" style="display: none">
+                                <input type="text" name="googleID" value="${l.googleID}" style="display: none">
+                                <button type="submit" name="btnUpdate" value="updateLogin">Save</button>
+                            </form>
                         </div>
                     </div>
                 </div>
