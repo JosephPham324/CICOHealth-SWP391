@@ -51,7 +51,6 @@
                             <th scope="col">Exercise Name</th>
                             <th scope="col">Exercise Description</th>
                             <th scope="col">Calories Per Hour</th>
-                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
