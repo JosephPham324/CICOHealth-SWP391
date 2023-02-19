@@ -40,7 +40,7 @@ public class ExerciseLogController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ExerciseLogController</title>");            
+            out.println("<title>Servlet ExerciseLogController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ExerciseLogController at " + request.getContextPath() + "</h1>");
@@ -62,19 +62,18 @@ public class ExerciseLogController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String searchKey = request.getParameter("txtExercise");
-        if(searchKey != null){
+        if (searchKey != null) {
             try {
                 ExerciseDao exDAO = new ExerciseDao();
-                List<Exercise> list= exDAO.getExerciseByName(searchKey);
-                request.setAttribute("listExercise", list);
-                request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
+                List<Exercise> exerciseList = exDAO.getExerciseByName(searchKey);
+                request.setAttribute("exerciseList", exerciseList);
+
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
         }
-        
+        request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
+
     }
 
     /**
