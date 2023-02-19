@@ -101,10 +101,12 @@
             <div class="form-group row">
                 <label for="txtFirstName" class="col-4 col-form-label">Type</label>
                 <div class="col-8">
-                    <select id="cars" name="cars" style="
+                    <select id="userType" name="userType" style="
                             border: 0.5px solid cornflowerblue;
                             width: 273px;
-                            height: 38px;"onchange="getValue(this)">
+                            height: 38px;"
+                            onchange="getValue(this)"
+                    >
                         <option value="0">---</option>
                         <option value="1">ME</option>
                         <option value="2">FE</option>
@@ -126,9 +128,9 @@
         <script>
             function  getValue(sel) {
                 if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
-                    var name = $("#txtFirstName").val();
+                    var firstName = $("#txtFirstName").val();
                     var lastName = $("#txtLastName").val();
-                    var result = validateUser(name, lastName);
+                    var result = validateUser(firstName, lastName);
                 } else {
                     $("#txtUsername").val('');
                     $("#txtPassword").val('');
@@ -139,9 +141,9 @@
                 $.get("/CICOHealth/validateUserController?username=" + username + "&lastname=" + lastname, function (data, status) {
                     if (data === 'true') {
                         $("i").removeClass("error");
-                        $("#cars").val(0);
+                        $("#userType").val(0);
                     } else {
-                        var type = $("#cars option:selected").val();
+                        var type = $("#userType option:selected").val();
                         var name = $("#txtFirstName").val();
                         var lastName = $("#txtLastName").val();
                         if (type === '1') {

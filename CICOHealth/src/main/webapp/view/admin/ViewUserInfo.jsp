@@ -56,7 +56,7 @@
             <h1 class="navbar-brand mx-auto">USER INFO</h1>
         </div>
         <div class="info-container">
-            <button><a href="addNew.jsp">Add</a></button>
+            <button><a href="/CICOHealth/view/admin/addNew.jsp">Add</a></button>
             <div class="info-table">            
                 <table id="info-table" class="table table-striped table-hover display">
                     <thead>
