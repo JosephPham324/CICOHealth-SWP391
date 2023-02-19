@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <input type="hidden" value="PUT" name="_method">
-                        <input type="submit" value="Save" name="btnSave">
+                        <button type="submit" name="btnUpdate" value="updateUser">Save</button>
                     </div>
                 </form>
 

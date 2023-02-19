@@ -29,7 +29,7 @@
                     <%@include file="../formHealthInfor.jsp" %>
                     <div class="form-group row">
                         <div class="offset-4 col-8">
-                            <button name="btnUpdateHealth" type="submit" class="btn btn-primary">
+                            <button name="btnUpdate" type="submit" class="btn btn-primary" value="updateHealth">
                                 Submit
                             </button>
                         </div>
