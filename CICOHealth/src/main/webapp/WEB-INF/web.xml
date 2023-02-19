@@ -73,6 +73,7 @@
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
         <url-pattern>/admin/user-management</url-pattern>
+        
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>

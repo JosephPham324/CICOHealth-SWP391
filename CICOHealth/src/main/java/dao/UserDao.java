@@ -147,4 +147,39 @@ public class UserDao extends BaseDao {
         return list;
     }
 
+    public void updateUserInfo(User user) {
+        try {
+            // Open a connection
+            connection = new DBContext().getConnection();
+
+            // Prepare the SQL statement
+            String sql = "UPDATE [user] SET firstname=?, lastname=?, email=?, phone=? WHERE userid=?";
+            preparedStatement = connection.prepareStatement(sql);
+
+            // Set the parameters
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPhone());
+            preparedStatement.setString(5, user.getUserID());
+
+            // Execute the SQL statement
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.getMessage();
+        } finally {
+            try {
+                // Close the statement and connection
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.getMessage();
+            }
+        }
+    }
+
 }
