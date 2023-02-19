@@ -128,15 +128,13 @@ public class ProfileController extends HttpServlet {
                 String password = request.getParameter("password");
                 String passwordSalt = authenticationLogic.getLoginSalt(username, password);
                 String passwordHash = null;
+                String googleID = request.getParameter("googleID");
                 try {
                     passwordHash = authenticationLogic.encryptPassword(password, passwordSalt);
                 } catch (Exception ex) {
                     Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                String googleID = request.getParameter("googleID");
-                Login login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
-                new LoginDao().updateLoginInfo(login);
-//                doPut(request, response);
+                new LoginDao().updateLoginInfo(new Login(userID, username, passwordHash, passwordSalt, googleID, false));
                 response.sendRedirect("/CICOHealth/user/profile/login-info?userid=" + userID);
                 return;
             case "updateUser":

@@ -37,7 +37,7 @@ public class test {
         int activity = 1;
         //Daily nutrition goal paramters
         double TDEE = 2;
-        double protein =1999.1;
+        double protein = 1999.1;
         double fat = 123124.1;
         double carb = 123123.1;
         int age = 226;
@@ -45,6 +45,10 @@ public class test {
                 (int) TDEE, (int) TDEE, protein, fat, carb);
         new HealthInfoDao().updateHealthInfo(healthInfo);
         User u = n.getUser("USME000001");
+        String username = "hihihaha";
+        String passwordHash = "123";
+        String passwordSalt = "456";
+        new LoginDao().updateLoginInfo(new Login(userID, username, passwordHash, passwordSalt, "12312", false));
         
     }
 
