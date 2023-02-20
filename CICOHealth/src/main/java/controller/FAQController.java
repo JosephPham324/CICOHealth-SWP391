@@ -32,19 +32,11 @@ public class FAQController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.endsWith("/admin")) {
-            String type = request.getParameter("type");
-            switch (type) {
-                case "view":
-                    List<Question> listQuestion = new QuestionDao().getAllQuestions();
-                    request.setAttribute("listQuestion", listQuestion);
-                    request.getRequestDispatcher("/view/admin/ViewQuestion.jsp").forward(request, response);
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+        if (URI.endsWith("/questions")) {
+            List<Question> listQuestion = new QuestionDao().getAllQuestions();
+            request.setAttribute("listQuestion", listQuestion);
+            request.getRequestDispatcher("/view/admin/ViewQuestion.jsp").forward(request, response);
         }
-
         request.getRequestDispatcher("/view/general/ViewFAQ.jsp").forward(request, response);
     }
 

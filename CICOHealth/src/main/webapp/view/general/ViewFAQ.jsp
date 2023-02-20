@@ -18,6 +18,6 @@
             Content: <input type="text" name="questionContent">
             <button type="submit" name="btnSubmitQuestion">Submit new question</button>
         </form>
-        <button><a href="/CICOHealth/faq/admin?type=view">View Question</a></button>
+        <button><a href="/CICOHealth/faq/questions">View Question</a></button>
     </body>
 </html>
