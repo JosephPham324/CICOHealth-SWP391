@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="/CICOHealth/exercise" method="get">
+        <form action="/CICOHealth/exercise-search" method="get">
             <input type="text" name="txtExercise">
             <button type="submit" name="btnSearch">Search</button>
         </form>
