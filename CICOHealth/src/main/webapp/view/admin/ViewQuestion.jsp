@@ -3,7 +3,8 @@
     Created on : Feb 20, 2023, 2:40:00 PM
     Author     : vhqua
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="listQuestion" value="${listQuestion}" scope="request" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div>
+            <c:forEach var="question" items="${listQuestion}">
+                <p>Question ID: ${question.questionID}</p>
+                <p>Submitted by: ${question.submittedBy}</p>
+                <p>Topic: ${question.questionTopic}</p>
+                <p>Content: ${question.questionContent}</p>
+                <hr>
+            </c:forEach>
+        </div>
     </body>
 </html>
