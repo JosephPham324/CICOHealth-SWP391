@@ -55,13 +55,12 @@
         <servlet-class>controller.ExerciseManagementController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< Updated upstream
         <servlet-name>ExerciseSearchController</servlet-name>
         <servlet-class>controller.ExerciseSearchController</servlet-class>
-=======
+    </servlet>
+    <servlet>
         <servlet-name>FAQController</servlet-name>
         <servlet-class>controller.FAQController</servlet-class>
->>>>>>> Stashed changes
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -92,13 +91,12 @@
         <url-pattern>/food-search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< Updated upstream
         <servlet-name>ExerciseSearchController</servlet-name>
         <url-pattern>/exercise-search/*</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FAQController</servlet-name>
         <url-pattern>/faq/*</url-pattern>
->>>>>>> Stashed changes
     </servlet-mapping>
     <session-config>
         <session-timeout>
