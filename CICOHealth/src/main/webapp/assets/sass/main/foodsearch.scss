@@ -11,7 +11,7 @@
     display: block;
     position: fixed;
   }
-  & > * {
+  & > .pop-up-content {
     position: relative;
     z-index: 5;
   }
