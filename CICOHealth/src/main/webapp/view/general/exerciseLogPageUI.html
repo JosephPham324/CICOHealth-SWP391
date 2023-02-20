@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Choose Date Button</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                onSelect: function (dateText) {
+                    $("#date-input").val(dateText);
+                    $("#date-button").html(dateText);
+                }
+            });
+        });
+    </script>
+    <style>
+        #date-button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #date-input {
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="date-button">Choose date</button>
+    <input type="datetime" id="date-input" style="display:none">
+    <script>
+        $("#date-button").click(function () {
+            $("#datepicker").datepicker("show");
+        });
+    </script>
+</body>
+
+</html>

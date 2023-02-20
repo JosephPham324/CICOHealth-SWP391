@@ -1,0 +1,28 @@
+.container {
+    margin-top: 5%;
+}
+
+.txt-title {
+    text-align: center;
+}
+
+.table-content thead {
+    background-color: yellowgreen;
+}
+
+.datepicker-container {
+    display: flex;
+    justify-content: center;
+}
+
+#date-picker {
+    text-align: center;
+
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    color: #444;
+}
