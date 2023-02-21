@@ -62,25 +62,7 @@ public class ValidateUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
         String firstName = request.getParameter("firstname");
-
-        //Generate ID
-        //firstname = request firstname
-        //lastname = request lastname
-        //usertype = request usertype
-        //
-        //generatedUsername = firstName + lastName + userDao.createID(usertype)
-        //generatedPassword = generatedUsername
-        //{username : generatedUsername
-        // password :generatedPassword}
-        
-        
-        
-        
-        String firstName = request.getParameter("username");
-
         String lastName = request.getParameter("lastname");
         String role = request.getParameter("type");
         String userID = userDao.createID(role);
