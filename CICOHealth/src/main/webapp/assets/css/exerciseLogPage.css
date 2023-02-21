@@ -7,7 +7,7 @@
 }
 
 .table-content thead {
-    background-color: yellowgreen;
+    background-color: rgb(131, 184, 46);
 }
 
 .datepicker-container {
@@ -28,7 +28,8 @@
 
 
 .title-total {
-    background-color: yellowgreen;
+    background-color: rgb(131, 184, 46);
+
     text-align: center;
     font-weight: bold;
     height: 50px;
