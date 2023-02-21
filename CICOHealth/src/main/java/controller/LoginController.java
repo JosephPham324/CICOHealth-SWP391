@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -111,13 +111,13 @@ public class LoginController extends HttpServlet {
                 return;
             }
             login = loginDao.getLoginInfo(username);
-            if (login == null ) {
+            if (login == null) {
                 response.sendRedirect("/CICOHealth/login");
                 return;
             }
             Login login1 = loginDao.getLoginInfo(username);
-            if (login1.getIsBanned() ==true) {
-                 response.sendRedirect("/CICOHealth/login");
+            if (login1.getIsBanned() == true) {
+                response.sendRedirect("/CICOHealth/login?error=database");
                 return;
             }
             try {

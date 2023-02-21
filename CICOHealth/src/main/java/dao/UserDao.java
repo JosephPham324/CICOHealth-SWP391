@@ -137,7 +137,7 @@ public class UserDao extends BaseDao {
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM [user]";
+            String query = "SELECT u.userID,u.firstName,u.lastName,u.email,u.phone,l.isBanned FROM [user] u left join [login] l on u.userID = l.userID";
             User user = null;
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -147,7 +147,8 @@ public class UserDao extends BaseDao {
                         resultSet.getString("firstName"),
                         resultSet.getString("lastName"),
                         resultSet.getString("email"),
-                        resultSet.getString("phone"));
+                        resultSet.getString("phone"),
+                        resultSet.getBoolean("isBanned"));
                 list.add(user);
             }
         } catch (Exception e) {

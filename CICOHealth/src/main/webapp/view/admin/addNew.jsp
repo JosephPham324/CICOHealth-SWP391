@@ -27,7 +27,7 @@
         </style>
         <title>Add</title>
         <style>
-            .error{
+            .error-message{
                 display: none;
             }
         </style>
@@ -82,7 +82,6 @@
                         type="text"
                         class="form-control"
                         />
-                    <i style="color: red; font-size: 12px" class="error">(*)Name has been duplicated</i>
                 </div>
             </div>
             <div class="form-group row">
@@ -101,14 +100,24 @@
             <div class="form-group row">
                 <label for="txtFirstName" class="col-4 col-form-label">Type</label>
                 <div class="col-8">
-                    <select id="cars" name="cars" style="
+<<<<<<< HEAD
+<<<<<<< HEAD
+                    <select id="type" name="type" style="
+=======
+                    <select id="userType" name="userType" style="
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+=======
+                    <select id="userType" name="userType" style="
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
                             border: 0.5px solid cornflowerblue;
                             width: 273px;
-                            height: 38px;"onchange="getValue(this)">
+                            height: 38px;"
+                            onchange="getValue(this)"
+                    >
                         <option value="0">---</option>
-                        <option value="1">ME</option>
-                        <option value="2">FE</option>
-                        <option value="3">AD</option>
+                        <option value="ME">ME</option>
+                        <option value="FE">FE</option>
+                        <option value="AD">AD</option>
                     </select>
                 </div>
             </div>
@@ -125,23 +134,46 @@
 
         <script>
             function  getValue(sel) {
-                if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
-                    var name = $("#txtFirstName").val();
+<<<<<<< HEAD
+<<<<<<< HEAD
+                if (sel.value === 'ME' || sel.value === 'FE' || sel.value === 'AD') {
+                    var firstName = $("#txtFirstName").val();
                     var lastName = $("#txtLastName").val();
-                    var result = validateUser(name, lastName);
+                    var type = $("#type option:selected").val();
+                    var result = validateUser(firstName, lastName, type);
+=======
+                if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
+                    var firstName = $("#txtFirstName").val();
+                    var lastName = $("#txtLastName").val();
+                    var result = validateUser(firstName, lastName);
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+=======
+                if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
+                    var firstName = $("#txtFirstName").val();
+                    var lastName = $("#txtLastName").val();
+                    var result = validateUser(firstName, lastName);
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
                 } else {
                     $("#txtUsername").val('');
                     $("#txtPassword").val('');
                 }
             }
 
+<<<<<<< HEAD
+            function validateUser(firstName, lastname, type) {
+                $.get("/CICOHealth/validateUserController?firstname=" + firstName + "&lastname=" + lastname[0] + "&type=" + type, function (data, status) {
+                    console.log(data);
+                    $("#txtUsername").val(data);
+                    $("#txtPassword").val(data);
+
+=======
             function validateUser(username, lastname) {
                 $.get("/CICOHealth/validateUserController?username=" + username + "&lastname=" + lastname, function (data, status) {
                     if (data === 'true') {
                         $("i").removeClass("error");
-                        $("#cars").val(0);
+                        $("#userType").val(0);
                     } else {
-                        var type = $("#cars option:selected").val();
+                        var type = $("#userType option:selected").val();
                         var name = $("#txtFirstName").val();
                         var lastName = $("#txtLastName").val();
                         if (type === '1') {
@@ -163,6 +195,7 @@
                             $("#txtPassword").val(new_userID);
                         }
                     }
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
                 });
             }
         </script>

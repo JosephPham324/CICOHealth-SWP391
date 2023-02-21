@@ -62,28 +62,38 @@ public class ValidateUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+        String firstName = request.getParameter("firstname");
+=======
+=======
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+        //Generate ID
+        //firstname = request firstname
+        //lastname = request lastname
+        //usertype = request usertype
+        //
+        //generatedUsername = firstName + lastName + userDao.createID(usertype)
+        //generatedPassword = generatedUsername
+        //{username : generatedUsername
+        // password :generatedPassword}
+        
+        
+        
+        
         String firstName = request.getParameter("username");
+>>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
         String lastName = request.getParameter("lastname");
-        List<User> list = userDao.getAllUser();
-        String flag = "";
-        for (User user : list) {
-            if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName)) {
-                flag = "true";
-                break;
-            }
-        }
-        if (flag.equals("true")) {
-            response.setContentType("text/plain"); // sets the content type
-            response.setCharacterEncoding("UTF-8"); // sets the encoding
-            String data = "true";
-            response.getWriter().write(data);
-        } else {
-            response.setContentType("text/plain"); // sets the content type
-            response.setCharacterEncoding("UTF-8"); // sets the encoding
-            String data = "false";
-            response.getWriter().write(data);
-        }
+        String role = request.getParameter("type");
+        String userID = userDao.createID(role);
+        String username = userID + firstName + lastName;
+
+        response.setContentType("text/plain"); // sets the content type
+        response.setCharacterEncoding("UTF-8"); // sets the encoding
+        String data = username;
+        response.getWriter().write(data);
+
     }
 
     /**

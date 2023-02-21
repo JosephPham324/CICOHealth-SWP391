@@ -128,27 +128,18 @@ public class LoginDao extends BaseDao {
 
     public int banUserByUserId(String userId) throws SQLException {
 
-        String query = "update [login] set isBanned = 1 where userID = ?";
+        Login login = getLoginInfoByID(userId);
+        String banned = "1";
+        if (login.getIsBanned()) {
+            banned = "0";
+        }
+        String query = "update [login] set isBanned = ? where userID = ?";
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, userId);
+        preparedStatement.setString(1, banned);
+        preparedStatement.setString(2, userId);
         int result = preparedStatement.executeUpdate();
-
         closeConnections();
-
-        return result;
-    }
-
-    public int unbanUserByUserId(String userId) throws SQLException {
-
-        String query = "update [login] set isBanned = 0 where userID = ?";
-        connection = new DBContext().getConnection();
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, userId);
-        int result = preparedStatement.executeUpdate();
-
-        closeConnections();
-
         return result;
     }
 

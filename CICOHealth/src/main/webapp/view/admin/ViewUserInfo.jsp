@@ -56,7 +56,7 @@
             <h1 class="navbar-brand mx-auto">USER INFO</h1>
         </div>
         <div class="info-container">
-            <button><a href="addNew.jsp">Add</a></button>
+            <button><a href="/CICOHealth/view/admin/addNew.jsp">Add</a></button>
             <div class="info-table">            
                 <table id="info-table" class="table table-striped table-hover display">
                     <thead>
@@ -67,6 +67,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Phone number</th>
                             <th scope="col">Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -82,8 +83,15 @@
                             <td>
                                 <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/profile/userinfo?userid=<%= list.getUserID()%>"></a> 
                                 <c:set var = "us" scope = "session" value = "<%= list.getUserID()%>"/>
-                                <a  class="banned" id="banned"
-                                    onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>                             
+                                <c:set var = "banned" scope = "session" value = "<%= list.isIsBanned()%>"/>
+                                <c:if test = "${banned}">
+                                    <a  class="unbaned" id="banned" data-value ="1" 
+                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>    
+                                    </c:if>
+                                    <c:if test = "${!banned}">
+                                    <a  class="banned" id="banned" data-value ="1" 
+                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>   
+                                    </c:if>                           
                             </td>
                         </tr>
                         <% }%>                       

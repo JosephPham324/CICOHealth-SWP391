@@ -59,19 +59,8 @@ public class UserManagementController extends HttpServlet {
         //User info parameters
         String firstName = request.getParameter("txtFirstName");
         String lastName = request.getParameter("txtLastName");
-        String option = request.getParameter("cars");
-        
-        //option is '1','2','3' then the account type will be "ME","FE","AD" respectively.
-        String type = "";
-        if (option.equals("1")) {
-            type = "ME";
-        }
-        if (option.equals("2")) {
-            type = "FE";
-        }
-        if (option.equals("3")) {
-            type = "AD";
-        }
+        String type = request.getParameter("type");
+
         //Regsiter logic
         UserDao userDao = new UserDao();
         LoginDao loginDao = new LoginDao();
@@ -83,6 +72,7 @@ public class UserManagementController extends HttpServlet {
         //Model representation
         User user = new User(userID, firstName, lastName);
         Login login;
+        HealthInfo healthInfo = new HealthInfo();
 
         AuthenticationLogic authLogic = new AuthenticationLogic();
         String passwordSalt = authLogic.getLoginSalt(username, password);//Get salt to encrypt password
@@ -99,7 +89,6 @@ public class UserManagementController extends HttpServlet {
         }
         login = new Login(userID, username, passwordHash, passwordSalt, false);
         try {
-            HealthInfo healthInfo = new HealthInfo();
             userDao.insertUserInfo(user);
             loginDao.insertLoginInfo(login);
             healthInfo.setUserID(userID);

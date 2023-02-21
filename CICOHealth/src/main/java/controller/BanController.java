@@ -68,17 +68,12 @@ public class BanController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String userid = request.getParameter("id");
-            Login login = loginDao.getLoginInfoByID(userid);
-            if (login.getIsBanned()) {
-                loginDao.unbanUserByUserId(userid);
-            } else {
-                loginDao.banUserByUserId(userid);
-            }
+            loginDao.banUserByUserId(userid);
+            
             response.setContentType("text/plain"); // sets the content type
             response.setCharacterEncoding("UTF-8"); // sets the encoding
             String data = "true";
             response.getWriter().write(data);
-            // response.sendRedirect("view/admin/ViewUserInfo.jsp");
         } catch (SQLException ex) {
             Logger.getLogger(BanController.class.getName()).log(Level.SEVERE, null, ex);
         }
