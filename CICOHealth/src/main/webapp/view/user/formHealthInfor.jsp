@@ -1,12 +1,18 @@
+<%@page import="bean.HealthInfo"%>
+<%
+    HealthInfo healthinfo = (HealthInfo) request.getAttribute("healthInfo");
+    int active = healthinfo == null ? 0 : healthinfo.getActiveness();
+    boolean gender = healthinfo == null ? true : healthinfo.getGender();
+%>
 <div class="form-group row">
     <label for="numHeight" class="col-4 col-form-label">Age</label>
     <div class="col-8">
         <input
-            value="20"
+            value="${health.age}"
             id="numAge"
             name="numAge"
             placeholder="Enter your age"
-            type="number"
+            type="text"
             class="form-control"
             />
     </div>
@@ -22,6 +28,7 @@
                 type="radio"
                 class="custom-control-input"
                 value="male"
+                <%= gender == false ? "checked" : ""%>
                 />
             <label for="radGender_0" class="custom-control-label">Male</label>
         </div>
@@ -32,6 +39,7 @@
                 type="radio"
                 class="custom-control-input"
                 value="female"
+                <%= gender == true ? "checked" : ""%>
                 />
             <label for="radGender_1" class="custom-control-label">Female</label>
         </div>
@@ -41,12 +49,11 @@
     <label for="numHeight" class="col-4 col-form-label">Height (cm)</label>
     <div class="col-8">
         <input
-            value="170"
+            value="${health.height}"
             id="numHeight"
             name="numHeight"
             placeholder="Enter your height"
-            min="10"
-            type="number"
+            type="text"
             class="form-control"
             />
     </div>
@@ -55,16 +62,16 @@
     <label for="numWeight" class="col-4 col-form-label">Weight (kg)</label>
     <div class="col-8">
         <input
-            value="60.0"
+            value="${health.weight}"
             id="numWeight"
             name="numWeight"
             placeholder="Enter your weight"
-            min="0.1"
-            type="number"
+            type="text"
             class="form-control"
             />
     </div>
 </div>
+
 <div class="form-group row">
     <label for="selectActiveness" class="col-4 col-form-label"
            >Activeness</label
@@ -77,11 +84,11 @@
             aria-describedby="selectActivenessHelpBlock"
             required="required"
             >
-            <option value="0">Sedentary - not active</option>
-            <option value="1">Lightly active</option>
-            <option value="2">Moderately active</option>
-            <option value="3">Active</option>
-            <option value="4">Extremely active</option>
+            <option value="0" <%= active == 0 ? "selected" : ""%> >Sedentary - not active</option>
+            <option value="1" <%= active == 1 ? "selected" : ""%>>Lightly active</option>
+            <option value="2" <%= active == 2 ? "selected" : ""%>>Moderately active</option>
+            <option value="3" <%= active == 3 ? "selected" : ""%>>Active</option>
+            <option value="4" <%= active == 4 ? "selected" : ""%>>Extremely active</option>
         </select>
         <span id="selectActivenessHelpBlock" class="form-text text-muted"
               >Estimate how much activity you perform during a day</span

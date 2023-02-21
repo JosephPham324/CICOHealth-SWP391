@@ -143,4 +143,21 @@ public class LoginDao extends BaseDao {
         return result;
     }
 
+    public void updateLoginInfo(Login login) {
+        String query = "UPDATE [login]\n"
+                + "SET username = ?, passwordHash = ?, passwordSalt = ?\n"
+                + "WHERE userID = ?";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, login.getUsername());
+            preparedStatement.setString(2, login.getPasswordHash());
+            preparedStatement.setString(3, login.getPasswordSalt());
+            preparedStatement.setString(4, login.getUserID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

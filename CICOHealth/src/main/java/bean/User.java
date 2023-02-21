@@ -173,9 +173,9 @@ public class User implements Serializable {
     public String toString() {
         return "bean.User[ userID=" + userID + " ]";
     }
-
-    public String getUserRole() {
-        return this.userID.substring(2, 2);
+    
+    public String getUserRole(){
+        return this.userID.substring(2,4);
     }
 
 }

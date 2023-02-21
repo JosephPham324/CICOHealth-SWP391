@@ -83,6 +83,16 @@ public class RegisterController extends HttpServlet {
             return;
         }
         if (registerHealth.equals("true")) {//If the parameter is set to true, forward to health register page
+            String username = request.getParameter("txtUsername");
+            try {
+                if (new LoginDao().getLoginInfoByUsername(username) != null) {
+                    response.sendRedirect("/CICOHealth/register?error=duplicateUsername");
+                    return;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.setAttribute("txtUsername", username);
             request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request, response);
         } else {//If user has filled both forms, process registration request
             //Login info parameters
@@ -111,9 +121,10 @@ public class RegisterController extends HttpServlet {
             LoginDao loginDao = new LoginDao();
             HealthInfoDao healthDao = new HealthInfoDao();
 
-            if (googleID != null) {
+            if (googleID != null && !googleID.isEmpty()) {
                 try {
                     if (loginDao.getLoginInfoByGoogle(googleID) != null) {
+                        System.out.println("HERE");
                         response.sendRedirect("/CICOHealth/register?error=duplicateGoogle");
                         return;
                     }
@@ -121,15 +132,6 @@ public class RegisterController extends HttpServlet {
                     Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            try {
-                if (loginDao.getLoginInfoByUsername(username) != null) {
-                    response.sendRedirect("/CICOHealth/register?error=duplicateUsername");
-                    return;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
             //Create a Member ID
             String userID = userDao.createID();
 
