@@ -1,4 +1,7 @@
 @use "../mixins/common";
+*{
+  box-sizing: border-box;
+}
 .prevent-scrolling {
   height: 100%;
   overflow: hidden;
@@ -30,6 +33,9 @@
   border-radius: 10px;
   width: auto;
   padding: 10px;
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
   @include common.flex-display(column, center, center);
   .food-item {
     @include common.flex-display(row, center, center);
