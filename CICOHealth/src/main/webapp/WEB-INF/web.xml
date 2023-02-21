@@ -3,15 +3,23 @@
     <welcome-file-list>
         <welcome-file>/view/general/index.jsp</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/view/error/error403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/view/error/error404.jsp</location>
+    </error-page>
     <!--To BE USED LATER-->
-    <!--    <filter>
+    <filter>
         <filter-name>RequestFilter</filter-name>
         <filter-class>filter.RequestFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
     <!--    <servlet>
         <servlet-name>CentralController</servlet-name>
         <servlet-class>controller.CentralController</servlet-class>
@@ -29,6 +37,10 @@
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BanController</servlet-name>
+        <servlet-class>controller.BanController</servlet-class>
     </servlet>
     <!--Log out-->
     <servlet>
@@ -80,7 +92,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
-        <url-pattern>/admin/user-management</url-pattern>
+        <url-pattern>/admin/user-management/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanController</servlet-name>
+        <url-pattern>/banController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>

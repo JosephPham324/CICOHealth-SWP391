@@ -24,7 +24,7 @@
     </head>
 
     <body>
-        <%@include file="navbar.jsp" %>
+        <%@include file="/view/general/navbar.jsp" %>
         <div class="top-content">
             <div class="container row">
                 <div class="offset-1 col-md-5 txt-left">
