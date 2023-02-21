@@ -70,6 +70,10 @@
         <servlet-name>ExerciseSearchController</servlet-name>
         <servlet-class>controller.ExerciseSearchController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FAQController</servlet-name>
+        <servlet-class>controller.FAQController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -105,6 +109,10 @@
     <servlet-mapping>
         <servlet-name>ExerciseSearchController</servlet-name>
         <url-pattern>/exercise-search/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FAQController</servlet-name>
+        <url-pattern>/faq/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

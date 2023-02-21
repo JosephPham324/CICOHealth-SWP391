@@ -105,7 +105,6 @@ public class UserDao extends BaseDao {
         } else {
             preparedStatement.setString(index++, "");
         }
-
         preparedStatement.executeUpdate();
         closeConnections();
     }
