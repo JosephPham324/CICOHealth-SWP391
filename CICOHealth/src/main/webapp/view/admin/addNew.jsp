@@ -100,15 +100,16 @@
             <div class="form-group row">
                 <label for="txtFirstName" class="col-4 col-form-label">Type</label>
                 <div class="col-8">
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                     <select id="type" name="type" style="
-=======
+
                     <select id="userType" name="userType" style="
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
-=======
+
                     <select id="userType" name="userType" style="
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+
+
+                    <select id="userType" name="userType" style="
+
                             border: 0.5px solid cornflowerblue;
                             width: 273px;
                             height: 38px;"
@@ -134,39 +135,42 @@
 
         <script>
             function  getValue(sel) {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                 if (sel.value === 'ME' || sel.value === 'FE' || sel.value === 'AD') {
                     var firstName = $("#txtFirstName").val();
                     var lastName = $("#txtLastName").val();
                     var type = $("#type option:selected").val();
                     var result = validateUser(firstName, lastName, type);
-=======
+
                 if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
                     var firstName = $("#txtFirstName").val();
                     var lastName = $("#txtLastName").val();
                     var result = validateUser(firstName, lastName);
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
-=======
+
                 if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
                     var firstName = $("#txtFirstName").val();
                     var lastName = $("#txtLastName").val();
                     var result = validateUser(firstName, lastName);
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+
+                if (sel.value === '1' || sel.value === '2' || sel.value === '3') {
+                    var firstName = $("#txtFirstName").val();
+                    var lastName = $("#txtLastName").val();
+                    var result = validateUser(firstName, lastName);
+
                 } else {
                     $("#txtUsername").val('');
                     $("#txtPassword").val('');
                 }
             }
 
-<<<<<<< HEAD
+
             function validateUser(firstName, lastname, type) {
                 $.get("/CICOHealth/validateUserController?firstname=" + firstName + "&lastname=" + lastname[0] + "&type=" + type, function (data, status) {
                     console.log(data);
                     $("#txtUsername").val(data);
                     $("#txtPassword").val(data);
 
-=======
+
             function validateUser(username, lastname) {
                 $.get("/CICOHealth/validateUserController?username=" + username + "&lastname=" + lastname, function (data, status) {
                     if (data === 'true') {
@@ -195,11 +199,10 @@
                             $("#txtPassword").val(new_userID);
                         }
                     }
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+
                 });
             }
         </script>
-
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/register.js"></script>
     </body>

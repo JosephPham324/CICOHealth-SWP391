@@ -62,13 +62,10 @@ public class ValidateUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
         String firstName = request.getParameter("firstname");
-=======
-=======
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+
         //Generate ID
         //firstname = request firstname
         //lastname = request lastname
@@ -83,7 +80,7 @@ public class ValidateUserController extends HttpServlet {
         
         
         String firstName = request.getParameter("username");
->>>>>>> c96fd4d7a5899278eea805c1b7e16932e98afd62
+
         String lastName = request.getParameter("lastname");
         String role = request.getParameter("type");
         String userID = userDao.createID(role);
