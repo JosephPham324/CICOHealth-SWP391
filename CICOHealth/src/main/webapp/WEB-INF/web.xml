@@ -3,15 +3,23 @@
     <welcome-file-list>
         <welcome-file>/view/general/index.jsp</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/view/error/error403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/view/error/error404.jsp</location>
+    </error-page>
     <!--To BE USED LATER-->
-    <!--    <filter>
+    <filter>
         <filter-name>RequestFilter</filter-name>
         <filter-class>filter.RequestFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
     <!--    <servlet>
         <servlet-name>CentralController</servlet-name>
         <servlet-class>controller.CentralController</servlet-class>
@@ -29,6 +37,10 @@
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BanController</servlet-name>
+        <servlet-class>controller.BanController</servlet-class>
     </servlet>
     <!--Log out-->
     <servlet>
@@ -54,6 +66,14 @@
         <servlet-name>ExerciseManagementController</servlet-name>
         <servlet-class>controller.ExerciseManagementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExerciseSearchController</servlet-name>
+        <servlet-class>controller.ExerciseSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FAQController</servlet-name>
+        <servlet-class>controller.FAQController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -72,8 +92,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
-        <url-pattern>/admin/user-management</url-pattern>
-        
+        <url-pattern>/admin/user-management/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanController</servlet-name>
+        <url-pattern>/banController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>
@@ -82,6 +105,14 @@
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>
         <url-pattern>/food-search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseSearchController</servlet-name>
+        <url-pattern>/exercise-search/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FAQController</servlet-name>
+        <url-pattern>/faq/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

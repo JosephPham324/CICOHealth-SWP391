@@ -53,6 +53,8 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private HealthInfo healthInfo;
 
+    private boolean isBanned;
+
     public User() {
     }
 
@@ -66,6 +68,21 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
+    }
+
+    public User(String userID, String firstName, String lastName) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(String userID, String firstName, String lastName, String email, String phone, boolean isBanned) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.isBanned = isBanned;
     }
 
     public String getUserID() {
@@ -124,6 +141,14 @@ public class User implements Serializable {
         this.healthInfo = healthInfo;
     }
 
+    public boolean isIsBanned() {
+        return isBanned;
+    }
+
+    public void setIsBanned(boolean isBanned) {
+        this.isBanned = isBanned;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -152,4 +177,5 @@ public class User implements Serializable {
     public String getUserRole(){
         return this.userID.substring(2,4);
     }
+
 }
