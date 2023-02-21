@@ -96,7 +96,6 @@ public class UserDao extends BaseDao {
         preparedStatement.setString(index++, user.getLastName());
         preparedStatement.setString(index++, user.getEmail());
         preparedStatement.setString(index++, user.getPhone());
-
         preparedStatement.executeUpdate();
         closeConnections();
     }

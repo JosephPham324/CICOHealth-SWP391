@@ -51,19 +51,15 @@ public class FAQController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String submittedBy = request.getParameter("submittedBy");
         String questionTopic = request.getParameter("questionTopic");
         String questionContent = request.getParameter("questionContent");
         // generate a new questionID
         String questionID = generateQuestionID();
-
         // create a new Question object
         Question question = new Question(questionID, submittedBy, questionTopic, questionContent);
-
         // insert the new question into the database
         new QuestionDao().insertQuestion(question);
-
         // redirect the user to a confirmation page
         response.sendRedirect("/CICOHealth/faq");
     }
