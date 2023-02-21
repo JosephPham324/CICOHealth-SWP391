@@ -23,7 +23,9 @@ CREATE TABLE login (
 );
 
 CREATE TABLE healthInfo (
-    userID varchar(10) PRIMARY KEY NOT NULL REFERENCES [user](userID),
+    userID varchar(10) NOT NULL REFERENCES [user](userID),
+	healthInfoID varchar(10) PRIMARY KEY,
+	createdDate datetime NULL,
     gender bit NOT NULL,
     height float NOT NULL,
     weight float NOT NULL,
@@ -174,3 +176,13 @@ CREATE TABLE certification (
 
 ALTER TABLE EXERCISELOG
 ADD FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID); 
+
+--Trigger to add createdDate when a new healthInfo is created
+CREATE TRIGGER addCreatedDateHealthInfo ON healthInfo AFTER INSERT AS
+BEGIN
+    UPDATE healthInfo
+    SET createdDate = GETDATE()
+    FROM healthInfo
+    WHERE healthInfo.healthInfoID = (SELECT healthInfoID from INSERTED)
+END
+

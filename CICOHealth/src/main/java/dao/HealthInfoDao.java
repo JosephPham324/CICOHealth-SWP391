@@ -13,7 +13,27 @@ public class HealthInfoDao extends BaseDao {
 
     @Override
     public String createID() {
-        return new UserDao().createID();
+        //Query to get the latest ID
+        String query = "SELECT TOP 1 healthInfoID\n"
+                + "from [healthInfo] \n"
+                + "ORDER BY healthInfoID DESC ";
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {//If there is a record in the table
+                //Generate new ID based on the record
+                closeConnections();
+                return "HLTH" + String.format("%06d", Integer.parseInt(resultSet.getString("healthInfoID").substring(4)) + 1);
+            }
+            //If not return the lowest ID
+            closeConnections();
+            return "HLTH000001";
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConnections();
+        return null;
     }
 
     @Override
@@ -22,12 +42,17 @@ public class HealthInfoDao extends BaseDao {
     }
 
     public void insertHealthInfo(HealthInfo healthInfo) throws SQLException {
-        String query = "INSERT INTO healthInfo (userID, gender, height, weight, age, activeness, tdee, dailyCalorie, dailyProtein, dailyFat, dailyCarb) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO healthInfo (userID, healthInfoID, gender, height, weight, age, activeness, tdee, dailyCalorie, dailyProtein, dailyFat, dailyCarb)\n"
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+//        System.out.println(healthInfo);
+        String id = this.createID();
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
         int index = 1;
         //Health info
         preparedStatement.setString(index++, healthInfo.getUserID());
+        preparedStatement.setString(index++, id);
         preparedStatement.setString(index++, (healthInfo.getGender() ? 0 + "" : 1 + ""));
         preparedStatement.setString(index++, healthInfo.getHeight() + "");
         preparedStatement.setString(index++, healthInfo.getWeight() + "");
@@ -46,7 +71,7 @@ public class HealthInfoDao extends BaseDao {
     }
 
     public HealthInfo getHealthInfo(String userID) {
-        String query = "select * from [healthInfo] where userID = ?";
+        String query = "select TOP 1 * from [healthInfo] where userID = ? ORDER BY healthInfoID DESC";
         connection = new DBContext().getConnection();
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -102,4 +127,12 @@ public class HealthInfoDao extends BaseDao {
         closeConnections();
     }
 
+    public static void main(String[] args) {
+        HealthInfo healthInfo = new HealthInfo("USME000001", true, 123, 123, 12, 0, 0, 0, 0, 0, 0);
+        try {
+            new HealthInfoDao().insertHealthInfo(healthInfo);
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

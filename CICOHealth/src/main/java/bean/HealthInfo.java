@@ -209,7 +209,6 @@ public class HealthInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.HealthInfo[ userID=" + userID + " ]";
+        return "HealthInfo{" + "userID=" + userID + ", gender=" + gender + ", height=" + height + ", weight=" + weight + ", age=" + age + ", activeness=" + activeness + ", tdee=" + tdee + ", dailyCalorie=" + dailyCalorie + ", dailyProtein=" + dailyProtein + ", dailyFat=" + dailyFat + ", dailyCarb=" + dailyCarb + ", user=" + user + '}';
     }
-    
 }
