@@ -107,9 +107,9 @@
                             height: 38px;"
                             onchange="getValue(this)">
                         <option value="0">---</option>
-                        <option value="ME">ME</option>
-                        <option value="FE">FE</option>
-                        <option value="AD">AD</option>
+                        <option value="ME">Member</option>
+                        <option value="FE">Fitness Expert</option>
+                        <option value="AD">Admin</option>
                     </select>
                 </div>
             </div>
@@ -134,7 +134,7 @@
             }
 
             function validateUser(firstName, lastname, type) {
-                $.get("/CICOHealth/validateUserController?firstname=" + firstName + "&lastname=" + lastname + "&type=" + type, function (data, status) {
+                $.get("/CICOHealth/admin/user-management/create-username?firstname=" + firstName + "&lastname=" + lastname + "&type=" + type, function (data, status) {
                     console.log(data);
                     $("#txtUsername").val(data);
                     $("#txtPassword").val(data);

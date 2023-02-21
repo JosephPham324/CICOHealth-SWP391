@@ -34,7 +34,6 @@
         <servlet-name>BanController</servlet-name>
         <servlet-class>controller.BanController</servlet-class>
     </servlet>
-    
     <!--Log out-->
     <servlet>
         <servlet-name>LogoutController</servlet-name>
@@ -50,16 +49,11 @@
         <servlet-name>UserManagementController</servlet-name>
         <servlet-class>controller.UserManagementController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ValidateUserController</servlet-name>
-        <servlet-class>controller.ValidateUserController</servlet-class>
-    </servlet>
     <!--Mappings-->
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -74,24 +68,12 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
-        <url-pattern>/admin/user-management</url-pattern>
+        <url-pattern>/admin/user-management/*</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>BanController</servlet-name>
         <url-pattern>/banController</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    <servlet-mapping>
-        <servlet-name>ValidateUserController</servlet-name>
-        <url-pattern>/validateUserController</url-pattern>
-    </servlet-mapping>
-    
-    
-    
-    
     <session-config>
         <session-timeout>
             30

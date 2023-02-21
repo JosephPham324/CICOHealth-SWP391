@@ -117,7 +117,7 @@ public class LoginController extends HttpServlet {
             }
             Login login1 = loginDao.getLoginInfo(username);
             if (login1.getIsBanned() == true) {
-                response.sendRedirect("/CICOHealth/login?error=database");
+                response.sendRedirect("/CICOHealth/login?error=banned");
                 return;
             }
             try {

@@ -38,6 +38,20 @@ public class UserManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String URI = request.getRequestURI();
+        if (URI.endsWith("/create-username")) {
+            String firstName = request.getParameter("firstname");
+            String lastName = request.getParameter("lastname");
+            String role = request.getParameter("type");
+            String userID = new UserDao().createID(role);
+            String username = firstName + lastName + userID;
+
+            response.setContentType("text/plain"); // sets the content type
+            response.setCharacterEncoding("UTF-8"); // sets the encoding
+            String data = username;
+            response.getWriter().write(data);
+            return;
+        }
         request.getRequestDispatcher("/view/admin/ViewUserInfo.jsp").forward(request, response);
     }
 
