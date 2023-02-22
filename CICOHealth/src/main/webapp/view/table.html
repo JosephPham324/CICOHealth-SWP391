@@ -26,7 +26,7 @@
 
 <body>
     <div class="page-wrapper chiller-theme">
-        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+        <a id="show-sidebar" class="btn btn-sm" href="#">
             <i class="fas fa-bars"></i>
         </a>
         <nav id="sidebar" class="sidebar-wrapper">
@@ -40,11 +40,11 @@
                 <div class="sidebar-menu">
                     <ul>
                         <li>
-                            <a href="/admin/employeemanager">Cardio
+                            <a href="#">Cardio
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/foodmanager">Resistance</a>
+                            <a href="#">Resistance</a>
                         </li>
                     </ul>
                 </div>
@@ -163,7 +163,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 
-
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
@@ -178,33 +177,6 @@
 </script>
 
 <script>
-    // function displayDiv() {
-    //     var x = document.getElementById("nav-content");
-    //     if (x.style.display === "none") {
-    //         x.style.display = "block";
-    //     } else {
-    //         x.style.display = "none";
-    //     }
-    // }
-
-    // window.addEventListener("load", function () {
-    //     if (window.innerWidth > 1010) {
-    //         document.getElementById("nav-content").style.display = "block";
-    //     } else {
-    //         document.getElementById("nav-content").style.display = "none";
-    //     }
-    // });
-
-    // window.addEventListener("resize", function () {
-    //     if (window.innerWidth > 1010) {
-    //         document.getElementById("nav-content").style.display = "block";
-    //     } else {
-    //         document.getElementById("nav-content").style.display = "none";
-    //     }
-    // });
-
-    // document.getElementById("menu-hamburger").addEventListener("click", displayDiv);
-
     jQuery(function ($) {
 
         $(".sidebar-dropdown > a").click(function () {

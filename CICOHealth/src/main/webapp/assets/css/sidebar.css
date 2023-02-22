@@ -495,3 +495,18 @@ body {
 #sidebar {
     margin-top: 58px;
 }
+
+.sidebar-menu ul li a:hover {
+    background-color: rgb(131, 184, 46);
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    transition: all .5s ease-in-out;
+}
+
+.btn {
+    background-color: rgb(131, 184, 46);
+}
+
+.btn:hover{
+    background-color: rgb(224, 224, 44);
+}
