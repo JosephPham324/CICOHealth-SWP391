@@ -121,12 +121,12 @@ public class RequestFilter implements Filter {
             switch (part) {
                 case "user":
                 case "admin":
-                    session = httpRequest.getSession();
-                    Object user = session.getAttribute("user");
-                    if (user == null) {
-                        request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
-                        return;
-                    }
+//                    session = httpRequest.getSession();
+//                    Object user = session.getAttribute("user");
+//                    if (user == null) {
+//                        request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
+//                        return;
+//                    }
                     break;
                 default:
                     break;
