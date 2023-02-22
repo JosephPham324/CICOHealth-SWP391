@@ -98,11 +98,11 @@ body {
     left: 0px;
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
     .page-wrapper.toggled .page-content {
         padding-left: 300px;
     }
-}
+} */
 
 /*----------------show sidebar button----------------*/
 #show-sidebar {
@@ -112,6 +112,7 @@ body {
     border-radius: 0 4px 4px 0px;
     width: 30px;
     transition-delay: 0.3s;
+    z-index: 1;
 }
 
 .page-wrapper.toggled #show-sidebar {
@@ -493,7 +494,9 @@ body {
 }
 
 #sidebar {
-    margin-top: 58px;
+    position: fixed;
+    margin-top: 170px;
+    z-index: 999;
 }
 
 .sidebar-menu ul li a:hover {
