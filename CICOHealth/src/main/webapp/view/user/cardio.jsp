@@ -45,8 +45,9 @@
                                 <th>No.</th>
                                 <th>Time</th>
                                 <th>Name</th>
-                                <th>Duration</th>
-                                <th>Kcal</th>
+                                <th>Calorie per hour</th>
+                                <th>Calorie burned</th>
+                                <th>Note</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -57,24 +58,27 @@
                                 <td>RUNNING</td>
                                 <td>30.0</td>
                                 <td>377.5</td>
+                                <td>Note</td>
                                 <td>Edit/Delete</td>
                             </tr>
 
                             <tr>
                                 <td>3</td>
                                 <td>10:28:10</td>
-                                <td>WALK</td>
+                                <td>RUNNING</td>
                                 <td>30.0</td>
                                 <td>377.5</td>
+                                <td>Note</td>
                                 <td>Edit/Delete</td>
                             </tr>
 
                             <tr>
                                 <td>4</td>
                                 <td>10:28:10</td>
-                                <td>SWING</td>
+                                <td>RUNNING</td>
                                 <td>30.0</td>
                                 <td>377.5</td>
+                                <td>Note</td>
                                 <td>Edit/Delete</td>
                             </tr>
 
@@ -84,6 +88,7 @@
                                 <td>RUNNING</td>
                                 <td>30.0</td>
                                 <td>377.5</td>
+                                <td>Note</td>
                                 <td>Edit/Delete</td>
                             </tr>
                         </tbody>

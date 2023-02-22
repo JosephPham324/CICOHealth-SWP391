@@ -45,8 +45,10 @@
                                 <th>No.</th>
                                 <th>Time</th>
                                 <th>Name</th>
-                                <th>Duration</th>
-                                <th>Kcal</th>
+                                <th>Set</th>
+                                <th>Rep</th>
+                                <th>Weight</th>
+                                <th>Note</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,26 +57,32 @@
                                 <td>1</td>
                                 <td>10:28:10</td>
                                 <td>RUNNING</td>
+                                <td>5</td>
+                                <td>12</td>
                                 <td>30.0</td>
-                                <td>377.5</td>
+                                <td>???</td>
                                 <td>Edit/Delete</td>
                             </tr>
 
                             <tr>
                                 <td>3</td>
                                 <td>10:28:10</td>
-                                <td>WALK</td>
+                                <td>RUNNING</td>
+                                <td>5</td>
+                                <td>12</td>
                                 <td>30.0</td>
-                                <td>377.5</td>
+                                <td>???</td>
                                 <td>Edit/Delete</td>
                             </tr>
 
                             <tr>
                                 <td>4</td>
                                 <td>10:28:10</td>
-                                <td>SWING</td>
+                                <td>RUNNING</td>
+                                <td>5</td>
+                                <td>12</td>
                                 <td>30.0</td>
-                                <td>377.5</td>
+                                <td>???</td>
                                 <td>Edit/Delete</td>
                             </tr>
 
@@ -82,8 +90,10 @@
                                 <td>5</td>
                                 <td>10:28:10</td>
                                 <td>RUNNING</td>
+                                <td>5</td>
+                                <td>12</td>
                                 <td>30.0</td>
-                                <td>377.5</td>
+                                <td>???</td>
                                 <td>Edit/Delete</td>
                             </tr>
                         </tbody>
