@@ -1,11 +1,14 @@
-<%-- Document : exerciseLogs Created on : Feb 9, 2023, 8:03:27 AM Author : Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
+<%-- 
+    Document   : cardio
+    Created on : Feb 22, 2023, 4:12:56 PM
+    Author     : Admin
+--%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
@@ -22,14 +25,12 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/sidebar.css">
         <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
-
-        <title>exercise Logs</title>
+        <title>Cardio</title>
     </head>
-
     <body>
-        <%@include file="navbar.jsp" %>
+        <%@include file="/view/general/navbar.jsp" %>
         <div class="page-wrapper chiller-theme">
-            <%@include file="sidebar.jsp" %>
+            <%@include file="/view/general/sidebar.jsp" %>
 
             <!-- sidebar-wrapper  -->
             <main class="page-content">
@@ -145,7 +146,6 @@
                 </div>
             </footer>
         </div>
-
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
@@ -179,5 +179,4 @@
 
         document.getElementById("menu-hamburger").addEventListener("click", displayDiv);
     </script>
-
 </html>

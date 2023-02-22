@@ -117,7 +117,7 @@
             } else {
                 x.style.display = "none";
             }
-        }
+        };
 
         window.addEventListener("load", function () {
             if (window.innerWidth > 1010) {

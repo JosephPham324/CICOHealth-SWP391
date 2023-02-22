@@ -65,8 +65,9 @@
                             <th>No.</th>
                             <th>Time</th>
                             <th>Name</th>
-                            <th>Duration</th>
-                            <th>Kcal</th>
+                            <th>Calorie per hour</th>
+                            <th>Calorie burned</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -77,25 +78,31 @@
                             <td>RUNNING</td>
                             <td>30.0</td>
                             <td>377.5</td>
-                            <td>Edit/Delete</td>
+                            <td>Note</td>
+                            <td><a href="#" id="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
+                                    href="#"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
 
                         <tr>
                             <td>3</td>
                             <td>10:28:10</td>
-                            <td>WALK</td>
+                            <td>RUNNING</td>
                             <td>30.0</td>
                             <td>377.5</td>
-                            <td>Edit/Delete</td>
+                            <td>Note</td>
+                            <td><a href="#" id="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
+                                    href="#"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
 
                         <tr>
                             <td>4</td>
                             <td>10:28:10</td>
-                            <td>SWING</td>
+                            <td>RUNNING</td>
                             <td>30.0</td>
                             <td>377.5</td>
-                            <td>Edit/Delete</td>
+                            <td>Note</td>
+                            <td><a href="#" id="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
+                                    href="#"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
 
                         <tr>
@@ -104,7 +111,9 @@
                             <td>RUNNING</td>
                             <td>30.0</td>
                             <td>377.5</td>
-                            <td>Edit/Delete</td>
+                            <td>Note</td>
+                            <td><a href="#" id="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
+                                    href="#"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -134,6 +143,91 @@
             </div>
         </main>
     </div>
+
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+            display: none;
+        }
+
+        .pop-up-edit {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            background-color: #fff;
+            z-index: 2;
+            border-radius: 20px;
+        }
+
+        .txt-title-pop-up {
+            text-align: center;
+        }
+
+        .edit-exercise-log-form {
+            margin-top: 10%;
+            height: 340px;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+    </style>
+    <div class="pop-up-container">
+        <div class="overlay" id="overlay">
+            <div class="pop-up-edit">
+                <form action="exercise-log" method="post" name="edit-exercise-log-form" class="edit-exercise-log-form">
+                    <h2 class="txt-title-pop-up">Edit Exercise Logs</h2>
+                    <div class="form-group row">
+                        <label for="txtDate" class="offset-1 col-3 col-form-label">Date</label>
+                        <div class="col-7" id="password-field">
+                            <input id="txtDate" name="txtDate" type="datetime" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtTime" class="offset-1 col-3 col-form-label">Time</label>
+                        <div class="col-7">
+                            <input id="txtTime" name="txtTime" type="time" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtName" class="offset-1 col-3 col-form-label">Name</label>
+                        <div class="col-7">
+                            <input id="txtName" name="txtName" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtCaloriePerHour" class="offset-1 col-3 col-form-label">Calorie per hour</label>
+                        <div class="col-7">
+                            <input id="txtCaloriePerHour" name="txtCaloriePerHour" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtCalorieBurned" class="offset-1 col-3 col-form-label">Calorie burned</label>
+                        <div class="col-7">
+                            <input id="txtCalorieBurned" name="txtCalorieBurned" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-2">
+                            <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                        </div>
+                        <div class="offset-1 col-2">
+                            <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="wrapper">
         <footer>
             <div class="row block-footer">
@@ -198,9 +292,22 @@
             $(".page-wrapper").addClass("toggled");
         });
     });
+</script>
 
+<script>
+    // Lấy thẻ a và khối div cần hiển thị
+    const btnEditPopUp = document.getElementById("btn-edit-pop-up");
+    const overlay = document.getElementById("overlay");
+    const cancelButton = document.getElementById("btn-cancel");
+    // Gắn hàm xử lý sự kiện cho thẻ a
+    btnEditPopUp.addEventListener("click", function (event) {
+        // Thay đổi thuộc tính display của khối div thành "block" để hiển thị nó
+        overlay.style.display = "block";
+    });
 
-
+    cancelButton.addEventListener('click', () => {
+        overlay.style.display = 'none';
+    });
 
 </script>
 
