@@ -70,7 +70,7 @@ label #btn {
 label #cancel {
     z-index: 1111;
     left: -195px;
-    top: 17px;
+    /* top: 17px; */
     font-size: 30px;
     columns: #0a5275;
     padding: 4px 9px;
