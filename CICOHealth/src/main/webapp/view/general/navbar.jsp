@@ -5,7 +5,7 @@
             <li class="nav-link"><a href="#" class="menu-item">Home</a></li>
             <li class="nav-link"><a href="#" class="menu-item">Food</a></li>
             <li class="nav-link"><a href="#" class="menu-item">Exercise</a></li>
-            <li class="nav-link dropdown"><a href="#" class="menu-item">Utilities <i class="fa-solid fa-caret-down"></i></a>
+            <li class="nav-link dropdown"><a href="#" class="menu-item">Utilities<i class="fa-solid fa-caret-down"></i></a>
                 <ul class="dropdown-menu">
                     <li class="dropdown-item"><a href="#">Convert Unit</a></li>
                     <li class="dropdown-item"><a href="#">Timer</a></li>

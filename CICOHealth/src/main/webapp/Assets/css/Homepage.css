@@ -107,6 +107,7 @@ a {
 
     .menu-hamburger {
         display: block;
+        cursor: pointer;
     }
 
     .nav-content {
