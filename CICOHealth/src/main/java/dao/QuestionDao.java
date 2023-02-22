@@ -72,10 +72,11 @@ public class QuestionDao extends BaseDao {
     public void insertQuestion(Question question) {
         try {
             PreparedStatement statement = connection.prepareStatement(INSERT);
-            statement.setString(1, question.getQuestionID());
-            statement.setString(2, question.getSubmittedBy());
-            statement.setString(3, question.getQuestionTopic());
-            statement.setString(4, question.getQuestionContent());
+            int index = 1;
+            statement.setString(index++, question.getQuestionID());
+            statement.setString(index++, question.getSubmittedBy());
+            statement.setString(index++, question.getQuestionTopic());
+            statement.setString(index++, question.getQuestionContent());
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDao.class.getName()).log(Level.SEVERE, null, ex);

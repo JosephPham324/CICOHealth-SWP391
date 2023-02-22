@@ -61,7 +61,7 @@ public class FAQController extends HttpServlet {
         // insert the new question into the database
         new QuestionDao().insertQuestion(question);
         // redirect the user to a confirmation page
-        response.sendRedirect("/CICOHealth/faq");
+        response.sendRedirect("/CICOHealth/faq?submit=success");
     }
 
     public String generateQuestionID() {
