@@ -140,13 +140,14 @@ a {
 .wrapper {
     position: relative;
     display: flex;
+    margin-top: 100px;
 }
 
 .wrapper {
     position: relative;
     top: 250px;
     bottom: 0;
-}
+} 
 
 footer {
     background-color: rgb(131, 184, 46);

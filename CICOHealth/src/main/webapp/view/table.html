@@ -13,268 +13,45 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+
     <title>Document</title>
 </head>
 
 <body>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        header {
-            display: flex;
-            padding: 0px 20px;
-            justify-content: space-between;
-            background-color: rgb(131, 184, 46);
-        }
-
-        a {
-            text-decoration: none;
-            color: black;
-            font-size: 20px;
-            font-weight: 600;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        }
-
-        .menu-item:hover {
-            color: yellow;
-        }
-
-        .logo {
-            width: 20%;
-            padding: 26px;
-            align-items: center;
-        }
-
-        .txt-logo {
-            font-size: 24px;
-            font-weight: bolder;
-        }
-
-        .menu {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-link {
-            padding: 26px;
-            position: relative;
-        }
-
-        .dropdown-menu {
-            margin-top: 20px;
-            position: absolute;
-            background-color: rgb(100, 149, 22);
-            list-style: none;
-            width: 150px;
-            display: none;
-        }
-
-        .dropdown-item {
-            padding: 12px;
-            border-bottom: 1px solid #000;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-item:hover {
-            background-color: yellow;
-        }
-
-        .nav-btn {
-            object-fit: cover;
-        }
-
-        .btn-item {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 20px;
-        }
-
-        .btn-item:hover {
-            background-color: yellow;
-        }
-
-        .top-content {
-            background-image: url('https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_1500,w_2000,f_auto,q_auto/92/Fpu4Kn6pkM7K14LvJqmX_aBxbZSl.jpg_xi9bds.jpg');
-            object-fit: cover;
-            width: 100%;
-            height: 800px;
-            /* justify-content: center; */
-        }
-
-        .txt-left {
-            margin-top: 20%;
-            font-size: 30px;
-        }
-
-        .menu-hamburger {
-            display: none;
-            position: absolute;
-            top: 24px;
-            right: 20px;
-        }
-
-        @media screen and (max-width: 1010px) {
-            .header {
-                padding: 0;
-            }
-
-            .menu-hamburger {
-                display: block;
-            }
-
-            .nav-content {
-                top: 0;
-                left: 0;
-                position: absolute;
-                background-color: rgb(100, 149, 22, 0.20);
-                backdrop-filter: blur(9px);
-                width: 100%;
-                height: 95vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .menu {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-top: 20%;
-            }
-
-            .footer-left,
-            .footer-right {
-                width: 100%;
-                float: none;
-            }
-        }
-
-        .wrapper {
-            position: relative;
-            display: flex;
-        }
-
-        .wrapper {
-            margin-top: 100px;
-            position: relative;
-            top: 250px;
-            bottom: 0;
-        }
-
-        footer {
-            background-color: rgb(131, 184, 46);
-            height: 250px;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-
-        .footer-content {
-            color: white;
-            align-items: center;
-            font-size: 20px;
-        }
-
-        .school-name {
-            color: yellow;
-        }
-
-        .block-footer {
-            margin-top: 20px;
-        }
-
-        @media screen and (max-width: 722px) {
-            footer {
-                background-color: rgb(131, 184, 46);
-                height: 220px;
-                width: 100%;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-            }
-
-            .footer-content {
-                font-size: 14px;
-            }
-        }
-
-        @media screen and (max-width: 695px) {
-            footer {
-                background-color: rgb(131, 184, 46);
-                height: 200px;
-                width: 100%;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-            }
-
-            .footer-content {
-                font-size: 10px;
-            }
-        }
-
-        @media screen and (max-width: 360px) {
-            footer {
-                background-color: rgb(131, 184, 46);
-                height: 220px;
-                width: 100%;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-            }
-
-            .footer-content {
-                font-size: 10px;
-            }
-        }
-    </style>
-    <header class="header">
-        <div class="logo txt-logo">CICOHealth</div>
-        <div class="nav-content" id="nav-content">
-            <ul class="menu">
-                <li class="nav-link"><a href="#" class="menu-item">Home</a></li>
-                <li class="nav-link"><a href="#" class="menu-item">Food</a></li>
-                <li class="nav-link"><a href="#" class="menu-item">Exercise</a></li>
-                <li class="nav-link dropdown"><a href="#" class="menu-item">Utilities <i
-                            class="fa-solid fa-caret-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="#">Convert Unit</a></li>
-                        <li class="dropdown-item"><a href="#">Timer</a></li>
+    <div class="page-wrapper chiller-theme">
+        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+            <i class="fas fa-bars"></i>
+        </a>
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    <a href="#">Manager</a>
+                    <div id="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="/admin/employeemanager">Quản lý nhân viên
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/foodmanager">Quản lý thức ăn</a>
+                        </li>
+                        <li>
+                            <a href="/admin/report">Xem báo cáo </a>
+                        </li>
+                        <li>
+                            <a href="/admin/oldfood">Các món ăn đã dừng kinh doanh</a>
+                        </li>
                     </ul>
-                </li>
-                <li class="nav-link"><a href="#" class="menu-item">FAQ</a></li>
-                <li class="nav-link nav-btn"><a href="#" class="btn-item">Login</a></li>
-                <li class="nav-link nav-btn"><a href="#" class="btn-item">Register</a></li>
-            </ul>
-        </div>
-        <div class="menu-hamburger" id="menu-hamburger">
-            <img src="./assets/img/icon.png" alt="menu-hamburger">
-        </div>
-    </header>
-    <nav class="side-bar">
-        <input type="checkbox" id="check">
-        <label for="check">
-            <i class="fa-solid fa-bars" id="btn"></i>
-            <i class="fa-solid fa-xmark" id="cancel"></i>
-        </label>
-        <div class="sidebar">
-            <header>
-                CICOHealth
-            </header>
-            <ul>
-                <li><a href="#"><i class="fa-solid fa-heart"></i>Cardio</a></li>
-                <li><a href="#"><i class="fa-solid fa-shield"></i>Resistance</a></li>
-            </ul>
-        </div>
-        <main>
+                </div>
+        </nav>
+
+        <!-- sidebar-wrapper  -->
+        <main class="page-content">
             <div class="container">
                 <h1 class="txt-title">LIST OF CARDIO EXERCISES</h1>
                 <div class="datepicker-container">
@@ -355,7 +132,7 @@
                 </div>
             </div>
         </main>
-    </nav>
+    </div>
     <div class="wrapper">
         <footer>
             <div class="row block-footer">
@@ -373,16 +150,19 @@
                     <p>Pham Tan Phat</p>
                 </div>
                 <div class="col-3 footer-content">
-                    <p>© 2023 All rights reserved. Our website services, content, and products are for informational
+                    <p>© 2023 All rights reserved. Our website services, content, and products are for
+                        informational
                         purposes only. Nutrition does not provide medical advice, diagnosis, or treatment.</p>
                 </div>
             </div>
-
         </footer>
     </div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
@@ -397,32 +177,58 @@
 </script>
 
 <script>
-    function displayDiv() {
-        var x = document.getElementById("nav-content");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
+    // function displayDiv() {
+    //     var x = document.getElementById("nav-content");
+    //     if (x.style.display === "none") {
+    //         x.style.display = "block";
+    //     } else {
+    //         x.style.display = "none";
+    //     }
+    // }
 
-    window.addEventListener("load", function () {
-        if (window.innerWidth > 1010) {
-            document.getElementById("nav-content").style.display = "block";
-        } else {
-            document.getElementById("nav-content").style.display = "none";
-        }
+    // window.addEventListener("load", function () {
+    //     if (window.innerWidth > 1010) {
+    //         document.getElementById("nav-content").style.display = "block";
+    //     } else {
+    //         document.getElementById("nav-content").style.display = "none";
+    //     }
+    // });
+
+    // window.addEventListener("resize", function () {
+    //     if (window.innerWidth > 1010) {
+    //         document.getElementById("nav-content").style.display = "block";
+    //     } else {
+    //         document.getElementById("nav-content").style.display = "none";
+    //     }
+    // });
+
+    // document.getElementById("menu-hamburger").addEventListener("click", displayDiv);
+
+    jQuery(function ($) {
+
+        $(".sidebar-dropdown > a").click(function () {
+            //        $(".sidebar-submenu").slideUp(200);
+            if ($(this).parent().hasClass("active")) {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this).parent().removeClass("active");
+            } else {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this).next(".sidebar-submenu").slideDown(200);
+                $(this).parent().addClass("active");
+            }
+        });
+
+        $("#close-sidebar").click(function () {
+            $(".page-wrapper").removeClass("toggled");
+        });
+        $("#show-sidebar").click(function () {
+            $(".page-wrapper").addClass("toggled");
+        });
     });
 
-    window.addEventListener("resize", function () {
-        if (window.innerWidth > 1010) {
-            document.getElementById("nav-content").style.display = "block";
-        } else {
-            document.getElementById("nav-content").style.display = "none";
-        }
-    });
 
-    document.getElementById("menu-hamburger").addEventListener("click", displayDiv);
+
+
 </script>
 
 </html>
