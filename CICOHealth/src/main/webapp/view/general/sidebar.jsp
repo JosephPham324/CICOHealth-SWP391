@@ -4,7 +4,7 @@
 <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
         <div class="sidebar-brand">
-            <a href="#">CICOHealth</a>
+            <a href="#">View</a>
             <div id="close-sidebar">
                 <i class="fas fa-times"></i>
             </div>
