@@ -55,6 +55,21 @@ public class ExerciseDao extends BaseDao {
 
     }
 
+    public void insertExercise(Exercise exercise) {
+        String query = "INSERT INTO EXERCISE\n"
+                + "VALUES(?,?,?,?)";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, exercise.getExerciseID());
+            preparedStatement.setString(2, exercise.getExerciseName());
+            preparedStatement.setString(3, exercise.getExerciseDescription());
+            preparedStatement.setDouble(4, exercise.getCaloriesPerHour());
+            preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     public void deleteExercise(String exerciseID) {
         try {
             String sql = "DELETE FROM exercise WHERE EXERCISEID = ?";
@@ -64,6 +79,27 @@ public class ExerciseDao extends BaseDao {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+    }
+
+    public void updateExercise(Exercise exercise) {
+        try {
+            String sql = "UPDATE [exercise] SET exerciseName = ?, exerciseDescription = ?, caloriesPerHour = ? "
+                    + "WHERE exerciseID = ?";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            int index = 1;
+            preparedStatement.setString(index++,exercise.getExerciseName());
+            preparedStatement.setString(index++,exercise.getExerciseDescription());
+            preparedStatement.setString(index++,exercise.getCaloriesPerHour()+"");
+            preparedStatement.setString(index++,exercise.getExerciseID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
         }
         closeConnections();
     }

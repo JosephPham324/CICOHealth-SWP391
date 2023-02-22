@@ -38,6 +38,10 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BanController</servlet-name>
+        <servlet-class>controller.BanController</servlet-class>
+    </servlet>
     <!--Log out-->
     <servlet>
         <servlet-name>LogoutController</servlet-name>
@@ -69,6 +73,10 @@
     <servlet>
         <servlet-name>MealLogController</servlet-name>
         <servlet-class>controller.MealLogController</servlet-class>
+  </servlet>
+  <servlet>
+        <servlet-name>FAQController</servlet-name>
+        <servlet-class>controller.FAQController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -88,7 +96,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
-        <url-pattern>/admin/user-management</url-pattern>
+        <url-pattern>/admin/user-management/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanController</servlet-name>
+        <url-pattern>/banController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>
@@ -105,6 +117,10 @@
     <servlet-mapping>
         <servlet-name>MealLogController</servlet-name>
         <url-pattern>/user/meal-logs/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FAQController</servlet-name>
+        <url-pattern>/faq/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
