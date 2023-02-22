@@ -340,18 +340,10 @@ function displayMealForm() {
     let rowHTML = `
     <tr>
       <td>${food.foodName}</td>
-      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(
-        0
-      )}</td>
-      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(
-        1
-      )}</td>
-      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(
-        1
-      )}</td>
-      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(
-        1
-      )}</td>
+      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(0)}</td>
+      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
       <td>${food.servingWeight}</td>
       <td>
         <input id="weight-${food.foodName}" 
@@ -410,9 +402,21 @@ function displayMealForm() {
       >
     </div>
   </div> 
-  
     `;
   mealForm.innerHTML += htmlMealName;
+
+  //Add meal log note
+  let htmlMealNote = `
+  <div class="form-group row">
+    <label for="meal-note" class="col-4 col-form-label">Meal Note</label>
+    <div class="col-8">
+      <textarea id="meal-note" name="meal-note" cols="40" rows="5" class="form-control"
+      value="${logNote}"
+      oninput='logNote = this.value;'></textarea>
+    </div>
+  </div>
+  `;
+  mealForm.innerHTML += htmlMealNote;
 
   //Add submit button to meal form
   mealForm.innerHTML += `
@@ -462,11 +466,15 @@ function updateFoodItem(foodName, weight) {
 //Submit meal form
 function requestLogCreation() {
   let formParams = {
-    mealName: document.getElementById("meal-name").value,
-    foods: JSON.stringify(selectedFoods),
+    mealLog: JSON.stringify({
+      mealLogName: document.getElementById("meal-name").value,
+      foods: selectedFoods,
+      logNote: document.getElementById("meal-note").value,
+    }),
   };
   console.log(formParams);
-  // post("/CICOHealth/user/meal-logs", formParams);
+  post("/CICOHealth/user/meal-logs", formParams);
 }
 
-let mealName = '';
+let mealName = "";
+let logNote = "";

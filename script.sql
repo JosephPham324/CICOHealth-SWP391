@@ -67,7 +67,8 @@ CREATE TABLE mealLogItem (
     proteinPerServing float NOT NULL,
     fatPerServing float NOT NULL,
     carbPerServing float NOT NULL,
-    caloriePerServing float NOT NULL
+    caloriePerServing float NOT NULL,
+	actualWeight float NOT NULL
 );
 
 CREATE TABLE exercise (

@@ -66,6 +66,10 @@
         <servlet-name>ExerciseSearchController</servlet-name>
         <servlet-class>controller.ExerciseSearchController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MealLogController</servlet-name>
+        <servlet-class>controller.MealLogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -97,6 +101,10 @@
     <servlet-mapping>
         <servlet-name>ExerciseSearchController</servlet-name>
         <url-pattern>/exercise-search/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MealLogController</servlet-name>
+        <url-pattern>/user/meal-logs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
