@@ -33,7 +33,7 @@ noteButtons.forEach(button => {
 
 cancelButton.forEach(button => {
     button.addEventListener('click', () => {
-        notePopUp.style.display = 'none';
         editPopUp.style.display = 'none';
+        notePopUp.style.display = 'none';
     });
 });
