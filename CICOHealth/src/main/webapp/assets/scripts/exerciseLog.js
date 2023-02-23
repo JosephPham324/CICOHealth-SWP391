@@ -14,25 +14,26 @@ datePicker.addEventListener("change", function () {
 const cancelButton = document.querySelectorAll("#btn-cancel");
 const editButtons = document.querySelectorAll('.btn-edit-pop-up');
 const noteButtons = document.querySelectorAll('.btn-note-pop-up');
-const editOverlay = document.querySelector('.edit-overlay');
-const noteOverlay = document.querySelector('.note-overlay');
-
+// const editOverlay = document.querySelector('.edit-overlay');
+// const noteOverlay = document.querySelector('.note-overlay');
+const editPopUp = document.querySelector('.edit-pop-up');
+const notePopUp = document.querySelector('.note-pop-up');
 
 editButtons.forEach(button => {
     button.addEventListener('click', () => {
-        editOverlay.style.display = 'block';
+        editPopUp.style.display = 'block';
     });
 });
 
 noteButtons.forEach(button => {
     button.addEventListener('click', () => {
-        noteOverlay.style.display = 'block';
+        notePopUp.style.display = 'block';
     });
 });
 
 cancelButton.forEach(button => {
     button.addEventListener('click', () => {
-        noteOverlay.style.display = 'none';
-        editOverlay.style.display = 'none';
+        notePopUp.style.display = 'none';
+        editPopUp.style.display = 'none';
     });
 });

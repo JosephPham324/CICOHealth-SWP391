@@ -1,3 +1,9 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+* {
+  box-sizing: border-box;
+}
+
 .container {
   margin-top: 5%;
 }
@@ -72,21 +78,38 @@
   text-align: center;
 }
 
-/* pop-up  */
-.edit-overlay,
-.note-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+.prevent-scrolling {
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1;
-  display: none;
+  overflow: hidden;
 }
 
-.edit-pop-up,
-.note-pop-up {
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  display: block;
+  position: fixed;
+}
+.pop-up > .pop-up-content {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+.pop-up .edit-pop-up-content,
+.pop-up .note-pop-up-content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -96,16 +119,13 @@
   z-index: 2;
   border-radius: 20px;
 }
-
-.txt-title-pop-up {
+.pop-up .txt-title-pop-up {
   text-align: center;
 }
-
-.edit-exercise-log-form {
+.pop-up .edit-exercise-log-form {
   margin-top: 10%;
   height: 340px;
 }
-
-.form-group {
+.pop-up .form-group {
   margin-bottom: 8px;
 }/*# sourceMappingURL=exercisLog.css.map */
