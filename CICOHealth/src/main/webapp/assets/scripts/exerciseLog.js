@@ -35,10 +35,3 @@ cancelButton.forEach(button => {
         editPopUp.style.display = 'none';
     });
 });
-
-cancelButton.forEach(button => {
-    button.addEventListener('click', () => {
-        editPopUp.style.display = 'none';
-        notePopUp.style.display = 'none';
-    });
-});

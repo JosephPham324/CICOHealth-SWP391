@@ -117,7 +117,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1 !important;
 }
-.pop-up .edit-pop-up-content {
+.pop-up .edit-pop-up-content, .pop-up .note-pop-up-content {
   position: fixed;
   top: 50%;
   left: 50%;
