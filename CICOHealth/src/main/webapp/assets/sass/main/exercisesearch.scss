@@ -1,0 +1,20 @@
+@use "../mixins/common";
+@use "../modules/popup";
+
+#info-table{
+    tbody tr{
+        cursor: pointer;
+        &:hover{
+            background-color: #f5f5f5;
+        }
+    }
+}
+
+#create-log-form{
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y:scroll;
+    @include common.flex-display(column, normal, normal);
+}
