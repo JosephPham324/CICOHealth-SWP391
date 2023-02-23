@@ -11,7 +11,7 @@
   max-height: 80vh;
   overflow-x: hidden;
   overflow-y: scroll;
-  @include common.flex-display(column, center, center);
+  @include common.flex-display(column, normal, normal);
   .food-item {
     @include common.flex-display(row, center, center);
     .food-item-name,
