@@ -1,5 +1,10 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
+.no-scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
 .pop-up {
   position: absolute;
   top: 50%;
@@ -11,7 +16,7 @@
   display: block;
   position: fixed;
 }
-.pop-up > * {
+.pop-up > .pop-up-content {
   position: relative;
   z-index: 5;
 }
@@ -24,13 +29,4 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1 !important;
-}
-.pop-up .content {
-  background-color: white;
-  padding: 10px;
-  border-radius: 20px;
-}
-
-.edit-button {
-  cursor: pointer;
 }/*# sourceMappingURL=exercisemanagement.css.map */
