@@ -24,6 +24,7 @@
             </select>
             <br>
             Content: <input type="text" name="questionContent"><br>
+            <input type="hidden" name="btnAdd" value="Add">
             <button type="submit" name="btnSubmitQuestion">Submit new question</button>
         </form>
         <button><a href="/CICOHealth/faq/questions">View Question</a></button>

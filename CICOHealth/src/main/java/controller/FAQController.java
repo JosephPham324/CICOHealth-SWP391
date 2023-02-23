@@ -51,17 +51,43 @@ public class FAQController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String submittedBy = request.getParameter("submittedBy");
-        String questionTopic = request.getParameter("questionTopic");
-        String questionContent = request.getParameter("questionContent");
-        // generate a new questionID
-        String questionID = generateQuestionID();
-        // create a new Question object
-        Question question = new Question(questionID, submittedBy, questionTopic, questionContent);
-        // insert the new question into the database
-        new QuestionDao().insertQuestion(question);
-        // redirect the user to a confirmation page
-        response.sendRedirect("/CICOHealth/faq");
+
+        String add = request.getParameter("btnAdd");
+        if (add != null && add.equals("Add")) {
+            String submittedBy = request.getParameter("submittedBy");
+            String questionTopic = request.getParameter("questionTopic");
+            String questionContent = request.getParameter("questionContent");
+            // generate a new questionID
+            String questionID = generateQuestionID();
+            // create a new Question object
+            Question question = new Question(questionID, submittedBy, questionTopic, questionContent);
+            // insert the new question into the database
+            new QuestionDao().insertQuestion(question);
+            // redirect the user to a confirmation page
+            response.sendRedirect("/CICOHealth/faq");
+        }
+        String method = request.getParameter("_method");
+        if (method != null && method.equals("Delete")) {
+            doDelete(request, response);
+            return;
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String questionID = request.getParameter("id_question");
+            // generate a new questionID
+            QuestionDao questionDao = new QuestionDao();
+            // create a new Question object
+            questionDao.deleteQuestion(questionID);
+            // delete question into the database
+            response.sendRedirect("/CICOHealth/faq/questions");
+            // redirect the user to a confirmation page
+        } catch (Exception e) {
+        }
+
     }
 
     public String generateQuestionID() {
