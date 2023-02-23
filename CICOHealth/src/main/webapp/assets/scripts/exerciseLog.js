@@ -14,8 +14,6 @@ datePicker.addEventListener("change", function () {
 const cancelButton = document.querySelectorAll("#btn-cancel");
 const editButtons = document.querySelectorAll('.btn-edit-pop-up');
 const noteButtons = document.querySelectorAll('.btn-note-pop-up');
-// const editOverlay = document.querySelector('.edit-overlay');
-// const noteOverlay = document.querySelector('.note-overlay');
 const editPopUp = document.querySelector('.edit-pop-up');
 const notePopUp = document.querySelector('.note-pop-up');
 
@@ -35,5 +33,12 @@ cancelButton.forEach(button => {
     button.addEventListener('click', () => {
         notePopUp.style.display = 'none';
         editPopUp.style.display = 'none';
+    });
+});
+
+cancelButton.forEach(button => {
+    button.addEventListener('click', () => {
+        editPopUp.style.display = 'none';
+        notePopUp.style.display = 'none';
     });
 });
