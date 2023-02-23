@@ -20,48 +20,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/sidebar.css">
     <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/popup.css">
 
     <title>Document</title>
 </head>
 
 <body>
     <style>
-        .edit-overlay,
-        .note-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1;
-            display: none;
-        }
-
-        .edit-pop-up,
-        .note-pop-up {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            background-color: #fff;
-            z-index: 2;
-            border-radius: 20px;
-        }
-
-        .txt-title-pop-up {
-            text-align: center;
-        }
-
-        .edit-exercise-log-form {
-            margin-top: 10%;
-            height: 340px;
-        }
-
-        .form-group {
-            margin-bottom: 8px;
-        }
         main{
             position: relative;
             z-index: 0;
@@ -310,47 +275,13 @@
             </div>
         </footer>
     </div>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="/CICOHealth/src/main/webapp/assets/scripts/navbar.js"></script>
+<script src="/CICOHealth/src/main/webapp/assets/scripts/exerciseLog.js"></script>
+<script src="/CICOHealth/src/main/webapp/assets/scripts/sidebar.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
-
-    const datePicker = document.getElementById("date-picker");
-
-    datePicker.addEventListener("change", function () {
-        const selectedDate = new Date(datePicker.value);
-        console.log(selectedDate);
-    });
-</script>
-
-<script>
-    jQuery(function ($) {
-
-        $(".sidebar-dropdown > a").click(function () {
-            //        $(".sidebar-submenu").slideUp(200);
-            if ($(this).parent().hasClass("active")) {
-                $(".sidebar-dropdown").removeClass("active");
-                $(this).parent().removeClass("active");
-            } else {
-                $(".sidebar-dropdown").removeClass("active");
-                $(this).next(".sidebar-submenu").slideDown(200);
-                $(this).parent().addClass("active");
-            }
-        });
-
-        $("#close-sidebar").click(function () {
-            $(".page-wrapper").removeClass("toggled");
-        });
-        $("#show-sidebar").click(function () {
-            $(".page-wrapper").addClass("toggled");
-        });
-    });
-</script>
 
 <script>
 
@@ -386,35 +317,6 @@
             editOverlay.style.display = 'none';
         });
     });
-</script>
-
-<script>
-    function displayDiv() {
-        var x = document.getElementById("nav-content");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    };
-
-    window.addEventListener("load", function () {
-        if (window.innerWidth > 1010) {
-            document.getElementById("nav-content").style.display = "block";
-        } else {
-            document.getElementById("nav-content").style.display = "none";
-        }
-    });
-
-    window.addEventListener("resize", function () {
-        if (window.innerWidth > 1010) {
-            document.getElementById("nav-content").style.display = "block";
-        } else {
-            document.getElementById("nav-content").style.display = "none";
-        }
-    });
-
-    document.getElementById("menu-hamburger").addEventListener("click", displayDiv);
 </script>
 
 </html>

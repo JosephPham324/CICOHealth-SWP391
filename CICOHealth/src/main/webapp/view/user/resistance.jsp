@@ -24,6 +24,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/sidebar.css">
         <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/popup.css">
 
         <title>Resistance</title>
     </head>
@@ -126,6 +127,84 @@
             </main>
 
         </div>
+        <!-- pop-up-edit -->
+    <div class="pop-up-container">
+        <div class="edit-overlay" id="overlay">
+            <div class="edit-pop-up">
+                <form action="exercise-log" method="post" name="edit-exercise-log-form" class="edit-exercise-log-form">
+                    <h2 class="txt-title-pop-up">Edit Exercise Logs</h2>
+                    <div class="form-group row">
+                        <label for="txtDate" class="offset-1 col-3 col-form-label">Date</label>
+                        <div class="col-7">
+                            <input id="txtDate" name="txtDate" type="datetime" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtTime" class="offset-1 col-3 col-form-label">Time</label>
+                        <div class="col-7">
+                            <input id="txtTime" name="txtTime" type="time" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtName" class="offset-1 col-3 col-form-label">Name</label>
+                        <div class="col-7">
+                            <input id="txtName" name="txtName" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtSet" class="offset-1 col-3 col-form-label">Set</label>
+                        <div class="col-7">
+                            <input id="txtSet" name="txtSet" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtRep" class="offset-1 col-3 col-form-label">Rep</label>
+                        <div class="col-7">
+                            <input id="txtCaltxtReprieBurned" name="txtRep" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtWeight" class="offset-1 col-3 col-form-label">Weight</label>
+                        <div class="col-7">
+                            <input id="txtWeight" name="txtWeight" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-4 col-2">
+                            <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
+                        </div>
+                        <div class="offset-1 col-2">
+                            <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- pop-up-notes -->
+    <div class="pop-up-container">
+        <div class="note-overlay" id="overlay">
+            <div class="note-pop-up">
+                <h2 class="txt-title-pop-up">Notes Exercise Logs</h2>
+
+                <div class="form-group row">
+                    <div class="offset-1 col-10">
+                        <textarea id="txtNote" name="txtNote" type="text" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="offset-3 col-2">
+                        <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
+                    </div>
+                    <div class="offset-1 col-2">
+                        <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         <div class="wrapper">
             <footer>
                 <div class="row block-footer">
@@ -156,32 +235,5 @@
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="/CICOHealth/src/main/webapp/assets/scripts/exerciseLog.js"></script>
     <script src="/CICOHealth/src/main/webapp/assets/scripts/sidebar.js"></script>
-    <script>
-        function displayDiv() {
-            var x = document.getElementById("nav-content");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-
-        window.addEventListener("load", function () {
-            if (window.innerWidth > 1010) {
-                document.getElementById("nav-content").style.display = "block";
-            } else {
-                document.getElementById("nav-content").style.display = "none";
-            }
-        });
-
-        window.addEventListener("resize", function () {
-            if (window.innerWidth > 1010) {
-                document.getElementById("nav-content").style.display = "block";
-            } else {
-                document.getElementById("nav-content").style.display = "none";
-            }
-        });
-
-        document.getElementById("menu-hamburger").addEventListener("click", displayDiv);
-    </script>
+    <script src="/CICOHealth/src/main/webapp/assets/scripts/navbar.js"></script>
 </html>
