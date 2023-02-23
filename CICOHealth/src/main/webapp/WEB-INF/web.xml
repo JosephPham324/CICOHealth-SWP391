@@ -77,10 +77,14 @@
     <servlet>
         <servlet-name>MealLogController</servlet-name>
         <servlet-class>controller.MealLogController</servlet-class>
-  </servlet>
-  <servlet>
+    </servlet>
+    <servlet>
         <servlet-name>FAQController</servlet-name>
         <servlet-class>controller.FAQController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExerciseLogController</servlet-name>
+        <servlet-class>controller.ExerciseLogController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -125,6 +129,10 @@
     <servlet-mapping>
         <servlet-name>FAQController</servlet-name>
         <url-pattern>/faq/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseLogController</servlet-name>
+        <url-pattern>/exercise-logs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,10 +1,6 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
-* {
-  box-sizing: border-box;
-}
-
-.prevent-scrolling {
+.no-scroll {
   height: 100%;
   overflow: hidden;
 }
@@ -33,6 +29,10 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1 !important;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #meal-form {
