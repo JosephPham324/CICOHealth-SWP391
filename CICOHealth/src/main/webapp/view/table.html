@@ -15,12 +15,14 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/exerciseLogPage.css">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/sidebar.css">
     <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
-    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/popup.css">
+    <!-- <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/popup.css"> -->
+    <!-- <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/exerciseLogPage.css"> -->
+    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/sass/main/exercisLog.css">
+
 
     <title>Document</title>
 </head>
@@ -281,42 +283,5 @@
 <script src="/CICOHealth/src/main/webapp/assets/scripts/navbar.js"></script>
 <script src="/CICOHealth/src/main/webapp/assets/scripts/exerciseLog.js"></script>
 <script src="/CICOHealth/src/main/webapp/assets/scripts/sidebar.js"></script>
-
-
-<script>
-
-    const cancelButton = document.querySelectorAll("#btn-cancel");
-    const editButtons = document.querySelectorAll('.btn-edit-pop-up');
-    const noteButtons = document.querySelectorAll('.btn-note-pop-up');
-    const editOverlay = document.querySelector('.edit-overlay');
-    const noteOverlay = document.querySelector('.note-overlay');
-
-
-    editButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            editOverlay.style.display = 'block';
-        });
-    });
-
-    noteButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            noteOverlay.style.display = 'block';
-        });
-    });
-
-    // cancelButton.forEach(button => {
-    //     cancelButton.addEventListener('click', () => {
-    //         overlayEdit.style.display = 'none';
-    //         overlayNote.style.display = 'none';
-    //     });
-    // });
-
-    cancelButton.forEach(button => {
-        button.addEventListener('click', () => {
-            noteOverlay.style.display = 'none';
-            editOverlay.style.display = 'none';
-        });
-    });
-</script>
 
 </html>
