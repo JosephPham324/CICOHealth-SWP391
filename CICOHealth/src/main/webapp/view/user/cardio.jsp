@@ -57,8 +57,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
 
                                         <tr>
@@ -67,8 +70,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
 
                                         <tr>
@@ -77,8 +83,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
 
                                         <tr>
@@ -87,8 +96,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
