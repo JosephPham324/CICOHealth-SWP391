@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/exercisesearch.css">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+        <!--FontAwesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
         <title>JSP Page</title>
     </head>
@@ -56,6 +58,7 @@
                                 <td>${exercise.exerciseName}</td>
                                 <td>${exercise.exerciseDescription}</td>
                                 <td>${exercise.caloriesPerHour}</td>
+                                <td class="btn-select"><i class="fa-solid fa-pen-nib" style="color:blue"></i>&nbsp;Log</td>
                             </tr> 
                         </c:forEach>
                     </tbody>
