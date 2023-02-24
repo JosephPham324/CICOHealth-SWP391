@@ -51,10 +51,10 @@ public class ExerciseLog implements Serializable {
     @Column(name = "set")
     private Integer set;
     @Column(name = "rep")
-    private Integer rep;
+    private String rep;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "weight")
-    private Double weight;
+    private  String weight;
     @Column(name = "timeSpent")
     private Integer timeSpent;
     @Lob
@@ -64,15 +64,24 @@ public class ExerciseLog implements Serializable {
     @JoinColumn(name = "exerciseID", referencedColumnName = "exerciseID")
     @ManyToOne(optional = false)
     private String exerciseID;
+    private Exercise exercise;
     @JoinColumn(name = "userID", referencedColumnName = "userID")
     @ManyToOne(optional = false)
-    private User userID;
+    private String userID;
 
     public ExerciseLog() {
     }
 
     public ExerciseLog(String exerciseLogID) {
         this.exerciseLogID = exerciseLogID;
+    }
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
     }
 
     public ExerciseLog(String exerciseLogID, Date logTime, Date logDate) {
@@ -113,19 +122,19 @@ public class ExerciseLog implements Serializable {
         this.set = set;
     }
 
-    public Integer getRep() {
+    public String getRep() {
         return rep;
     }
 
-    public void setRep(Integer rep) {
+    public void setRep(String rep) {
         this.rep = rep;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -153,11 +162,11 @@ public class ExerciseLog implements Serializable {
         this.exerciseID = exerciseID;
     }
 
-    public User getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(User userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -186,4 +195,7 @@ public class ExerciseLog implements Serializable {
         return "ExerciseLog{" + "exerciseLogID=" + exerciseLogID + ", logTime=" + logTime + ", logDate=" + logDate + ", set=" + set + ", rep=" + rep + ", weight=" + weight + ", timeSpent=" + timeSpent + ", logNote=" + logNote + ", exerciseID=" + exerciseID + ", userID=" + userID + '}';
     }
     
+    public String getExerciseType(){
+        return this.exerciseID.substring(2,4);
+    }
 }

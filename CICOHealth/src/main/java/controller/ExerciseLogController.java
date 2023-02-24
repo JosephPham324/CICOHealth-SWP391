@@ -4,12 +4,19 @@
  */
 package controller;
 
+import bean.ExerciseLog;
+import bean.User;
+import com.google.gson.Gson;
+import dao.ExerciseLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,7 +41,7 @@ public class ExerciseLogController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ExerciseLogController</title>");            
+            out.println("<title>Servlet ExerciseLogController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ExerciseLogController at " + request.getContextPath() + "</h1>");
@@ -69,7 +76,29 @@ public class ExerciseLogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        ExerciseLog log;
+        Gson gson = new Gson();
+        String exerciseParam = request.getParameter("exercise");
+        log = gson.fromJson(exerciseParam, ExerciseLog.class);
+        User user = (User) request.getSession().getAttribute("user");
+        log.setUserID(user.getUserID());
+//        response.getWriter().write(log.toString());
+        try {
+            new ExerciseLogDao().createLog(log);
+            response.sendRedirect("/CICOHealth/exercise-search?log=success");
+            return;
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("/CICOHealth/exercise-search?log=failure");
+            return;
+        }
+    }
+
+    public void createCardioLog(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    public void createResistanceLog(HttpServletRequest request, HttpServletResponse response) {
     }
 
     /**

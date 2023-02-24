@@ -45,6 +45,7 @@
                         <c:forEach var="exercise" items="${exerciseList}">
                             <tr data-type="${exercise.getExerciseType()}" 
                             data-exercise-info="{
+                                &quot;exerciseID&quot;: &quot;${exercise.exerciseID}&quot;,
                                 &quot;exerciseName&quot;: &quot;${exercise.exerciseName}&quot;,
                                 &quot;exerciseType&quot;: &quot;${exercise.getExerciseType()}&quot;,
                                 &quot;exerciseDescription&quot;: &quot;${exercise.exerciseDescription}&quot;,
@@ -61,6 +62,7 @@
                 </table>
             </div>
         </div>
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/exercisesearch.js"></script>
     </body>
 </html>
