@@ -5,6 +5,7 @@
 package dao;
 
 import bean.Answer;
+import bean.Exercise;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ public class AnswerDao extends BaseDao {
     private final String SELECT_BY_ID = "SELECT * FROM answer WHERE answerID = ?";
     private final String INSERT = "INSERT INTO answer(answerID, createdBy, questionTopic, questionContent,answerContent) VALUES (?, ?, ?, ?,?)";
     private final String DELETE = "DELETE FROM answer WHERE answerID  = ?";
-   
+
     // connection to the database
     private Connection connection;
 
@@ -33,7 +34,7 @@ public class AnswerDao extends BaseDao {
         connection = new DBContext().getConnection();
     }
 
-     // method to retrieve all answers from the database
+    // method to retrieve all answers from the database
     public List<Answer> getAllAnswers() {
         List<Answer> list = new ArrayList<>();
         try {
@@ -53,7 +54,7 @@ public class AnswerDao extends BaseDao {
         }
         return list;
     }
- 
+
     // method to insert a new answer into the database
     public void insertAnswer(Answer answer) {
         try {
@@ -66,11 +67,32 @@ public class AnswerDao extends BaseDao {
             statement.setString(index++, answer.getAnswerContent());
             statement.executeUpdate();
         } catch (SQLException ex) {
-          Logger.getLogger(AnswerDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AnswerDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-         closeConnections();
+        closeConnections();
     }
-    
+    // method to update a Answer from the database
+    public void updateAnswer(Answer answer) {
+        try {
+            String sql = "UPDATE [answer] \n"
+                    + "SET answerID = ?, questionTopic = ?, questionContent = ?, answerContent = ? WHERE answerID = ?";
+            connection = new DBContext().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            statement.setString(index++, answer.getAnswerID());
+            statement.setString(index++, answer.getQuestionTopic());
+            statement.setString(index++, answer.getQuestionContent());
+            statement.setString(index++, answer.getAnswerContent());
+            statement.setString(index++, answer.getAnswerID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+        closeConnections();
+    }
+
     // method to delete a Answer from the database
     public void deleteAnswer(String questionID) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(DELETE);
@@ -78,6 +100,7 @@ public class AnswerDao extends BaseDao {
         statement.executeUpdate();
         closeConnections();
     }
+
     public int getAnswerCount() {
         PreparedStatement stmt = null;
         ResultSet rs = null;
