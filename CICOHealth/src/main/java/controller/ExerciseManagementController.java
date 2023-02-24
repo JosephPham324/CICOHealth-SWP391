@@ -4,6 +4,7 @@
  */
 package controller;
 
+import bean.Exercise;
 import bean.User;
 import dao.ExerciseDao;
 import java.io.IOException;
@@ -33,22 +34,9 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (!("AD").equalsIgnoreCase(user.getUserRole())) {
-            response.sendRedirect("/CICOHealth");
-            return;
-        }
-        
-        String delete = request.getParameter("delete");
-        String exerciseID = request.getParameter("exerciseid");
-        if (delete == null) {
-            request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
-            request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
-        } else {
-            new ExerciseDao().deleteExercise(exerciseID);
-            response.sendRedirect("/CICOHealth/admin/exercise-management");
-        }
+        request.setAttribute("exerciseList", new ExerciseDao().getAllExercises());
+        request.getRequestDispatcher("/view/admin/ViewExercise.jsp").forward(request, response);
+        return;
 
     }
 
@@ -64,7 +52,46 @@ public class ExerciseManagementController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String add = request.getParameter("btnAdd");
+        if (add != null) {
+            String exerciseName = request.getParameter("txtExerciseName");
+            String exerciseType = request.getParameter("txtExerciseType");
+            String exerciseDescription = request.getParameter("txtExerciseDescription");
+            String calPHParam = request.getParameter("numCaloriePerHour");
+            double caloriesPerHour = Double.parseDouble(calPHParam != null && calPHParam.isEmpty() ? calPHParam : "0");
+            new ExerciseDao().insertExercise(exerciseType, new Exercise(null, exerciseName, exerciseDescription, caloriesPerHour));
+            response.sendRedirect("/CICOHealth/admin/exercise-management?create=success");
+        }
+        String method = request.getParameter("_method");
+        if (method != null) {
+            switch (method) {
+                case "PUT":
+                    doPut(request, response);
+                    break;
+                case "DELETE":
+                    doDelete(request, response);
+                    break;
+            }
+        }
+    }
 
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String exerciseID = request.getParameter("txtExerciseID");
+        String exerciseName = request.getParameter("txtExerciseName");
+        String exerciseDescription = request.getParameter("txtExerciseDescription");
+        String caloriePerHour = request.getParameter("numCaloriePerHour");
+        Exercise exercise = new Exercise(exerciseID, exerciseName, exerciseDescription, Double.parseDouble(caloriePerHour));
+        ExerciseDao exerciseDao = new ExerciseDao();
+        exerciseDao.updateExercise(exercise);
+        response.sendRedirect("/CICOHealth/admin/exercise-management");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String exerciseID = request.getParameter("exerciseid");
+        new ExerciseDao().deleteExercise(exerciseID);
+        response.sendRedirect("/CICOHealth/admin/exercise-management?delete=success");
     }
 
     /**

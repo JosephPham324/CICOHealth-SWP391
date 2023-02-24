@@ -1,0 +1,8 @@
+@use "../mixins/common";
+@use "../modules/popup";
+
+#edit-exercise-form, #add-exercise-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}

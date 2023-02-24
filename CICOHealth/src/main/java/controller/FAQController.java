@@ -4,13 +4,17 @@
  */
 package controller;
 
+import bean.Answer;
 import bean.Question;
+import bean.User;
+import dao.AnswerDao;
 import dao.QuestionDao;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -37,7 +41,13 @@ public class FAQController extends HttpServlet {
             request.setAttribute("listQuestion", listQuestion);
             request.getRequestDispatcher("/view/admin/ViewQuestion.jsp").forward(request, response);
         }
+        if (URI.endsWith("/answers")) {
+            List<Answer> listAnswer = new AnswerDao().getAllAnswers();
+            request.setAttribute("listAnswer", listAnswer);
+            request.getRequestDispatcher("/view/admin/ViewAnswer.jsp").forward(request, response);
+        }
         request.getRequestDispatcher("/view/general/ViewFAQ.jsp").forward(request, response);
+
     }
 
     /**
@@ -51,9 +61,28 @@ public class FAQController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String URI = request.getRequestURI();
+        if (URI.endsWith("/answers")) {
+            String questionTopic = request.getParameter("questionTopic");
+            String questionContent = request.getParameter("questionContent");
+            String answerContent = request.getParameter("answerContent");
+            AnswerDao answerDao = new AnswerDao();
+            // generate a new answerID
+            String answerID = answerDao.createID();
+            // get session
+            HttpSession session = request.getSession();
+            if (null == session.getAttribute("user")) {
+                //if session not exists ,redirect to  login
+                response.sendRedirect("/CICOHealth/login");
+            } else {
+                //exists => get session 
+                User user = (User) session.getAttribute("user");
+                // insert the new answer into the database
+                new AnswerDao().insertAnswer(new Answer(answerID, user.getUserID(), questionTopic, questionContent, answerContent));
+                response.sendRedirect("/CICOHealth/faq/answers");
+            }
 
-        String add = request.getParameter("btnAdd");
-        if (add != null && add.equals("Add")) {
+        } else {
             String submittedBy = request.getParameter("submittedBy");
             String questionTopic = request.getParameter("questionTopic");
             String questionContent = request.getParameter("questionContent");
@@ -86,6 +115,7 @@ public class FAQController extends HttpServlet {
             response.sendRedirect("/CICOHealth/faq/questions");
             // redirect the user to a confirmation page
         } catch (Exception e) {
+            response.sendRedirect("/CICOHealth/faq?submit=success");
         }
 
     }

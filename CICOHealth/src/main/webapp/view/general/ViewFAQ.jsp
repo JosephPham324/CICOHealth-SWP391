@@ -13,7 +13,7 @@
     <body>
 
         <form action="faq" method="post">
-            Name: <input type="text" name="submitedBy"><br>
+            Name: <input type="text" name="submittedBy"><br>
             <label for="options">Please select an option:</label>
             <select id="topic" name="questionTopic">
                 <option value="optionA">Option A</option>

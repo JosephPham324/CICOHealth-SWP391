@@ -1,36 +1,17 @@
 @use "../mixins/common";
-.prevent-scrolling {
-  height: 100%;
-  overflow: hidden;
-}
-
-.pop-up {
-  @include common.absolute-position();
-  display: none;
-  &.active {
-    display: block;
-    position: fixed;
-  }
-  & > .pop-up-content {
-    position: relative;
-    z-index: 5;
-  }
-  .overlay {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    @include common.dimension(100vw, 100vh);
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1 !important;
-  }
+@use "../modules/popup";
+*{
+  box-sizing: border-box;
 }
 #meal-form {
   background-color: white;
   border-radius: 10px;
   width: auto;
   padding: 10px;
-  @include common.flex-display(column, center, center);
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  @include common.flex-display(column, normal, normal);
   .food-item {
     @include common.flex-display(row, center, center);
     .food-item-name,

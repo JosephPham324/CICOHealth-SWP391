@@ -1,6 +1,6 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
-.prevent-scrolling {
+.no-scroll {
   height: 100%;
   overflow: hidden;
 }
@@ -16,7 +16,7 @@
   display: block;
   position: fixed;
 }
-.pop-up > * {
+.pop-up > .pop-up-content {
   position: relative;
   z-index: 5;
 }
@@ -31,15 +31,22 @@
   z-index: 1 !important;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #meal-form {
   background-color: white;
   border-radius: 10px;
   width: auto;
   padding: 10px;
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: normal;
+  justify-content: normal;
 }
 #meal-form .food-item {
   display: flex;
