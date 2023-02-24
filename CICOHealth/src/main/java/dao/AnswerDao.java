@@ -90,7 +90,6 @@ public class AnswerDao extends BaseDao {
         } finally {
             closeConnections();
         }
-        closeConnections();
     }
 
     // method to delete a Answer from the database
