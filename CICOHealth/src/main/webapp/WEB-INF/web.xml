@@ -112,7 +112,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>
-        <url-pattern>/admin/exercise-management</url-pattern>
+        <url-pattern>/admin/exercise-management/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>

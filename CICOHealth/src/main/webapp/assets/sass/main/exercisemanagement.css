@@ -29,4 +29,10 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1 !important;
+}
+
+#edit-exercise-form, #add-exercise-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
 }/*# sourceMappingURL=exercisemanagement.css.map */
