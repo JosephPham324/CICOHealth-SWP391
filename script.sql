@@ -47,7 +47,8 @@ CREATE TABLE answer (
     answerID varchar(10) PRIMARY KEY NOT NULL,
     createdBy varchar(10) NOT NULL REFERENCES [user](userID),
     questionTopic text NOT NULL,
-    questionContent text NOT NULL
+    questionContent text NOT NULL,
+	answerContent text NOT NULL
 );
 
 CREATE TABLE mealLog (
