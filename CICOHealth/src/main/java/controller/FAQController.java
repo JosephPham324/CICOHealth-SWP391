@@ -82,7 +82,7 @@ public class FAQController extends HttpServlet {
                     User user = (User) session.getAttribute("user");
                     // insert the new answer into the database
                     new AnswerDao().insertAnswer(new Answer(answerID, user.getUserID(), questionTopic, questionContent, answerContent));
-                    response.sendRedirect("/CICOHealth/faq/answers");
+                    response.sendRedirect("/CICOHealth/faq/answers?create=sucess");
                 }
 
             } else {
@@ -113,7 +113,7 @@ public class FAQController extends HttpServlet {
             // create a new Answer object
             answerDao.deleteAnswer(answerID);
             // delete Answer into the database
-            response.sendRedirect("/CICOHealth/faq/answers");
+            response.sendRedirect("/CICOHealth/faq/answers?delete=success");
         } catch (Exception e) {
         }
     }
