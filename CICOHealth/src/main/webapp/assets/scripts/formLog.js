@@ -11,27 +11,29 @@ datePicker.addEventListener("change", function () {
 
 
 // pop-up 
-const cancelButton = document.querySelectorAll("#btn-cancel");
+// const cancelButton = document.querySelectorAll("#btn-cancel");
 const editButtons = document.querySelectorAll('.btn-edit-pop-up');
 const noteButtons = document.querySelectorAll('.btn-note-pop-up');
-const editPopUp = document.querySelector('.edit-pop-up');
-const notePopUp = document.querySelector('.note-pop-up');
+// const editPopUp = document.getElementById('edit-pop-up');
+// const notePopUp = document.getElementById('note-pop-up');
 
 editButtons.forEach(button => {
     button.addEventListener('click', () => {
-        editPopUp.style.display = 'block';
+        // editPopUp.style.display = 'block';
+        displayPopUp("edit-pop-up");
     });
 });
 
 noteButtons.forEach(button => {
     button.addEventListener('click', () => {
-        notePopUp.style.display = 'block';
+        // notePopUp.style.display = 'block';
+        displayPopUp("note-pop-up");
     });
 });
 
-cancelButton.forEach(button => {
-    button.addEventListener('click', () => {
-        notePopUp.style.display = 'none';
-        editPopUp.style.display = 'none';
-    });
-});
+// cancelButton.forEach(button => {
+//     button.addEventListener('click', () => {
+//         editPopUp.style.display = 'none';
+//         notePopUp.style.display = 'none';
+//     });
+// });
