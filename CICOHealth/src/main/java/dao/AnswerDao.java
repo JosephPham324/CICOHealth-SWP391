@@ -70,7 +70,14 @@ public class AnswerDao extends BaseDao {
         }
          closeConnections();
     }
-
+    
+    // method to delete a Answer from the database
+    public void deleteAnswer(String questionID) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(DELETE);
+        statement.setString(1, questionID);
+        statement.executeUpdate();
+        closeConnections();
+    }
     public int getAnswerCount() {
         PreparedStatement stmt = null;
         ResultSet rs = null;
