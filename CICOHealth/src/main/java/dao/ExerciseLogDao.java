@@ -27,11 +27,13 @@ public class ExerciseLogDao extends BaseDao {
             return null;
         }
         //Query to get the latest ID
+        String idPrefix = type + "LG";
+
         String query = "SELECT TOP 1 exerciseLogID\n"
                 + "from [exerciseLog] \n"
-                + "ORDER BY exerciseLogID DESC ";
+                + "WHERE exerciseLogID LIKE '" + idPrefix + "'+'%'\n"
+                + "ORDER BY exerciseLogID DESC";
         String id = null;
-        String idPrefix = type + "LG";
         try {
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
