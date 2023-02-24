@@ -1,16 +1,15 @@
 <%-- 
-    Document   : ViewQuestion
-    Created on : Feb 20, 2023, 2:40:00 PM
-    Author     : vhqua
+    Document   : ViewAnswer
+    Created on : Feb 23, 2023, 3:24:22 PM
+    Author     : User
 --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="listQuestion" value="${listQuestion}" scope="request" />
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -32,55 +31,51 @@
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/adminuserinfo.css">  
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/adminuserinfo.css"> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Answer Information</title>
     </head>
     <body>
         <div class="nav">
-            <a href="admin" class="button" style="vertical-align:middle"><span>Back </span></a>
-            <h1 class="navbar-brand mx-auto">USER INFO</h1>
+            <h1 class="navbar-brand mx-auto">Answer Information</h1>
         </div>
         <div class="info-container">
+            <button><a href="/CICOHealth/faq/answers/create">Add</a></button>
             <div class="info-table">            
                 <table id="info-table" class="table table-striped table-hover display">
                     <thead>
                         <tr style="background-color:  greenyellow">
-                            <th scope="col">ID</th>
-                            <th scope="col">Submit by</th>
+                            <th scope="col">Answer ID</th>
+                            <th scope="col">Created By</th>
                             <th scope="col">Question Topic</th>
                             <th scope="col">Question Content</th>
+                            <th scope="col">Answer Content</th>
                             <th scope="col">Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="question" items="${listQuestion}">
+                        <c:forEach var="answer" items="${listAnswer}">
+                        <form action="/CICOHealth/faq/answers/delete" method="post" onSubmit="return confirm('Do you want to delete?')">     
                             <tr>
-                        <form action="CICOHealth/faq/questions" method="post">
-
-                            <td>${question.questionID}</td>
-                            <td>${question.submittedBy}</td>
-                            <td>${question.questionTopic}</td>
-                            <td>${question.questionContent}</td>
-                            <td>                        
-                                <input type="hidden" name="_method" value="Delete">
-                                <input type="hidden" name="id_question" value="${question.questionID}" >
-                                <button type="submit" name="btl_delete" style="border: none">
-                                    <i style="color: red;" class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            </td>
+                                <td>${answer.answerID}</td>
+                                <td>${answer.createBy}</td>
+                                <td>${answer.questionTopic}</td>
+                                <td>${answer.questionContent}</td>
+                                <td>${answer.answerContent}</td>
+                                <td>
+                                    <input type="hidden" name="_method" value="Delete">
+                                    <input type="hidden" name="Id_answer" value="${answer.answerID}">
+                                    <button type="submit" style="border: none;">
+                                        <i class="fa-solid fa-trash" style="color: red;"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         </form>
-                        </tr>
-                    </c:forEach>              
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
-
-
-
-
-
-
-
-
     </body>
 </html>
