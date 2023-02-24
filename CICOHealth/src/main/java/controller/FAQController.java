@@ -43,14 +43,21 @@ public class FAQController extends HttpServlet {
             List<Question> listQuestion = new QuestionDao().getAllQuestions();
             request.setAttribute("listQuestion", listQuestion);
             request.getRequestDispatcher("/view/general/faq/ViewQuestion.jsp").forward(request, response);
+            return;
         }
         if (URI.startsWith("/CICOHealth/faq/answers")) {
-            if (URI.endsWith("/create")){
+            if (URI.endsWith("/create")) {
                 request.getRequestDispatcher("/view/general/faq/addAnswer.jsp").forward(request, response);
+                return;
+            }
+            if (request.getParameter("updateid") != null) {
+                String answerID = request.getParameter("updateid");
+                request.setAttribute("AnswerUpdate", new AnswerDao().getAnswerByID(answerID));
             }
             List<Answer> listAnswer = new AnswerDao().getAllAnswers();
             request.setAttribute("listAnswer", listAnswer);
             request.getRequestDispatcher("/view/general/faq/ViewAnswer.jsp").forward(request, response);
+            return;
         }
         //Default
         request.getRequestDispatcher("/view/general/faq/ViewFAQ.jsp").forward(request, response);
@@ -70,6 +77,9 @@ public class FAQController extends HttpServlet {
         String method = request.getParameter("_method");
         if (method != null && method.equals("Delete")) {
             doDelete(request, response);
+            return;
+        } else if (method != null && method.equalsIgnoreCase("put")) {
+            doPut(request, response);
             return;
         }
         String URI = request.getRequestURI();
@@ -137,6 +147,18 @@ public class FAQController extends HttpServlet {
             }
         }
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String answerID = request.getParameter("answerID");
+        String createdBy = request.getParameter("createdBy");
+        String questionTopic = request.getParameter("questionTopic");
+        String questionContent = request.getParameter("questionContent");
+        String answerContent = request.getParameter("answerContent");
+        new AnswerDao().updateAnswer(new Answer(answerID, createdBy, questionTopic, questionContent, answerContent));
+        response.sendRedirect("/CICOHealth/faq/answers?updateid=" + answerID);
+        return;
     }
 
     public String generateQuestionID() {

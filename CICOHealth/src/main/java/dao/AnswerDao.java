@@ -72,21 +72,22 @@ public class AnswerDao extends BaseDao {
         closeConnections();
     }
     // method to update a Answer from the database
+
     public void updateAnswer(Answer answer) {
+        PreparedStatement statement = null;
         try {
             String sql = "UPDATE [answer] \n"
-                    + "SET answerID = ?, questionTopic = ?, questionContent = ?, answerContent = ? WHERE answerID = ?";
+                    + "SET createdBy = ?, questionTopic = ?, questionContent = ?, answerContent = ? WHERE answerID = ?";
             connection = new DBContext().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            int index = 1;
-            statement.setString(index++, answer.getAnswerID());
-            statement.setString(index++, answer.getQuestionTopic());
-            statement.setString(index++, answer.getQuestionContent());
-            statement.setString(index++, answer.getAnswerContent());
-            statement.setString(index++, answer.getAnswerID());
-            preparedStatement.executeUpdate();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, answer.getCreateBy());
+            statement.setString(2, answer.getQuestionTopic());
+            statement.setString(3, answer.getQuestionContent());
+            statement.setString(4, answer.getAnswerContent());
+            statement.setString(5, answer.getAnswerID());
+            statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AnswerDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConnections();
         }
@@ -134,6 +135,25 @@ public class AnswerDao extends BaseDao {
     @Override
     public String createID(String type) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Answer getAnswerByID(String answerID) {
+        Answer answer = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
+            statement.setString(1, answerID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String createBy = resultSet.getString("createdBy");
+                String questionTopic = resultSet.getString("questionTopic");
+                String questionContent = resultSet.getString("questionContent");
+                String answerContent = resultSet.getString("answerContent");
+                answer = new Answer(answerID, createBy, questionTopic, questionContent, answerContent);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnswerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return answer;
     }
 
 }

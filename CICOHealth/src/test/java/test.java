@@ -1,8 +1,10 @@
 
+import bean.Answer;
 import bean.HealthInfo;
 import bean.Login;
 import bean.Question;
 import bean.User;
+import dao.AnswerDao;
 import dao.HealthInfoDao;
 import dao.LoginDao;
 import dao.QuestionDao;
@@ -23,7 +25,8 @@ import util.AuthenticationLogic;
 public class test {
 
     public static void main(String[] args) {
-       
+        Answer a = new AnswerDao().getAnswerByID("ANSW00001");
+        System.out.println(a.getAnswerID());
     
     }
 
