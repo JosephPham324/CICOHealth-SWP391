@@ -53,11 +53,8 @@ public class MealLogDao extends BaseDao {
         // Define the SQL query to insert the meal log into the database
         String query = "INSERT INTO mealLog (userID, mealLogID, mealLogName, logTime, logDate, logNote) VALUES (?, ?, ?, ?, ?, ?)";
         // Get the current date and time to use for the logTime and logDate fields
-        Date current = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
-        String formattedTime = formatter.format(current);
-        formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(current);
+        String formattedTime = util.Utility.getDateOrTime("time");
+        String formattedDate = util.Utility.getDateOrTime("date");
         // Generate a unique ID for the meal log
         String id = this.createID();
         int index = 1;

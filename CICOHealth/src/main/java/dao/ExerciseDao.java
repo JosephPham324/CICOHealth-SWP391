@@ -26,7 +26,34 @@ public class ExerciseDao extends BaseDao {
 
     @Override
     public String createID(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (!type.toUpperCase().matches("CA|RE")) {
+            //Return null if type isn't allowed
+            return null;
+        }
+        //Query to get the latest ID
+        String idPrefix = "EX"  + type;
+
+        String query = "SELECT TOP 1 exerciseID\n"
+                + "from [exercise] \n"
+                + "WHERE exerciseID LIKE '" + idPrefix + "'+'%'\n"
+                + "ORDER BY exerciseID DESC";
+        String id = null;
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {//If there is a record in the table
+                //Generate new ID based on the record
+                id = idPrefix + String.format("%06d", Integer.parseInt(resultSet.getString("exerciseID").substring(4)) + 1);
+            } else {
+                id = idPrefix + "000001";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+        return id;
     }
 
     public List getAllExercises() {
@@ -116,13 +143,14 @@ public class ExerciseDao extends BaseDao {
         return null;
     }
 
-    public void insertExercise(Exercise exercise) {
+    public void insertExercise(String type, Exercise exercise) {
         String query = "INSERT INTO EXERCISE(EXERCISEID, EXERCISENAME, EXERCISEDESCRIPTION, CALORIESPERHOUR)\n"
                 + "VALUES(?,?,?,?)";
+        String id = createID(type);
         connection = new DBContext().getConnection();
         try {
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, exercise.getExerciseID());
+            preparedStatement.setString(1, id);
             preparedStatement.setString(2, exercise.getExerciseName());
             preparedStatement.setString(3, exercise.getExerciseDescription());
             preparedStatement.setDouble(4, exercise.getCaloriesPerHour());

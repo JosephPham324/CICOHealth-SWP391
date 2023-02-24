@@ -1,6 +1,7 @@
 <%-- Document : ViewExercise Created on : Feb 15, 2023, 8:42:00 AM Author :
-Admin --%> <%@page contentType="text/html" pageEncoding="UTF-8"%> <%@taglib
-prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+Admin --%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -44,10 +45,13 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       >
       <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
     </div>
+    <button name="submit" class="btn btn-success" id="add-button">
+      Add Exercise
+    </button>
     <div class="pop-up" id="edit-exercise-popup">
       <div class="overlay"></div>
-      <div class="content">
-        <form id = "edit-exercise-form" action="/CICOHealth/admin/exercise-management" method="PoST">
+      <div class="pop-up-content">
+        <form id = "edit-exercise-form" action="/CICOHealth/admin/exercise-management" method="POST">
           <div class="form-group row">
             <div class="offset-4 col-8">
               <h2>Update Exercise</h2>
@@ -164,21 +168,20 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 <td>${exercise.exerciseDescription}</td>
                 <td>${exercise.caloriesPerHour}</td>
                 <td>
-                  <a
-                    class="fa-solid fa-pen-to-square edit-button"
-                    style="color: blue"
-                    data-exercise='{"exerciseID": "${exercise.exerciseID}",
-                        "exerciseType": "${exercise.getExerciseType()}",
-                        "exerciseName": "${exercise.exerciseName}",
-                        "exerciseDescription": "${exercise.exerciseDescription}",
-                        "caloriesPerHour": "${exercise.caloriesPerHour}"
-                        }'
-                  ></a>
-                  <a
-                    href="/CICOHealth/admin/exercise-management?delete=true&exerciseid=${exercise.exerciseID}"
-                    style="color: red"
-                    ><i class="fa-solid fa-ban"></i
-                  ></a>
+                  <button class="btn btn-info edit-button" 
+                  data-exercise='{"exerciseID": "${exercise.exerciseID}",
+                  "exerciseType": "${exercise.getExerciseType()}",
+                  "exerciseName": "${exercise.exerciseName}",
+                  "exerciseDescription": "${exercise.exerciseDescription}",
+                  "caloriesPerHour": "${exercise.caloriesPerHour}"
+                  }'>
+                    <a class="fa-solid fa-pen-to-square " style="color: #fff"></a>
+                  </button>
+                  <form action="/CICOHealth/admin/exercise-management" method="POST" style = "display:inline">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="exerciseid" value="${exercise.exerciseID}">
+                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-ban"></i></button>
+                  </form>
                 </td>
               </tr>
             </c:forEach>
@@ -186,6 +189,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         </table>
       </div>
     </div>
+         <script src="${pageContext.request.contextPath}/assets/scripts/popup.js"></script>
     <script src="${pageContext.request.contextPath}/assets/scripts/exerciseManagement.js"></script>
   </body>
 </html>

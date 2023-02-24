@@ -45,8 +45,8 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: normal;
+  justify-content: normal;
 }
 #meal-form .food-item {
   display: flex;

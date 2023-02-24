@@ -112,7 +112,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>
-        <url-pattern>/admin/exercise-management</url-pattern>
+        <url-pattern>/admin/exercise-management/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>
@@ -132,7 +132,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseLogController</servlet-name>
-        <url-pattern>/exercise-logs/*</url-pattern>
+        <url-pattern>/user/exercise-logs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

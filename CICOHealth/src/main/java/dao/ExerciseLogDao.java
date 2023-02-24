@@ -4,6 +4,7 @@
  */
 package dao;
 
+import bean.ExerciseLog;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,11 +27,13 @@ public class ExerciseLogDao extends BaseDao {
             return null;
         }
         //Query to get the latest ID
+        String idPrefix = type + "LG";
+
         String query = "SELECT TOP 1 exerciseLogID\n"
                 + "from [exerciseLog] \n"
-                + "ORDER BY exerciseLogID DESC ";
+                + "WHERE exerciseLogID LIKE '" + idPrefix + "'+'%'\n"
+                + "ORDER BY exerciseLogID DESC";
         String id = null;
-        String idPrefix = type + "LG";
         try {
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -49,4 +52,27 @@ public class ExerciseLogDao extends BaseDao {
         return id;
     }
 
+    public void createLog(ExerciseLog log) throws SQLException {
+
+        String query = "INSERT INTO [exerciseLog] (userID, exerciseLogID, exerciseID, logTime, logDate,[set], rep, weight, timeSpent, logNote)\n"
+                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        String date = util.Utility.getDateOrTime("date");
+        String time = util.Utility.getDateOrTime("time");
+        String id = createID(log.getExerciseType());
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        int index = 1;
+        preparedStatement.setString(index++, "USME000001");
+        preparedStatement.setString(index++, id);
+        preparedStatement.setString(index++, log.getExerciseID());
+        preparedStatement.setString(index++, time);
+        preparedStatement.setString(index++, date);
+        preparedStatement.setInt(index++, log.getSet() == null ? 0 : log.getSet());
+        preparedStatement.setString(index++, log.getRep());
+        preparedStatement.setString(index++, log.getWeight());
+        preparedStatement.setInt(index++, log.getTimeSpent() == null ? 0 : log.getTimeSpent());
+        preparedStatement.setString(index++, log.getLogNote());
+        preparedStatement.executeUpdate();
+        closeConnections();
+    }
 }
