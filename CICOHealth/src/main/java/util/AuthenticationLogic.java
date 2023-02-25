@@ -11,44 +11,60 @@ import javax.crypto.SecretKey;
 public class AuthenticationLogic {
 
     /**
-     * Gene
+     * Generates a salt value for a user's login credentials.
      *
-     * @param username
-     * @param password
-     * @return
+     * @param username A string representing the user's username.
+     * @param password A string representing the user's password.
+     * @return A string representing the salt value for the user's login
+     * credentials.
      */
     public String getLoginSalt(String username, String password) {
+        // Generate a salt value using the provided username and password
         return Encryption.generateSalt(username, password);
     }
 
     /**
-     * Generate a secret key from a password and salt
+     * Retrieves a secret key based on a given password and salt.
      *
-     * @param password Password to generate
-     * @param salt Salt to generate
-     * @return SecretKey object used in encryption
-     * @throws Exception When Key can't be generated, possibly because of wrong
-     * input
+     * @param password A string representing the user's password.
+     * @param salt A string representing the salt value for the user's password.
+     * @return A SecretKey object representing the secret key generated from the
+     * password and salt values.
+     * @throws Exception if there is an error generating the secret key.
      */
     private SecretKey getSecretKey(String password, String salt) throws Exception {
+        // Generate a secret key using the provided password and salt
         return Encryption.getSecretKey(password, salt);
     }
 
     /**
-     * Encrypt password using username and password.
+     * Encrypts a password using a secret key.
      *
-     * @param username Username to pair with password for encryption
-     * @param password Password to pair with username for encryption
-     * @return Hash of password
-     * @throws Exception
+     * @param password A string representing the user's password.
+     * @param salt Salt value used along with encrypting password
+     * @return A string representing the encrypted password.
+     * @throws Exception if there is an error encrypting the password.
      */
     public String encryptPassword(String password, String salt) throws Exception {
         return Encryption.encrypt(password, getSecretKey(password, salt));
     }
 
+    /**
+     * Verifies a user's login credentials.
+     *
+     * @param enteredPassword A string representing the password entered by the
+     * user.
+     * @param passwordHash A string representing the encrypted password hash
+     * stored in the database.
+     * @param passwordSalt A string representing the salt value used to generate
+     * the password hash stored in the database.
+     * @return true if the entered password matches the stored password hash,
+     * false otherwise.
+     * @throws Exception if there is an error verifying the login credentials.
+     */
     public boolean verifyLogin(String enteredPassword, String passwordHash, String passwordSalt) throws Exception {
-        return encryptPassword(enteredPassword, passwordSalt).equals(passwordHash);
+        // Encrypt the entered password using the stored salt value and compare it to the stored password hash
+         return encryptPassword(enteredPassword, passwordSalt).equals(passwordHash);
     }
-    
 
 }

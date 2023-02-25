@@ -30,6 +30,7 @@ function sendRequest(query) {
   };
   request.send(JSON.stringify(body)); //Send the request
 }
+
 /**
  * Filter out duplicate foods in foods array
  * @param {Array} foods - The foods array
@@ -68,6 +69,7 @@ function dislpayFoods(foods) {
       fat: food.nf_total_fat,
       carbs: food.nf_total_carbohydrate,
       photo: food.photo.highres,
+      actualWeight: food.serving_weight_grams,
     };
     displayFoodItem(searchResults, foodData); //Display the food item
   }
@@ -106,22 +108,33 @@ function displayFoodItem(searchResults, food) {
     `;
   searchResults.innerHTML += html;
 }
-//Selected foods
+// Array to store selected foods
 let selectedFoods = [];
-//Add food to selected foods
+
+/**
+ * Add food to selected foods array
+ *
+ * @param {Object} food - The food object to be added
+ * @throws {Error} If the food object is already present in the selected foods array
+ */
 function addFood(food) {
-  //Check if food is already in selected foods
+  // Check if food is already in selected foods
   for (let i = 0; i < selectedFoods.length; i++) {
     if (selectedFoods[i].foodName === food.foodName) {
       throw new Error("Food already in selected foods");
     }
   }
   selectedFoods.push(food);
-  // console.log(selectedFoods);
 }
-//Remove food from selected foods
+
+/**
+ * Remove food from selected foods array
+ *
+ * @param {Object} food - The food object to be removed
+ * @throws {Error} If the food object is not present in the selected foods array
+ */
 function removeFood(food) {
-  //Check if food is already in selected foods
+  // Check if food is already in selected foods
   for (let i = 0; i < selectedFoods.length; i++) {
     if (selectedFoods[i].foodName === food.foodName) {
       selectedFoods.splice(i, 1);
@@ -130,9 +143,31 @@ function removeFood(food) {
   }
   throw new Error("Food not in selected foods");
 }
-//Toggle food in selected foods
+/**
+ * Remove food from selected foods array by foodName
+ *
+ * @param {string} foodName - The name of the food to be removed
+ * @throws {Error} If the food with the specified name is not present in the selected foods array
+ */
+function removeFoodByName(foodName) {
+  // Check if food is already in selected foods
+  for (let i = 0; i < selectedFoods.length; i++) {
+    if (selectedFoods[i].foodName === foodName) {
+      selectedFoods.splice(i, 1);
+      return;
+    }
+  }
+  throw new Error("Food not in selected foods");
+}
+
+/**
+ * Toggle food in selected foods array
+ *
+ * @param {Object} food - The food object to be toggled
+ * @returns {boolean} True if the food was added to the selected foods array, false if it was removed
+ */
 function toggleFood(food) {
-  //Check if food is already in selected foods
+  // Check if food is already in selected foods
   for (let i = 0; i < selectedFoods.length; i++) {
     if (selectedFoods[i].foodName === food.foodName) {
       removeFood(food);
@@ -141,46 +176,58 @@ function toggleFood(food) {
   }
   addFood(food);
   return true;
-  console.log(selectedFoods);
 }
 /**
  * Add click event listener to search results
  * Toggle selected status of search result clicked, and add/remove food from selectedFoods
- * */
+ */
 function addSearchResultEventListener() {
+  // Get the search results container element
   let searchResults = document.getElementById("search-results");
-  //Iterate through search results
+  // Iterate through each search result element
   for (let i = 0; i < searchResults.children.length; i++) {
     let searchResult = searchResults.children[i];
-    //Add event listener to search result
+    // Add event listener to each search result element
     searchResult.addEventListener("click", function () {
       let food = JSON.parse(this.dataset.food);
+      // Toggle the food's selected status and update the search result's UI accordingly
       if (toggleFood(food) == true) {
         this.classList.add("selected");
+        changeButtonText(this, "add");
       } else {
         this.classList.remove("selected");
+        changeButtonText(this, "remove");
       }
-      changeButtonText(this);
-      console.log(selectedFoods);
+      // Update the food cart button UI
+      updateFoodCartButton();
     });
   }
 }
 /**
  * Change the text of the button in search result
- * 
  * @param {Element} searchResult - The search result element
+ * @param {string} state - The new state of the button ("add" or "remove")
  */
-function changeButtonText(searchResult){
+function changeButtonText(searchResult, state) {
+  // Get the button element within the search result element
   let button = searchResult.children[1].children[1].children[5];
-  if(button.innerText === "Add"){
-    button.innerText = "Remove";
-  }else{
-    button.innerText = "Add";
+  // Change the button text based on the given state
+  switch (state) {
+    case "add":
+      button.innerText = "Remove";
+      break;
+    case "remove":
+      button.innerText = "Add";
+      break;
+    default:
+      break;
   }
 }
 /**
  * Add selected class to search-result elements that contain food in selectedFoods
- * @param {Array} selectedFoods Array of selected foods
+ *
+ * @param {Array} selectedFoods - The array of selected foods
+ *
  */
 function showSelected(selectedFoods) {
   let searchResults = document.getElementById("search-results");
@@ -192,61 +239,242 @@ function showSelected(selectedFoods) {
       )
     ) {
       searchResult.classList.add("selected");
-      changeButtonText(searchResult);
+      changeButtonText(searchResult, "add");
+      updateFoodCartButton();
+    } else {
+      searchResult.classList.remove("selected");
+      changeButtonText(searchResult, "remove");
+      updateFoodCartButton();
+    }
+  }
+}
+/**
+ * Add selected class to search-result elements that contain food in selectedFoods
+ */
+function showSelected() {
+  let searchResults = document.getElementById("search-results");
+  //Iterate through search result elements
+  for (let i = 0; i < searchResults.children.length; i++) {
+    let searchResult = searchResults.children[i];
+    //Check if the food is in the selectedFoods array
+    if (
+      selectedFoods.find(
+        (food) => food.foodName === searchResult.children[0].innerText //If a selected food has name equal to search result name
+      )
+    ) {
+      //Add "selected" class to search-result element
+      searchResult.classList.add("selected");
+      //Change the text of the button in search-result element to "Remove"
+      changeButtonText(searchResult, "add");
+      //Update the number of selected foods in food cart button
+      updateFoodCartButton();
+    } else {
+      //Remove "selected" class from search-result element
+      searchResult.classList.remove("selected");
+      //Change the text of the button in search-result element to "Add"
+      changeButtonText(searchResult, "remove");
+      //Update the number of selected foods in food cart button
+      updateFoodCartButton();
     }
   }
 }
 
+/**
+ * Update the number of selected foods in food cart button
+ */
+function updateFoodCartButton() {
+  let foodCartButton = document.getElementById("selected-number");
+  //Update the text content of food cart button to display the number of selected foods
+  foodCartButton.innerText = `${selectedFoods.length}`;
+}
+
+addSearchResultEventListener();
+
 //Send request of some common foods, separated by new line
-sendRequest(`Apple
-      Banana
-      Orange
-      Watermelon
-      Kiwi
-      Carrot
-      Mushroom
-      Potato
-      Sweet potato
-      Corn
-      Broccoli
-      Cauliflower
-      Cabbage
-      Spinach
-      Lettuce
-      Kale
-      Onion
-      Garlic
-      Ginger
-      Green beans
-      Peas
-      Lentils
-      Chickpeas
-      Kidney beans
-      Black beans
-      Pinto beans
-      Tuna
-      Salmon
-      Shrimp
-      Chicken
-      Eggs
-      Milk
-      Yogurt
-      Cheese
-      Honey
-      Maple syrup
-      Bread
-      Bagel
-      Oatmeal
-      Granola
-      Pasta
-      Rice
-      Quinoa
-      Couscous
-      Pizza
-      Burger
-      Hot dog
-      Sandwich
-      Tacos
-      Burritos
-      Sushi
-      Pad Thai`);
+
+//Food cart element
+let mealCart = document.getElementById("food-cart");
+//Display pop-ups
+function displayPopUp(id) {
+  let popUp = document.getElementById(id);
+  let overlay = document.querySelector(`#${id} .overlay`);
+  popUp.classList.add("active");
+  overlay.addEventListener("click", function (e) {
+    popUp.classList.remove("active");
+  });
+}
+
+//Add event listener to food cart button
+document.getElementById("food-cart").addEventListener("click", displayMealForm);
+
+/**
+
+Display meal form pop-up
+The function displays a pop-up that allows the user to create a meal using the selected foods
+*/
+function displayMealForm() {
+  // Display meal form pop-up
+  displayPopUp("meal-pop-up");
+  // Clear meal form
+  let mealForm = document.getElementById("meal-form");
+  mealForm.innerHTML = "";
+  let tableHTML = `
+  <table id="table_id" class="display">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Calorie(kcal)</th>
+              <th>Protein(g)</th>
+              <th>Fat(g)</th>
+              <th>Carbs(g)</th>
+              <th>Serving(g)</th>
+              <th>Actual(g)</th>
+              <th>Remove</th>
+          </tr>
+      </thead>
+      <tbody>
+  `;
+  // Iterate through selected foods and add them to the meal form
+  selectedFoods.forEach((food) => {
+    //Add rows to the table
+    let rowHTML = `
+    <tr>
+      <td>${food.foodName}</td>
+      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(0)}</td>
+      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${food.servingWeight}</td>
+      <td>
+        <input id="weight-${food.foodName}" 
+        name="weight-${food.foodName}" 
+        type="number" class="form-control"
+        required="required" 
+        value="${food.actualWeight}" 
+        onblur="updateFoodItem('${food.foodName}', this.value)"
+        />
+      </td>
+      <td>
+        <button id="remove-${food.foodName}"
+        class="btn btn-danger"
+        onclick="removeFoodByName('${food.foodName}');showSelected();displayMealForm();"
+        >Remove</button>
+      </td>
+    </tr>
+    `;
+    //Add row to the table
+    tableHTML += rowHTML;
+  });
+
+  // Sum up the nutrition information of the selected foods
+  let mealSum = calculateMealSum(selectedFoods);
+  let rowMealSumHTML = `
+  <tr>
+    <td>Sum</td>
+    <td>${mealSum[0].toFixed(0)}</td>
+    <td>${mealSum[1].toFixed(1)}</td>
+    <td>${mealSum[2].toFixed(1)}</td>
+    <td>${mealSum[3].toFixed(1)}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  `;
+  //Add row to the table
+  tableHTML += rowMealSumHTML;
+  // Close table
+  tableHTML += `
+      </tbody>
+  </table>
+  `;
+  //Add table to the meal form
+  mealForm.innerHTML += tableHTML;
+
+  // Add meal name input
+  let htmlMealName = `
+  <div class="form-group row">
+    <label for="meal-name" class="col-4 col-form-label">Meal Name</label> 
+    <div class="col-8">
+      <input id="meal-name" name="meal-name" placeholder="Enter meal name" type="text" class="form-control"
+      required="required"
+      value="${mealName}"
+      oninput='mealName = this.value;';
+      >
+    </div>
+  </div> 
+    `;
+  mealForm.innerHTML += htmlMealName;
+
+  //Add meal log note
+  let htmlMealNote = `
+  <div class="form-group row">
+    <label for="meal-note" class="col-4 col-form-label">Meal Note</label>
+    <div class="col-8">
+      <textarea id="meal-note" name="meal-note" cols="40" rows="5" class="form-control"
+      value="${logNote}"
+      oninput='logNote = this.value;'></textarea>
+    </div>
+  </div>
+  `;
+  mealForm.innerHTML += htmlMealNote;
+
+  //Add submit button to meal form
+  mealForm.innerHTML += `
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+  `;
+}
+
+/**
+ * Calculate the total calories, protein, fat, and carbs of the selected foods
+ *
+ * @param {Array} selectedFoods - An array of selected foods
+ * @returns {Array} - An array of the total calories, protein, fat, and carbs of the selected foods
+ */
+function calculateMealSum(selectedFoods) {
+  let totalCalories = 0;
+  let totalProtein = 0;
+  let totalFat = 0;
+  let totalCarbs = 0;
+  selectedFoods.forEach((food) => {
+    totalCalories += food.calories * (food.actualWeight / food.servingWeight);
+    totalProtein += food.protein * (food.actualWeight / food.servingWeight);
+    totalFat += food.fat * (food.actualWeight / food.servingWeight);
+    totalCarbs += food.carbs * (food.actualWeight / food.servingWeight);
+  });
+  return [totalCalories, totalProtein, totalFat, totalCarbs];
+}
+
+/**
+
+Update the actual weight of a selected food
+@param {string} foodName - The name of the food to update
+@param {number} weight - The new weight of the food
+*/
+function updateFoodItem(foodName, weight) {
+  selectedFoods.forEach((food) => {
+    if (food.foodName === foodName) {
+      food.actualWeight = weight;
+    }
+  });
+  displayMealForm();
+}
+
+//Submit meal form
+function requestLogCreation() {
+  let formParams = {
+    mealLog: JSON.stringify({
+      mealLogName: document.getElementById("meal-name").value,
+      foods: selectedFoods,
+      logNote: document.getElementById("meal-note").value,
+    }),
+  };
+  console.log(formParams);
+  post("/CICOHealth/user/meal-logs", formParams);
+}
+
+let mealName = "";
+let logNote = "";
