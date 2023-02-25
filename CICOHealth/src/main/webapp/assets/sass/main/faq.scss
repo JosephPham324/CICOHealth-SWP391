@@ -41,6 +41,21 @@ h1 {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
+.btn-faq {
+    border: 2px solid black;
+    display: none;
+}
+
+.btn-faq a {
+    color: black;
+    font-size: 25px;
+    margin: 0 20px;
+}
+
+.btn-faq a:hover {
+    color: rgb(131, 184, 46);
+}
+
 .faq.active::before,
 .faq.active::after {
     content: '\f075';
@@ -90,21 +105,7 @@ h1 {
     width: 30px;
 }
 
-.btn-faq{
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    padding: 0;
-    position: absolute;
-    top: 30px;
-    right: 100px;
-    height: 30px;
-    width: 30px;
-}
+
 
 .faq-toggle .fa-chevron-up {
     display: none;
@@ -119,30 +120,205 @@ h1 {
 }
 
 // Select-Topic
-.btn-base{
+.btn-base {
     background-color: rgb(131, 184, 46);
 }
 
-.btn-base:hover{
+.btn-base:hover {
     background-color: yellow;
 }
 
-.search-select-container-fluid{
+.search-select-container-fluid {
     width: 100%;
 }
 
-.no-gutters{
+.no-gutters {
     display: flex;
     justify-content: center;
 }
 
-.select-topic{
+.select-topic {
     width: 15%;
 }
 
-.search-topic{
+.search-topic {
     width: 30%;
 }
-.btn-search{
+
+.btn-search {
     width: 5%;
+}
+
+//Button Question
+
+.question-wrapper {
+    position: fixed;
+    bottom: 250px;
+    right: 0;
+    z-index: 9999999;
+}
+
+.question-checkbox {
+    display: none !important;
+}
+
+.question {
+    width: 60px;
+    max-width: unset;
+    height: 60px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border-radius: 50%;
+    background: rgb(131, 184, 46);
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 1000;
+    overflow: hidden;
+    transform: rotate(0deg);
+    -webkit-transition: all .15s cubic-bezier(.15, .87, .45, 1.23);
+    transition: all .15s cubic-bezier(.15, .87, .45, 1.23);
+}
+
+.question-button {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    padding: 4px;
+    border-radius: 50%;
+    background: #0f1941;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    font-size: 24px;
+    color: White;
+    transition: all 1s ease;
+    overflow: hidden;
+}
+
+/* .icon-question {
+    width: 30px;
+    height: 30px;
+    background-position: -42px -45px;
+} */
+
+.question-checkbox:not(:checked)~.question {
+    animation-name: zoom;
+    -webkit-animation-name: zoom;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    cursor: pointer;
+    box-shadow: 0 0 0 0 rgb(131, 184, 46);
+    ;
+}
+
+@-webkit-keyframes tada {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1)
+    }
+
+    10%,
+    20% {
+        -webkit-transform: scale(.9) rotate(-3deg);
+        transform: scale(.9) rotate(-3deg)
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: scale(1.1) rotate(3deg);
+        transform: scale(1.1) rotate(3deg)
+    }
+
+    40%,
+    60%,
+    80% {
+        -webkit-transform: scale(1.1) rotate(-3deg);
+        transform: scale(1.1) rotate(-3deg)
+    }
+
+    100% {
+        -webkit-transform: scale(1) rotate(0);
+        transform: scale(1) rotate(0)
+    }
+}
+
+@keyframes tada {
+    0% {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1)
+    }
+
+    10%,
+    20% {
+        -webkit-transform: scale(.9) rotate(-3deg);
+        -ms-transform: scale(.9) rotate(-3deg);
+        transform: scale(.9) rotate(-3deg)
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: scale(1.1) rotate(3deg);
+        -ms-transform: scale(1.1) rotate(3deg);
+        transform: scale(1.1) rotate(3deg)
+    }
+
+    40%,
+    60%,
+    80% {
+        -webkit-transform: scale(1.1) rotate(-3deg);
+        -ms-transform: scale(1.1) rotate(-3deg);
+        transform: scale(1.1) rotate(-3deg)
+    }
+
+    100% {
+        -webkit-transform: scale(1) rotate(0);
+        -ms-transform: scale(1) rotate(0);
+        transform: scale(1) rotate(0)
+    }
+}
+
+@-webkit-keyframes zoom {
+    0% {
+        transform: scale(.9)
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px transparent
+    }
+
+    100% {
+        transform: scale(.9);
+        box-shadow: 0 0 0 0 transparent
+    }
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(.9)
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px transparent
+    }
+
+    100% {
+        transform: scale(.9);
+        box-shadow: 0 0 0 0 transparent
+    }
 }
