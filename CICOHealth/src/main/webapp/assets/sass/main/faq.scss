@@ -7,7 +7,7 @@
 }
 
 .pop-up {
-    .question-pop-up-content {
+    .question-pop-up-content, .edit-pop-up-content, .answer-pop-up-content {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -22,7 +22,7 @@
         text-align: center;
     }
 
-    .question-form {
+    .question-form, .edit-form, .answer-form {
         margin-top: 10%;
         height: 340px;
     }
@@ -77,18 +77,21 @@ h1 {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-faq {
-    border: 2px solid black;
-    display: none;
-}
+// .btn-faq {
+//     display: none;
+// }
 
-.btn-faq a {
+// .btn-faq-admin{
+    // display: none;
+// }
+
+.btn-faq a , .btn-faq-admin a{
     color: black;
     font-size: 25px;
     margin: 0 20px;
 }
 
-.btn-faq a:hover {
+.btn-faq a:hover, .btn-faq-admin a:hover{
     color: rgb(131, 184, 46);
 }
 
@@ -121,7 +124,7 @@ h1 {
     margin: 30px 0 0;
 }
 
-.faq.active .faq-text {
+.faq.active .faq-text{
     display: block;
 }
 
@@ -185,8 +188,12 @@ h1 {
     width: 5%;
 }
 
-//Button Question
+.search-topic input , .select-topic select , .btn-search button{
+    border: 2px solid black;
+}
 
+// ===============================================
+//Button Question
 .question-wrapper {
     position: fixed;
     bottom: 250px;
