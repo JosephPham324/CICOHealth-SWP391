@@ -106,6 +106,7 @@ function fillEditForm(logData){
             </td>
             <td>
                 <a href="#" class="btn-delete-pop-up"
+                onclick = "removeFoodItem(logUpdate, '${food.itemID}'); fillEditForm(logUpdate);"
                 ><i class="fa-solid fa-trash"></i
                 ></a>
             </td>
@@ -125,6 +126,10 @@ function fillEditForm(logData){
             <td></td>
         </tr>
     `
+}
+function removeFoodItem(mealLog, itemID){
+    let index = mealLog.foods.findIndex((food) => food.itemID == itemID);
+    mealLog.foods.splice(index, 1);
 }
 function getFoodItem(mealLog, itemID){
     let food = mealLog.foods.find((food) => food.itemID == itemID);
