@@ -57,8 +57,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
 
                                         <tr>
@@ -67,8 +70,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
 
                                         <tr>
@@ -77,8 +83,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
 
                                         <tr>
@@ -87,8 +96,11 @@
                                             <td>RUNNING</td>
                                             <td>30.0</td>
                                             <td>377.5</td>
-                                            <td>Note</td>
-                                            <td>Edit/Delete</td>
+                                            <td><a href="#" class="btn-note-pop-up"><i
+                                                        class="fa-solid fa-note-sticky"></i></a></td>
+                                            <td><a href="#" class="btn-edit-pop-up"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>/ <a href="#"
+                                                    class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -106,6 +118,7 @@
                                             <p>Kcal</p>
                                         </div>
                                     </div>
+
                                     <div class="table-body row">
                                         <div class="total-content col-md-6">
                                             <p>30.0</p>
@@ -121,9 +134,10 @@
 
 
                 <!-- pop-up-edit -->
-                <div class="pop-up edit-pop-up">
+                <div class="pop-up edit-pop-up" id="edit-pop-up">
                     <div class="edit-overlay overlay" id="overlay"></div>
                     <div class="pop-up-content edit-pop-up-content">
+                        <!-- <div class="edit-pop-up"> -->
                         <form action="exercise-log" method="post" name="edit-exercise-log-form"
                             class="edit-exercise-log-form">
                             <h2 class="txt-title-pop-up">Edit Exercise Logs</h2>
@@ -162,21 +176,24 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="offset-4 col-2">
-                                    <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
-                                </div>
-                                <div class="offset-1 col-2">
+                                <!-- <div class="offset-4 col-2">
+                        <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
+                    </div> -->
+                                <div class="offset-5 col-2">
                                     <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
                                 </div>
                             </div>
                         </form>
+                        <!-- </div> -->
                     </div>
                 </div>
 
+
                 <!-- pop-up-notes -->
-                <div class="pop-up note-pop-up">
+                <div class="pop-up note-pop-up" id="note-pop-up">
                     <div class="note-overlay overlay" id="overlay"></div>
                     <div class="pop-up-content note-pop-up-content">
+                        <!-- <div class="note-pop-up"> -->
                         <h2 class="txt-title-pop-up">Notes Exercise Logs</h2>
 
                         <div class="form-group row">
@@ -186,13 +203,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="offset-3 col-2">
-                                <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
-                            </div>
-                            <div class="offset-1 col-2">
+                            <!-- <div class="offset-3 col-2">
+                    <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
+                </div> -->
+                            <div class="offset-5 col-2 btn-submit">
                                 <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
                             </div>
                         </div>
+                        <!-- </div> -->
                     </div>
                 </div>
 
@@ -227,7 +245,8 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="/CICOHealth/src/main/webapp/assets/scripts/navbar.js"></script>
-        <script src="/CICOHealth/src/main/webapp/assets/scripts/exerciseLogAndMealLog.js"></script>
+        <script src="/CICOHealth/src/main/webapp/assets/scripts/formLog.js"></script>
         <script src="/CICOHealth/src/main/webapp/assets/scripts/sidebar.js"></script>
+        <script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
 
         </html>
