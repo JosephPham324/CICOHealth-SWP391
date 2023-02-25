@@ -1,0 +1,165 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  margin-top: 5%;
+}
+
+.txt-title {
+  text-align: center;
+}
+
+.table-content thead {
+  background-color: rgb(131, 184, 46);
+}
+
+.table-content tfoot {
+  background-color: yellow;
+}
+
+.table-content {
+  margin-bottom: 20px;
+}
+
+.datepicker-container {
+  display: flex;
+  justify-content: center;
+}
+
+#date-picker {
+  text-align: center;
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #444;
+}
+
+.title-total {
+  background-color: rgb(131, 184, 46);
+  text-align: center;
+  font-weight: bold;
+  height: 50px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.title-total p,
+.meal-info-item p {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.table-head {
+  border-bottom: 1px solid black;
+}
+
+.table-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.total-content {
+  height: 50px;
+  position: relative;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.total-content p {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.txt-title-total h2 {
+  text-align: center;
+}
+
+.prevent-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  display: block;
+  position: fixed;
+}
+.pop-up > .pop-up-content {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+.pop-up .edit-pop-up-content, .pop-up .note-pop-up-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  background-color: #fff;
+  z-index: 2;
+  border-radius: 20px;
+}
+.pop-up .txt-title-pop-up {
+  text-align: center;
+}
+.pop-up .edit-meal-log-form {
+  margin-top: 10%;
+  height: 340px;
+}
+.pop-up .form-group {
+  margin-bottom: 8px;
+}
+.pop-up .pop-up-head-item {
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 1px solid black;
+}
+.pop-up .mass {
+  width: 50px;
+}
+@media screen and (max-width: 625px) {
+  .pop-up .edit-pop-up-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 20px;
+  }
+}
+.pop-up .pop-up-thead-table {
+  font-size: 20px;
+}
+.pop-up .pop-up-body-table, .pop-up .pop-up-foot-table {
+  font-size: 18px;
+}/*# sourceMappingURL=mealLog.css.map */

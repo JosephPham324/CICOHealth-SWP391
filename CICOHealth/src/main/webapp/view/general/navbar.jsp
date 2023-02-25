@@ -3,6 +3,7 @@
     <div class="logo txt-logo">CICOHealth</div>
     <div class="nav-content" id="nav-content">
         <ul class="menu">
+
             <li class="nav-link"><a href="/CICOHealth/" class="menu-item">Home</a></li>
             <li class="nav-link"><a href="/CICOHealth/food-search" class="menu-item">Food</a></li>
             <li class="nav-link"><a href="/CICOHealth/exercise-search" class="menu-item">Exercise</a></li>
