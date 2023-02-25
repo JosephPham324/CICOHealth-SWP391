@@ -1,0 +1,38 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+.no-scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  display: block;
+  position: fixed;
+}
+.pop-up > .pop-up-content {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+
+#edit-exercise-form, #add-exercise-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}/*# sourceMappingURL=exercisemanagement.css.map */

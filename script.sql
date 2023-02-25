@@ -38,7 +38,7 @@ CREATE TABLE healthInfo (
 
 CREATE TABLE question (
     questionID varchar(10) PRIMARY KEY NOT NULL,
-    submittedBy varchar(10) NOT NULL REFERENCES [user](userID),
+    submittedBy varchar(10) NULL ,
     questionTopic text NOT NULL,
     questionContent text NOT NULL
 );
@@ -47,7 +47,8 @@ CREATE TABLE answer (
     answerID varchar(10) PRIMARY KEY NOT NULL,
     createdBy varchar(10) NOT NULL REFERENCES [user](userID),
     questionTopic text NOT NULL,
-    questionContent text NOT NULL
+    questionContent text NOT NULL,
+	answerContent text NOT NULL
 );
 
 CREATE TABLE mealLog (
@@ -67,7 +68,8 @@ CREATE TABLE mealLogItem (
     proteinPerServing float NOT NULL,
     fatPerServing float NOT NULL,
     carbPerServing float NOT NULL,
-    caloriePerServing float NOT NULL
+    caloriePerServing float NOT NULL,
+	actualWeight float NOT NULL
 );
 
 CREATE TABLE exercise (
@@ -85,8 +87,8 @@ CREATE TABLE ExerciseLog (
   logTime time NOT NULL,
   logDate date NOT NULL,
   [set] int,
-  rep int,
-  weight float,
+  rep varchar(255),
+  weight varchar(255),
   timeSpent int,
   logNote text,
   PRIMARY KEY (exerciseLogID),
