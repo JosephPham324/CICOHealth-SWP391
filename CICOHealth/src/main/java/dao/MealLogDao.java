@@ -1,8 +1,10 @@
 package dao;
 
 import bean.MealLog;
+import bean.MealLogItem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,7 +70,7 @@ public class MealLogDao extends BaseDao {
             preparedStatement.setString(index++, mealLog.getMealLogName());
             preparedStatement.setString(index++, formattedTime);
             preparedStatement.setString(index++, formattedDate);
-            preparedStatement.setString(index++, mealLog.getLogNote()!=null?mealLog.getLogNote():"");
+            preparedStatement.setString(index++, mealLog.getLogNote() != null ? mealLog.getLogNote() : "");
             // Execute the SQL statement to insert the meal log into the database
             preparedStatement.executeUpdate();
             // Insert the meal log items into the database
@@ -76,6 +78,47 @@ public class MealLogDao extends BaseDao {
         } finally {
             // Close the database connections
             closeConnections();
+        }
+    }
+
+    public ArrayList<MealLog> getLogsOfDate(String userID, String date) throws SQLException {
+        String query = "SELECT userID, mealLogID, mealLogName, logTime, logDate, logNote\n"
+                + "FROM [mealLog]\n"
+                + "WHERE userID = ? AND logDate = ?";
+        int index = 1; 
+        ArrayList<MealLog> result = new ArrayList<>();
+        try {
+            // Get a connection to the database and prepare the SQL statement
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, date);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                String mealLogID = resultSet.getString("mealLogID");
+                String mealLogName = resultSet.getString("mealLogName");
+                Date logTime = resultSet.getTime("logTime");
+                String logNote = resultSet.getString("logNote");
+                MealLog log = new MealLog(mealLogID,mealLogName,logTime,logTime,logNote);
+                ArrayList<MealLogItem> logItems = new MealLogItemDao().getLogItems(mealLogID);
+                log.setFoods(logItems);
+                result.add(log);
+            }
+        } finally {
+            // Close the database connections
+            closeConnections();
+        }
+        return result;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            ArrayList<MealLog> result = new MealLogDao().getLogsOfDate("USME000001", "2023-02-24");
+            for (MealLog log : result){
+                System.out.println(log.toString());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MealLogDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -106,7 +106,6 @@
                         <p>© 2023 All rights reserved. Our website services, content, and products are for informational purposes only. Nutrition does not provide medical advice, diagnosis, or treatment.</p>
                     </div>
                 </div>
-
             </footer>
         </div>
     </body>
@@ -118,17 +117,21 @@
             } else {
                 x.style.display = "none";
             }
-        }
+        };
 
         window.addEventListener("load", function () {
             if (window.innerWidth > 1010) {
                 document.getElementById("nav-content").style.display = "block";
+            } else {
+                document.getElementById("nav-content").style.display = "none";
             }
         });
 
         window.addEventListener("resize", function () {
             if (window.innerWidth > 1010) {
                 document.getElementById("nav-content").style.display = "block";
+            } else {
+                document.getElementById("nav-content").style.display = "none";
             }
         });
 
