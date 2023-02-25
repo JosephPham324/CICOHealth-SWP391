@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.AuthenticationLogic;
@@ -62,6 +63,7 @@ public class ProfileController extends HttpServlet {
             }
             request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/health-info")) {
+            String date = request.getParameter("selectedDate");
             request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(user.getUserID()));
             if (("AD").equalsIgnoreCase(role)) {
                 request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(userIDRequest));
@@ -69,6 +71,8 @@ public class ProfileController extends HttpServlet {
                 response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + user.getUserID());
                 return;
             }
+            
+            
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
 
         }
@@ -107,6 +111,7 @@ public class ProfileController extends HttpServlet {
         String userID = request.getParameter("userID");
         switch (check) {
             case "updateHealth":
+                String createdBy = request.getParameter("createdBy");
                 int age = Integer.parseInt(request.getParameter("numAge"));
                 String gender = request.getParameter("radGender");
                 double height = Double.parseDouble(request.getParameter("numHeight"));
@@ -119,9 +124,15 @@ public class ProfileController extends HttpServlet {
                 double carb = Double.parseDouble(request.getParameter("numCarb"));
                 HealthInfo healthInfo = new HealthInfo(userID, gender.equals("female"), height, weight, age, activity,
                         (int) TDEE, (int) TDEE, protein, fat, carb);
-                new HealthInfoDao().updateHealthInfo(healthInfo);
+                try {
+                    new HealthInfoDao().insertHealthInfo(healthInfo);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + userID);
                 return;
+
             case "updateLogin":
                 AuthenticationLogic authenticationLogic = new AuthenticationLogic();
                 String username = request.getParameter("username");

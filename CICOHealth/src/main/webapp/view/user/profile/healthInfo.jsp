@@ -29,6 +29,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <form action="ProfileController" method="post">
+                                <input type="datetime" name="createdBy" id="createdBy"">
                                 <div class="card">
                                     <div class="card-header">
                                         User Information
@@ -38,7 +39,7 @@
                                             <input type="text" name="_method" style="display:none" value="put" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="userID" style="display:none" value="${healthInfo.userID}" class="form-control">
+                                            <input type="text" name="userID" style="display:none" value="${healthInfo.userID}" id="userID" class="form-control">
 
                                         </div>
                                         <%@include file="../formHealthInfor.jsp" %>
@@ -54,6 +55,20 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.getElementById("createdBy").addEventListener("change", () => {
+                const userID = document.getElementById("userID").value;
+                // Get the value of the date picker
+                const datePicker = document.getElementById("createdBy");
+                const selectedDate = datePicker.value;
+                alert(selectedDate);
+                // Build the new URL using the selected date
+                const baseUrl = "/CICOHealth/user/profile/health-info?userid=" + userID; // remove any existing query string
+                const newUrl = baseUrl + `&selectedDate=` + selectedDate;
+                // Change the URL of the current page
+                window.location.href = newUrl;
+            });
+        </script>
         <script src="/CICOHealth/assets/scripts/healthRegister.js"></script>
     </body>
 </html>

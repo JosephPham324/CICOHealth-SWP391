@@ -1,7 +1,10 @@
 package dao;
 
 import bean.HealthInfo;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,41 +101,58 @@ public class HealthInfoDao extends BaseDao {
         return null;
     }
 
-    public void updateHealthInfo(HealthInfo healthInfo) {
-        try {
-            String query = "UPDATE [healthInfo]\n"
-                    + "SET gender = ?, age = ?, height = ?, weight = ?, activeness = ?,\n"
-                    + "tdee=?, dailyCalorie = ?, dailyProtein = ?, dailyFat = ?, dailyCarb = ? where userID = ?";
-            connection = new DBContext().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            int index = 1;
-            //Health info
-            preparedStatement.setBoolean(index++, healthInfo.getGender());
-            preparedStatement.setInt(index++, healthInfo.getAge());
-            preparedStatement.setDouble(index++, healthInfo.getHeight());
-            preparedStatement.setDouble(index++, healthInfo.getWeight());
-            preparedStatement.setInt(index++, healthInfo.getActiveness());
-            //Nutrition goal
-            preparedStatement.setInt(index++, healthInfo.getTdee());
-            preparedStatement.setDouble(index++, healthInfo.getDailyCalorie());
-            preparedStatement.setDouble(index++, healthInfo.getDailyProtein());
-            preparedStatement.setDouble(index++, healthInfo.getDailyFat());
-            preparedStatement.setDouble(index++, healthInfo.getDailyCarb());
-            preparedStatement.setString(index++, healthInfo.getUserID());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+    public List<HealthInfo> selectByDate(String date) throws SQLException {
+        List listHealthInfo = new ArrayList();
+        connection = new DBContext().getConnection();
+        String query = "SELECT *\n"
+                + "FROM healthInfo\n"
+                + "WHERE createdDate BETWEEN ? AND ?\n";
+        String from = date + " 00:00:00";
+        String to = date + " 23:59:59";
+        preparedStatement = connection.prepareStatement(query);
+        // Set the parameter for the SQL statement
+        preparedStatement.setString(1, from);
+        preparedStatement.setString(2, to);
+        
+        // Execute the SQL statement and retrieve the results
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                HealthInfo healthInfo = new HealthInfo(resultSet.getString("userID"),
+                        resultSet.getBoolean("gender"),
+                        resultSet.getDouble("height"),
+                        resultSet.getDouble("weight"),
+                        resultSet.getInt("age"),
+                        resultSet.getInt("activeness"),
+                        resultSet.getInt("tdee"),
+                        resultSet.getDouble("dailyCalorie"),
+                        resultSet.getDouble("dailyProtein"),
+                        resultSet.getDouble("dailyFat"),
+                        resultSet.getDouble("dailyCarb"));
+                listHealthInfo.add(healthInfo);
+            }
         }
         closeConnections();
+        return listHealthInfo;
     }
 
     public static void main(String[] args) {
-        HealthInfo healthInfo = new HealthInfo("USME000001", true, 123, 123, 12, 0, 0, 0, 0, 0, 0);
+//        HealthInfo healthInfo = new HealthInfo("USME000001", true, 123, 123, 12, 0, 0, 0, 0, 0, 0);
+//        try {
+//            new HealthInfoDao().insertHealthInfo(healthInfo);
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(HealthInfoDao.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+        HealthInfo h = null;
+        List<HealthInfo> l = null;
         try {
-            new HealthInfoDao().insertHealthInfo(healthInfo);
+            l = new HealthInfoDao().selectByDate("2023-02-25");
         } catch (SQLException ex) {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (HealthInfo healthInfo : l) {
+            System.out.println(healthInfo);
         }
     }
 }
