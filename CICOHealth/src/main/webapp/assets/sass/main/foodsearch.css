@@ -1,10 +1,6 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
-* {
-  box-sizing: border-box;
-}
-
-.prevent-scrolling {
+.no-scroll {
   height: 100%;
   overflow: hidden;
 }
@@ -35,6 +31,10 @@
   z-index: 1 !important;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #meal-form {
   background-color: white;
   border-radius: 10px;
@@ -45,8 +45,8 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: normal;
+  justify-content: normal;
 }
 #meal-form .food-item {
   display: flex;

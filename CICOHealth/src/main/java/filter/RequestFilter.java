@@ -115,23 +115,32 @@ public class RequestFilter implements Filter {
         String regex = "/CICOHealth/(\\w*(-*\\w*)*)/*.*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(URI);
-        if (matcher.find()) {
-            String part = matcher.group(1);
-            HttpSession session;
-            switch (part) {
-                case "user":
-                case "admin":
-                    session = httpRequest.getSession();
-                    Object user = session.getAttribute("user");
-                    if (user == null) {
-                        request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
-                        return;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+//        if (matcher.find()) {
+//            String part = matcher.group(1);
+//            HttpSession session;
+//            Object user = null;
+//            //Authorization for accounts access
+//            if (part.equalsIgnoreCase("user") || part.equalsIgnoreCase("admin")) {
+//                session = httpRequest.getSession();
+//                user = session.getAttribute("user");
+//                if (user == null) {
+//                    request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
+//                    return;
+//                }
+//            }
+//            
+//            switch (part){
+//                case "user"://User pages
+//                    break;
+//                case "admin"://Admin pages
+//                    if (!((bean.User)user).getUserRole().equals("AD")){
+//                        request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
+//                        return;
+//                    }
+//                default:
+//                    break;
+//            }
+//        }
         Throwable problem = null;
         try {
             chain.doFilter(request, response);

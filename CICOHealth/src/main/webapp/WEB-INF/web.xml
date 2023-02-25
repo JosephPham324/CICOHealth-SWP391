@@ -3,6 +3,10 @@
     <welcome-file-list>
         <welcome-file>/view/general/index.jsp</welcome-file>
     </welcome-file-list>
+    <context-param>
+        <param-name>webappName</param-name>
+        <param-value>CICO Health</param-value>
+    </context-param>
     <error-page>
         <error-code>403</error-code>
         <location>/view/error/error403.jsp</location>
@@ -38,6 +42,10 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BanController</servlet-name>
+        <servlet-class>controller.BanController</servlet-class>
+    </servlet>
     <!--Log out-->
     <servlet>
         <servlet-name>LogoutController</servlet-name>
@@ -66,6 +74,18 @@
         <servlet-name>ExerciseSearchController</servlet-name>
         <servlet-class>controller.ExerciseSearchController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MealLogController</servlet-name>
+        <servlet-class>controller.MealLogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FAQController</servlet-name>
+        <servlet-class>controller.FAQController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExerciseLogController</servlet-name>
+        <servlet-class>controller.ExerciseLogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -84,11 +104,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
-        <url-pattern>/admin/user-management</url-pattern>
+        <url-pattern>/admin/user-management/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanController</servlet-name>
+        <url-pattern>/banController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseManagementController</servlet-name>
-        <url-pattern>/admin/exercise-management</url-pattern>
+        <url-pattern>/admin/exercise-management/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>
@@ -97,6 +121,18 @@
     <servlet-mapping>
         <servlet-name>ExerciseSearchController</servlet-name>
         <url-pattern>/exercise-search/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MealLogController</servlet-name>
+        <url-pattern>/user/meal-logs/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FAQController</servlet-name>
+        <url-pattern>/faq/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseLogController</servlet-name>
+        <url-pattern>/user/exercise-logs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
