@@ -60,40 +60,57 @@ function addEditButtonsClickEvent() {
       fillEditForm(logUpdate);
       displayPopUp("edit-pop-up");
       //Add submit event listener to the edit form
-      let form_id = 'edit-meal-log-form';
-        document.getElementById(form_id).addEventListener('submit', function(event){
-            event.preventDefault();
-            let formParams = {
-                mealLog: JSON.stringify(logUpdate),
-                _method: "PUT"
-            }
-            post("/CICOHealth/user/meal-logs", formParams);
+      let form_id = "edit-meal-log-form";
+      document
+        .getElementById(form_id)
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          let formParams = {
+            mealLog: JSON.stringify(logUpdate),
+            _method: "PUT",
+          };
+          post("/CICOHealth/user/meal-logs", formParams);
         });
     });
   });
 }
-function fillEditForm(logData){
-    let bodyHTML = "";
-    let totalMealNutrition = {
-        protein: 0,
-        fat: 0,
-        carbs: 0,
-        calories: 0
-    }
-    logData.foods.forEach((food) => {
-        //Calculate the nutrition values for the food item
-        totalMealNutrition.protein += food.protein * (food.actualWeight / food.servingWeight);
-        totalMealNutrition.fat += food.fat * (food.actualWeight / food.servingWeight);
-        totalMealNutrition.carbs += food.carbs * (food.actualWeight / food.servingWeight);
-        totalMealNutrition.calories += food.calories * (food.actualWeight / food.servingWeight);
-        //Create the html for the food item
-        let htmlFood = `
+function fillEditForm(logData) {
+  let bodyHTML = "";
+  let totalMealNutrition = {
+    protein: 0,
+    fat: 0,
+    carbs: 0,
+    calories: 0,
+  };
+  logData.foods.forEach((food) => {
+    //Calculate the nutrition values for the food item
+    totalMealNutrition.protein +=
+      food.protein * (food.actualWeight / food.servingWeight);
+    totalMealNutrition.fat +=
+      food.fat * (food.actualWeight / food.servingWeight);
+    totalMealNutrition.carbs +=
+      food.carbs * (food.actualWeight / food.servingWeight);
+    totalMealNutrition.calories +=
+      food.calories * (food.actualWeight / food.servingWeight);
+    //Create the html for the food item
+    let htmlFood = `
         <tr>
             <td>${food.foodName}</td>
-            <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-            <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-            <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-            <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(0)}</td>
+            <td>${(
+              food.protein *
+              (food.actualWeight / food.servingWeight)
+            ).toFixed(1)}</td>
+            <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(
+              1
+            )}</td>
+            <td>${(
+              food.carbs *
+              (food.actualWeight / food.servingWeight)
+            ).toFixed(1)}</td>
+            <td>${(
+              food.calories *
+              (food.actualWeight / food.servingWeight)
+            ).toFixed(0)}</td>
             <td>
                 <input
                     type="number"
@@ -101,21 +118,25 @@ function fillEditForm(logData){
                     id="txtMass-${food.itemID}"
                     class="mass"
                     value="${food.actualWeight}"
-                    oninput="getFoodItem(logUpdate,'${food.itemID}').actualWeight = this.value; fillEditForm(logUpdate);"
+                    oninput="getFoodItem(logUpdate,'${
+                      food.itemID
+                    }').actualWeight = this.value; fillEditForm(logUpdate);"
                 />
             </td>
             <td>
                 <a href="#" class="btn-delete-pop-up"
-                onclick = "removeFoodItem(logUpdate, '${food.itemID}'); fillEditForm(logUpdate);"
+                onclick = "removeFoodItem(logUpdate, '${
+                  food.itemID
+                }'); fillEditForm(logUpdate);"
                 ><i class="fa-solid fa-trash"></i
                 ></a>
             </td>
         </tr>
-        `
-        bodyHTML += htmlFood;
-    });
-    document.querySelector("#edit-table tbody").innerHTML = bodyHTML;
-    document.querySelector("#edit-table tfoot").innerHTML = `
+        `;
+    bodyHTML += htmlFood;
+  });
+  document.querySelector("#edit-table tbody").innerHTML = bodyHTML;
+  document.querySelector("#edit-table tfoot").innerHTML = `
         <tr>
             <td>${logData.mealLogName}</td>
             <td>${totalMealNutrition.protein.toFixed(1)}</td>
@@ -125,15 +146,15 @@ function fillEditForm(logData){
             <td></td>
             <td></td>
         </tr>
-    `
+    `;
 }
-function removeFoodItem(mealLog, itemID){
-    let index = mealLog.foods.findIndex((food) => food.itemID == itemID);
-    mealLog.foods.splice(index, 1);
+function removeFoodItem(mealLog, itemID) {
+  let index = mealLog.foods.findIndex((food) => food.itemID == itemID);
+  mealLog.foods.splice(index, 1);
 }
-function getFoodItem(mealLog, itemID){
-    let food = mealLog.foods.find((food) => food.itemID == itemID);
-    return food;
+function getFoodItem(mealLog, itemID) {
+  let food = mealLog.foods.find((food) => food.itemID == itemID);
+  return food;
 }
 
 function addNoteButtonsClickEvent() {
@@ -171,7 +192,11 @@ function getRowHTML(count, logData) {
         <td>
             <a href="#" class="btn-edit-pop-up" data-logid = "${
               logData.mealLogID
-            }"><i class="fa-solid fa-pen-to-square"></i></a>/<a href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a>
+            }"><i class="fa-solid fa-pen-to-square"></i></a>/
+            <form action="/CICOHealth/user/meal-logs" method="POST" style="display: inline-block;">
+                <input type="hidden" name="mealLogID" value="${logData.mealLogID}">
+                <button style="border:0; background-color:transparent; color:red;" type="submit" class="btn-delete-pop-up"><i style = "font-size:20;" class="fa-solid fa-trash"></i></button>
+            </form>
         </td>
     </tr>
     `;
@@ -198,10 +223,10 @@ $(document).ready(function () {
 });
 
 document.querySelectorAll('a[name="btn-cancel"]').forEach((button) => {
-    console.log(button)
-    button.addEventListener('click', function(event){
-        let overlay = document.querySelector('.pop-up.active .overlay');
-        //Invoke click event on the overlay to close the pop up
-        overlay.click();
-    });
+  console.log(button);
+  button.addEventListener("click", function (event) {
+    let overlay = document.querySelector(".pop-up.active .overlay");
+    //Invoke click event on the overlay to close the pop up
+    overlay.click();
+  });
 });
