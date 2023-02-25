@@ -10,3 +10,14 @@ faqs.forEach(faq => {
         faq.classList.toggle('active')
     })
 })
+
+
+// pop-up 
+const questionButtons = document.querySelectorAll('.btn-question-pop-up');
+
+questionButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // editPopUp.style.display = 'block';
+        displayPopUp("question-pop-up");
+    });
+});

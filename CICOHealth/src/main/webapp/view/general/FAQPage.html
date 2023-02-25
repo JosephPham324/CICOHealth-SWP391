@@ -173,10 +173,53 @@
     <div class="question-wrapper">
         <input id="questionCheckbox" type="checkbox" class="question-checkbox">
         <label class="question" for="questionCheckbox">
-            <a class="question-action" href="#" title="Edit Question">
+            <a class="question-action btn-question-pop-up" href="#" title="Edit Question">
                 <div class="question-button"><i class="fa-sold fa-question icon-question"></i></div>
             </a>
         </label>
+    </div>
+
+    <!-- pop-up-question -->
+    <div class="pop-up question-pop-up" id="question-pop-up">
+        <div class="question-overlay overlay" id="overlay"></div>
+        <div class="pop-up-content question-pop-up-content">
+            <form action="question-log" method="post" name="question-form" class="question-form">
+                <h2 class="txt-title-pop-up">Edit Question</h2>
+                <div class="form-group row">
+                    <label for="txtQuestionTopic" class="offset-1 col-3 col-form-label">Question topic</label>
+                    <div class="col-7">
+                        <!-- <input id="txtQuestionTopic" name="txtQuestionTopic" type="datetime" class="form-control"> -->
+                        <select name="txtQuestionTopic" id="txtQuestionTopic" class="form-control">
+                            <option value="1">Default all topics</option>
+                            <option value="2">Topic B</option>
+                            <option value="3">Topic C</option>
+                            <option value="4">Topic A</option>
+                            <option value="5">Topic D</option>
+                            <option value="6">Topic E</option>
+                            <option value="7">Topic F</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtName" class="offset-1 col-3 col-form-label">Name (Optional)</label>
+                    <div class="col-7">
+                        <input id="txtName" name="txtName" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtQuestionContent" class="offset-1 col-3 col-form-label">Question content</label>
+                    <div class="col-7">
+                        <textarea id="txtQuestionContent" name="txtQuestionContent" cols="30" rows="10" class="form-control"></textarea>
+                        <!-- <input id="txtQuestionContent" name="txtQuestionContent" type="text" class="form-control"> -->
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-5 col-2">
+                        <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="wrapper">
@@ -204,5 +247,6 @@
     </div>
 </body>
 <script src="/CICOHealth/src/main/webapp/assets/scripts/faq.js"></script>
+<script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
 
 </html>
