@@ -6,6 +6,42 @@
     box-sizing: border-box;
 }
 
+.pop-up {
+    .question-pop-up-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        background-color: #fff;
+        z-index: 2;
+        border-radius: 20px;
+    }
+
+    .txt-title-pop-up {
+        text-align: center;
+    }
+
+    .question-form {
+        margin-top: 10%;
+        height: 340px;
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+    }
+
+    .btn-submit{
+        background-color: rgb(131, 184, 46);
+        color: white;
+    }
+
+    .btn-submit:hover{
+        background-color: yellow;
+        color: black;
+    }
+}
+
 body {
     font-family: 'Muli', sans-serif;
     background-color: #f0f0f0;
