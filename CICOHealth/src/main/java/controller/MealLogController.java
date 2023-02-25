@@ -15,15 +15,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  *
  * @author Pham Nhat Quang CE170036 (FPTU CANTHO)
  */
 public class MealLogController extends HttpServlet {
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,8 +64,39 @@ public class MealLogController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        request.getRequestDispatcher("/view/user/mealLogs/mealLogs.jsp").forward(request, response);
+        String URI = request.getRequestURI();
+        if (URI.endsWith("/data")) {
+            String date = request.getParameter("date");
+            User user = (User) request.getSession().getAttribute("user");
+            String responseData = null;
+            try {
+                ArrayList<MealLog> logs = new MealLogDao().getLogsOfDate(user.getUserID(), date);
+                String logsJSON = createMealLogsJSON(logs);
+                responseData = logsJSON;
+            } catch (SQLException ex) {
+                responseData = "{"
+                        + "\"retrieve\" : \"unsuccessful\""
+                        + "}";
+                Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
+                out.print(responseData);
+                out.flush();
+                return;
+            }
+        }
+        request.getRequestDispatcher("/view/user/mealLogs/mealLogsPage.html").forward(request, response);
     }
+
+    private String createMealLogsJSON(ArrayList<MealLog> logs) {
+        Gson gson = new Gson();
+        String logsJSON = "{\"logs\":";
+        logsJSON += gson.toJson(logs);
+        logsJSON+= "}";
+        return logsJSON;
+    }
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
