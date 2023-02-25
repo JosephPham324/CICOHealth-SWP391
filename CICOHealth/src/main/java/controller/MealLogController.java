@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.lang3.StringEscapeUtils;
+
 
 /**
  *
@@ -109,6 +109,11 @@ public class MealLogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String method = request.getParameter("_method");
+        if (method.equalsIgnoreCase("delete")) {
+            doDelete(request, response);
+            return;
+        }
         // Get the meal log data from the request parameters
         String meal = request.getParameter("mealLog");
         // Create a Gson object to convert the meal log JSON string to a MealLog object
@@ -131,6 +136,20 @@ public class MealLogController extends HttpServlet {
             response.sendRedirect("/CICOHealth/food-search?log=failure");
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String id = req.getParameter("mealLogID");
+            MealLogDao mealLogDao = new MealLogDao();
+            mealLogDao.deleteMealLog(id);
+            resp.sendRedirect("/CICOHealth/user/meal-logs?delelte=successfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     /**
      * Returns a short description of the servlet.

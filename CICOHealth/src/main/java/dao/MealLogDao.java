@@ -85,7 +85,7 @@ public class MealLogDao extends BaseDao {
         String query = "SELECT userID, mealLogID, mealLogName, logTime, logDate, logNote\n"
                 + "FROM [mealLog]\n"
                 + "WHERE userID = ? AND logDate = ?";
-        int index = 1; 
+        int index = 1;
         ArrayList<MealLog> result = new ArrayList<>();
         try {
             // Get a connection to the database and prepare the SQL statement
@@ -94,12 +94,12 @@ public class MealLogDao extends BaseDao {
             preparedStatement.setString(index++, userID);
             preparedStatement.setString(index++, date);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String mealLogID = resultSet.getString("mealLogID");
                 String mealLogName = resultSet.getString("mealLogName");
                 Date logTime = resultSet.getTime("logTime");
                 String logNote = resultSet.getString("logNote");
-                MealLog log = new MealLog(mealLogID,mealLogName,logTime,logTime,logNote);
+                MealLog log = new MealLog(mealLogID, mealLogName, logTime, logTime, logNote);
                 ArrayList<MealLogItem> logItems = new MealLogItemDao().getLogItems(mealLogID);
                 log.setFoods(logItems);
                 result.add(log);
@@ -110,11 +110,31 @@ public class MealLogDao extends BaseDao {
         }
         return result;
     }
-    
+
+    public void deleteMealLog(String mealLogID) throws SQLException {
+        // Define the SQL query to insert the meal log into the database
+        String query = "DELETE FROM [mealLog]\n"
+                + "WHERE mealLogID = ?";
+        // Generate a unique ID for the meal log
+        int index = 1;
+        try {
+            // Get a connection to the database and prepare the SQL statement
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            // Set the values of the parameters in the SQL statement
+            preparedStatement.setString(index++, mealLogID);
+            // Execute the SQL statement to insert the meal log into the database
+            preparedStatement.executeUpdate();
+        } finally {
+            // Close the database connections
+            closeConnections();
+        }
+    }
+
     public static void main(String[] args) {
         try {
             ArrayList<MealLog> result = new MealLogDao().getLogsOfDate("USME000001", "2023-02-24");
-            for (MealLog log : result){
+            for (MealLog log : result) {
                 System.out.println(log.toString());
             }
         } catch (SQLException ex) {
