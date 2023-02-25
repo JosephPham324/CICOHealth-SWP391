@@ -65,6 +65,7 @@
                                 <button type="submit" name="btl_delete" style="border: none">
                                     <i style="color: red;" class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
+                                
                             </td>
                         </form>
                         </tr>

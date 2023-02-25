@@ -4,6 +4,7 @@
     Author     : User
 --%>
 
+<%@page import="bean.Answer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -56,7 +57,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="answer" items="${listAnswer}">
-                        <form action="/CICOHealth/faq/answers/delete" method="post" onSubmit="return confirm('Do you want to delete?')">     
+                        <form action="/CICOHealth/faq" method="post">     
                             <tr>
                                 <td>${answer.answerID}</td>
                                 <td>${answer.createBy}</td>
@@ -69,12 +70,59 @@
                                     <button type="submit" style="border: none;">
                                         <i class="fa-solid fa-trash" style="color: red;"></i>
                                     </button>
+                                    <a href="/CICOHealth/faq/answers?updateid=${answer.answerID}">Update</a>
                                 </td>
                             </tr>
                         </form>
                     </c:forEach>
                     </tbody>
                 </table>
+                <!--sau nay lam cai nay thanh pop up-->
+                <%
+                    Answer answer = null;
+                    if (request.getAttribute("AnswerUpdate") != null) {
+                        answer = (Answer) request.getAttribute("AnswerUpdate");
+                        %>
+                <form class="form-horizontal" action="/CICOHealth/faq/answers" method="post">
+                    <input type="hidden" name="answerID" value="<%= answer.getAnswerID() %>" readonly>
+                    <input type="hidden" name="_method" value="put">
+                    <input type="hidden" name="createdBy" value="<%= answer.getCreateBy() %>">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Please select an option:</label>
+                        
+                        <div class="col-sm-10">
+                            <select id="topic" name="questionTopic">
+                                <option value="optionA" <%= answer.getQuestionContent() == "optionA" ? "selected" : ""%> >Option A</option>
+                                <option value="optionB" <%= answer.getQuestionContent() == "optionB" ? "selected" : ""%>>Option B</option>
+                                <option value="optionC" <%= answer.getQuestionContent() == "optionC" ? "selected" : ""%>>Option C</option>
+                                <option value="optionD" <%= answer.getQuestionContent() == "optionD" ? "selected" : ""%>>Option D</option>
+                                <option value="optionE" <%= answer.getQuestionContent() == "optionE" ? "selected" : ""%>>Option E</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >Question Content</label>
+                        <div class="col-sm-10">          
+                            <input type="text" class="form-control"  name="questionContent" value="<%= answer.getQuestionContent() %>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >Answer Content</label>
+                        <div class="col-sm-10">          
+                            <input type="text" class="form-control"  name="answerContent" value="<%= answer.getAnswerContent() %>">
+                        </div>
+                    </div>
+                    <div class="form-group">        
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                        
+                <%
+                    }
+                %>
+                
             </div>
         </div>
     </body>

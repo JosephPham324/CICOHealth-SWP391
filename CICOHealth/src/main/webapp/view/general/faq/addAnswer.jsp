@@ -18,6 +18,7 @@
     <body>
         <div class="container">
             <h4>Add new Answer</h4>
+             
             <form class="form-horizontal" action="/CICOHealth/faq/answers" method="post">
                 <div class="form-group">
                     <label class="control-label col-sm-2">Please select an option:</label>
