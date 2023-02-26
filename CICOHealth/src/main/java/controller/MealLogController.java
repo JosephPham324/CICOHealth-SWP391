@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Pham Nhat Quang CE170036 (FPTU CANTHO)
  */
 public class MealLogController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -93,10 +93,9 @@ public class MealLogController extends HttpServlet {
         Gson gson = new Gson();
         String logsJSON = "{\"logs\":";
         logsJSON += gson.toJson(logs);
-        logsJSON+= "}";
+        logsJSON += "}";
         return logsJSON;
     }
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -138,18 +137,17 @@ public class MealLogController extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String id = req.getParameter("mealLogID");
+            String id = request.getParameter("mealLogID");
             MealLogDao mealLogDao = new MealLogDao();
             mealLogDao.deleteMealLog(id);
-            resp.sendRedirect("/CICOHealth/user/meal-logs?delelte=successfully");
+            response.sendRedirect("/CICOHealth/user/meal-logs?delete=success");
         } catch (SQLException ex) {
             Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("/CICOHealth/user/meal-logs?delete=failure");
         }
     }
-    
-    
 
     /**
      * Returns a short description of the servlet.
