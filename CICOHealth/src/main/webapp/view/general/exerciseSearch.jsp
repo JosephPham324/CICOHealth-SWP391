@@ -15,7 +15,8 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
         <!--        //footer-->
-        
+        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
@@ -24,9 +25,9 @@
 
     <body>
         <%@include file="/view/general/navbar.jsp" %>
-        <form action="/CICOHealth/exercise-search" method="get">
+        <form id="exerciseForm" action="/CICOHealth/exercise-search" method="get" style="display: none;">
             <input type="text" name="txtExercise">
-            <button type="submit" name="btnSearch">Search</button>
+            <button autoSubmit type="submit" name="btnSearch">Search</button>
         </form>
         <div class="pop-up" id="exercise-log-pop-up">
             <div class="overlay"></div>
@@ -98,7 +99,11 @@
         <script src="/CICOHealth/assets/scripts/exercisesearch.js"></script>
 
 
-
+        <script>
+            window.onload = function() {
+              document.getElementById("autoSubmit").click();
+            };
+        </script>
         <script>
             $(document).ready(function () {
                 $('#info-table').DataTable();
