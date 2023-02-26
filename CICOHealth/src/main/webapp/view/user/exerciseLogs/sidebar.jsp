@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/CICOHealth/assets/css/sidebar.css">
 <a id="show-sidebar" class="btn btn-sm" href="#">
     <i class="fas fa-bars"></i>
 </a>
@@ -12,11 +13,11 @@
         <div class="sidebar-menu">
             <ul>
                 <li>
-                    <a href="#">Cardio
+                    <a href="/CICOHealth/user/exercise-logs/cardio">Cardio
                     </a>
                 </li>
                 <li>
-                    <a href="#">Resistance</a>
+                    <a href="/CICOHealth/user/exercise-logs/resistance">Resistance</a>
                 </li>
             </ul>
         </div>

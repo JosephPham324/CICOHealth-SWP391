@@ -1,3 +1,5 @@
+<%-- Document : Resistance Created on : Feb 22, 2023, 4:21:37 PM Author : Admin --%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,11 +19,11 @@
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <!-- Font Awesome -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/sidebar.css">
-        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
-        <!-- <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/popup.css"> -->
-        <!-- <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/exerciseLogPage.css"> -->
-        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/sass/main/exercisLog.css">
+        <link rel="stylesheet" href="/CICOHealth/assets/css/sidebar.css">
+        <link rel="stylesheet" href="/CICOHealth/assets/css/Homepage.css">
+        <!-- <link rel="stylesheet" href="/CICOHealth/assets/css/popup.css"> -->
+        <!-- <link rel="stylesheet" href="/CICOHealth/assets/css/exerciseLogPage.css"> -->
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/exercisLog.css">
         <style>
             main {
                 position: relative;
@@ -32,74 +34,26 @@
     </head>
 
     <body>
-
-
-        <header class="header">
-            <div class="logo txt-logo">CICOHealth</div>
-            <div class="nav-content" id="nav-content">
-                <ul class="menu">
-                    <li class="nav-link"><a href="#" class="menu-item">Home</a></li>
-                    <li class="nav-link"><a href="#" class="menu-item">Food</a></li>
-                    <li class="nav-link"><a href="#" class="menu-item">Exercise</a></li>
-                    <li class="nav-link dropdown"><a href="#" class="menu-item">Utilities<i
-                                class="fa-solid fa-caret-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="#">Convert Unit</a></li>
-                            <li class="dropdown-item"><a href="#">Timer</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-link"><a href="#" class="menu-item">FAQ</a></li>
-                    <li class="nav-link nav-btn"><a href="#" class="btn-item">Login</a></li>
-                    <li class="nav-link nav-btn"><a href="#" class="btn-item">Register</a></li>
-                </ul>
-            </div>
-            <div class="menu-hamburger" id="menu-hamburger">
-                <img src="./assets/img/icon.png" alt="menu-hamburger">
-            </div>
-        </header>
-
-        <div class="page-wrapper chiller-theme">
-            <a id="show-sidebar" class="btn btn-sm" href="#">
-                <i class="fas fa-bars"></i>
-            </a>
-            <nav id="sidebar" class="sidebar-wrapper">
-                <div class="sidebar-content">
-                    <div class="sidebar-brand">
-                        <a href="#">View</a>
-                        <div id="close-sidebar">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
-                    <div class="sidebar-menu">
-                        <ul>
-                            <li>
-                                <a href="./user/cardio.jsp">Cardio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="./user/resistance.jsp">Resistance</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
+        <%@include file = "/view/general/navbar.jsp"%>
+        <div class="page-wrapper chiller-theme">   
+            <%@include file="sidebar.jsp" %>
             <!-- sidebar-wrapper  -->
             <main class="page-content">
                 <div class="container">
-                    <h1 class="txt-title">LIST OF CARDIO EXERCISES</h1>
+                    <h1 class="txt-title">Resistance Exercises Logs</h1>
                     <div class="datepicker-container">
                         <input type="date" id="date-picker" class="datepicker">
                     </div>
 
-                    <table id="example" class="hover table-content" style="width:100%">
+                    <table id="resistance-logs-table" class="hover table-content" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
                                 <th>Time</th>
                                 <th>Name</th>
-                                <th>Calorie per hour</th>
-                                <th>Calorie burned</th>
+                                <th>Sets</th>
+                                <th>Reps</th>
+                                <th>Weights(kg)</th>
                                 <th>Note</th>
                                 <th>Action</th>
                             </tr>
@@ -110,38 +64,6 @@
                                 <td>10:28:10</td>
                                 <td>RUNNING</td>
                                 <td>30.0</td>
-                                <td>377.5</td>
-                                <td><a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a></td>
-                                <td><a href="#" class="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
-                                        href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>10:28:10</td>
-                                <td>RUNNING</td>
-                                <td>30.0</td>
-                                <td>377.5</td>
-                                <td><a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a></td>
-                                <td><a href="#" class="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
-                                        href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>10:28:10</td>
-                                <td>RUNNING</td>
-                                <td>30.0</td>
-                                <td>377.5</td>
-                                <td><a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a></td>
-                                <td><a href="#" class="btn-edit-pop-up"><i class="fa-solid fa-pen-to-square"></i></a>/ <a
-                                        href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a></td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-                                <td>10:28:10</td>
-                                <td>RUNNING</td>
                                 <td>30.0</td>
                                 <td>377.5</td>
                                 <td><a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a></td>
@@ -157,20 +79,26 @@
                             <h2>Total of day</h2>
                         </div>
                         <div class="table-head row">
-                            <div class="title-total col-md-6">
-                                <p>Duration</p>
+                            <div class="title-total col-md-4">
+                                <p>Sets</p>
                             </div>
-                            <div class="title-total col-md-6">
-                                <p>Kcal</p>
+                            <div class="title-total col-md-4">
+                                <p>Reps</p>
+                            </div>
+                            <div class="title-total col-md-4">
+                                <p>Weight(kg)</p>
                             </div>
                         </div>
 
                         <div class="table-body row">
-                            <div class="total-content col-md-6">
-                                <p>30.0</p>
+                            <div class="total-content col-md-4">
+                                <p id="total-set">30.0</p>
                             </div>
-                            <div class="total-content col-md-6">
-                                <p>377.5</p>
+                            <div class="total-content col-md-4">
+                                <p id="total-reps">30.0</p>
+                            </div>
+                            <div class="total-content col-md-4">
+                                <p id="total-weight">377.5</p>
                             </div>
                         </div>
                     </div>
@@ -282,9 +210,9 @@
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/navbar.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/formLog.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/sidebar.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
+    <script src="/CICOHealth/assets/scripts/formLog.js"></script>
+    <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
+    <script src="/CICOHealth/assets/scripts/popup.js"></script>
+    <script src="/CICOHealth/assets/scripts/resistancelogs.js"></script>
 
 </html>

@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,7 +63,48 @@ public class ExerciseLogController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String URI = request.getRequestURI();
+        if (URI.endsWith("/data")) {
+            String responseData = defaultResponseData();
+            Object user = request.getSession().getAttribute("user");
+            String userID = ((User)user).getUserID();
+            String date = request.getParameter("date");
+            Gson gson = new Gson();
+            if (URI.matches(".*/exercise-logs/cardio(/.*)*")) {
+                try {
+                    ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "CA");
+                    responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "RE");
+                    responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            //Write JSON response
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(responseData);
+            out.flush();
+            return;
+        }
+        if (URI.matches(".*/exercise-logs/cardio/*.*")) {
+            request.getRequestDispatcher("/view/user/exerciseLogs/cardio.jsp").forward(request, response);
+            return;
+        } else if (URI.matches(".*/exercise-logs/resistance/*.*")){
+            request.getRequestDispatcher("/view/user/exerciseLogs/resistance.jsp").forward(request, response);
+            return;
+        }
+        response.sendRedirect("/CICOHealth/user/exercise-logs/cardio");
+    }
+
+    private String defaultResponseData() {
+        return "{\"logs\":" + "[]" + "}";
     }
 
     /**

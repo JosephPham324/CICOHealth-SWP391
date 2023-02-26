@@ -122,39 +122,39 @@ public class RequestFilter implements Filter {
             log("RequestFilter:doFilter()");
         }
         doBeforeProcessing(request, response);
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        //URI 
-        String URI = httpRequest.getRequestURI();
-        System.out.println(URI);
-        String regex = "/CICOHealth/(\\w*(-*\\w*)*)/*.*";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(URI);
-        if (matcher.find()) {
-            String part = matcher.group(1);
-            HttpSession session;
-            Object user = null;
-            //Authorization for accounts access
-            if (part.matches("user|admin")) {
-                session = httpRequest.getSession();
-                user = session.getAttribute("user");
-                if (user == null) {
-                    redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
-                    return;
-                }
-            }
-            switch (part) {
-                case "user"://User pages
-                    break;
-                case "admin"://Admin pages
-                    if (!((bean.User) user).getUserRole().equals("AD")) {
-                        redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
-                        return;
-                    }
-                default:
-                    break;
-            }
-        }
+//        HttpServletRequest httpRequest = (HttpServletRequest) request;
+//        HttpServletResponse httpResponse = (HttpServletResponse) response;
+//        //URI 
+//        String URI = httpRequest.getRequestURI();
+//        System.out.println(URI);
+//        String regex = "/CICOHealth/(\\w*(-*\\w*)*)/*.*";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(URI);
+//        if (matcher.find()) {
+//            String part = matcher.group(1);
+//            HttpSession session;
+//            Object user = null;
+//            //Authorization for accounts access
+//            if (part.matches("user|admin")) {
+//                session = httpRequest.getSession();
+//                user = session.getAttribute("user");
+//                if (user == null) {
+//                    redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
+//                    return;
+//                }
+//            }
+//            switch (part) {
+//                case "user"://User pages
+//                    break;
+//                case "admin"://Admin pages
+//                    if (!((bean.User) user).getUserRole().equals("AD")) {
+//                        redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
+//                        return;
+//                    }
+//                default:
+//                    break;
+//            }
+//        }
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
