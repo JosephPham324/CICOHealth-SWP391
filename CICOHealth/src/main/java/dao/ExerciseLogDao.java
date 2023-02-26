@@ -111,6 +111,27 @@ public class ExerciseLogDao extends BaseDao {
         return result;
     }
     
+     public void deleteExerciseLog(String exerciseLogID ) throws SQLException {
+        // Define the SQL query to insert the exercise log into the database
+        String query = "DELETE FROM [exerciseLog]\n"
+                + "WHERE exerciseLogID = ?";
+        // Generate a unique ID for the exercise log
+        int index = 1;
+        try {
+            // Get a connection to the database and prepare the SQL statement
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            // Set the values of the parameters in the SQL statement
+            preparedStatement.setString(index++, exerciseLogID );
+            // Execute the SQL statement to insert the exercise log into the database
+            preparedStatement.executeUpdate();
+        } finally {
+            // Close the database connections
+            closeConnections();
+        }
+    }
+
+    
     public static void main(String[] args) {
         try {
             System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-02-26", "CA"));

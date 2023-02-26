@@ -143,3 +143,13 @@ function fillEditForm(log) {
 function findExerciseLogById(id) {
     return logsData.find((log) => log.exerciseLogID == id);
 }
+
+function confirmDelete(event){
+    if(confirm("Are you sure you want to delete this exercise log?")){
+         event.preventDefault();
+        document.getElementById("formDelete").submit();
+    }else{
+        event.preventDefault();
+        alert("Oke vay thoi!");
+    }
+}
