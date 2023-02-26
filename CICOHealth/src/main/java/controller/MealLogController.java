@@ -86,7 +86,7 @@ public class MealLogController extends HttpServlet {
                 return;
             }
         }
-        request.getRequestDispatcher("/view/user/mealLogs/mealLogsPage.html").forward(request, response);
+        request.getRequestDispatcher("/view/user/mealLogs/mealLogs.jsp").forward(request, response);
     }
 
     private String createMealLogsJSON(ArrayList<MealLog> logs) {
@@ -109,7 +109,7 @@ public class MealLogController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String method = request.getParameter("_method");
-        if (method.equalsIgnoreCase("delete")) {
+        if (method != null && method.equalsIgnoreCase("delete")) {
             doDelete(request, response);
             return;
         }

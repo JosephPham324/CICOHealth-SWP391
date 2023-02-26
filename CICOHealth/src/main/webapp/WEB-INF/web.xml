@@ -20,10 +20,6 @@
         <filter-name>RequestFilter</filter-name>
         <filter-class>filter.RequestFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>RequestFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
     <!--    <servlet>
         <servlet-name>CentralController</servlet-name>
         <servlet-class>controller.CentralController</servlet-class>
@@ -33,6 +29,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>-->
     <!--Register-->
+    <filter-mapping>
+        <filter-name>RequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.RegisterController</servlet-class>

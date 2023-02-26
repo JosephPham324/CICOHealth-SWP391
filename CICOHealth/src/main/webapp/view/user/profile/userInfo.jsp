@@ -3,7 +3,7 @@ Document   : userInfo
 Created on : Feb 14, 2023, 11:29:08 AM
 Author     : vhqua
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@ Author     : vhqua
         <title>User Information</title>
     </head>
     <body>
-        <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@include file="/view/general/navbar.jsp" %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-3 bg-light pt-3">

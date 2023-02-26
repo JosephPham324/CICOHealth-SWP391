@@ -18,6 +18,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
         <form action="/CICOHealth/exercise-search" method="get">
             <input type="text" name="txtExercise">
             <button type="submit" name="btnSearch">Search</button>
@@ -35,7 +36,8 @@
                 <table id="info-table" class="table table-striped table-hover display">
                     <thead>
                         <tr style="background-color:  greenyellow">
-                            <th scope="col">Exercise ID</th>
+                            <!--No ID-->
+                            <!--<th scope="col">Exercise ID</th>-->
                             <th scope="col">Exercise Type</th>
                             <th scope="col">Exercise Name</th>
                             <th scope="col">Exercise Description</th>
@@ -46,14 +48,14 @@
                     <tbody>
                         <c:forEach var="exercise" items="${exerciseList}">
                             <tr data-type="${exercise.getExerciseType()}" 
-                            data-exercise-info="{
+                                data-exercise-info="{
                                 &quot;exerciseID&quot;: &quot;${exercise.exerciseID}&quot;,
                                 &quot;exerciseName&quot;: &quot;${exercise.exerciseName}&quot;,
                                 &quot;exerciseType&quot;: &quot;${exercise.getExerciseType()}&quot;,
                                 &quot;exerciseDescription&quot;: &quot;${exercise.exerciseDescription}&quot;,
                                 &quot;caloriesPerHour&quot;: &quot;${exercise.caloriesPerHour}&quot;
-                            }">
-                                <td>${exercise.exerciseID}</td>
+                                }">
+                                    <!--<td>${exercise.exerciseID}</td>-->
                                 <td>${exercise.getExerciseType()}</td>
                                 <td>${exercise.exerciseName}</td>
                                 <td>${exercise.exerciseDescription}</td>

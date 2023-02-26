@@ -38,7 +38,7 @@ CREATE TABLE healthInfo (
 
 CREATE TABLE question (
     questionID varchar(10) PRIMARY KEY NOT NULL,
-    submittedBy varchar(10) NULL ,
+    submittedBy varchar(10) NULL,
     questionTopic text NOT NULL,
     questionContent text NOT NULL
 );
