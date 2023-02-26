@@ -126,7 +126,7 @@ function fillEditForm(logData) {
             <td>
                 <a href="#" class="btn-delete-pop-up"
                 onclick = "removeFoodItem(logUpdate, '${
-                  food.itemID
+                  food.itemID 
                 }'); fillEditForm(logUpdate);"
                 ><i class="fa-solid fa-trash"></i
                 ></a>
@@ -193,9 +193,10 @@ function getRowHTML(count, logData) {
             <a href="#" class="btn-edit-pop-up" data-logid = "${
               logData.mealLogID
             }"><i class="fa-solid fa-pen-to-square"></i></a>/
-            <form action="/CICOHealth/user/meal-logs" method="POST" style="display: inline-block;">
+            <form action="/CICOHealth/user/meal-logs" method="POST" style="display: inline-block;" id="formDelete">
+                <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="mealLogID" value="${logData.mealLogID}">
-                <button style="border:0; background-color:transparent; color:red;" type="submit" class="btn-delete-pop-up"><i style = "font-size:20;" class="fa-solid fa-trash"></i></button>
+                <button style="border:0; background-color:transparent; color:red;" type="submit" class="btn-delete-pop-up" onclick="confirmDelete()"><i style = "font-size:20;" class="fa-solid fa-trash" id="btnDelete"></i></button>
             </form>
         </td>
     </tr>
@@ -210,7 +211,7 @@ function getDatePickerData() {
   //Send a synchronous GET request to the server
   let response = $.ajax({
     url: "/CICOHealth/user/meal-logs/data?date=" + date,
-    async: false,
+    async: false
   }).responseText;
   let data = JSON.parse(response);
   return data.logs;
@@ -230,3 +231,14 @@ document.querySelectorAll('a[name="btn-cancel"]').forEach((button) => {
     overlay.click();
   });
 });
+
+
+function confirmDelete(){
+    if(confirm("Co thiet hong")){
+         event.preventDefault();
+        document.getElementById("formDelete").submit();
+    }else{
+        event.preventDefault();
+        alert("Oke vay thoi!");
+    }
+}

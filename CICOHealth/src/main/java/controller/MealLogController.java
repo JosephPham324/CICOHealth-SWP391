@@ -18,13 +18,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  *
  * @author Pham Nhat Quang CE170036 (FPTU CANTHO)
  */
 public class MealLogController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -93,10 +93,9 @@ public class MealLogController extends HttpServlet {
         Gson gson = new Gson();
         String logsJSON = "{\"logs\":";
         logsJSON += gson.toJson(logs);
-        logsJSON+= "}";
+        logsJSON += "}";
         return logsJSON;
     }
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -109,6 +108,11 @@ public class MealLogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String method = request.getParameter("_method");
+        if (method.equalsIgnoreCase("delete")) {
+            doDelete(request, response);
+            return;
+        }
         // Get the meal log data from the request parameters
         String meal = request.getParameter("mealLog");
         // Create a Gson object to convert the meal log JSON string to a MealLog object
@@ -129,6 +133,19 @@ public class MealLogController extends HttpServlet {
             // Log the error and redirect the user to the food search page with a failure message
             Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect("/CICOHealth/food-search?log=failure");
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String id = request.getParameter("mealLogID");
+            MealLogDao mealLogDao = new MealLogDao();
+            mealLogDao.deleteMealLog(id);
+            response.sendRedirect("/CICOHealth/user/meal-logs?delete=success");
+        } catch (SQLException ex) {
+            Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("/CICOHealth/user/meal-logs?delete=failure");
         }
     }
 
