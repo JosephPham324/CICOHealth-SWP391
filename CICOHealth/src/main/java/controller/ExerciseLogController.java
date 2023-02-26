@@ -37,7 +37,7 @@ public class ExerciseLogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -67,7 +67,7 @@ public class ExerciseLogController extends HttpServlet {
         if (URI.endsWith("/data")) {
             String responseData = defaultResponseData();
             Object user = request.getSession().getAttribute("user");
-            String userID = ((User)user).getUserID();
+            String userID = ((User) user).getUserID();
             String date = request.getParameter("date");
             Gson gson = new Gson();
             if (URI.matches(".*/exercise-logs/cardio(/.*)*")) {
@@ -96,7 +96,7 @@ public class ExerciseLogController extends HttpServlet {
         if (URI.matches(".*/exercise-logs/cardio/*.*")) {
             request.getRequestDispatcher("/view/user/exerciseLogs/cardio.jsp").forward(request, response);
             return;
-        } else if (URI.matches(".*/exercise-logs/resistance/*.*")){
+        } else if (URI.matches(".*/exercise-logs/resistance/*.*")) {
             request.getRequestDispatcher("/view/user/exerciseLogs/resistance.jsp").forward(request, response);
             return;
         }
@@ -119,6 +119,11 @@ public class ExerciseLogController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String method = request.getParameter("_method");
+        if (method.equalsIgnoreCase("delete")) {
+            doDelete(request, response);
+            return;
+        }
         ExerciseLog log;
         Gson gson = new Gson();
         String exerciseParam = request.getParameter("exercise");
@@ -136,6 +141,19 @@ public class ExerciseLogController extends HttpServlet {
             return;
         }
     }
+    
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String id = req.getParameter("exerciseLogID");
+            ExerciseLogDao exerciseLogDao = new ExerciseLogDao();
+            exerciseLogDao.deleteExerciseLog(id);
+            resp.sendRedirect("/CICOHealth/user/exercise-logs?delelte=successfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     public void createCardioLog(HttpServletRequest request, HttpServletResponse response) {
     }

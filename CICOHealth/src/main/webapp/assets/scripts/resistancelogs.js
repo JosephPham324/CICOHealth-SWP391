@@ -71,9 +71,9 @@ function getRowHTML(count, logData) {
         </td>
         <td>
             <a href="#" class="btn-edit-pop-up" data-logid = "${logData.exerciseLogID}"><i class="fa-solid fa-pen-to-square"></i></a>/
-            <form action="/CICOHealth/user/meal-logs" method="POST" style="display: inline-block;" id="formDelete">
+            <form action="/CICOHealth/user/exercise-logs" method="POST" style="display: inline-block;" id="formDelete">
                 <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="mealLogID" value="${logData.exerciseLogID}">
+                <input type="hidden" name="exerciseLogID" value="${logData.exerciseLogID}">
                 <button style="border:0; background-color:transparent; color:red;" type="submit" class="btn-delete-pop-up" onclick="confirmDelete()"><i style = "font-size:20;" class="fa-solid fa-trash" id="btnDelete"></i></button>
             </form>
         </td>
@@ -136,4 +136,14 @@ function addToTotal(logData) {
     (a, b) => a + b,
     0
   );
+}
+
+function confirmDelete(event){
+    if(confirm("Are you sure you want to delete this exercise log?")){
+         event.preventDefault();
+        document.getElementById("formDelete").submit();
+    }else{
+        event.preventDefault();
+        alert("Oke vay thoi!");
+    }
 }
