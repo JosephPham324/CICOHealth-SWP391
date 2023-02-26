@@ -25,9 +25,9 @@
 
     <body>
         <%@include file="/view/general/navbar.jsp" %>
-        <form id="exerciseForm" action="/CICOHealth/exercise-search" method="get" style="display: none;">
+        <form id="exerciseForm" action="/CICOHealth/exercise-search" method="get" style="display:none;">
             <input type="text" name="txtExercise">
-            <button autoSubmit type="submit" name="btnSearch">Search</button>
+            <button  id ="autoSubmit" type="submit" name="btnSearch">Search</button>
         </form>
         <div class="pop-up" id="exercise-log-pop-up">
             <div class="overlay"></div>
@@ -96,14 +96,7 @@
             </footer>
         </div>
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
-        <script src="/CICOHealth/assets/scripts/exercisesearch.js"></script>
-
-
-        <script>
-            window.onload = function() {
-              document.getElementById("autoSubmit").click();
-            };
-        </script>
+        <script src="/CICOHealth/assets/scripts/exercisesearch.js"></script>      
         <script>
             $(document).ready(function () {
                 $('#info-table').DataTable();
