@@ -28,7 +28,7 @@ date_picker.addEventListener("input", function (event) {
     total.calories.toFixed(0);
 });
 
-function findMealLogById(id) {
+function findExerciseLogById(id) {
   return logsData.find((log) => log.mealLogID == id);
 }
 
@@ -55,7 +55,7 @@ function addEditButtonsClickEvent() {
   let editButtons = document.querySelectorAll(".btn-edit-pop-up");
   editButtons.forEach((button) => {
     button.addEventListener("click", function (event) {
-      let log = findMealLogById(button.dataset.logid);
+      let log = findExerciseLogById(button.dataset.logid);
       logUpdate = JSON.parse(JSON.stringify(log));
       fillEditForm(logUpdate);
       displayPopUp("edit-pop-up");
@@ -161,7 +161,7 @@ function addNoteButtonsClickEvent() {
   let noteButtons = document.querySelectorAll(".btn-note-pop-up");
   noteButtons.forEach((button) => {
     button.addEventListener("click", function (event) {
-      let log = findMealLogById(button.dataset.logid);
+      let log = findExerciseLogById(button.dataset.logid);
       document.getElementById("txtNote").innerText = log.logNote;
       displayPopUp("note-pop-up");
     });
@@ -233,8 +233,8 @@ document.querySelectorAll('a[name="btn-cancel"]').forEach((button) => {
 });
 
 
-function confirmDelete(){
-    if(confirm("Co thiet hong")){
+function confirmDelete(event){
+    if(confirm("Are you sure you want to delete this meal log?")){
          event.preventDefault();
         document.getElementById("formDelete").submit();
     }else{

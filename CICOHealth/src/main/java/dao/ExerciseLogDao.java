@@ -6,6 +6,7 @@ package dao;
 
 import bean.ExerciseLog;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,5 +75,47 @@ public class ExerciseLogDao extends BaseDao {
         preparedStatement.setString(index++, log.getLogNote());
         preparedStatement.executeUpdate();
         closeConnections();
+    }
+
+    public ArrayList<ExerciseLog> getLogsOfDate(String userID, String date, String type) throws SQLException {
+        if (!type.matches("CA|RE")) {
+            return null;
+        }
+        String query = "SELECT *\n"
+                + "FROM [exerciseLog]\n"
+                + "WHERE userID = ? AND logDate = ?\n"
+                + "AND exerciseLogID like '"+type + "LG' + '%'";
+        int index = 1;
+        ArrayList<ExerciseLog> result = new ArrayList<>();
+        try {
+            // Get a connection to the database and prepare the SQL statement
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, date);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ExerciseLog log = new ExerciseLog(resultSet.getString("exerciseLogID"), resultSet.getTime("logTime"), resultSet.getDate("logDate"));
+                log.setExercise(new ExerciseDao().getExerciseByID(resultSet.getString("exerciseID")));
+                log.setSet(resultSet.getInt("set"));
+                log.setRep(resultSet.getString("rep"));
+                log.setWeight(resultSet.getString("weight"));
+                log.setTimeSpent(resultSet.getInt("timeSpent"));
+                log.setLogNote(resultSet.getString("logNote"));
+                result.add(log);
+            }
+        } finally {
+            // Close the database connections
+            closeConnections();
+        }
+        return result;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-02-26", "CA"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
