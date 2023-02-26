@@ -13,6 +13,7 @@
   display: none;
 }
 .pop-up.active {
+  z-index: 1;
   display: block;
   position: fixed;
 }
