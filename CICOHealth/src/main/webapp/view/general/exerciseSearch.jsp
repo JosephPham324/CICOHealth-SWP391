@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
         <!--FontAwesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+        
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
         <title>JSP Page</title>
     </head>
@@ -33,7 +35,7 @@
         </div>
         <div class="info-container">
             <div class="info-table">            
-                <table id="info-table" class="table table-striped table-hover display">
+                <table id="info-table" class="table table-striped table-hover display hover table-content">
                     <thead>
                         <tr style="background-color:  greenyellow">
                             <!--No ID-->
@@ -69,5 +71,13 @@
         </div>
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/exercisesearch.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            $(document).ready(function () {
+            $('#example').DataTable();
+ });
+        </script>
     </body>
 </html>
