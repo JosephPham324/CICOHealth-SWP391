@@ -80,6 +80,7 @@ public class MealLogDao extends BaseDao {
             closeConnections();
         }
     }
+
     /**
      * Inserts a new MealLog record into the database.
      *
@@ -90,14 +91,14 @@ public class MealLogDao extends BaseDao {
         // Define the SQL query to insert the meal log into the database
         String query = "INSERT INTO mealLog (userID, mealLogID, mealLogName, logTime, logDate, logNote) VALUES (?, ?, ?, ?, ?, ?)";
         // Get the current date and time to use for the logTime and logDate fields
-        
+
         String formattedTime = util.Utility.getCurrentDateOrTime("time");
         String formattedDate = util.Utility.getCurrentDateOrTime("date");
-        
-        if (forUpdate == true){
+
+        if (forUpdate == true) {
             formattedTime = util.Utility.getDateOrTime(mealLog.getLogTime(), "TIME");
             formattedDate = util.Utility.getDateOrTime(mealLog.getLogTime(), "DATE");
-            
+
         }
         // Generate a unique ID for the meal log
         String id = this.createID();
@@ -125,8 +126,8 @@ public class MealLogDao extends BaseDao {
 
     public ArrayList<MealLog> getLogsOfDate(String userID, String date) throws SQLException {
         String query = "SELECT userID, mealLogID, mealLogName, logTime, logDate, logNote\n"
-                        + "FROM [mealLog]\n"
-                        + "WHERE userID = ? AND logDate = ?\n"
+                + "FROM [mealLog]\n"
+                + "WHERE userID = ? AND logDate = ?\n"
                 + "ORDER BY logTime ASC";
         int index = 1;
         ArrayList<MealLog> result = new ArrayList<>();
@@ -154,10 +155,42 @@ public class MealLogDao extends BaseDao {
         return result;
     }
 
+    public ArrayList<MealLog> getLogsOfDateRange(String userID, String startDate, String endDate) throws SQLException {
+        String query = "SELECT userID, mealLogID, mealLogName, logTime, logDate, logNote\n"
+                + "FROM [mealLog]\n"
+                + "WHERE userID = ? AND logDate BETWEEN ? AND ?\n"
+                + "ORDER BY logTime ASC";
+        int index = 1;
+        ArrayList<MealLog> result = new ArrayList<>();
+        try {
+            // Get a connection to the database and prepare the SQL statement
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, startDate);
+            preparedStatement.setString(index++, endDate);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String mealLogID = resultSet.getString("mealLogID");
+                String mealLogName = resultSet.getString("mealLogName");
+                Date logTime = resultSet.getTime("logTime");
+                String logNote = resultSet.getString("logNote");
+                MealLog log = new MealLog(mealLogID, mealLogName, logTime, logTime, logNote);
+                ArrayList<MealLogItem> logItems = new MealLogItemDao().getLogItems(mealLogID);
+                log.setFoods(logItems);
+                result.add(log);
+            }
+        } finally {
+            // Close the database connections
+            closeConnections();
+        }
+        return result;
+    }
+
     public void deleteMealLog(String mealLogID) throws SQLException {
         // Define the SQL query to insert the meal log into the database
         String query = "DELETE FROM [mealLog]\n"
-                     + "WHERE mealLogID = ?";
+                + "WHERE mealLogID = ?";
         // Generate a unique ID for the meal log
         int index = 1;
         try {
