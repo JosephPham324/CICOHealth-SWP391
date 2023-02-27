@@ -164,9 +164,11 @@ public class MealLogController extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         // Set the user ID on the meal log object
         mealLog.setUserID(user.getUserID());
+        System.out.println(mealLog.getMealLogID());
         // Create a new instance of the MealLogDao class to interact with the database
         MealLogDao mealLogDao = new MealLogDao();
         try {
+            mealLogDao.deleteMealLog(mealLog.getMealLogID());
             // Call the createMealLog method to insert the new meal log into the database
             mealLogDao.createMealLog(mealLog);
             // Redirect the user to the food search page with a success message
