@@ -7,6 +7,7 @@ package controller;
 import bean.MealLog;
 import bean.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import dao.MealLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +16,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -113,6 +119,10 @@ public class MealLogController extends HttpServlet {
             doDelete(request, response);
             return;
         }
+        if (method != null && method.equalsIgnoreCase("put")) {
+            doPut(request, response);
+            return;
+        }
         // Get the meal log data from the request parameters
         String meal = request.getParameter("mealLog");
         // Create a Gson object to convert the meal log JSON string to a MealLog object
@@ -133,6 +143,38 @@ public class MealLogController extends HttpServlet {
             // Log the error and redirect the user to the food search page with a failure message
             Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect("/CICOHealth/food-search?log=failure");
+        }
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the meal log data from the request parameters
+        String meal = request.getParameter("mealLog");
+        Gson gson = new Gson();
+        System.out.println(meal);
+        MealLog mealLog = gson.fromJson(meal, MealLog.class);
+        // Get the user object from the session
+        User user = (User) request.getSession().getAttribute("user");
+        // Set the user ID on the meal log object
+        mealLog.setUserID(user.getUserID());
+        // Create a new instance of the MealLogDao class to interact with the database
+        MealLogDao mealLogDao = new MealLogDao();
+        try {
+            // Call the createMealLog method to insert the new meal log into the database
+            mealLogDao.createMealLog(mealLog);
+            // Redirect the user to the food search page with a success message
+            response.sendRedirect("/CICOHealth/user/meal-logs?update=success");
+        } catch (SQLException ex) {
+            // Log the error and redirect the user to the food search page with a failure message
+            Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("/CICOHealth/user/meal-logs?update=failure");
         }
     }
 

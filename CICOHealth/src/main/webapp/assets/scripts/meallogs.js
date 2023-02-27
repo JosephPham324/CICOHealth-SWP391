@@ -61,13 +61,20 @@ function addEditButtonsClickEvent() {
       displayPopUp("edit-pop-up");
       //Add submit event listener to the edit form
       let form_id = "edit-meal-log-form";
+      //Get log date in format yyyy-mm-dd from date picker
+      logUpdate.logDate = $("#date-picker").val();
+      //parse string to Date
+      logUpdate.logTime = new Date(logUpdate.logTime);
+      //Format time to SQL Server format
+      
+      // logUpdate.logTime = logUpdate.logTime;
       document
         .getElementById(form_id)
         .addEventListener("submit", function (event) {
           event.preventDefault();
           let formParams = {
             mealLog: JSON.stringify(logUpdate),
-            _method: "PUT",
+            _method: "PUT"
           };
           post("/CICOHealth/user/meal-logs", formParams);
         });

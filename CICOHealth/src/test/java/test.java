@@ -9,6 +9,7 @@ import dao.HealthInfoDao;
 import dao.LoginDao;
 import dao.QuestionDao;
 import dao.UserDao;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +26,7 @@ import util.AuthenticationLogic;
 public class test {
 
     public static void main(String[] args) {
-        Answer a = new AnswerDao().getAnswerByID("ANSW00001");
-        System.out.println(a.getAnswerID());
+     
     
     }
 
