@@ -7,6 +7,7 @@ package controller;
 import bean.MealLog;
 import bean.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dao.MealLogDao;
 import java.io.IOException;
@@ -157,7 +158,7 @@ public class MealLogController extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the meal log data from the request parameters
         String meal = request.getParameter("mealLog");
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         System.out.println(meal);
         MealLog mealLog = gson.fromJson(meal, MealLog.class);
         // Get the user object from the session
@@ -170,7 +171,7 @@ public class MealLogController extends HttpServlet {
         try {
             mealLogDao.deleteMealLog(mealLog.getMealLogID());
             // Call the createMealLog method to insert the new meal log into the database
-            mealLogDao.createMealLog(mealLog);
+            mealLogDao.createMealLog(mealLog,true);
             // Redirect the user to the food search page with a success message
             response.sendRedirect("/CICOHealth/user/meal-logs?update=success");
         } catch (SQLException ex) {

@@ -5,6 +5,8 @@
 package bean;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -103,10 +105,8 @@ public class MealLog implements Serializable {
         this.logNote = null;
         this.mealLogName = null;
         this.foods = foods;
-        
+
     }
-    
-    
 
     public String getMealLogID() {
         return mealLogID;
@@ -197,19 +197,19 @@ public class MealLog implements Serializable {
     public void setNutrition() {
         this.nutrition = this.calculateNutrition();
     }
-    
-    public final Double[] calculateNutrition(){
+
+    public final Double[] calculateNutrition() {
         double protein = 0;
         double fat = 0;
         double carbs = 0;
         double calories = 0;
-        for (MealLogItem item : this.foods){
+        for (MealLogItem item : this.foods) {
             protein += item.getActualProtein();
             fat += item.getActualFat();
             carbs += item.getActualCarb();
             calories += item.getActualCalories();
         }
-        return new Double[]{protein,fat,carbs,calories};
+        return new Double[]{protein, fat, carbs, calories};
     }
-    
+
 }

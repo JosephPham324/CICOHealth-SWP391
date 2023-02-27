@@ -57,8 +57,8 @@ public class ExerciseLogDao extends BaseDao {
 
         String query = "INSERT INTO [exerciseLog] (userID, exerciseLogID, exerciseID, logTime, logDate,[set], rep, weight, timeSpent, logNote)\n"
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
-        String date = util.Utility.getDateOrTime("date");
-        String time = util.Utility.getDateOrTime("time");
+        String date = util.Utility.getCurrentDateOrTime("date");
+        String time = util.Utility.getCurrentDateOrTime("time");
         String id = createID(log.getExerciseType());
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
