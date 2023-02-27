@@ -83,8 +83,8 @@ public class MealLogDao extends BaseDao {
 
     public ArrayList<MealLog> getLogsOfDate(String userID, String date) throws SQLException {
         String query = "SELECT userID, mealLogID, mealLogName, logTime, logDate, logNote\n"
-                + "FROM [mealLog]\n"
-                + "WHERE userID = ? AND logDate = ?";
+                        + "FROM [mealLog]\n"
+                        + "WHERE userID = ? AND logDate = ?";
         int index = 1;
         ArrayList<MealLog> result = new ArrayList<>();
         try {
@@ -114,7 +114,7 @@ public class MealLogDao extends BaseDao {
     public void deleteMealLog(String mealLogID) throws SQLException {
         // Define the SQL query to insert the meal log into the database
         String query = "DELETE FROM [mealLog]\n"
-                + "WHERE mealLogID = ?";
+                     + "WHERE mealLogID = ?";
         // Generate a unique ID for the meal log
         int index = 1;
         try {
