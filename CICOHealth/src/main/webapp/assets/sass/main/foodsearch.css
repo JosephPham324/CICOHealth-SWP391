@@ -72,6 +72,10 @@
 #meal-form .btn-submit:hover {
   background-color: yellow !important;
 }
+#meal-form .sum {
+  background-color: yellow;
+  font-weight: 700;
+}
 #meal-form #table_id {
   border: 1px solid black;
   margin-bottom: 10px;

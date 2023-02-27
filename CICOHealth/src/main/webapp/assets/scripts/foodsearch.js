@@ -369,7 +369,7 @@ function displayMealForm() {
   // Sum up the nutrition information of the selected foods
   let mealSum = calculateMealSum(selectedFoods);
   let rowMealSumHTML = `
-  <tr>
+  <tr class="sum">
     <td>Sum</td>
     <td>${mealSum[0].toFixed(0)}</td>
     <td>${mealSum[1].toFixed(1)}</td>
