@@ -120,7 +120,7 @@ public class ExerciseLogController extends HttpServlet {
             throws ServletException, IOException {
 //        processRequest(request, response);
         String method = request.getParameter("_method");
-        if (method.equalsIgnoreCase("delete")) {
+        if (method != null && method.equalsIgnoreCase("delete")) {
             doDelete(request, response);
             return;
         }

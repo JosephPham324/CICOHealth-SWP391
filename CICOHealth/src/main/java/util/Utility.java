@@ -24,7 +24,7 @@ public class Utility {
         Date current = new Date();
 
         // Set the output format based on the input argument
-        String format = type.equalsIgnoreCase("date") ? "yyyy-MM-dd" : "hh:mm:ss";
+        String format = type.equalsIgnoreCase("date") ? "yyyy-MM-dd" : "HH:mm:ss";
 
         // Create a new instance of the SimpleDateFormat class with the desired format
         SimpleDateFormat formatter = new SimpleDateFormat(format);
