@@ -215,9 +215,11 @@ function changeButtonText(searchResult, state) {
   switch (state) {
     case "add":
       button.innerText = "Remove";
+      button.style.backgroundColor = "red";
       break;
     case "remove":
       button.innerText = "Add";
+      button.style.backgroundColor = "";
       break;
     default:
       break;
