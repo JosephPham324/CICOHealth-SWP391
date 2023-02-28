@@ -111,7 +111,7 @@
             <div class="edit-overlay overlay" id="overlay"></div>
             <div class="pop-up-content edit-pop-up-content">
                 <!-- <div class="edit-pop-up"> -->
-                <form action="exercise-log" method="post" name="edit-exercise-log-form" class="edit-exercise-log-form">
+                <form action="exercise-log" method="post" name="edit-exercise-log-form" id="edit-exercise-log-form" class="edit-exercise-log-form">
                     <h2 class="txt-title-pop-up">Edit Exercise Logs</h2>
                     <div class="form-group row">
                         <label for="txtDate" class="offset-1 col-3 col-form-label">Date</label>
@@ -214,6 +214,6 @@
     <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
     <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
     <script src="/CICOHealth/assets/scripts/popup.js"></script>
-    <script src="/CICOHealth/assets/scripts/resistancelogs.js"></script>
+    <script src="/CICOHealth/assets/scripts/resistancelogs"></script>
 
 </html>
