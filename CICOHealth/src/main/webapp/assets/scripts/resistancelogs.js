@@ -93,6 +93,11 @@ function addEditButtonsClickEvent() {
       displayPopUp("edit-pop-up");
       //Add submit event listener to the edit form
       let form_id = "edit-exercise-log-form";
+      logUpdate.logDate = $("#date-picker").val();
+
+      //Add submit event listener to the edit form
+      logUpdate.logTime = logUpdate.logDate + " "+ logUpdate.logTime.split(" ")[0];
+      logUpdate.logTime = new Date(logUpdate.logTime);
       document
         .getElementById(form_id)
         .addEventListener("submit", function (event) {

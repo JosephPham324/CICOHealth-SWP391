@@ -182,7 +182,7 @@ public class ExerciseLogController extends HttpServlet {
             System.out.println(exerciseParam);
             log.setUserID(user.getUserID());
             try {
-                new ExerciseLogDao().updateExerciseLogCardio(log);
+                new ExerciseLogDao().updateExerciseLogResitance(log);
                 response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?updatelog=success");
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
