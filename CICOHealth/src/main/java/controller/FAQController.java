@@ -11,7 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -33,11 +34,24 @@ public class FAQController extends HttpServlet {
             throws ServletException, IOException {
         String URI = request.getRequestURI();
         if (URI.endsWith("/questions")) {
-            List<Question> listQuestion = new QuestionDao().getAllQuestions();
-            request.setAttribute("listQuestion", listQuestion);
-            request.getRequestDispatcher("/view/admin/ViewQuestion.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/general/FAQQuestions.jsp").forward(request, response);
+            return;
         }
-        request.getRequestDispatcher("/view/general/ViewFAQ.jsp").forward(request, response);
+        if (URI.endsWith("data")){
+            if (URI.matches(".*/faq/answers")){
+                
+            }
+        }
+        request.getRequestDispatcher("/view/general/FAQ.jsp").forward(request, response);
+    }
+    
+    private ArrayList<String> getFaqTopics(){
+        ArrayList<String> result = new ArrayList();
+        result.add("General");
+        result.add("Logging");
+        result.add("Statistics");
+        result.add("Terminologies");
+        return result;
     }
 
     /**
