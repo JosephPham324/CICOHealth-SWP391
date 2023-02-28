@@ -110,6 +110,7 @@ function addEditButtonsClickEvent() {
           let formParams = {
             exerciseLog: JSON.stringify(logUpdate),
             _method: "PUT",
+            check: "cardio"
           };
           post("/CICOHealth/user/exercise-logs/cardio", formParams);
         });

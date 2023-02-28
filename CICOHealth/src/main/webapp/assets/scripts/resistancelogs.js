@@ -52,7 +52,7 @@ function fillTable(logsData) {
   tableBody.innerHTML = rowsHTML;
 
   //Add event listeners to the edit and delete buttons
-  //   addEditButtonsClickEvent();
+  addEditButtonsClickEvent();
   addNoteButtonsClickEvent();
   $(`#${table_id}`).DataTable();
 }
@@ -67,10 +67,12 @@ function getRowHTML(count, logData) {
         <td>${logData.rep}</td>
         <td>${logData.weight}</td>
         <td>
-            <a href="#" class="btn-note-pop-up" data-logid = "${logData.exerciseLogID}"><i class="fa-solid fa-note-sticky"></i></a>
+            <a href="#" class="btn-note-pop-up" data-logid = "${logData.exerciseLogID}">
+            <i class="fa-solid fa-note-sticky"></i></a>
         </td>
         <td>
-            <a href="#" class="btn-edit-pop-up" data-logid = "${logData.exerciseLogID}"><i class="fa-solid fa-pen-to-square"></i></a>/
+            <a href="#" class="btn-edit-pop-up" data-logid = "${logData.exerciseLogID}">
+            <i class="fa-solid fa-pen-to-square"></i></a>/
             <form action="/CICOHealth/user/exercise-logs" method="POST" style="display: inline-block;" id="formDelete">
                 <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="exerciseLogID" value="${logData.exerciseLogID}">
@@ -90,7 +92,7 @@ function addEditButtonsClickEvent() {
       fillEditForm(logUpdate);
       displayPopUp("edit-pop-up");
       //Add submit event listener to the edit form
-      let form_id = "edit-meal-log-form";
+      let form_id = "edit-exercise-log-form";
       document
         .getElementById(form_id)
         .addEventListener("submit", function (event) {
@@ -98,8 +100,9 @@ function addEditButtonsClickEvent() {
           let formParams = {
             mealLog: JSON.stringify(logUpdate),
             _method: "PUT",
+            check: "resitance"
           };
-          post("/CICOHealth/user/exercise-logs/cardio", formParams);
+          post("/CICOHealth/user/exercise-logs/resistance", formParams);
         });
     });
   });
