@@ -14,6 +14,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
@@ -39,28 +41,25 @@ public class FAQController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.startsWith("/CICOHealth/faq/questions")) {
-            List<Question> listQuestion = new QuestionDao().getAllQuestions();
-            request.setAttribute("listQuestion", listQuestion);
-            request.getRequestDispatcher("/view/general/faq/ViewQuestion.jsp").forward(request, response);
+        if (URI.endsWith("/questions")) {
+            request.getRequestDispatcher("/view/general/FAQQuestions.jsp").forward(request, response);
             return;
         }
-        if (URI.startsWith("/CICOHealth/faq/answers")) {
-            if (URI.endsWith("/create")) {
-                request.getRequestDispatcher("/view/general/faq/addAnswer.jsp").forward(request, response);
-                return;
+        if (URI.endsWith("data")){
+            if (URI.matches(".*/faq/answers")){
+                
             }
-            if (request.getParameter("updateid") != null) {
-                String answerID = request.getParameter("updateid");
-                request.setAttribute("AnswerUpdate", new AnswerDao().getAnswerByID(answerID));
-            }
-            List<Answer> listAnswer = new AnswerDao().getAllAnswers();
-            request.setAttribute("listAnswer", listAnswer);
-            request.getRequestDispatcher("/view/general/faq/ViewAnswer.jsp").forward(request, response);
-            return;
         }
-        //Default
-        request.getRequestDispatcher("/view/general/faq/ViewFAQ.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/general/FAQ.jsp").forward(request, response);
+    }
+    
+    private ArrayList<String> getFaqTopics(){
+        ArrayList<String> result = new ArrayList();
+        result.add("General");
+        result.add("Logging");
+        result.add("Statistics");
+        result.add("Terminologies");
+        return result;
     }
 
     /**
