@@ -91,6 +91,20 @@ public class RequestFilter implements Filter {
          */
     }
 
+    private void redirectToHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/CICOHealth/").forward(request, response);
+    }
+
+    private void redirectToErrorPage(HttpServletRequest request, HttpServletResponse response, int errorCode) throws ServletException, IOException {
+        switch (errorCode) {
+            case HttpServletResponse.SC_FORBIDDEN:
+                request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
+                break;
+            default:
+                request.getRequestDispatcher("/view/error/error404.jsp").forward(request, response);
+        }
+    }
+
     /**
      *
      * @param request The servlet request we are processing
@@ -108,33 +122,33 @@ public class RequestFilter implements Filter {
             log("RequestFilter:doFilter()");
         }
         doBeforeProcessing(request, response);
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        //URI 
-        String URI = httpRequest.getRequestURI();
-        String regex = "/CICOHealth/(\\w*(-*\\w*)*)/*.*";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(URI);
+//        HttpServletRequest httpRequest = (HttpServletRequest) request;
+//        HttpServletResponse httpResponse = (HttpServletResponse) response;
+//        //URI 
+//        String URI = httpRequest.getRequestURI();
+//        System.out.println(URI);
+//        String regex = "/CICOHealth/(\\w*(-*\\w*)*)/*.*";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(URI);
 //        if (matcher.find()) {
 //            String part = matcher.group(1);
 //            HttpSession session;
 //            Object user = null;
 //            //Authorization for accounts access
-//            if (part.equalsIgnoreCase("user") || part.equalsIgnoreCase("admin")) {
+//            if (part.matches("user|admin")) {
 //                session = httpRequest.getSession();
 //                user = session.getAttribute("user");
 //                if (user == null) {
-//                    request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
+//                    redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
 //                    return;
 //                }
 //            }
-//            
-//            switch (part){
+//            switch (part) {
 //                case "user"://User pages
 //                    break;
 //                case "admin"://Admin pages
-//                    if (!((bean.User)user).getUserRole().equals("AD")){
-//                        request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
+//                    if (!((bean.User) user).getUserRole().equals("AD")) {
+//                        redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
 //                        return;
 //                    }
 //                default:
@@ -151,7 +165,6 @@ public class RequestFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is

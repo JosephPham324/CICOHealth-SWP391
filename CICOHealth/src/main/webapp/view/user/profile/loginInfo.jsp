@@ -10,6 +10,7 @@
         <title>Login Information</title>
     </head>
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-3 bg-light pt-3">

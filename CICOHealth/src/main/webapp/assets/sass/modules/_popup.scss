@@ -1,4 +1,5 @@
 @use "../mixins/common";
+
 .no-scroll {
   height: 100%;
   overflow: hidden;
@@ -8,6 +9,7 @@
   @include common.absolute-position();
   display: none;
   &.active {
+    z-index: 1;
     display: block;
     position: fixed;
   }

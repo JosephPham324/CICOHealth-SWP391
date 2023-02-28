@@ -61,19 +61,10 @@ public class ExerciseSearchController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String searchKey = request.getParameter("txtExercise");
-        if (searchKey != null) {
-            try {
-                ExerciseDao exDAO = new ExerciseDao();
-                List<Exercise> exerciseList = exDAO.getExerciseByName(searchKey);
-                request.setAttribute("exerciseList", exerciseList);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ExerciseSearchController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        ExerciseDao exDAO = new ExerciseDao();
+        List<Exercise> exerciseList = exDAO.getAllExercises();
+        request.setAttribute("exerciseList", exerciseList);
         request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
-
     }
 
     /**

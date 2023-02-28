@@ -13,13 +13,6 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <!-- Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Homepage.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/card.css">
         <title>Home Page</title>
     </head>
 
@@ -106,7 +99,6 @@
                         <p>© 2023 All rights reserved. Our website services, content, and products are for informational purposes only. Nutrition does not provide medical advice, diagnosis, or treatment.</p>
                     </div>
                 </div>
-
             </footer>
         </div>
     </body>
@@ -118,17 +110,21 @@
             } else {
                 x.style.display = "none";
             }
-        }
+        };
 
         window.addEventListener("load", function () {
             if (window.innerWidth > 1010) {
                 document.getElementById("nav-content").style.display = "block";
+            } else {
+                document.getElementById("nav-content").style.display = "none";
             }
         });
 
         window.addEventListener("resize", function () {
             if (window.innerWidth > 1010) {
                 document.getElementById("nav-content").style.display = "block";
+            } else {
+                document.getElementById("nav-content").style.display = "none";
             }
         });
 

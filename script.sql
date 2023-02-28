@@ -38,7 +38,7 @@ CREATE TABLE healthInfo (
 
 CREATE TABLE question (
     questionID varchar(10) PRIMARY KEY NOT NULL,
-    submittedBy varchar(10) NULL ,
+    submittedBy varchar(10) NULL,
     questionTopic text NOT NULL,
     questionContent text NOT NULL
 );
@@ -47,7 +47,8 @@ CREATE TABLE answer (
     answerID varchar(10) PRIMARY KEY NOT NULL,
     createdBy varchar(10) NOT NULL REFERENCES [user](userID),
     questionTopic text NOT NULL,
-    questionContent text NOT NULL
+    questionContent text NOT NULL,
+	answerContent text NOT NULL
 );
 
 CREATE TABLE mealLog (
@@ -60,7 +61,7 @@ CREATE TABLE mealLog (
 );
 
 CREATE TABLE mealLogItem (
-    mealLogID varchar(10)  NOT NULL REFERENCES mealLog(mealLogID),
+    mealLogID varchar(10)  NOT NULL REFERENCES mealLog(mealLogID) ON DELETE CASCADE,
     itemID varchar(10) PRIMARY KEY NOT NULL,
     itemName varchar(255) NOT NULL,
     servingWeight float NOT NULL,

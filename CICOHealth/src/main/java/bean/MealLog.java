@@ -5,6 +5,8 @@
 package bean;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -68,6 +70,7 @@ public class MealLog implements Serializable {
     private String userID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mealLogID")
     private ArrayList<MealLogItem> foods;
+    private Double[] nutrition;
 
     public MealLog() {
     }
@@ -91,6 +94,7 @@ public class MealLog implements Serializable {
         this.logDate = logDate;
         this.userID = userID;
         this.foods = mealLogItemCollection;
+        this.setNutrition();
     }
 
     public MealLog(ArrayList<MealLogItem> foods) {
@@ -101,10 +105,8 @@ public class MealLog implements Serializable {
         this.logNote = null;
         this.mealLogName = null;
         this.foods = foods;
-        
+
     }
-    
-    
 
     public String getMealLogID() {
         return mealLogID;
@@ -160,6 +162,7 @@ public class MealLog implements Serializable {
 
     public void setFoods(ArrayList<MealLogItem> foods) {
         this.foods = foods;
+        this.setNutrition();
     }
 
     @Override
@@ -186,4 +189,27 @@ public class MealLog implements Serializable {
     public String toString() {
         return "MealLog{" + "mealLogID=" + mealLogID + ", mealLogName=" + mealLogName + ", logTime=" + logTime + ", logDate=" + logDate + ", logNote=" + logNote + ", userID=" + userID + ", foods=" + foods + '}';
     }
+
+    public Double[] getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition() {
+        this.nutrition = this.calculateNutrition();
+    }
+
+    public final Double[] calculateNutrition() {
+        double protein = 0;
+        double fat = 0;
+        double carbs = 0;
+        double calories = 0;
+        for (MealLogItem item : this.foods) {
+            protein += item.getActualProtein();
+            fat += item.getActualFat();
+            carbs += item.getActualCarb();
+            calories += item.getActualCalories();
+        }
+        return new Double[]{protein, fat, carbs, calories};
+    }
+
 }
