@@ -131,6 +131,15 @@ public class ExerciseLogDao extends BaseDao {
         }
     }
 
+     public void updateExerciseLogCardio(ExerciseLog exerciseLog) throws SQLException{
+         connection = new DBContext().getConnection();
+         String query = "UPDATE ExerciseLog SET timeSpent = ? WHERE exerciseLogID = ? AND exerciseID = ?";
+         preparedStatement = connection.prepareStatement(query);
+         preparedStatement.setInt(1, exerciseLog.getTimeSpent());
+         preparedStatement.setString(2, exerciseLog.getExerciseLogID());
+         preparedStatement.setString(3, exerciseLog.getExercise().getExerciseID());
+         preparedStatement.executeUpdate();
+     }
     
     public static void main(String[] args) {
         try {

@@ -232,6 +232,7 @@
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="/CICOHealth/assets/scripts/formLog.js"></script>
     <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
+    <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
     <script src="/CICOHealth/assets/scripts/popup.js"></script>
     <script src="/CICOHealth/assets/scripts/cardiologs.js"></script>
 
