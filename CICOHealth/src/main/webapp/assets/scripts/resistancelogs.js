@@ -103,7 +103,7 @@ function addEditButtonsClickEvent() {
         .addEventListener("submit", function (event) {
           event.preventDefault();
           let formParams = {
-            mealLog: JSON.stringify(logUpdate),
+            exerciseLog: JSON.stringify(logUpdate),
             _method: "PUT",
             check: "resitance"
           };
