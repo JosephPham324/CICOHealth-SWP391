@@ -86,14 +86,18 @@ public class MealLogController extends HttpServlet {
                         + "}";
                 Logger.getLogger(MealLogController.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-                response.setContentType("application/json");
-                PrintWriter out = response.getWriter();
-                out.print(responseData);
-                out.flush();
+                printJSONResponse(response, responseData);
                 return;
             }
         }
         request.getRequestDispatcher("/view/user/mealLogs/mealLogs.jsp").forward(request, response);
+    }
+
+    private void printJSONResponse(HttpServletResponse response, String responseData) throws IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.print(responseData);
+        out.flush();
     }
 
     private String createMealLogsJSON(ArrayList<MealLog> logs) {

@@ -1,65 +1,64 @@
 @use "../mixins/common";
 @use "../modules/popup";
-@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .pop-up {
-    .question-pop-up-content, .edit-pop-up-content, .answer-pop-up-content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 600px;
-        background-color: #fff;
-        z-index: 2;
-        border-radius: 20px;
-    }
+  .question-pop-up-content,
+  .edit-pop-up-content,
+  .answer-pop-up-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 20px;
+  }
 
-    .txt-title-pop-up {
-        text-align: center;
-    }
+  .txt-title-pop-up {
+    text-align: center;
+  }
 
-    .question-form, .edit-form, .answer-form {
-        margin-top: 10%;
-        height: 340px;
-    }
+  .question-form,
+  .edit-form,
+  .answer-form {
+    margin-top: 10%;
+    height: 340px;
+  }
 
-    .form-group {
-        margin-bottom: 8px;
-    }
+  .form-group {
+    margin-bottom: 8px;
+  }
 
-    .btn-submit{
-        background-color: rgb(131, 184, 46);
-        color: white;
-    }
+  .btn-submit {
+    background-color: rgb(131, 184, 46);
+    color: white;
+  }
 
-    .btn-submit:hover{
-        background-color: yellow;
-        color: black;
-    }
+  .btn-submit:hover {
+    background-color: yellow;
+    color: black;
+  }
 }
 
 body {
-    font-family: 'Muli', sans-serif;
-    background-color: #f0f0f0;
+  font-family: "Muli", sans-serif;
+  background-color: #f0f0f0;
 }
 
 h1 {
-    text-align: center;
-    margin: 50px 0 30px;
+  text-align: center;
+  margin: 50px 0 30px;
 }
 
 .faq-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.faq {
+  @include common.flex-display(column, center, center);
+  .faq {
     width: 60%;
     background-color: transparent;
     border: 1px solid #9fa4a8;
@@ -70,177 +69,165 @@ h1 {
     overflow: hidden;
     transition: 0.3s ease;
     cursor: pointer;
-}
 
-.faq.active {
-    background-color: #fff;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
-}
+    .faq-title {
+      margin: 0 35px 0 0;
+    }
 
-// .btn-faq {
-//     display: none;
-// }
+    .faq-text {
+      display: none;
+      margin: 30px 0 0;
+    }
 
-// .btn-faq-admin{
-    // display: none;
-// }
+    &.active {
+      background-color: #fff;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 
-.btn-faq a , .btn-faq-admin a{
+      .faq-text {
+        display: block;
+      }
+
+      &::before,
+      &::after {
+        content: "\f075";
+        font-family: "Font Awesome 5 Free";
+        color: #2ecc91;
+        font-size: 7rem;
+        opacity: 0.2;
+        @include common.absolute-position(20px, 20px);
+        z-index: 0;
+      }
+
+      &::before {
+        color: #3498db;
+        top: -10px;
+        left: -30px;
+        transform: rotateY(180deg);
+      }
+    }
+  }
+
+  .btn-faq a,
+  .btn-faq-admin a {
     color: black;
     font-size: 25px;
     margin: 0 20px;
-}
 
-.btn-faq a:hover, .btn-faq-admin a:hover{
-    color: rgb(131, 184, 46);
-}
-
-.faq.active::before,
-.faq.active::after {
-    content: '\f075';
-    font-family: 'Font Awesome 5 Free';
-    color: #2ecc91;
-    font-size: 7rem;
-    position: absolute;
-    opacity: 0.2;
-    top: 20px;
-    left: 20px;
-    z-index: 0;
-}
-
-.faq.active::before {
-    color: #3498db;
-    top: -10px;
-    left: -30px;
-    transform: rotateY(180deg);
-}
-
-.faq-title {
-    margin: 0 35px 0 0;
-}
-
-.faq-text {
-    display: none;
-    margin: 30px 0 0;
-}
-
-.faq.active .faq-text{
-    display: block;
+    &:hover {
+      color: rgb(131, 184, 46);
+    }
+  }
 }
 
 .faq-toggle {
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    padding: 0;
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    height: 30px;
-    width: 30px;
-}
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  @include common.flex-display(row, center, center);
+  font-size: 16px;
+  padding: 0;
+  @include common.absolute-position(30px, 99%);
+  @include common.dimension(30px, 30px);
 
-
-
-.faq-toggle .fa-chevron-up {
+  .fa-chevron-up {
     display: none;
+  }
 }
-
-.faq.active .faq-toggle .fa-chevron-up {
-    display: block;
-}
-
-.faq.active .faq-toggle .fa-chevron-down {
-    display: none;
+.faq.active {
+  .faq-toggle {
+    .fa-chevron-up {
+      display: block;
+    }
+    .fa-chevron-down {
+      display: none;
+    }
+  }
 }
 
 // Select-Topic
 .btn-base {
-    background-color: rgb(131, 184, 46);
+  background-color: rgb(131, 184, 46);
 }
 
 .btn-base:hover {
-    background-color: yellow;
+  background-color: yellow;
 }
 
 .search-select-container-fluid {
-    width: 100%;
+  width: 100%;
 }
 
 .no-gutters {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .select-topic {
-    width: 15%;
+  width: 15%;
 }
 
 .search-topic {
-    width: 30%;
+  width: 30%;
 }
 
 .btn-search {
-    width: 5%;
+  width: 5%;
 }
 
-.search-topic input , .select-topic select , .btn-search button{
-    border: 2px solid black;
+.search-topic input,
+.select-topic select,
+.btn-search button {
+  border: 2px solid black;
 }
 
 // ===============================================
 //Button Question
 .question-wrapper {
-    position: fixed;
-    bottom: 250px;
-    right: 0;
-    z-index: 9999999;
+  position: fixed;
+  bottom: 250px;
+  right: 0;
+  z-index: 9999999;
 }
 
 .question-checkbox {
-    display: none !important;
+  display: none !important;
 }
 
 .question {
-    width: 60px;
-    max-width: unset;
-    height: 60px;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    border-radius: 50%;
-    background: rgb(131, 184, 46);
-    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    z-index: 1000;
-    overflow: hidden;
-    transform: rotate(0deg);
-    -webkit-transition: all .15s cubic-bezier(.15, .87, .45, 1.23);
-    transition: all .15s cubic-bezier(.15, .87, .45, 1.23);
+  width: 60px;
+  max-width: unset;
+  height: 60px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-radius: 50%;
+  background: rgb(131, 184, 46);
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1000;
+  overflow: hidden;
+  transform: rotate(0deg);
+  -webkit-transition: all 0.15s cubic-bezier(0.15, 0.87, 0.45, 1.23);
+  transition: all 0.15s cubic-bezier(0.15, 0.87, 0.45, 1.23);
 }
 
 .question-button {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: left;
-    padding: 4px;
-    border-radius: 50%;
-    background: #0f1941;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
-    font-size: 24px;
-    color: White;
-    transition: all 1s ease;
-    overflow: hidden;
+  @include common.dimension(45px,45px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  padding: 4px;
+  border-radius: 50%;
+  background: #0f1941;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+  font-size: 24px;
+  color: White;
+  transition: all 1s ease;
+  overflow: hidden;
 }
 
 /* .icon-question {
@@ -249,119 +236,118 @@ h1 {
     background-position: -42px -45px;
 } */
 
-.question-checkbox:not(:checked)~.question {
-    animation-name: zoom;
-    -webkit-animation-name: zoom;
-    animation-delay: 0s;
-    -webkit-animation-delay: 0s;
-    animation-duration: 1.5s;
-    -webkit-animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite;
-    cursor: pointer;
-    box-shadow: 0 0 0 0 rgb(131, 184, 46);
-    ;
+.question-checkbox:not(:checked) ~ .question {
+  animation-name: zoom;
+  -webkit-animation-name: zoom;
+  animation-delay: 0s;
+  -webkit-animation-delay: 0s;
+  animation-duration: 1.5s;
+  -webkit-animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgb(131, 184, 46);
 }
 
 @-webkit-keyframes tada {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1)
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 
-    10%,
-    20% {
-        -webkit-transform: scale(.9) rotate(-3deg);
-        transform: scale(.9) rotate(-3deg)
-    }
+  10%,
+  20% {
+    -webkit-transform: scale(0.9) rotate(-3deg);
+    transform: scale(0.9) rotate(-3deg);
+  }
 
-    30%,
-    50%,
-    70%,
-    90% {
-        -webkit-transform: scale(1.1) rotate(3deg);
-        transform: scale(1.1) rotate(3deg)
-    }
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: scale(1.1) rotate(3deg);
+    transform: scale(1.1) rotate(3deg);
+  }
 
-    40%,
-    60%,
-    80% {
-        -webkit-transform: scale(1.1) rotate(-3deg);
-        transform: scale(1.1) rotate(-3deg)
-    }
+  40%,
+  60%,
+  80% {
+    -webkit-transform: scale(1.1) rotate(-3deg);
+    transform: scale(1.1) rotate(-3deg);
+  }
 
-    100% {
-        -webkit-transform: scale(1) rotate(0);
-        transform: scale(1) rotate(0)
-    }
+  100% {
+    -webkit-transform: scale(1) rotate(0);
+    transform: scale(1) rotate(0);
+  }
 }
 
 @keyframes tada {
-    0% {
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
-        transform: scale(1)
-    }
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
 
-    10%,
-    20% {
-        -webkit-transform: scale(.9) rotate(-3deg);
-        -ms-transform: scale(.9) rotate(-3deg);
-        transform: scale(.9) rotate(-3deg)
-    }
+  10%,
+  20% {
+    -webkit-transform: scale(0.9) rotate(-3deg);
+    -ms-transform: scale(0.9) rotate(-3deg);
+    transform: scale(0.9) rotate(-3deg);
+  }
 
-    30%,
-    50%,
-    70%,
-    90% {
-        -webkit-transform: scale(1.1) rotate(3deg);
-        -ms-transform: scale(1.1) rotate(3deg);
-        transform: scale(1.1) rotate(3deg)
-    }
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: scale(1.1) rotate(3deg);
+    -ms-transform: scale(1.1) rotate(3deg);
+    transform: scale(1.1) rotate(3deg);
+  }
 
-    40%,
-    60%,
-    80% {
-        -webkit-transform: scale(1.1) rotate(-3deg);
-        -ms-transform: scale(1.1) rotate(-3deg);
-        transform: scale(1.1) rotate(-3deg)
-    }
+  40%,
+  60%,
+  80% {
+    -webkit-transform: scale(1.1) rotate(-3deg);
+    -ms-transform: scale(1.1) rotate(-3deg);
+    transform: scale(1.1) rotate(-3deg);
+  }
 
-    100% {
-        -webkit-transform: scale(1) rotate(0);
-        -ms-transform: scale(1) rotate(0);
-        transform: scale(1) rotate(0)
-    }
+  100% {
+    -webkit-transform: scale(1) rotate(0);
+    -ms-transform: scale(1) rotate(0);
+    transform: scale(1) rotate(0);
+  }
 }
 
 @-webkit-keyframes zoom {
-    0% {
-        transform: scale(.9)
-    }
+  0% {
+    transform: scale(0.9);
+  }
 
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 15px transparent
-    }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px transparent;
+  }
 
-    100% {
-        transform: scale(.9);
-        box-shadow: 0 0 0 0 transparent
-    }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 transparent;
+  }
 }
 
 @keyframes zoom {
-    0% {
-        transform: scale(.9)
-    }
+  0% {
+    transform: scale(0.9);
+  }
 
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 15px transparent
-    }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px transparent;
+  }
 
-    100% {
-        transform: scale(.9);
-        box-shadow: 0 0 0 0 transparent
-    }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 transparent;
+  }
 }

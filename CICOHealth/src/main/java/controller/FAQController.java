@@ -7,6 +7,7 @@ package controller;
 import bean.Answer;
 import bean.Question;
 import bean.User;
+import com.google.gson.Gson;
 import dao.AnswerDao;
 import dao.QuestionDao;
 import java.io.IOException;
@@ -17,7 +18,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,21 +48,64 @@ public class FAQController extends HttpServlet {
             request.getRequestDispatcher("/view/general/FAQQuestions.jsp").forward(request, response);
             return;
         }
-        if (URI.endsWith("data")){
-            if (URI.matches(".*/faq/answers")){
-                
-            }
+        if (URI.endsWith("/answers")) {
+            request.getRequestDispatcher("/view/general/FAQ.jsp").forward(request, response);
+            return;
         }
-        request.getRequestDispatcher("/view/general/FAQ.jsp").forward(request, response);
+        if (URI.endsWith("/data")) {
+            String topic = request.getParameter("topic");
+            String responseData = null;
+            if (!getFaqTopics().contains(topic)) {
+                printJSONResponse(response, "{\"data\":[]}");
+                return;
+            }
+            Gson gson = new Gson();
+            if (URI.endsWith("/questions/data")) {
+                QuestionDao qDao = new QuestionDao();
+                ArrayList<Question> queryRes;
+                System.out.println(topic);
+                if (topic.equalsIgnoreCase("All")) {
+                    queryRes = (ArrayList) qDao.getAllQuestions();
+                } else {
+                    queryRes = (ArrayList) qDao.getQuestionsByTopic("topic");
+                }
+                responseData = "{\"questions\":" + gson.toJson(queryRes) + "}";
+            }
+            if (URI.endsWith("/answers/data")) {
+                AnswerDao aDao = new AnswerDao();
+                ArrayList<Answer> queryRes;
+                if (topic.equalsIgnoreCase("All")) {
+                    queryRes = (ArrayList) aDao.getAllAnswers();
+                } else {
+                    queryRes = (ArrayList) aDao.getAnswersByTopic("topic");
+                }
+                String userRole = "";
+                if (request.getSession().getAttribute("user")!=null){
+                    userRole = ",\"userRole\":\""+((User)request.getSession().getAttribute("user")).getUserRole()+"\"";
+                }
+                responseData = "{\"answers\":" + gson.toJson(queryRes) + userRole + "}";
+            }
+            printJSONResponse(response, responseData);
+            return;
+        }
+        response.sendRedirect("/CICOHealth/faq/answers");
     }
-    
-    private ArrayList<String> getFaqTopics(){
-        ArrayList<String> result = new ArrayList();
+
+    private HashSet<String> getFaqTopics() {
+        HashSet<String> result = new HashSet();
+        result.add("All");
         result.add("General");
         result.add("Logging");
         result.add("Statistics");
         result.add("Terminologies");
         return result;
+    }
+
+    private void printJSONResponse(HttpServletResponse response, String responseData) throws IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.print(responseData);
+        out.flush();
     }
 
     /**
@@ -74,7 +120,7 @@ public class FAQController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String method = request.getParameter("_method");
-        if (method != null && method.equals("Delete")) {
+        if (method != null && method.equalsIgnoreCase("Delete")) {
             doDelete(request, response);
             return;
         } else if (method != null && method.equalsIgnoreCase("put")) {
@@ -99,7 +145,7 @@ public class FAQController extends HttpServlet {
                 User user = (User) session.getAttribute("user");
                 // insert the new answer into the database
                 new AnswerDao().insertAnswer(new Answer(answerID, user.getUserID(), questionTopic, questionContent, answerContent));
-                response.sendRedirect("/CICOHealth/faq/answers?create=sucess");
+                response.sendRedirect("/CICOHealth/faq/questions?create=sucess");
             }
         } else {
             String submittedBy = request.getParameter("submittedBy");
@@ -112,7 +158,7 @@ public class FAQController extends HttpServlet {
             // insert the new question into the database
             new QuestionDao().insertQuestion(question);
             // redirect the user to a confirmation page
-            response.sendRedirect("/CICOHealth/faq?submit=success");
+            response.sendRedirect("/CICOHealth/faq/answers?submit=success");
         }
     }
 
@@ -123,7 +169,7 @@ public class FAQController extends HttpServlet {
         if (URI.startsWith("/CICOHealth/faq/questions")) {
             try {
 
-                String questionID = request.getParameter("id_question");
+                String questionID = request.getParameter("questionID");
                 QuestionDao questionDao = new QuestionDao();
                 questionDao.deleteQuestion(questionID);
                 response.sendRedirect("/CICOHealth/faq/questions?delete=success");
@@ -134,7 +180,7 @@ public class FAQController extends HttpServlet {
         } else if (URI.startsWith("/CICOHealth/faq/answers")) {
             try {
                 // redirect the user to a confirmation page
-                String answerID = request.getParameter("Id_answer");
+                String answerID = request.getParameter("answerID");
                 // generate a new answerID
                 AnswerDao answerDao = new AnswerDao();
                 // create a new Answer object
@@ -152,10 +198,17 @@ public class FAQController extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String answerID = request.getParameter("answerID");
         String createdBy = request.getParameter("createdBy");
-        String questionTopic = request.getParameter("questionTopic");
+        String questionTopic = request.getParameter("topic");
         String questionContent = request.getParameter("questionContent");
         String answerContent = request.getParameter("answerContent");
-        new AnswerDao().updateAnswer(new Answer(answerID, createdBy, questionTopic, questionContent, answerContent));
+        Answer answer = new Answer(answerID, createdBy, questionTopic, questionContent, answerContent);
+                System.out.println(questionTopic);
+                System.out.println(answerID);
+                System.out.println(answerContent);
+                System.out.println(questionTopic);
+                System.out.println(questionContent);
+        System.out.println(answer.getQuestionContent());
+        new AnswerDao().updateAnswer(answer);
         response.sendRedirect("/CICOHealth/faq/answers?updateid=" + answerID);
         return;
     }

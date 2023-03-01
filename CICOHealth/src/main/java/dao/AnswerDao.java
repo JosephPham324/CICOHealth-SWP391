@@ -26,7 +26,8 @@ public class AnswerDao extends BaseDao {
     private final String SELECT_BY_ID = "SELECT * FROM answer WHERE answerID = ?";
     private final String INSERT = "INSERT INTO answer(answerID, createdBy, questionTopic, questionContent,answerContent) VALUES (?, ?, ?, ?,?)";
     private final String DELETE = "DELETE FROM answer WHERE answerID  = ?";
-
+    private final String SELECT_BY_TOPIC = "SELECT * FROM [answer] where questionTopic = ?";
+    
     // connection to the database
     private Connection connection;
 
@@ -54,6 +55,27 @@ public class AnswerDao extends BaseDao {
         }
         return list;
     }
+    
+    public List<Answer> getAnswersByTopic(String topic){
+        List<Answer> list = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_BY_TOPIC);
+            preparedStatement.setString(1, topic);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String answerID = resultSet.getString("answerID");
+                String createBy = resultSet.getString("createdBy");
+                String questionTopic = resultSet.getString("questionTopic");
+                String questionContent = resultSet.getString("questionContent");
+                String answerContent = resultSet.getString("answerContent");
+                Answer answer = new Answer(answerID, createBy, questionTopic, questionContent, answerContent);
+                list.add(answer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AnswerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     // method to insert a new answer into the database
     public void insertAnswer(Answer answer) {
@@ -65,6 +87,7 @@ public class AnswerDao extends BaseDao {
             statement.setString(index++, answer.getQuestionTopic());
             statement.setString(index++, answer.getQuestionContent());
             statement.setString(index++, answer.getAnswerContent());
+            System.out.println("inserting");
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AnswerDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,6 +98,7 @@ public class AnswerDao extends BaseDao {
 
     public void updateAnswer(Answer answer) {
         PreparedStatement statement = null;
+        System.out.println(answer.getQuestionTopic());
         try {
             String sql = "UPDATE [answer] \n"
                     + "SET createdBy = ?, questionTopic = ?, questionContent = ?, answerContent = ? WHERE answerID = ?";

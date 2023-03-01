@@ -23,6 +23,7 @@ public class QuestionDao extends BaseDao {
     // SQL queries
     private final String SELECT_ALL = "SELECT * FROM question";
     private final String SELECT_BY_ID = "SELECT * FROM question WHERE questionID = ?";
+    private final String SELECT_BY_TOPIC = "SELECT * FROM questionwhere questionTopic = ?";
     private final String INSERT = "INSERT INTO question(questionID, submittedBy, questionTopic, questionContent) VALUES (?, ?, ?, ?)";
     private final String UPDATE = "UPDATE question SET submittedBy = ?, questionTopic = ?, questionContent = ? WHERE questionID = ?";
     private final String DELETE = "DELETE FROM question WHERE questionID = ?";
@@ -39,6 +40,25 @@ public class QuestionDao extends BaseDao {
         List<Question> questions = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String questionID = resultSet.getString("questionID");
+                String submittedBy = resultSet.getString("submittedBy");
+                String questionTopic = resultSet.getString("questionTopic");
+                String questionContent = resultSet.getString("questionContent");
+                Question question = new Question(questionID, submittedBy, questionTopic, questionContent);
+                questions.add(question);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
+    }
+    public List<Question> getQuestionsByTopic(String topic) {
+        List<Question> questions = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_TOPIC);
+            statement.setString(1, topic);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String questionID = resultSet.getString("questionID");
