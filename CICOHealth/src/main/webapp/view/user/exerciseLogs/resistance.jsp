@@ -106,56 +106,10 @@
             </main>
         </div>
 
-        <!-- pop-up-edit -->
-        <div class="pop-up edit-pop-up" id="edit-pop-up">
-            <div class="edit-overlay overlay" id="overlay"></div>
-            <div class="pop-up-content edit-pop-up-content">
-                <!-- <div class="edit-pop-up"> -->
-                <form action="exercise-log" method="post" name="edit-exercise-log-form" id="edit-exercise-log-form" class="edit-exercise-log-form">
-                    <h2 class="txt-title-pop-up">Edit Exercise Logs</h2>
-                    <div class="form-group row">
-                        <label for="txtDate" class="offset-1 col-3 col-form-label">Date</label>
-                        <div class="col-7">
-                            <input id="txtDate" name="txtDate" type="datetime" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtTime" class="offset-1 col-3 col-form-label">Time</label>
-                        <div class="col-7">
-                            <input id="txtTime" name="txtTime" type="time" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtName" class="offset-1 col-3 col-form-label">Name</label>
-                        <div class="col-7">
-                            <input id="txtName" name="txtName" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtCaloriePerHour" class="offset-1 col-3 col-form-label">Calorie per hour</label>
-                        <div class="col-7">
-                            <input id="txtCaloriePerHour" name="txtCaloriePerHour" type="number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtCalorieBurned" class="offset-1 col-3 col-form-label">Calorie burned</label>
-                        <div class="col-7">
-                            <input id="txtCalorieBurned" name="txtCalorieBurned" type="number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <!-- <div class="offset-4 col-2">
-                            <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
-                        </div> -->
-                        <div class="offset-5 col-2">
-                            <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
-                <!-- </div> -->
-            </div>
+        <div class="pop-up" id="exercise-log-pop-up">
+            <div class="overlay"></div>
+            <div class="pop-up-content">Hello</div>
         </div>
-
 
         <!-- pop-up-notes -->
         <div class="pop-up note-pop-up" id="note-pop-up">
@@ -212,8 +166,8 @@
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="/CICOHealth/assets/scripts/formLog.js"></script>
     <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
-    <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
     <script src="/CICOHealth/assets/scripts/popup.js"></script>
-    <script src="/CICOHealth/assets/scripts/resistancelogs"></script>
+    <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
+    <script src="/CICOHealth/assets/scripts/resistancelogs.js"></script>
 
 </html>
