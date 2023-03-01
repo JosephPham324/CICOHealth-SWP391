@@ -140,22 +140,26 @@ public class ExerciseLogDao extends BaseDao {
         preparedStatement.setString(index++, exerciseLog.getExerciseLogID());
         preparedStatement.setString(index++, exerciseLog.getExercise().getExerciseID());
         preparedStatement.executeUpdate();
+        closeConnections();
     }
 
     public void updateExerciseLogResitance(ExerciseLog exerciseLog) throws SQLException {
         connection = new DBContext().getConnection();
-        String query = "UPDATE ExerciseLog SET rep = ?, weight =? WHERE exerciseLogID = ? AND exerciseID = ?";
+        String query = "UPDATE ExerciseLog SET set= ?, rep = ?, weight =? WHERE exerciseLogID = ? AND exerciseID = ?";
         preparedStatement = connection.prepareStatement(query);
         int index = 1;
+        preparedStatement.setInt(index++, exerciseLog.getSet());
         preparedStatement.setString(index++, exerciseLog.getRep());
         preparedStatement.setString(index++, exerciseLog.getWeight());
         preparedStatement.setString(index++, exerciseLog.getExerciseLogID());
         preparedStatement.setString(index++, exerciseLog.getExercise().getExerciseID());
         preparedStatement.executeUpdate();
+        closeConnections();
     }
 
     public static void main(String[] args) {
         try {
+            ExerciseLog el = new ExerciseLog();
             System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-02-26", "CA"));
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
