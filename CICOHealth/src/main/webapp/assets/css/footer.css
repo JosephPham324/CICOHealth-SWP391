@@ -1,0 +1,87 @@
+@media screen and (max-width: 1010px) {
+    .footer-left,
+    .footer-right {
+        width: 100%;
+        float: none;
+    }
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    margin-top: 100px;
+}
+
+.wrapper {
+    position: relative;
+    top: 250px;
+    bottom: 0;
+} 
+
+footer {
+    background-color: rgb(131, 184, 46);
+    height: 250px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.footer-content {
+    color: white;
+    align-items: center;
+    font-size: 20px;
+}
+
+.school-name {
+    color: yellow;
+}
+
+.block-footer {
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 722px) {
+    footer {
+        background-color: rgb(131, 184, 46);
+        height: 220px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .footer-content {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 695px) {
+    footer {
+        background-color: rgb(131, 184, 46);
+        height: 200px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .footer-content {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    footer {
+        background-color: rgb(131, 184, 46);
+        height: 220px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .footer-content {
+        font-size: 10px;
+    }
+}
