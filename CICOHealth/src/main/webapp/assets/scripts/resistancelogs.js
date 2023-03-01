@@ -96,7 +96,7 @@ function addEditButtonsClickEvent() {
 //            displayPopUp(popup_id);
 //      fillEditForm(logUpdate);
 //      displayPopUp("edit-pop-up");
-            //Add submit event listener to the edit form
+    //Add submit event listener to the edit form
 //      let form_id = "edit-meal-log-form";
 //      document
 //        .getElementById(form_id)
@@ -160,7 +160,6 @@ function createPopupContent(exercise_info) {
 }
 
 function createResistancePopupContent(exercise_info) {
-    console.log(exercise_info);
 //    let JSON_exercise_info = JSON.parse(exercise_info);
     //HTML for form
     let exercise_info_html = `
@@ -202,6 +201,7 @@ function createResistancePopupContent(exercise_info) {
     </div>
 </div>
 <input type = "hidden" name = "exerciseID" value="${exercise_info.exercise.exerciseID}">
+
 <div class="form-group row">
     <div class="offset-4 col-8">
     <button name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -265,7 +265,7 @@ function submitResistanceLog(event) {
     console.log(form_data);
     //Convert form data to JSON
     let form_data_json = {};
-    
+
     for (const pair of form_data.entries()) {
         if (pair[0].startsWith('numWeightSet')) {
             weights += pair[1] + '/';
@@ -282,6 +282,8 @@ function submitResistanceLog(event) {
     form_data_json['rep'] = reps;
     weights = weights.slice(0, weights.length - 1);
     form_data_json['weight'] = weights;
+    console.log("final data: " + form_data_json);
+    
     data_send = {
         exerciseLog: JSON.stringify(form_data_json),
         _method: "PUT",
@@ -292,13 +294,14 @@ function submitResistanceLog(event) {
 
 
 function p(id) {
+
     let editButtons = document.querySelectorAll(".btn-edit-pop-up");
-     editButtons.forEach((button)=>{
-          let log = findExerciseLogById(button.dataset.logid);
-          logUpdate = JSON.parse(JSON.stringify(log));
+    editButtons.forEach((button) => {
+        let log = findExerciseLogById(button.dataset.logid);
+        logUpdate = JSON.parse(JSON.stringify(log));
     });
-   
-    
+
+
     popup_content.innerHTML = createPopupContent(logUpdate);
     addFormInputListener();
     displayPopUp(popup_id);
