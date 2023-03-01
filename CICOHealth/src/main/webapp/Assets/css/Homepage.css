@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+/* 
 header {
     display: flex;
     padding: 0px 20px;
@@ -78,7 +78,7 @@ a {
 
 .btn-item:hover {
     background-color: yellow;
-}
+} */
 
 .top-content {
     background-image: url('https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_1500,w_2000,f_auto,q_auto/92/Fpu4Kn6pkM7K14LvJqmX_aBxbZSl.jpg_xi9bds.jpg');
@@ -93,15 +93,15 @@ a {
     font-size: 30px;
 }
 
-.menu-hamburger {
+/* .menu-hamburger {
     display: none;
     position: absolute;
     top: 24px;
     right: 20px;
-}
+} */
 
 @media screen and (max-width: 1010px) {
-    .header {
+    /* .header {
         padding: 0;
     }
 
@@ -128,7 +128,7 @@ a {
         flex-direction: column;
         align-items: center;
         margin-top: 20%;
-    }
+    } */
 
     .footer-left,
     .footer-right {

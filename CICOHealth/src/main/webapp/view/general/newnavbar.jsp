@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/navbar.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Homepage.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/card.css">
 
 <nav class="navbar">
