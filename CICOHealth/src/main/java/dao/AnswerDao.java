@@ -27,7 +27,7 @@ public class AnswerDao extends BaseDao {
     private final String INSERT = "INSERT INTO answer(answerID, createdBy, questionTopic, questionContent,answerContent) VALUES (?, ?, ?, ?,?)";
     private final String DELETE = "DELETE FROM answer WHERE answerID  = ?";
     private final String SELECT_BY_TOPIC = "SELECT * FROM [answer] where questionTopic = ?";
-    
+
     // connection to the database
     private Connection connection;
 
@@ -55,8 +55,8 @@ public class AnswerDao extends BaseDao {
         }
         return list;
     }
-    
-    public List<Answer> getAnswersByTopic(String topic){
+
+    public List<Answer> getAnswersByTopic(String topic) {
         List<Answer> list = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SELECT_BY_TOPIC);
@@ -125,35 +125,30 @@ public class AnswerDao extends BaseDao {
         closeConnections();
     }
 
-    public int getAnswerCount() {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        int count = 0;
-        try {
-            // prepare the SQL statement
-            String sql = "SELECT COUNT(*) FROM answer";
-            stmt = connection.prepareStatement(sql);
-            // execute the query
-            rs = stmt.executeQuery();
-            // get the count from the result set
-            if (rs.next()) {
-                count = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        closeConnections();
-        return count;
-
-    }
-
     @Override
     public String createID() {
-        // get the count of answers already in the database
-        int answerCount = getAnswerCount();
-        // generate the new answerID
-        String answerID = "ANSW" + String.format("%05d", answerCount + 1);
-        return answerID;
+        //Query to get the latest ID
+        String query = "SELECT TOP 1 answerID\n"
+                + "from [answer] \n"
+                + "ORDER BY answerID DESC";
+        String id = null;
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {//If there is a record in the table
+                //Generate new ID based on the record
+                id = "ANSW" + String.format("%06d", Integer.parseInt(resultSet.getString("answerID").substring(4)) + 1);
+            } else //If not return the lowest ID
+            {
+                id = "ANSW000001";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+        return id;
     }
 
     @Override

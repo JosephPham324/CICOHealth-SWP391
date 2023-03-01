@@ -21,7 +21,7 @@
         <form id="search-form">
             <div class="no-gutters">
                 <div class="select-topic">
-                    <select class="form-control">
+                    <select class="form-control" id = "topic-select">
                         <option value="All">All</option>
                         <option value="General">General</option>
                         <option value="Logging">Logging</option>

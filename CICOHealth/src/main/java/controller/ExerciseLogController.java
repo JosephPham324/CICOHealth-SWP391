@@ -132,6 +132,8 @@ public class ExerciseLogController extends HttpServlet {
         log = gson.fromJson(exerciseParam, ExerciseLog.class);
         User user = (User) request.getSession().getAttribute("user");
         log.setUserID(user.getUserID());
+        System.out.println(user.getUserID());
+        System.out.println(log.getUserID());
 //        response.getWriter().write(log.toString());
         try {
             new ExerciseLogDao().createLog(log);

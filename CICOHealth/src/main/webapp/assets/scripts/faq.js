@@ -10,16 +10,18 @@ let answers = [];
 let role;
 //On page load, query /CICOHealth/faq/answers/data for all answers
 window.addEventListener("load", () => {
-  //Get all answers
-  fetch("/CICOHealth/faq/answers/data?topic=All")
+  fetchAndFill("All");
+});
+function fetchAndFill(topic) {
+  fetch("/CICOHealth/faq/answers/data?topic=" + topic)
     .then((response) => response.json())
     .then((answersRes) => {
-        console.log(answersRes);
+      console.log(answersRes);
       answers = answersRes.answers;
       role = answersRes.userRole;
       createFAQs(answersRes.answers);
     });
-});
+}
 
 function initializeFaqBehavioursFull() {
   collapseFAQ();
@@ -51,9 +53,9 @@ function createFAQs(answers) {
             </button>
         </div>
         `;
-        console.log(role)
+    console.log(role);
     if (role === "AD") {
-      console.log('admin here')
+      console.log("admin here");
       faqHtml += `
             <div class="faq-buttons">
                 <button class="btn btn-edit btn-answer" data-id="${answer.answerID}">
@@ -131,4 +133,9 @@ document.getElementById("edit-answer").addEventListener("submit", (e) => {
     answerContent: document.querySelector("#txtAnswerContent").value,
   };
   post("/CICOHealth/faq/answers", formParams);
+});
+
+let topicSelect = document.querySelector("#topic-select");
+topicSelect.addEventListener("change", () => {
+  fetchAndFill(topicSelect.value);
 });

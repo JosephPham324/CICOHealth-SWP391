@@ -63,7 +63,7 @@ public class ExerciseLogDao extends BaseDao {
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(query);
         int index = 1;
-        preparedStatement.setString(index++, "USME000001");
+        preparedStatement.setString(index++, log.getUserID());
         preparedStatement.setString(index++, id);
         preparedStatement.setString(index++, log.getExerciseID());
         preparedStatement.setString(index++, time);

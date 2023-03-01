@@ -123,31 +123,30 @@ public class QuestionDao extends BaseDao {
         closeConnections();
     }
 
-    public int getQuestionCount() {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        int count = 0;
-        try {
-            // prepare the SQL statement
-            String sql = "SELECT COUNT(*) FROM question";
-            stmt = connection.prepareStatement(sql);
-            // execute the query
-            rs = stmt.executeQuery();
-            // get the count from the result set
-            if (rs.next()) {
-                count = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        closeConnections();
-        return count;
-
-    }
-
     @Override
     public String createID() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //Query to get the latest ID
+        String query = "SELECT TOP 1 questionID\n"
+                + "from [question] \n"
+                + "ORDER BY questionID DESC";
+        String id = null;
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {//If there is a record in the table
+                //Generate new ID based on the record
+                id = "FAQS" + String.format("%06d", Integer.parseInt(resultSet.getString("questionID").substring(4)) + 1);
+            } else //If not return the lowest ID
+            {
+                id = "FAQS000001";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+        return id;
     }
 
     @Override

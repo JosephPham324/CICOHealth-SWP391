@@ -54,6 +54,7 @@ public class FAQController extends HttpServlet {
         }
         if (URI.endsWith("/data")) {
             String topic = request.getParameter("topic");
+            System.out.println(topic);
             String responseData = null;
             if (!getFaqTopics().contains(topic)) {
                 printJSONResponse(response, "{\"data\":[]}");
@@ -77,7 +78,7 @@ public class FAQController extends HttpServlet {
                 if (topic.equalsIgnoreCase("All")) {
                     queryRes = (ArrayList) aDao.getAllAnswers();
                 } else {
-                    queryRes = (ArrayList) aDao.getAnswersByTopic("topic");
+                    queryRes = (ArrayList) aDao.getAnswersByTopic(topic);
                 }
                 String userRole = "";
                 if (request.getSession().getAttribute("user")!=null){
@@ -152,7 +153,7 @@ public class FAQController extends HttpServlet {
             String questionTopic = request.getParameter("questionTopic");
             String questionContent = request.getParameter("questionContent");
             // generate a new questionID
-            String questionID = generateQuestionID();
+            String questionID = new QuestionDao().createID();
             // create a new Question object
             Question question = new Question(questionID, submittedBy, questionTopic, questionContent);
             // insert the new question into the database
@@ -211,14 +212,6 @@ public class FAQController extends HttpServlet {
         new AnswerDao().updateAnswer(answer);
         response.sendRedirect("/CICOHealth/faq/answers?updateid=" + answerID);
         return;
-    }
-
-    public String generateQuestionID() {
-        // get the count of questions already in the database
-        int questionCount = new QuestionDao().getQuestionCount();
-        // generate the new questionID
-        String questionID = "Q" + String.format("%05d", questionCount + 1);
-        return questionID;
     }
 
     /**
