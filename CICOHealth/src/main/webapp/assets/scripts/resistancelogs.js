@@ -201,7 +201,7 @@ function createResistancePopupContent(exercise_info) {
     <input id="numRepSet1" name="numRepSet1" placeholder="Enter how many repetition performed" type="text" class="form-control" required="required" value="${exercise_info.rep}">
     </div>
 </div>
-<input type = "hidden" name = "exerciseID" value = value="${exercise_info.exercise.exerciseID}">
+<input type = "hidden" name = "exerciseID" value="${exercise_info.exercise.exerciseID}">
 <div class="form-group row">
     <div class="offset-4 col-8">
     <button name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -265,6 +265,7 @@ function submitResistanceLog(event) {
     console.log(form_data);
     //Convert form data to JSON
     let form_data_json = {};
+    
     for (const pair of form_data.entries()) {
         if (pair[0].startsWith('numWeightSet')) {
             weights += pair[1] + '/';
