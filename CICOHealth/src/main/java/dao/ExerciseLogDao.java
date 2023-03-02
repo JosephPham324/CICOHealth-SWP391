@@ -156,7 +156,6 @@ public class ExerciseLogDao extends BaseDao {
         System.out.println(exerciseLog.getWeight());
         System.out.println(exerciseLog.getExerciseID());
         System.out.println(exerciseLog.getExerciseLogID());
-        
         preparedStatement.setInt(index++, exerciseLog.getSet());
         preparedStatement.setString(index++, exerciseLog.getRep());
         preparedStatement.setString(index++, exerciseLog.getWeight());

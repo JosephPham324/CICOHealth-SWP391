@@ -83,34 +83,6 @@ function getRowHTML(count, logData) {
 
 let popup_id = "exercise-log-pop-up";
 let popup_content = document.querySelector(`#${popup_id} .pop-up-content`);
-function addEditButtonsClickEvent() {
-//    let editButtons = document.querySelectorAll(".btn-edit-pop-up");
-//    editButtons.forEach((button) => {
-//        button.addEventListener("click", function (event) {
-//            alert("hihi");
-//            let log = findExerciseLogById(button.dataset.logid);
-//            logUpdate = JSON.parse(JSON.stringify(log));
-//
-//            popup_content.innerHTML = createPopupContent(logUpdate);
-//            addFormInputListener();
-//            displayPopUp(popup_id);
-//      fillEditForm(logUpdate);
-//      displayPopUp("edit-pop-up");
-    //Add submit event listener to the edit form
-//      let form_id = "edit-meal-log-form";
-//      document
-//        .getElementById(form_id)
-//        .addEventListener("submit", function (event) {
-//          event.preventDefault();
-//          let formParams = {
-//            mealLog: JSON.stringify(logUpdate),
-//            _method: "PUT",
-//          };
-//          post("/CICOHealth/user/exercise-logs/cardio", formParams);
-//        });
-//        });
-//    });
-}
 
 function addNoteButtonsClickEvent() {
     let noteButtons = document.querySelectorAll(".btn-note-pop-up");
@@ -161,7 +133,7 @@ function createPopupContent(exercise_info) {
 
 function createResistancePopupContent(exercise_info) {
 //    let JSON_exercise_info = JSON.parse(exercise_info);
-    console.log("day la log " + exercise_info.exerciseLogID) ;
+    console.log("day la log " + exercise_info.exerciseLogID);
     //HTML for form
     let exercise_info_html = `
    <form id = "create-log-form" onsubmit = "submitResistanceLog(event)">
@@ -285,7 +257,7 @@ function submitResistanceLog(event) {
     weights = weights.slice(0, weights.length - 1);
     form_data_json['weight'] = weights;
     console.log("final data: " + form_data_json);
-    
+
     data_send = {
         exerciseLog: JSON.stringify(form_data_json),
         _method: "PUT",
@@ -295,16 +267,14 @@ function submitResistanceLog(event) {
 }
 
 
-function p(id) {
-
+function p() {
     let editButtons = document.querySelectorAll(".btn-edit-pop-up");
-    editButtons.forEach((button) => {
-        let log = findExerciseLogById(button.dataset.logid);
-        logUpdate = JSON.parse(JSON.stringify(log));
-        
-    });
-
-
+    var logid = event.target.parentNode.getAttribute('data-logid');
+    console.log(logid);
+    let log = findExerciseLogById(logid);
+    console.log(log);
+    logUpdate = JSON.parse(JSON.stringify(log));
+    console.log(logUpdate);
     popup_content.innerHTML = createPopupContent(logUpdate);
     addFormInputListener();
     displayPopUp(popup_id);
