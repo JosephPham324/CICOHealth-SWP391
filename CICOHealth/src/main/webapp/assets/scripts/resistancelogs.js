@@ -161,6 +161,7 @@ function createPopupContent(exercise_info) {
 
 function createResistancePopupContent(exercise_info) {
 //    let JSON_exercise_info = JSON.parse(exercise_info);
+    console.log("day la log " + exercise_info.exerciseLogID) ;
     //HTML for form
     let exercise_info_html = `
    <form id = "create-log-form" onsubmit = "submitResistanceLog(event)">
@@ -200,6 +201,7 @@ function createResistancePopupContent(exercise_info) {
     <input id="numRepSet1" name="numRepSet1" placeholder="Enter how many repetition performed" type="text" class="form-control" required="required" value="${exercise_info.rep}">
     </div>
 </div>
+<input type = "hidden" name = "exerciseLogID" value="${exercise_info.exerciseLogID}">
 <input type = "hidden" name = "exerciseID" value="${exercise_info.exercise.exerciseID}">
 
 <div class="form-group row">
@@ -299,6 +301,7 @@ function p(id) {
     editButtons.forEach((button) => {
         let log = findExerciseLogById(button.dataset.logid);
         logUpdate = JSON.parse(JSON.stringify(log));
+        
     });
 
 

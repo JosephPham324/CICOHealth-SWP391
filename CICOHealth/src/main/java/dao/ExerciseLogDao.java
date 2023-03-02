@@ -148,14 +148,20 @@ public class ExerciseLogDao extends BaseDao {
 
     public void updateExerciseLogResitance(ExerciseLog exerciseLog) throws SQLException {
         connection = new DBContext().getConnection();
-        String query = "UPDATE ExerciseLog SET [set] = ?, rep = ?, weight =? WHERE exerciseLogID = ? AND exerciseID = ?";
+        String query = "UPDATE ExerciseLog SET [set] = ?, rep = ?, weight = ? WHERE exerciseID = ? AND exerciseLogID = ?";
         preparedStatement = connection.prepareStatement(query);
         int index = 1;
+        System.out.println(exerciseLog.getSet());
+        System.out.println(exerciseLog.getRep());
+        System.out.println(exerciseLog.getWeight());
+        System.out.println(exerciseLog.getExerciseID());
+        System.out.println(exerciseLog.getExerciseLogID());
+        
         preparedStatement.setInt(index++, exerciseLog.getSet());
         preparedStatement.setString(index++, exerciseLog.getRep());
         preparedStatement.setString(index++, exerciseLog.getWeight());
-        preparedStatement.setString(index++, exerciseLog.getExerciseLogID());
         preparedStatement.setString(index++, exerciseLog.getExerciseID());
+        preparedStatement.setString(index++, exerciseLog.getExerciseLogID());
         preparedStatement.executeUpdate();
         closeConnections();
     }
