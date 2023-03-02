@@ -84,7 +84,7 @@ public class ExerciseLogDao extends BaseDao {
         String query = "SELECT *\n"
                 + "FROM [exerciseLog]\n"
                 + "WHERE userID = ? AND logDate = ?\n"
-                + "AND exerciseLogID like '"+type + "LG' + '%'";
+                + "AND exerciseLogID like '" + type + "LG' + '%'";
         int index = 1;
         ArrayList<ExerciseLog> result = new ArrayList<>();
         try {
@@ -110,8 +110,8 @@ public class ExerciseLogDao extends BaseDao {
         }
         return result;
     }
-    
-     public void deleteExerciseLog(String exerciseLogID ) throws SQLException {
+
+    public void deleteExerciseLog(String exerciseLogID) throws SQLException {
         // Define the SQL query to insert the exercise log into the database
         String query = "DELETE FROM [exerciseLog]\n"
                 + "WHERE exerciseLogID = ?";
@@ -122,7 +122,7 @@ public class ExerciseLogDao extends BaseDao {
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
             // Set the values of the parameters in the SQL statement
-            preparedStatement.setString(index++, exerciseLogID );
+            preparedStatement.setString(index++, exerciseLogID);
             // Execute the SQL statement to insert the exercise log into the database
             preparedStatement.executeUpdate();
         } finally {
@@ -131,7 +131,49 @@ public class ExerciseLogDao extends BaseDao {
         }
     }
 
-    
+    public ArrayList<ExerciseLog> getLogsOfDateRange(String userID, String type, String startDate, String endDate) throws SQLException {
+        if (!type.matches("CA|RE")) {
+            return null;
+        }
+        String query = "SELECT *\n"
+                + "FROM [exerciseLog]\n"
+                + "WHERE userID = ? AND logDate BETWEEN ? AND ?\n"
+                + "AND exerciseLogID like '" + type + "LG' + '%'";
+        System.out.println(userID);
+        System.out.println(type);
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(query);
+        int index = 1;
+        ArrayList<ExerciseLog> result = new ArrayList<>();
+        try {
+            // Get a connection to the database and prepare the SQL statement
+            System.out.println("here");
+
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, startDate);
+            preparedStatement.setString(index++, endDate);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("here");
+                ExerciseLog log = new ExerciseLog(resultSet.getString("exerciseLogID"), resultSet.getTime("logTime"), resultSet.getDate("logDate"));
+                log.setExercise(new ExerciseDao().getExerciseByID(resultSet.getString("exerciseID")));
+                log.setSet(resultSet.getInt("set"));
+                log.setRep(resultSet.getString("rep"));
+                log.setWeight(resultSet.getString("weight"));
+                log.setTimeSpent(resultSet.getInt("timeSpent"));
+                log.setLogNote(resultSet.getString("logNote"));
+                result.add(log);
+            }
+        } finally {
+            // Close the database connections
+            closeConnections();
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         try {
             System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-02-26", "CA"));
