@@ -158,7 +158,7 @@ function createResistancePopupContent(exercise_info) {
 <div class="form-group row" id = "num-set-input">
     <label for="numSet" class="col-4 col-form-label">Set</label> 
     <div class="col-8">
-    <input id="numSet" name="set" placeholder="Enter number of sets" type="number" min="1" value = "1" required class="form-control">
+    <input id="numSet" name="set" placeholder="Enter number of sets" type="number" min="1" value = "${exercise_info.set}" required class="form-control">
     </div>
 </div>
 <div class="form-group row set-input">
