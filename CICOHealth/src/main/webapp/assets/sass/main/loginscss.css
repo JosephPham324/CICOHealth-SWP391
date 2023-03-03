@@ -146,4 +146,12 @@ button {
 }
 .gg-login-text {
   padding-top: 0.32em;
+}
+
+.register-header {
+  margin-bottom: 0 !important;
+}
+
+.register-button {
+  width: 100%;
 }/*# sourceMappingURL=loginscss.css.map */
