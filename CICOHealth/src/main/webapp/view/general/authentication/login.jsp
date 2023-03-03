@@ -40,30 +40,30 @@
 
                         <div>                          
                             <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
-
-                            <div
-                                id="g_id_onload"
-                                data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
-                                data-context="signin"
-                                data-ux_mode="popup"
-                                data-login_uri="http://localhost:8080/CICOHealth/login"
-                                data-auto_prompt="false"
-                                data-callback="handleCredentialResponse"
-                                ></div>
-                            <div
-                                class="g_id_signin"
-                                data-type="standard"
-                                data-shape="reactangle"
-                                data-theme="filled_blue"
-                                data-text="signin_with"
-                                data-size="huge"
-                                data-logo_alignment="left"
-                                ></div>
+                            <button name="submit" type="submit" class="btn btn-primary">Register</button>
                         </div>
-
                     </div>
+                    
                     <div class="login-form-footer">
 
+                        <div
+                            id="g_id_onload"
+                            data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
+                            data-context="signin"
+                            data-ux_mode="popup"
+                            data-login_uri="http://localhost:8080/CICOHealth/login"
+                            data-auto_prompt="false"
+                            data-callback="handleCredentialResponse"
+                            ></div>
+                        <div
+                            class="g_id_signin"
+                            data-type="standard"
+                            data-shape="pill"
+                            data-theme="filled_blue"
+                            data-text="signin_with"
+                            data-size="huge"
+                            data-logo_alignment="left"
+                            ></div>
                     </div>
 
                 </form>

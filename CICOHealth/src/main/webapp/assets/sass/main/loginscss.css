@@ -57,9 +57,7 @@ body {
   gap: 35px;
 }
 .login-form-footer {
-  display: flex;
-  gap: 30px;
-  margin-top: 70px;
+  margin-top: 40px !important;
 }
 .login-form-footer a {
   flex: 6;

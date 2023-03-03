@@ -64,9 +64,9 @@ body {
     }
 
     &-footer {
-        display: flex;
-        gap: 30px;
-        margin-top: 70px;
+        // display: flex !important;
+        // gap: 30px !important;
+        margin-top: 40px !important;
 
         a {
             flex: 6;
