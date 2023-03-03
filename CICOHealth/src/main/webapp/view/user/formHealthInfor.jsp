@@ -28,7 +28,7 @@
                 type="radio"
                 class="custom-control-input"
                 value="male"
-                <%= gender == false ? "checked" : ""%>
+                <%= gender == true ? "checked" : ""%>
                 />
             <label for="radGender_0" class="custom-control-label">Male</label>
         </div>
@@ -39,7 +39,7 @@
                 type="radio"
                 class="custom-control-input"
                 value="female"
-                <%= gender == true ? "checked" : ""%>
+                <%= gender == false ? "checked" : ""%>
                 />
             <label for="radGender_1" class="custom-control-label">Female</label>
         </div>
