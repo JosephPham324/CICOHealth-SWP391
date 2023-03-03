@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +37,7 @@ public class ExerciseLogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -62,7 +63,50 @@ public class ExerciseLogController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String URI = request.getRequestURI();
+        if (URI.endsWith("/data")) {
+            String responseData = defaultResponseData();
+            Object user = request.getSession().getAttribute("user");
+            String userID = ((User) user).getUserID();
+            String date = request.getParameter("date");
+            Gson gson = new Gson();
+            if (URI.matches(".*/exercise-logs/cardio(/.*)*")) {
+                System.out.println("here");
+                try {
+                    ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "CA");
+                    responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    System.out.println("here");
+                    ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "RE");
+                    responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            //Write JSON response
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(responseData);
+            out.flush();
+            return;
+        }
+        if (URI.matches(".*/exercise-logs/cardio/*.*")) {
+            request.getRequestDispatcher("/view/user/exerciseLogs/cardio.jsp").forward(request, response);
+            return;
+        } else if (URI.matches(".*/exercise-logs/resistance/*.*")) {
+            request.getRequestDispatcher("/view/user/exerciseLogs/resistance.jsp").forward(request, response);
+            return;
+        }
+        response.sendRedirect("/CICOHealth/user/exercise-logs/cardio");
+    }
+
+    private String defaultResponseData() {
+        return "{\"logs\":" + "[]" + "}";
     }
 
     /**
@@ -77,12 +121,19 @@ public class ExerciseLogController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String method = request.getParameter("_method");
+        if (method != null && method.equalsIgnoreCase("delete")) {
+            doDelete(request, response);
+            return;
+        }
         ExerciseLog log;
         Gson gson = new Gson();
         String exerciseParam = request.getParameter("exercise");
         log = gson.fromJson(exerciseParam, ExerciseLog.class);
         User user = (User) request.getSession().getAttribute("user");
         log.setUserID(user.getUserID());
+        System.out.println(user.getUserID());
+        System.out.println(log.getUserID());
 //        response.getWriter().write(log.toString());
         try {
             new ExerciseLogDao().createLog(log);
@@ -94,6 +145,19 @@ public class ExerciseLogController extends HttpServlet {
             return;
         }
     }
+    
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String id = req.getParameter("exerciseLogID");
+            ExerciseLogDao exerciseLogDao = new ExerciseLogDao();
+            exerciseLogDao.deleteExerciseLog(id);
+            resp.sendRedirect("/CICOHealth/user/exercise-logs?delelte=successfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     public void createCardioLog(HttpServletRequest request, HttpServletResponse response) {
     }

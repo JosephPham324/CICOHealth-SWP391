@@ -7,7 +7,6 @@ package dao;
 import bean.MealLogItem;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -87,6 +86,35 @@ public class MealLogItemDao extends BaseDao {
         } finally {
             closeConnections();
         }
-
+    }
+    
+    public ArrayList<MealLogItem> getLogItems(String mealLogID) throws SQLException{
+        String query = "SELECT * FROM [mealLogItem] where mealLogID = ?";
+        int index = 1;
+        ArrayList<MealLogItem> result = new ArrayList<>();
+        try{
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(index++, mealLogID);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                //String itemID, String itemName, double servingWeight, 
+                //double proteinPerServing, double fatPerServing, double carbPerServing, double caloriePerServing, double actualWeight
+                MealLogItem item = new MealLogItem(
+                        resultSet.getString("itemID"),
+                        resultSet.getString("itemName"),
+                        resultSet.getDouble("servingWeight"),
+                        resultSet.getDouble("proteinPerServing"),
+                        resultSet.getDouble("fatPerServing"),
+                        resultSet.getDouble("carbPerServing"),
+                        resultSet.getDouble("caloriePerServing"),
+                        resultSet.getDouble("actualWeight")
+                );
+                result.add(item);
+            }
+        } finally{
+            closeConnections();
+        }
+        return result;
     }
 }

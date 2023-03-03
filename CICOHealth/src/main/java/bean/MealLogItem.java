@@ -195,4 +195,16 @@ public class MealLogItem implements Serializable {
         return "MealLogItem{" + "itemID=" + itemID + ", foodName=" + foodName + ", servingWeight=" + servingWeight + ", protein=" + protein + ", fat=" + fat + ", carbs=" + carbs + ", calories=" + calories + ", actualWeight=" + actualWeight + ", mealLogID=" + mealLogID + '}';
     }
     
+    public double getActualProtein(){
+        return this.protein * (actualWeight / this.servingWeight);
+    }
+    public double getActualFat(){
+        return this.fat * (actualWeight / this.servingWeight);
+    }
+    public double getActualCarb(){
+        return this.carbs * (actualWeight / this.servingWeight);
+    }
+    public double getActualCalories(){
+        return this.calories * (actualWeight / this.servingWeight);
+    }
 }

@@ -30,3 +30,50 @@
     background-color: #ccc;
   }
 }
+
+.pop-up{
+  z-index: 1;
+}
+
+body {
+  font-size: 0.9rem !important;
+    background-color: white !important;
+    font-family: "Kanit", sans-serif !important;
+}
+
+h2 .display-4 {
+  text-align: center;
+}
+
+#create-log-form {
+  border-radius: 5%;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+  }
+
+  .btn-primary {
+    background-color: rgb(131, 184, 46) !important;
+    border: none !important;
+    color: black !important;
+    text-transform: uppercase !important;
+    
+  }
+
+
+  .btn-primary:hover {
+    background-color: yellow !important;
+  }
+
+  .navbar-brand{
+    font-weight: bold;
+    font-size: 2em !important;
+    font-family: "Kanit", sans-serif !important;
+  }
+
+  thead {
+    background-color: rgb(131, 184, 46) !important;
+
+  }

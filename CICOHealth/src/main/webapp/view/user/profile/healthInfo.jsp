@@ -4,6 +4,7 @@
     Author     : vhqua
 --%>
 <%@page import="java.util.List"%>
+<%@page import="bean.User"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="history" value="${history}" scope="request" />
 <c:set var="health" value="${healthInfo}" scope="request" />

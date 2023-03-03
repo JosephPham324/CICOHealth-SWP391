@@ -5,9 +5,10 @@
 package dao;
 
 import bean.Exercise;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import bean.ExerciseLog;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -142,6 +143,31 @@ public class ExerciseDao extends BaseDao {
         closeConnections();
         return null;
     }
+    public Exercise getExerciseByID(String id) throws SQLException {
+        try {
+            String query = "SELECT *\n"
+                    + "FROM [exercise]\n"
+                    + "WHERE exerciseID = ?";
+            Exercise exercise = null;
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                exercise = new Exercise(resultSet.getString("exerciseID"),
+                        resultSet.getString("exerciseName"),
+                        resultSet.getString("exerciseDescription"),
+                        resultSet.getDouble("caloriesPerHour"));
+                closeConnections();
+                return exercise;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+        closeConnections();
+        }
+        return null;
+    }
 
     public void insertExercise(String type, Exercise exercise) {
         String query = "INSERT INTO EXERCISE(EXERCISEID, EXERCISENAME, EXERCISEDESCRIPTION, CALORIESPERHOUR)\n"
@@ -160,4 +186,6 @@ public class ExerciseDao extends BaseDao {
         }
         closeConnections();
     }
+    
+    
 }
