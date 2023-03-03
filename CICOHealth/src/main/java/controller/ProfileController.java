@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.AuthenticationLogic;
@@ -63,16 +64,25 @@ public class ProfileController extends HttpServlet {
             }
             request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
         } else if (URI.endsWith("/health-info")) {
-            String date = request.getParameter("selectedDate");
+            String userID = user.getUserID();
             request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(user.getUserID()));
             if (("AD").equalsIgnoreCase(role)) {
+                userID = userIDRequest;
                 request.setAttribute("healthInfo", new HealthInfoDao().getHealthInfo(userIDRequest));
             } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
                 response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + user.getUserID());
                 return;
             }
-            
-            
+            String healthInfoID = request.getParameter("healthinfo");
+            if (healthInfoID != null) {
+                try {
+                    request.setAttribute("healthInfo", new HealthInfoDao().getUpdateHealthInfo(healthInfoID, userID));
+                } catch (SQLException ex) {
+                    response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + userID);
+                }
+            }
+            List<HealthInfo> history = new HealthInfoDao().getHistory(userID);
+            request.setAttribute("history", history);
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
 
         }
@@ -111,7 +121,7 @@ public class ProfileController extends HttpServlet {
         String userID = request.getParameter("userID");
         switch (check) {
             case "updateHealth":
-                String createdBy = request.getParameter("createdBy");
+                String healthInfoID = request.getParameter("healthInfoID");
                 int age = Integer.parseInt(request.getParameter("numAge"));
                 String gender = request.getParameter("radGender");
                 double height = Double.parseDouble(request.getParameter("numHeight"));

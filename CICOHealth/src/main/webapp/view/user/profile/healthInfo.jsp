@@ -3,6 +3,7 @@
     Created on : Feb 14, 2023, 11:29:08 AM
     Author     : vhqua
 --%>
+<%@page import="java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="bean.HealthInfo"%>
@@ -32,7 +33,7 @@
                                 <input type="datetime" name="createdBy" id="createdBy"">
                                 <div class="card">
                                     <div class="card-header">
-                                        User Information
+                                        Health Information
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
@@ -40,7 +41,7 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="text" name="userID" style="display:none" value="${healthInfo.userID}" id="userID" class="form-control">
-
+                                            <input type="text" name="healthInfoID" style="display:none" value="${healthInfo.healthInfoID}" id="userID" class="form-control">
                                         </div>
                                         <%@include file="../formHealthInfor.jsp" %>
                                     </div>
@@ -55,20 +56,29 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.getElementById("createdBy").addEventListener("change", () => {
-                const userID = document.getElementById("userID").value;
-                // Get the value of the date picker
-                const datePicker = document.getElementById("createdBy");
-                const selectedDate = datePicker.value;
-                alert(selectedDate);
-                // Build the new URL using the selected date
-                const baseUrl = "/CICOHealth/user/profile/health-info?userid=" + userID; // remove any existing query string
-                const newUrl = baseUrl + `&selectedDate=` + selectedDate;
-                // Change the URL of the current page
-                window.location.href = newUrl;
-            });
-        </script>
+        <div>
+            <h3>Histoy</h3>
+            <c:forEach var="healthInfo" items="${history}">
+                <a href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
+            </c:forEach>
+        </div>
+        <%            List<HealthInfo> history = (List<HealthInfo>) request.getAttribute("history");
+        %>
+
+        <!--        <script>
+                    document.getElementById("createdBy").addEventListener("change", () => {
+                        const userID = document.getElementById("userID").value;
+                        // Get the value of the date picker
+                        const datePicker = document.getElementById("createdBy");
+                        const selectedDate = datePicker.value;
+                        alert(selectedDate);
+                        // Build the new URL using the selected date
+                        const baseUrl = "/CICOHealth/user/profile/health-info?userid=" + userID; // remove any existing query string
+                        const newUrl = baseUrl + `&selectedDate=` + selectedDate;
+                        // Change the URL of the current page
+                        window.location.href = newUrl;
+                    });
+                </script>-->
         <script src="/CICOHealth/assets/scripts/healthRegister.js"></script>
     </body>
 </html>
