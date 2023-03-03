@@ -18,7 +18,7 @@
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-4">Gender</label>
+    <label class="col-4 col-form-label">Gender</label>
     <div class="col-8">
         <div class="custom-control custom-radio custom-control-inline">
             <input

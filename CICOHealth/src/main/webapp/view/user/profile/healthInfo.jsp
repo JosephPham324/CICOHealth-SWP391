@@ -29,6 +29,7 @@
         <title>Health Information</title>
     </head>
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
         <div class="page-wrapper chiller-theme">   
             <%@include file="sidebarProfile.jsp" %>
             <!-- sidebar-wrapper  -->
@@ -62,7 +63,7 @@
                     </div>
                 </div>
                 <div class="history-container">
-                    <h3 class="txt-center">Histoy</h3>
+                    <h3 class="txt-center">History</h3>
                     <div class="history-items-container" style="height: 200px; overflow-y: scroll;">
                         <c:forEach var="healthInfo" items="${history}">
                             <a class="history-items" href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
