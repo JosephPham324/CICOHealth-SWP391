@@ -44,8 +44,6 @@
             />
         <link rel="stylesheet" href="/CICOHealth/assets/css/sidebar.css" />
         <link rel="stylesheet" href="/CICOHealth/assets/css/Homepage.css" />
-        <!-- <link rel="stylesheet" href="/CICOHealth/assets/css/popup.css"> -->
-        <!-- <link rel="stylesheet" href="/CICOHealth/assets/css/exerciseLogPage.css"> -->
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/mealLog.css" />
         <!--Functions scripts-->
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
