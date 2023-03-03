@@ -319,7 +319,7 @@ function displayMealForm() {
   let mealForm = document.getElementById("meal-form");
   mealForm.innerHTML = "";
   let tableHTML = `
-  <table id="table_id" class="display">
+  <table id="table_id" class="display selectedFood">
       <thead>
           <tr>
               <th>Name</th>
@@ -386,6 +386,7 @@ function displayMealForm() {
   tableHTML += `
       </tbody>
   </table>
+  <div id="meal-form-error"></div>
   `;
   //Add table to the meal form
   mealForm.innerHTML += tableHTML;
