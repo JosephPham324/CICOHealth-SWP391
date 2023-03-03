@@ -44,7 +44,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="firstName">Password</label>
-                                            <input type="password" name="password" value="${l.passwordHash}" class="form-control" >
+                                            <input type="password" name="password" value="${l.passwordHash}" class="form-control"  id="id_password">
+                                             <i class="far fa-eye" id="togglePassword" style="position: absolute; top: 60%; transform: translateY(-10%); right: 55px; cursor: pointer;"></i>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" name="_method" value="put" style="display: none" class="form-control">
@@ -70,5 +71,17 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
+        <script>
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#id_password');
+
+            togglePassword.addEventListener('click', function (e) {
+                // toggle the type attribute
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                // toggle the eye slash icon
+                this.classList.toggle('fa-eye-slash');
+            });
+        </script>
     </body>
 </html>
