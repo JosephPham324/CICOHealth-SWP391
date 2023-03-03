@@ -36,7 +36,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <form action="ProfileController" method="post">
-                                <input type="datetime" name="createdBy" id="createdBy"">
+                               
                                 <div class="card">
                                     <div class="card-header">
                                         Health Information
@@ -64,7 +64,7 @@
                     <h3 class="txt-center">Histoy</h3>
                     <div class="history-items-container" style="height: 200px; overflow-y: scroll;">
                         <c:forEach var="healthInfo" items="${history}">
-                            <a href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
+                            <a class="history-items" href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
                         </c:forEach>
                     </div>
 

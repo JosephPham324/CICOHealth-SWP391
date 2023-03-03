@@ -17,3 +17,15 @@
   border: 1px solid #ccc;
   padding: 10px;
 }
+
+.history-container{
+    align-content: center;
+}
+.history-items-container{
+    background: #96be25;
+}
+
+.history-items{
+    text-decoration: none;
+    color: black;
+}
