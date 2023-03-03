@@ -154,4 +154,8 @@ button {
 
 .register-button {
   width: 100%;
+}
+
+.login-right img {
+  padding-right: 0;
 }/*# sourceMappingURL=loginscss.css.map */

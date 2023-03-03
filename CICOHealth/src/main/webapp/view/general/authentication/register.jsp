@@ -130,7 +130,7 @@ Nhat Quang CE170036 (FPTU CANTHO) --%>
                 </form>
             </div>
             <div class="login-right">
-                <img src="/CICOHealth/assets/img/loginbackground.png">
+                <img src="/CICOHealth/assets/img/registerfillform.png">
             </div>
         </div>
         
