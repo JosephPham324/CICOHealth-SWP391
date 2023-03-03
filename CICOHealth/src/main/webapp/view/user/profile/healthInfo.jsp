@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/profile.css"/>
+        <link rel="stylesheet" href="/CICOHealth/assets/css/healthInfo.css"/>
         <title>Health Information</title>
     </head>
     <body>
@@ -56,14 +56,16 @@
                 </div>
             </div>
         </div>
-        <div>
-            <h3>Histoy</h3>
-            <c:forEach var="healthInfo" items="${history}">
-                <a href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
-            </c:forEach>
+        <c:set var="history" value="${history}" scope="request" />
+        <div class="history-container">
+            <h3 class="txt-center">Histoy</h3>
+            <div class="history-items-container" style="height: 200px; overflow-y: scroll;">
+                <c:forEach var="healthInfo" items="${history}">
+                    <a href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
+                </c:forEach>
+            </div>
+
         </div>
-        <%            List<HealthInfo> history = (List<HealthInfo>) request.getAttribute("history");
-        %>
 
         <!--        <script>
                     document.getElementById("createdBy").addEventListener("change", () => {
