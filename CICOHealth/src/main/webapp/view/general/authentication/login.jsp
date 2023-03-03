@@ -6,14 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/sass/main/loginscss.css">
-        <title>JSP Page</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/loginscss.css" />
+        <title>Login Page</title>
     </head>
     <body>
-        
         <div class="container">
             <div class="login-left">
                 <div class="login-header">
@@ -24,11 +25,11 @@
                     <div class="login-form-content">
                         <div class="form-item">
                             <label for="txtUsername">Username</label>                           
-                                <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text">                      
+                            <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text">                      
                         </div>
                         <div class="form-item">
                             <label for="txtPassword">Password</label> 
-                                <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="password" aria-describedby="txtPasswordHelpBlock"> 
+                            <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="password" aria-describedby="txtPasswordHelpBlock"> 
                         </div>
                         <div class="form-item">
                             <div class="checkbox">
@@ -37,41 +38,43 @@
                             </div>
                         </div>
 
-                            <div>
-                                <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
-                            </div>
-                        
+                        <div>                          
+                            <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
+
+                            <div
+                                id="g_id_onload"
+                                data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
+                                data-context="signin"
+                                data-ux_mode="popup"
+                                data-login_uri="http://localhost:8080/CICOHealth/login"
+                                data-auto_prompt="false"
+                                data-callback="handleCredentialResponse"
+                                ></div>
+                            <div
+                                class="g_id_signin"
+                                data-type="standard"
+                                data-shape="reactangle"
+                                data-theme="filled_blue"
+                                data-text="signin_with"
+                                data-size="huge"
+                                data-logo_alignment="left"
+                                ></div>
+                        </div>
+
                     </div>
                     <div class="login-form-footer">
-                        <div
-                        id="g_id_onload"
-                        data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
-                        data-context="signin"
-                        data-ux_mode="popup"
-                        data-login_uri="http://localhost:8080/CICOHealth/login"
-                        data-auto_prompt="false"
-                        data-callback="handleCredentialResponse"
-                        ></div>
-                    <div
-                        class="g_id_signin"
-                        data-type="standard"
-                        data-shape="reactangle"
-                        data-theme="filled_blue"
-                        data-text="signin_with"
-                        data-size="huge"
-                        data-logo_alignment="left"
-                        ></div>
+
                     </div>
-                    
+
                 </form>
-        
+
                 <script src="https://accounts.google.com/gsi/client" async defer></script>
                 <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
                 <script>
                     function handleCredentialResponse(response) {
                         const responsePayload = parseJwt(response.credential);
                         const formParams = {
-                            googleID : responsePayload.sub
+                            googleID: responsePayload.sub
                         };
                         console.log(formParams);
                         post("login", formParams);
@@ -80,10 +83,10 @@
                 <p id="email"></p>
             </div>
             <div class="login-right">
-                <img src="/CICOHealth/src/main/webapp/assets/img/loginbackground.png">
+                <img src="/CICOHealth/assets/img/loginbackground.png">
             </div>
         </div>
-            
-        
+
+
     </body>
 </html>
