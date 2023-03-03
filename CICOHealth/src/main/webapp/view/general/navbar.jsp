@@ -32,6 +32,7 @@
                             <li class="dropdown-item"><a href="/CICOHealth/user/profile">Profile</a></li>
                             <li class="dropdown-item"><a href="/CICOHealth/user/meal-logs">Meal Logs</a></li>
                             <li class="dropdown-item"><a href="/CICOHealth/user/exercise-logs">Exercise Logs</a></li>
+                            <li class="dropdown-item"><a href="/CICOHealth/log-out">Log out</a></li>
                         </ul>
                     </li>
                 </c:otherwise>

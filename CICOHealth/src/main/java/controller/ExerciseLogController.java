@@ -73,6 +73,7 @@ public class ExerciseLogController extends HttpServlet {
             String date = request.getParameter("date");
             Gson gson = new Gson();
             if (URI.matches(".*/exercise-logs/cardio(/.*)*")) {
+                System.out.println("here");
                 try {
                     ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "CA");
                     responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
@@ -81,6 +82,7 @@ public class ExerciseLogController extends HttpServlet {
                 }
             } else {
                 try {
+                    System.out.println("here");
                     ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "RE");
                     responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
                 } catch (SQLException ex) {
@@ -136,6 +138,8 @@ public class ExerciseLogController extends HttpServlet {
         log = gson.fromJson(exerciseParam, ExerciseLog.class);
         User user = (User) request.getSession().getAttribute("user");
         log.setUserID(user.getUserID());
+        System.out.println(user.getUserID());
+        System.out.println(log.getUserID());
 //        response.getWriter().write(log.toString());
         try {
             new ExerciseLogDao().createLog(log);

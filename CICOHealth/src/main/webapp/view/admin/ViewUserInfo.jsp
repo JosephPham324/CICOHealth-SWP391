@@ -81,7 +81,7 @@
                             <td><%= list.getEmail()%></td>
                             <td><%= list.getPhone()%></td>
                             <td>
-                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/profile/userinfo?userid=<%= list.getUserID()%>"></a> 
+                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/user/profile/user-info?userid=<%= list.getUserID()%>"></a> 
                                 <c:set var = "us" scope = "session" value = "<%= list.getUserID()%>"/>
                                 <c:set var = "banned" scope = "session" value = "<%= list.isIsBanned()%>"/>
                                 <c:if test = "${banned}">

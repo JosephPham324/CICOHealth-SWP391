@@ -1,6 +1,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import javax.validation.constraints.Size;
 public class HealthInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private String healthInfoID;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -66,9 +68,26 @@ public class HealthInfo implements Serializable {
     @NotNull
     @Column(name = "dailyCarb")
     private double dailyCarb;
+    private String createdDate;
     @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private User user;
+
+    public HealthInfo(String healthInfoID, String userID, boolean gender, double height, double weight, int age, int activeness, int tdee, double dailyCalorie, double dailyProtein, double dailyFat, double dailyCarb, String createdDate) {
+        this.healthInfoID = healthInfoID;
+        this.userID = userID;
+        this.gender = gender;
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
+        this.activeness = activeness;
+        this.tdee = tdee;
+        this.dailyCalorie = dailyCalorie;
+        this.dailyProtein = dailyProtein;
+        this.dailyFat = dailyFat;
+        this.dailyCarb = dailyCarb;
+        this.createdDate = createdDate;
+    }
 
     public HealthInfo() {
     }
@@ -78,6 +97,22 @@ public class HealthInfo implements Serializable {
     }
 
     public HealthInfo(String userID, boolean gender, double height, double weight, int age, int activeness, int tdee, double dailyCalorie, double dailyProtein, double dailyFat, double dailyCarb) {
+        this.userID = userID;
+        this.gender = gender;
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
+        this.activeness = activeness;
+        this.tdee = tdee;
+        this.dailyCalorie = dailyCalorie;
+        this.dailyProtein = dailyProtein;
+        this.dailyFat = dailyFat;
+        this.dailyCarb = dailyCarb;
+    }
+
+    
+    public HealthInfo(String healthInfoID, String userID, boolean gender, double height, double weight, int age, int activeness, int tdee, double dailyCalorie, double dailyProtein, double dailyFat, double dailyCarb) {
+        this.healthInfoID = healthInfoID;
         this.userID = userID;
         this.gender = gender;
         this.height = height;
@@ -105,6 +140,14 @@ public class HealthInfo implements Serializable {
 
     public void setGender(boolean gender) {
         this.gender = gender;
+    }
+
+    public String getHealthInfoID() {
+        return healthInfoID;
+    }
+
+    public void setHealthInfoID(String healthInfoID) {
+        this.healthInfoID = healthInfoID;
     }
 
     public double getHeight() {
@@ -187,6 +230,14 @@ public class HealthInfo implements Serializable {
         this.user = user;
     }
 
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -209,7 +260,6 @@ public class HealthInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.HealthInfo[ userID=" + userID + " ]";
+        return "HealthInfo{" + "userID=" + userID + ", gender=" + gender + ", height=" + height + ", weight=" + weight + ", age=" + age + ", activeness=" + activeness + ", tdee=" + tdee + ", dailyCalorie=" + dailyCalorie + ", dailyProtein=" + dailyProtein + ", dailyFat=" + dailyFat + ", dailyCarb=" + dailyCarb + ", user=" + user + '}';
     }
-    
 }
