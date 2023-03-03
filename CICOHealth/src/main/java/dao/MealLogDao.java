@@ -3,7 +3,6 @@ package dao;
 import bean.MealLog;
 import bean.MealLogItem;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -206,7 +205,7 @@ public class MealLogDao extends BaseDao {
             closeConnections();
         }
     }
-
+    
     public static void main(String[] args) {
         try {
             ArrayList<MealLog> result = new MealLogDao().getLogsOfDate("USME000001", "2023-02-24");

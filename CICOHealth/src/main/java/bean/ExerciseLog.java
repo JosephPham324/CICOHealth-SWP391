@@ -90,6 +90,34 @@ public class ExerciseLog implements Serializable {
         this.logDate = logDate;
     }
 
+    public ExerciseLog(String exerciseLogID, Integer set, String rep, String weight, Exercise exercise, String userID) {
+        this.exerciseLogID = exerciseLogID;
+        this.set = set;
+        this.rep = rep;
+        this.weight = weight;
+        this.exercise = exercise;
+        this.userID = userID;
+    }
+
+    
+    
+    
+    public ExerciseLog(String exerciseLogID, Date logTime, Date logDate, Integer set, String rep, String weight, Integer timeSpent, String logNote, String exerciseID, Exercise exercise, String userID) {
+        this.exerciseLogID = exerciseLogID;
+        this.logTime = logTime;
+        this.logDate = logDate;
+        this.set = set;
+        this.rep = rep;
+        this.weight = weight;
+        this.timeSpent = timeSpent;
+        this.logNote = logNote;
+        this.exerciseID = exerciseID;
+        this.exercise = exercise;
+        this.userID = userID;
+    }
+
+    
+    
     public String getExerciseLogID() {
         return exerciseLogID;
     }

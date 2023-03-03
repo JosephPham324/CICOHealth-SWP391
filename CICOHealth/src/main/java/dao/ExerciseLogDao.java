@@ -4,9 +4,12 @@
  */
 package dao;
 
+import bean.Exercise;
 import bean.ExerciseLog;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -131,6 +134,37 @@ public class ExerciseLogDao extends BaseDao {
         }
     }
 
+    public void updateExerciseLogCardio(ExerciseLog exerciseLog) throws SQLException {
+        connection = new DBContext().getConnection();
+        String query = "UPDATE ExerciseLog SET timeSpent = ? WHERE exerciseLogID = ? AND exerciseID = ?";
+        preparedStatement = connection.prepareStatement(query);
+        int index = 1;
+        preparedStatement.setInt(index++, exerciseLog.getTimeSpent());
+        preparedStatement.setString(index++, exerciseLog.getExerciseLogID());
+        preparedStatement.setString(index++, exerciseLog.getExercise().getExerciseID());
+        preparedStatement.executeUpdate();
+        closeConnections();
+    }
+
+    public void updateExerciseLogResitance(ExerciseLog exerciseLog) throws SQLException {
+        connection = new DBContext().getConnection();
+        String query = "UPDATE ExerciseLog SET [set] = ?, rep = ?, weight = ? WHERE exerciseID = ? AND exerciseLogID = ?";
+        preparedStatement = connection.prepareStatement(query);
+        int index = 1;
+        System.out.println(exerciseLog.getSet());
+        System.out.println(exerciseLog.getRep());
+        System.out.println(exerciseLog.getWeight());
+        System.out.println(exerciseLog.getExerciseID());
+        System.out.println(exerciseLog.getExerciseLogID());
+        preparedStatement.setInt(index++, exerciseLog.getSet());
+        preparedStatement.setString(index++, exerciseLog.getRep());
+        preparedStatement.setString(index++, exerciseLog.getWeight());
+        preparedStatement.setString(index++, exerciseLog.getExerciseID());
+        preparedStatement.setString(index++, exerciseLog.getExerciseLogID());
+        preparedStatement.executeUpdate();
+        closeConnections();
+    }
+    
     public ArrayList<ExerciseLog> getLogsOfDateRange(String userID, String type, String startDate, String endDate) throws SQLException {
         if (!type.matches("CA|RE")) {
             return null;
@@ -173,10 +207,20 @@ public class ExerciseLogDao extends BaseDao {
         }
         return result;
     }
-
     public static void main(String[] args) {
         try {
-            System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-02-26", "CA"));
+            ExerciseLog el = new ExerciseLog();
+
+            System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-03-01", "RE"));
+            ArrayList<ExerciseLog> arrayList = new ExerciseLogDao().getLogsOfDate("USME000001", "2023-03-01", "RE");
+//            if(arrayList!=null){
+//                for (ExerciseLog exerciseLog : arrayList) {
+//                    el = exerciseLog;
+//                }
+//            }
+//            el.setSet(23000);
+//            System.out.println(el.getSet());
+//            new ExerciseLogDao().updateExerciseLogResitance(el);
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
         }
