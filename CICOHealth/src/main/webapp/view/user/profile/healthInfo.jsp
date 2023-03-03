@@ -5,6 +5,8 @@
 --%>
 <%@page import="java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="history" value="${history}" scope="request" />
+<c:set var="health" value="${healthInfo}" scope="request" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="bean.HealthInfo"%>
 <!DOCTYPE html>
@@ -16,16 +18,12 @@
         <title>Health Information</title>
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3 bg-light pt-3">
-                    <ul class="list-unstyled">
-                        <li><a href="/CICOHealth/user/profile/user-info" class="sidebar-link">User Info</a></li>
-                        <li><a href="/CICOHealth/user/profile/login-info" class="sidebar-link">Login Info</a></li>
-                        <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>
-                    </ul>
-                </div>
-                <c:set var="health" value="${healthInfo}" scope="request" />
+
+
+        <div class="page-wrapper chiller-theme">   
+            <%@include file="sidebarProfile.jsp" %>
+            <!-- sidebar-wrapper  -->
+            <main class="page-content">
                 <div class="container mt-5">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
@@ -54,33 +52,18 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <c:set var="history" value="${history}" scope="request" />
-        <div class="history-container">
-            <h3 class="txt-center">Histoy</h3>
-            <div class="history-items-container" style="height: 200px; overflow-y: scroll;">
-                <c:forEach var="healthInfo" items="${history}">
-                    <a href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
-                </c:forEach>
-            </div>
+                <div class="history-container">
+                    <h3 class="txt-center">Histoy</h3>
+                    <div class="history-items-container" style="height: 200px; overflow-y: scroll;">
+                        <c:forEach var="healthInfo" items="${history}">
+                            <a href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
+                        </c:forEach>
+                    </div>
 
+                </div>
+            </main>
         </div>
 
-        <!--        <script>
-                    document.getElementById("createdBy").addEventListener("change", () => {
-                        const userID = document.getElementById("userID").value;
-                        // Get the value of the date picker
-                        const datePicker = document.getElementById("createdBy");
-                        const selectedDate = datePicker.value;
-                        alert(selectedDate);
-                        // Build the new URL using the selected date
-                        const baseUrl = "/CICOHealth/user/profile/health-info?userid=" + userID; // remove any existing query string
-                        const newUrl = baseUrl + `&selectedDate=` + selectedDate;
-                        // Change the URL of the current page
-                        window.location.href = newUrl;
-                    });
-                </script>-->
         <script src="/CICOHealth/assets/scripts/healthRegister.js"></script>
     </body>
 </html>
