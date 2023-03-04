@@ -31,7 +31,7 @@
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="module">
-      import { fetchData, analyzeLogDataByDate, analyzeTopWeightData} from "/CICOHealth/assets/scripts/modules/statistics.js";
+      import { fetchData, analyzeLogDataByDate, getDailyTopSets,countExercisesPerWeek,getExerciseFrequency} from "/CICOHealth/assets/scripts/modules/statistics.js";
       // const statistics = new Statistics();
       //Start date picker
       const startDate = document.getElementById("startDate");
@@ -49,8 +49,9 @@
           startDate,
           endDate,
         );
-        console.log(data.logs)
-        console.log(analyzeTopWeightData(data.logs,'weight'));
+        console.log((countExercisesPerWeek(data.logs)));
+        let exercisesCounts = countExercisesPerWeek(data.logs);
+        console.log(getExerciseFrequency("Dumbbell Bench Press",exercisesCounts));
       }
       //Add event listener to both date pickers
       startDate.addEventListener("change", fetchDate);
