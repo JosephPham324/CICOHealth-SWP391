@@ -77,23 +77,23 @@
                         <% UserDao dao = new UserDao();
                             List<User> users = dao.getAllUser();
                             for (User list : users) {%>
-                        <tr>
+                        <tr class="table-active">
                             <td><%= list.getUserID()%></td>
                             <td><%= list.getFirstName()%></td>
                             <td><%= list.getLastName()%></td>
                             <td><%= list.getEmail()%></td>
                             <td><%= list.getPhone()%></td>
                             <td>
-                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/user/profile/user-info?userid=<%= list.getUserID()%>"></a> 
+                                <a class="fa-solid fa-pen-to-square edit-button fa-lg" style="color: blue;" href="/CICOHealth/user/profile/user-info?userid=<%= list.getUserID()%>"></a> 
                                 <c:set var = "us" scope = "session" value = "<%= list.getUserID()%>"/>
                                 <c:set var = "banned" scope = "session" value = "<%= list.isIsBanned()%>"/>
                                 <c:if test = "${banned}">
                                     <a  class="unbaned" id="banned" data-value ="1" 
-                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>    
+                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban fa-lg"></i></a>    
                                     </c:if>
                                     <c:if test = "${!banned}">
                                     <a  class="banned" id="banned" data-value ="1" 
-                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>   
+                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban fa-lg"></i></a>   
                                     </c:if>                           
                             </td>
                         </tr>
