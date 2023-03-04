@@ -28,10 +28,16 @@
           required
         />
       </div>
+      <canvas id="cardioChart"></canvas>
     </main>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
     <script type="module">
-      import { fetchData, analyzeLogDataByDate, getDailyTopSets,countExercisesPerWeek,getExerciseFrequency, calculateExerciseStats} from "/CICOHealth/assets/scripts/modules/statistics.js";
+      import {
+        fetchData,
+        calculateDailyCardioStats,
+        calculateCardioExerciseStats
+      } from "/CICOHealth/assets/scripts/modules/statistics.js";
       // const statistics = new Statistics();
       //Start date picker
       const startDate = document.getElementById("startDate");
@@ -44,15 +50,10 @@
         const endDate = document.getElementById("endDate").value;
         console.log(startDate);
         console.log(endDate);
-        let data = await fetchData(
-          "exercise/resistance",
-          startDate,
-          endDate,
-        );
-        console.log(calculateExerciseStats(data.logs))
-        console.log((countExercisesPerWeek(data.logs)));
-        let exercisesCounts = countExercisesPerWeek(data.logs);
-        console.log(getExerciseFrequency("Dumbbell Bench Press",exercisesCounts));
+        let data = await fetchData("exercise/cardio", startDate, endDate);
+        console.log(data.logs);
+        console.log(calculateDailyCardioStats(data.logs));
+        console.log(calculateCardioExerciseStats(data.logs));
       }
       //Add event listener to both date pickers
       startDate.addEventListener("change", fetchDate);
@@ -64,7 +65,7 @@
         .toISOString()
         .substr(0, 10);
       //Fetch data on page load
-        fetchDate();
+      fetchDate();
     </script>
   </body>
 </html>

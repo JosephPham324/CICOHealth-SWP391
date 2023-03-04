@@ -61,6 +61,13 @@ function analyzeLogDataByDate(logsCollection, attribute) {
 //----------------------------------------------------------------------------------------------
 /*----------------Exercise statistics-----------------------*/
 //----------------Utility functions
+
+/**
+ * This function returns the start and end dates for a given week in a given year.
+ * @param {number} year - The year for the week
+ * @param {number} weekNumber - The week number (1-52)
+ * @returns {Object} An object containing the start and end dates for the week
+ */  
 function getWeekEndpoints(year, weekNumber) {
   const januaryFirst = new Date(year, 0, 1);
   const dayOfWeek = januaryFirst.getDay();
@@ -73,6 +80,12 @@ function getWeekEndpoints(year, weekNumber) {
   const endDate = new Date(startDate.getTime() + 6 * 86400000);
   return { startDate, endDate };
 }
+
+/**
+ * This function returns the week number (1-52) for a given date.
+ * @param {Date} date - The date to get the week number for
+ * @returns {number} The week number (1-52)
+ */
 function getWeekNumber(date) {
   const onejan = new Date(date.getFullYear(), 0, 1);
   const millisecsInDay = 86400000;
@@ -80,8 +93,39 @@ function getWeekNumber(date) {
     ((date - onejan) / millisecsInDay + onejan.getDay() + 1) / 7
   );
 }
+
+/**
+ * Converts a string of numbers separated by a specified separator into an array of integers.
+ *
+ * @param {string} string - The string to be converted into an array.
+ * @param {string} separator - The separator used to split the string into an array.
+ * @returns {number[]} An array of integers extracted from the original string.
+ */
+function separateString(string, separator) {
+  return string.split(separator).map((item) => parseInt(item.trim()));
+}
+
+/**
+ * Returns the maximum value in an array of numbers.
+ *
+ * @param {number[]} array - The array of numbers to search for the maximum value.
+ * @returns {number} The maximum value in the array.
+ */
+function getMaxValue(array) {
+  return Math.max(...array);
+}
 //----------------------------------------------------------------------------------------------
 //----------------Main functions
+//----------------Resistence exercise statistics
+
+/**
+ * This function counts the number of times each exercise is performed in a given week across all years
+ * It takes an array of exercise logs as input and returns an object containing the count for each exercise
+ * for each week in every year. Each property in the returned object is a year, and each year property
+ * contains a week object, which contains the count for each exercise.
+ * @param {Object[]} data - An array of exercise logs
+ * @returns {Object} An object containing the count of each exercise for each week in every year
+ */
 function countExercisesPerWeek(data) {
   const exerciseCounts = {};
 
@@ -111,6 +155,17 @@ function countExercisesPerWeek(data) {
   return exerciseCounts;
 }
 
+/**
+ * This function calculates the frequency of a given exercise across all weeks in all years
+ * It takes an exercise name and an array of exercise logs as input and returns an object containing the name
+ * of the exercise, the total number of times it was performed, and an array of objects containing the count for
+ * each week the exercise was performed, as well as the start and end dates of the week.
+ * @param {string} exerciseName - The name of the exercise to calculate the frequency for
+ * @param {Object[]} data - An array of exercise logs
+ * @returns {Object} An object containing the name of the exercise, the total number of times it was performed,
+ * and an array of objects containing the count for each week the exercise was performed, as well as the start and
+ * end dates of the week.
+ */
 function getExerciseFrequency(exerciseName, data) {
   const exerciseData = {
     name: exerciseName,
@@ -131,27 +186,6 @@ function getExerciseFrequency(exerciseName, data) {
   }
 
   return exerciseData;
-}
-
-/**
- * Converts a string of numbers separated by a specified separator into an array of integers.
- *
- * @param {string} string - The string to be converted into an array.
- * @param {string} separator - The separator used to split the string into an array.
- * @returns {number[]} An array of integers extracted from the original string.
- */
-function separateString(string, separator) {
-  return string.split(separator).map((item) => parseInt(item.trim()));
-}
-
-/**
- * Returns the maximum value in an array of numbers.
- *
- * @param {number[]} array - The array of numbers to search for the maximum value.
- * @returns {number} The maximum value in the array.
- */
-function getMaxValue(array) {
-  return Math.max(...array);
 }
 
 /**
@@ -220,26 +254,22 @@ function getDailyTopSets(data) {
 }
 /*
  * This function calculates statistics for a set of exercise logs
- * It takes an array of exercise logs as input
- * It returns an object containing statistics for each exercise in the logs
- * Each property in the returned object is the name of an exercise
+ * It takes an array of exercise logs as input and returns an object containing statistics
+ * for each exercise in the logs. Each property in the returned object is the name of an exercise
  * The value of each property is an object containing the following properties:
- * totalSets (number): The total number of sets for the exercise
- * totalReps (number): The total number of reps for the exercise
- * totalWeight (number): The total weight lifted for the exercise
- * avgSets (number): The average number of sets for the exercise
- * avgReps (number): The average number of reps for the exercise
- * avgWeight (number): The average weight lifted for the exercise
- * maxSets (number): The maximum number of sets for the exercise
- * maxReps (number): The maximum number of reps for the exercise
- * maxWeight (number): The maximum weight lifted for the exercise
- * minSets (number): The minimum number of sets for the exercise
- * minReps (number): The minimum number of reps for the exercise
- * minWeight (number): The minimum weight lifted for the exercise
+ * - totalSets (number): The total number of sets for the exercise
+ * - totalReps (number): The total number of reps for the exercise
+ * - totalWeight (number): The total weight lifted for the exercise
+ * - frequency (number): The number of times the exercise was performed
+ * - averageSets (number): The average number of sets for the exercise
+ * - averageReps (number): The average number of reps for the exercise
+ * - averageWeight (number): The average weight lifted for the exercise
+ * - maxWeight (number): The maximum weight lifted for the exercise
  * @param {Object[]} exerciseLogs - An array of exercise logs
  * @returns {Object} An object containing statistics for each exercise in the logs
  */
-function calculateExerciseStats(exerciseLogs) {
+function calculateResistanceExerciseStats(exerciseLogs) {
+  console.log(exerciseLogs);
   // Initialize an empty object to store exercise statistics
   const exerciseStats = {};
 
@@ -265,6 +295,7 @@ function calculateExerciseStats(exerciseLogs) {
         totalReps: 0,
         totalWeight: 0,
         frequency: 1,
+        maxWeight: getMaxValue(separateString(log.weight, "/")),
       };
     }
     // If the current exercise has been seen before, increment its frequency count
@@ -276,10 +307,107 @@ function calculateExerciseStats(exerciseLogs) {
     exerciseStats[exerciseName].totalSets += sets;
     exerciseStats[exerciseName].totalReps += reps;
     exerciseStats[exerciseName].totalWeight += weight;
+    exerciseStats[exerciseName].maxWeight = getMaxValue([
+      exerciseStats[exerciseName].maxWeight,
+      ...separateString(log.weight, "/"),
+    ]);
   });
+  //Add average weight and average reps to the exerciseStats object
+  for (const exercise in exerciseStats) {
+    exerciseStats[exercise].averageWeight =
+      exerciseStats[exercise].totalWeight / exerciseStats[exercise].totalSets;
+    exerciseStats[exercise].averageReps =
+      exerciseStats[exercise].totalReps / exerciseStats[exercise].totalSets;
+    // exercise[exercise].averageSets = exerciseStats[exercise].totalSets / exerciseStats[exercise].frequency;
+  }
 
   // Return the exerciseStats object
   return exerciseStats;
+}
+//----------------Cardio exercise statistics
+function calculateDailyCardioStats(exerciseLogs) {
+  const cardioLogs = exerciseLogs.filter((log) => {
+    const exercise = log.exercise;
+    return exercise && exercise.caloriesPerHour > 0;
+  });
+
+  const cardioStats = {};
+  cardioLogs.forEach((log) => {
+    const logDate = log.logDate;
+    const timeSpent = log.timeSpent;
+    const caloriesBurnt = (log.exercise.caloriesPerHour * timeSpent) / 60;
+    const exerciseName = log.exercise.exerciseName;
+
+    if (cardioStats[logDate]) {
+      cardioStats[logDate].timeSpent += timeSpent;
+      cardioStats[logDate].caloriesBurnt += caloriesBurnt;
+      cardioStats[logDate].exerciseNames.push(exerciseName);
+    } else {
+      cardioStats[logDate] = {
+        timeSpent,
+        caloriesBurnt,
+        exerciseNames: [exerciseName],
+      };
+    }
+  });
+
+  return cardioStats;
+}
+
+/**
+ * This function calculates statistics for a set of exercise logs
+ * It takes an array of exercise logs as input and returns an array of objects containing statistics
+ * for each unique exercise in the logs.
+ * Each object in the returned array contains the following properties:
+ * - exerciseName (string): The name of the exercise
+ * - totalTimeSpent (number): The total time spent on the exercise, in minutes
+ * - totalKcalBurnt (number): The total number of calories burnt during the exercise
+ * - frequency (number): The number of times the exercise was performed
+ * - averageTimeSpent (number): The average time spent on the exercise, in minutes
+ * - averageKcalBurnt (number): The average number of calories burnt during the exercise
+ * - maxTimeSpent (number): The maximum time spent on the exercise, in minutes (per log that is)
+ * - maxKcalBurnt (number): The maximum number of calories burnt during the exercise (same as max time spent)
+ * @param {Object[]} exerciseLogs - An array of exercise logs
+ * @returns {Object[]} An array of objects containing statistics for each unique exercise in the logs
+ */
+function calculateCardioExerciseStats(exerciseLogs) {
+  // Create an object to store information for each exercise
+  const exercises = {};
+
+  // Loop through each exercise log
+  exerciseLogs.forEach((log) => {
+    const exerciseName = log.exercise.exerciseName;
+    const timeSpent = log.timeSpent;
+    const caloriesBurned = (log.exercise.caloriesPerHour / 60) * timeSpent; // Calculate calories burned
+
+    // If exercise hasn't been encountered before, initialize its info
+    if (!exercises[exerciseName]) {
+      exercises[exerciseName] = {
+        exerciseName: exerciseName,
+        totalTimeSpent: 0,
+        totalKcalBurnt: 0,
+        frequency: 0,
+        maxTimeSpent: timeSpent,
+        maxKcalBurnt: caloriesBurned,
+      };
+    }
+
+    // Update exercise info
+    exercises[exerciseName].totalTimeSpent += timeSpent;
+    exercises[exerciseName].totalKcalBurnt += caloriesBurned;
+    exercises[exerciseName].frequency++;
+    exercises[exerciseName].averageTimeSpent = exercises[exerciseName].totalTimeSpent / exercises[exerciseName].frequency;
+    exercises[exerciseName].averageKcalBurnt = exercises[exerciseName].totalKcalBurnt / exercises[exerciseName].frequency;
+
+    // Update max time and max kcal if necessary
+    if (timeSpent > exercises[exerciseName].maxTimeSpent) {
+      exercises[exerciseName].maxTimeSpent = timeSpent;
+      exercises[exerciseName].maxKcalBurnt = caloriesBurned;
+    }
+  });
+
+  // Return array of exercise info objects
+  return Object.values(exercises);
 }
 
 //Export fetch data function
@@ -289,7 +417,8 @@ export {
   getDailyTopSets,
   countExercisesPerWeek,
   getExerciseFrequency,
-  calculateExerciseStats,
+  calculateResistanceExerciseStats,
+  calculateDailyCardioStats,
+  calculateCardioExerciseStats,
 };
 
-//Date picker html, start and end date
