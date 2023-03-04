@@ -70,7 +70,7 @@ public class StatisticsController extends HttpServlet {
         if (URI.endsWith("/data")) {
             String responseData = defaultResponseData();
             Object user = request.getSession().getAttribute("user");
-            String userID = ((User) user).getUserID();
+            String userID = "USME000001";
             String startDate = request.getParameter("start");
             String endDate = request.getParameter("end");
             Gson gson = new Gson();
@@ -108,19 +108,14 @@ public class StatisticsController extends HttpServlet {
                             + "\"mealLogs\":"+ gson.toJson(queryMeal) 
                             + "}";
                     printResponseJSON(response, responseData);
+                    return;
                 } catch (SQLException | IOException ex) {
                     Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
                     printResponseJSON(response, defaultResponseData());
                 }
             }
         }
-//        if (URI.matches(".*/exercise-logs/cardio/*.*")) {
-//            request.getRequestDispatcher("/view/user/exerciseLogs/cardio.jsp").forward(request, response);
-//            return;
-//        } else if (URI.matches(".*/exercise-logs/resistance/*.*")) {
-//            request.getRequestDispatcher("/view/user/exerciseLogs/resistance.jsp").forward(request, response);
-//            return;
-//        }
+        request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
     }
 
     private void printResponseJSON(HttpServletResponse response, String json) throws IOException {

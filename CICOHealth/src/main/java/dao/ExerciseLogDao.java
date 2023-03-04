@@ -173,11 +173,6 @@ public class ExerciseLogDao extends BaseDao {
                 + "FROM [exerciseLog]\n"
                 + "WHERE userID = ? AND logDate BETWEEN ? AND ?\n"
                 + "AND exerciseLogID like '" + type + "LG' + '%'";
-        System.out.println(userID);
-        System.out.println(type);
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(query);
         int index = 1;
         ArrayList<ExerciseLog> result = new ArrayList<>();
         try {

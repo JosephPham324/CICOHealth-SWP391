@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <div class="form-group">
+        <!--Start date picker-->
+        <label for="startDate">Start Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="startDate"
+          name="startDate"
+          required
+        />
+        <!--End date picker-->
+        <label for="endDate">End Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="endDate"
+          name="endDate"
+          required
+        />
+      </div>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="module">
+      import { fetchData, analyzeLogDataByDate, analyzeTopWeightData} from "/CICOHealth/assets/scripts/modules/statistics.js";
+      // const statistics = new Statistics();
+      //Start date picker
+      const startDate = document.getElementById("startDate");
+      //End date picker
+      const endDate = document.getElementById("endDate");
+
+      //Take both dates
+      async function fetchDate() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        console.log(startDate);
+        console.log(endDate);
+        let data = await fetchData(
+          "exercise/resistance",
+          startDate,
+          endDate,
+        );
+        console.log(data.logs)
+        console.log(analyzeTopWeightData(data.logs,'weight'));
+      }
+      //Add event listener to both date pickers
+      startDate.addEventListener("change", fetchDate);
+      endDate.addEventListener("change", fetchDate);
+      //Set end date to today
+      endDate.value = new Date().toISOString().substr(0, 10);
+      //Set start date to 1 month ago
+      startDate.value = new Date(new Date().setDate(new Date().getDate() - 30))
+        .toISOString()
+        .substr(0, 10);
+      //Fetch data on page load
+        fetchDate();
+    </script>
+  </body>
+</html>
