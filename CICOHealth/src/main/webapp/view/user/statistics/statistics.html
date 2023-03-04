@@ -31,7 +31,7 @@
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="module">
-      import { fetchData, analyzeLogDataByDate, getDailyTopSets,countExercisesPerWeek,getExerciseFrequency} from "/CICOHealth/assets/scripts/modules/statistics.js";
+      import { fetchData, analyzeLogDataByDate, getDailyTopSets,countExercisesPerWeek,getExerciseFrequency, calculateExerciseStats} from "/CICOHealth/assets/scripts/modules/statistics.js";
       // const statistics = new Statistics();
       //Start date picker
       const startDate = document.getElementById("startDate");
@@ -49,6 +49,7 @@
           startDate,
           endDate,
         );
+        console.log(calculateExerciseStats(data.logs))
         console.log((countExercisesPerWeek(data.logs)));
         let exercisesCounts = countExercisesPerWeek(data.logs);
         console.log(getExerciseFrequency("Dumbbell Bench Press",exercisesCounts));

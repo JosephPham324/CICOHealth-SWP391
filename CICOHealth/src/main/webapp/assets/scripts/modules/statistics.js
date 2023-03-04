@@ -218,6 +218,69 @@ function getDailyTopSets(data) {
   // return the final result array
   return result;
 }
+/*
+ * This function calculates statistics for a set of exercise logs
+ * It takes an array of exercise logs as input
+ * It returns an object containing statistics for each exercise in the logs
+ * Each property in the returned object is the name of an exercise
+ * The value of each property is an object containing the following properties:
+ * totalSets (number): The total number of sets for the exercise
+ * totalReps (number): The total number of reps for the exercise
+ * totalWeight (number): The total weight lifted for the exercise
+ * avgSets (number): The average number of sets for the exercise
+ * avgReps (number): The average number of reps for the exercise
+ * avgWeight (number): The average weight lifted for the exercise
+ * maxSets (number): The maximum number of sets for the exercise
+ * maxReps (number): The maximum number of reps for the exercise
+ * maxWeight (number): The maximum weight lifted for the exercise
+ * minSets (number): The minimum number of sets for the exercise
+ * minReps (number): The minimum number of reps for the exercise
+ * minWeight (number): The minimum weight lifted for the exercise
+ * @param {Object[]} exerciseLogs - An array of exercise logs
+ * @returns {Object} An object containing statistics for each exercise in the logs
+ */
+function calculateExerciseStats(exerciseLogs) {
+  // Initialize an empty object to store exercise statistics
+  const exerciseStats = {};
+
+  // Loop through each exercise log in the input array
+  exerciseLogs.forEach((log) => {
+    // Get the name of the current exercise
+    const exerciseName = log.exercise.exerciseName;
+    // Get the number of sets for the current exercise log
+    const sets = log.set;
+    // Calculate the total number of reps for the current exercise log
+    const reps = log.rep
+      .split("/")
+      .reduce((total, current) => total + parseInt(current), 0);
+    // Calculate the total weight lifted for the current exercise log
+    const weight = log.weight
+      .split("/")
+      .reduce((total, current) => total + parseInt(current), 0);
+
+    // If the current exercise has not been seen before, create a new entry in the exerciseStats object
+    if (!exerciseStats[exerciseName]) {
+      exerciseStats[exerciseName] = {
+        totalSets: 0,
+        totalReps: 0,
+        totalWeight: 0,
+        frequency: 1,
+      };
+    }
+    // If the current exercise has been seen before, increment its frequency count
+    else {
+      exerciseStats[exerciseName].frequency += 1;
+    }
+
+    // Add the current exercise log's sets, reps, and weight to the exerciseStats object
+    exerciseStats[exerciseName].totalSets += sets;
+    exerciseStats[exerciseName].totalReps += reps;
+    exerciseStats[exerciseName].totalWeight += weight;
+  });
+
+  // Return the exerciseStats object
+  return exerciseStats;
+}
 
 //Export fetch data function
 export {
@@ -225,7 +288,8 @@ export {
   analyzeLogDataByDate,
   getDailyTopSets,
   countExercisesPerWeek,
-  getExerciseFrequency
+  getExerciseFrequency,
+  calculateExerciseStats,
 };
 
 //Date picker html, start and end date
