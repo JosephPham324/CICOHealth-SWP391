@@ -37,7 +37,8 @@
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/adminuserinfo.css">       
+
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/adminuserinfo.css">       
         <title>Users Info</title>
         <style>
 
@@ -56,7 +57,10 @@
             <h1 class="navbar-brand mx-auto">USER INFO</h1>
         </div>
         <div class="info-container">
-            <button><a href="/CICOHealth/view/admin/addNew.jsp">Add</a></button>
+
+            <button name="submit" class="btn btn-success" id="add-button" >
+                Add Account
+            </button>
             <div class="info-table">            
                 <table id="info-table" class="table table-striped table-hover display">
                     <thead>
@@ -67,7 +71,6 @@
                             <th scope="col">Email</th>
                             <th scope="col">Phone number</th>
                             <th scope="col">Actions</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -124,5 +127,7 @@
                 }
             }
         </script>
+        <script src="${pageContext.request.contextPath}/assets/scripts/popup.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/scripts/adduser.js"></script>
     </body>
 </html>
