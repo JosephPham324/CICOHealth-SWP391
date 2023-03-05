@@ -1,11 +1,33 @@
+function getAccountCredentials() {
+  console.log("getAccountCredentials");
+  let firstName = $("#txtFirstName").val();
+  let lastName = $("#txtLastName").val();
+  let type = $("#type option:selected").val();
+  $.get(
+    "/CICOHealth/admin/user-management/create-username?firstname=" +
+      firstName +
+      "&lastname=" +
+      lastName +
+      "&type=" +
+      type,
+    function (data, status) {
+      //Split data by space, and stitch together
+      let username = data.split(" ").join("");
 
-//Get add button
-let addButton = document.getElementById("add-button");
-//Add click event listener to add button
-let add_clicked = false;
-addButton.addEventListener("click", function () {
-  if (add_clicked == false) {
-    let html_pop_up_addButton = `
+      $("#txtUsername").val(username);
+      $("#txtPassword").val(username);
+    }
+  );
+}
+
+$(document).ready(function () {
+  //Get add button
+  let addButton = document.getElementById("add-button");
+  //Add click event listener to add button
+  let add_clicked = false;
+  addButton.addEventListener("click", function () {
+    if (add_clicked == false) {
+      let html_pop_up_addButton = `
     <div class="overlay"></div>
     <div class="pop-up-content">
         <form action="/CICOHealth/admin/user-management" method="post" id = "register-form" style="
@@ -46,7 +68,7 @@ addButton.addEventListener("click", function () {
             <div class="form-group row">
                 <label class="col-4 col-form-label">Type</label>
                 <div class="col-8">
-                <select id="type" name="type" class="form-control" onchange="getValue(this)">
+                <select id="type" name="type" class="form-control">
                     <option value="ME">Member</option>
                         <option value="FE">Fitness Expert</option>
                         <option value="AD">Admin</option>
@@ -93,32 +115,26 @@ addButton.addEventListener("click", function () {
     </div>
        
         `;
-    let pop_up_element = document.createElement("div");
-    pop_up_element.id = "add-account-popup";
-    pop_up_element.classList.add("pop-up");
-    pop_up_element.innerHTML = html_pop_up_addButton;
-    document.body.appendChild(pop_up_element);
+      let pop_up_element = document.createElement("div");
+      pop_up_element.id = "add-account-popup";
+      pop_up_element.classList.add("pop-up");
+      pop_up_element.innerHTML = html_pop_up_addButton;
+      document.body.appendChild(pop_up_element);
+      displayPopUp("add-account-popup");
+      add_clicked = true;
+      console.log("add clicked");
+      document
+        .getElementById("txtFirstName")
+        .addEventListener("change", getAccountCredentials);
+      document
+        .getElementById("txtLastName")
+        .addEventListener("change", getAccountCredentials);
+      document
+        .getElementById("type")
+        .addEventListener("change", getAccountCredentials);
+    }
     displayPopUp("add-account-popup");
-    add_clicked = true;
-  }
-  displayPopUp("add-account-popup");
   });
-  
-  function  getValue(sel) {
-
-                if (sel.value === 'ME' || sel.value === 'FE' || sel.value === 'AD') {
-                    var firstName = $("#txtFirstName").val();
-                    var lastName = $("#txtLastName").val();
-                    var type = $("#type option:selected").val();
-                    var result = validateUser(firstName, lastName, type);
-                }
-            }
-
-            function validateUser(firstName, lastname, type) {
-                $.get("/CICOHealth/admin/user-management/create-username?firstname=" + firstName + "&lastname=" + lastname + "&type=" + type, function (data, status) {
-                    console.log(data);
-                    $("#txtUsername").val(data);
-                    $("#txtPassword").val(data);
-
-                });
-            }
+  console.log($("#users-table"))
+  $('#users-table').DataTable();
+});

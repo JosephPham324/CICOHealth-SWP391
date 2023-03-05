@@ -108,7 +108,7 @@
                         <button name="submit" class="btn btn-success" id="add-button" >
                             Add Account
                         </button>
-                        <table class="content-table">
+                        <table class="content-table" id ="users-table">
                             <thead>
                                 <tr>
                                     <th>UserID</th>
@@ -119,7 +119,6 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
                             <tbody>
                                 <% UserDao dao = new UserDao();
                                     List<User> users = dao.getAllUser();
@@ -206,6 +205,7 @@
                 }
             }
         </script>
+        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/scripts/popup.js"></script>
         <script src="${pageContext.request.contextPath}/assets/scripts/adduser.js"></script>
     </body>
