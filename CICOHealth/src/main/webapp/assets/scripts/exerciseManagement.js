@@ -77,29 +77,24 @@ addButton.addEventListener("click", function () {
     document.body.appendChild(pop_up_element);
     displayPopUp("add-exercise-popup");
     add_clicked = true;
-    $("#add-exercise-form").validate();
   }
   displayPopUp("add-exercise-popup");
-
-
-  $(function () {
-    $("#add-exercise-form").validate({
-      rules: {
-        txtExerciseName: {
-          required: true
-        },
-        txtExerciseDescription: {
-          required: true
-        }
+  $("#add-exercise-form").validate({
+    rules: {
+      txtExerciseName: {
+        required: true
       },
-      messages: {
-        txtExerciseName: {
-          required: "Exercise name cannot be empty!"
-        },
-        txtExerciseDescription: {
-          required: "Exercise description cannot be empty!"
-        }
+      txtExerciseDescription: {
+        required: true
       }
-    });
+    },
+    messages: {
+      txtExerciseName: {
+        required: "Exercise name cannot be empty!"
+      },
+      txtExerciseDescription: {
+        required: "Exercise description cannot be empty!"
+      }
+    }
   });
 });

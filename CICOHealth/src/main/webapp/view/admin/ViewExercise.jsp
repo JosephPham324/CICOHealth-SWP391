@@ -130,28 +130,6 @@
         <script src="${pageContext.request.contextPath}/assets/scripts/validateform.js"></script>
         <script src="${pageContext.request.contextPath}/assets/scripts/popup.js"></script>
         <script src="${pageContext.request.contextPath}/assets/scripts/exerciseManagement.js"></script>
-        <script>
-          $(function () {
-            $("#add-exercise-form").validate({
-              rules: {
-                txtExerciseName: {
-                  required: true
-                },
-                txtExerciseDescription: {
-                  required: true
-                }
-              },
-              messages: {
-                txtExerciseName: {
-                  required: "Exercise name cannot be empty!"
-                },
-                txtExerciseDescription: {
-                  required: "Exercise description cannot be empty!"
-                }
-              }
-            });
-          });
-        </script>
       </body>
 
       </html>
