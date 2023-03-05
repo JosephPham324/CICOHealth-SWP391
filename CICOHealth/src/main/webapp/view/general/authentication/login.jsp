@@ -6,75 +6,87 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>JSP Page</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/loginscss.css" />
+        <title>Login Page</title>
     </head>
     <body>
-        <style>
-            body{
-                width:100vw;
-                height:100vh;
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:center;
-            }
-        </style>
-        <form action="login" method="post" name="sign-form">
-            <div class="form-group row">
-                <label for="txtUsername" class="col-4 col-form-label">Username</label> 
-                <div class="col-8" id="password-field">
-                    <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text" class="form-control">
+        <div class="container">
+            <div class="login-left">
+                <div class="login-header">
+                    <h1>Welcome to Our Application</h1>
+                    <p>Please login to use the platform</p>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="txtPassword" class="col-4 col-form-label">Password</label> 
-                <div class="col-8">
-                    <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="text" class="form-control" aria-describedby="txtPasswordHelpBlock"> 
-                    <!--<span id="txtPasswordHelpBlock" class="form-text text-muted">Password must be between 6 to 20 characters!</span>-->
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="offset-4 col-8">
-                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-            <div
-                id="g_id_onload"
-                data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
-                data-context="signin"
-                data-ux_mode="popup"
-                data-login_uri="http://localhost:8080/CICOHealth/login"
-                data-auto_prompt="false"
-                data-callback="handleCredentialResponse"
-                ></div>
-            <div
-                class="g_id_signin"
-                data-type="standard"
-                data-shape="reactangle"
-                data-theme="filled_blue"
-                data-text="signin_with"
-                data-size="huge"
-                data-logo_alignment="left"
-                ></div>
-        </form>
+                <form action="login" method="post" name="sign-form" class="login-form">
+                    <div class="login-form-content">
+                        <div class="form-item">
+                            <label for="txtUsername">Username</label>                           
+                            <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text">                      
+                        </div>
+                        <div class="form-item">
+                            <label for="txtPassword">Password</label> 
+                            <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="password" aria-describedby="txtPasswordHelpBlock"> 
+                        </div>
+                        <div class="form-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="rememberMeCheckbox" checked>
+                                <label for="rememberMeCheckbox" class="checkboxLabel">Remember me</label>
+                            </div>
+                        </div>
 
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
-        <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
-        <script>
-            function handleCredentialResponse(response) {
-                const responsePayload = parseJwt(response.credential);
-                const formParams = {
-                    googleID : responsePayload.sub
-                };
-                console.log(formParams);
-                post("login", formParams);
-            }
-        </script>
-        <p id="email"></p>
+                        <div>                          
+                            <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
+                            <button name="submit" type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                    
+                    <div class="login-form-footer">
+
+                        <div
+                            id="g_id_onload"
+                            data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
+                            data-context="signin"
+                            data-ux_mode="popup"
+                            data-login_uri="http://localhost:8080/CICOHealth/login"
+                            data-auto_prompt="false"
+                            data-callback="handleCredentialResponse"
+                            ></div>
+                        <div
+                            class="g_id_signin"
+                            data-type="standard"
+                            data-shape="pill"
+                            data-theme="filled_blue"
+                            data-text="signin_with"
+                            data-size="huge"
+                            data-logo_alignment="left"
+                            ></div>
+                    </div>
+
+                </form>
+
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
+                <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
+                <script>
+                    function handleCredentialResponse(response) {
+                        const responsePayload = parseJwt(response.credential);
+                        const formParams = {
+                            googleID: responsePayload.sub
+                        };
+                        console.log(formParams);
+                        post("login", formParams);
+                    }
+                </script>
+                <p id="email"></p>
+            </div>
+            <div class="login-right">
+                <img src="/CICOHealth/assets/img/loginbackground.png">
+            </div>
+        </div>
+
+
     </body>
 </html>

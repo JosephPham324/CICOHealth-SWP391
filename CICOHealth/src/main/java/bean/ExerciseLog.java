@@ -4,6 +4,7 @@
  */
 package bean;
 
+import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -47,6 +48,7 @@ public class ExerciseLog implements Serializable {
     @NotNull
     @Column(name = "logDate")
     @Temporal(TemporalType.DATE)
+    @Expose
     private Date logDate;
     @Column(name = "set")
     private Integer set;
@@ -54,8 +56,9 @@ public class ExerciseLog implements Serializable {
     private String rep;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "weight")
-    private  String weight;
+    private String weight;
     @Column(name = "timeSpent")
+    @Expose
     private Integer timeSpent;
     @Lob
     @Size(max = 2147483647)
@@ -68,6 +71,8 @@ public class ExerciseLog implements Serializable {
     @JoinColumn(name = "userID", referencedColumnName = "userID")
     @ManyToOne(optional = false)
     private String userID;
+    @Expose
+    private double caloriesBurnt;
 
     public ExerciseLog() {
     }
@@ -88,6 +93,33 @@ public class ExerciseLog implements Serializable {
         this.exerciseLogID = exerciseLogID;
         this.logTime = logTime;
         this.logDate = logDate;
+    }
+
+    public ExerciseLog(String exerciseLogID, Integer set, String rep, String weight, Exercise exercise, String userID) {
+        this.exerciseLogID = exerciseLogID;
+        this.set = set;
+        this.rep = rep;
+        this.weight = weight;
+        this.exercise = exercise;
+        this.userID = userID;
+        System.out.println("what the fuck");
+        this.setCaloriesBurnt();
+    }
+
+    public ExerciseLog(String exerciseLogID, Date logTime, Date logDate, Integer set, String rep, String weight, Integer timeSpent, String logNote, String exerciseID, Exercise exercise, String userID) {
+        this.exerciseLogID = exerciseLogID;
+        this.logTime = logTime;
+        this.logDate = logDate;
+        this.set = set;
+        this.rep = rep;
+        this.weight = weight;
+        this.timeSpent = timeSpent;
+        this.logNote = logNote;
+        this.exerciseID = exerciseID;
+        this.exercise = exercise;
+        this.userID = userID;
+        System.out.println("what the fuck");
+        this.setCaloriesBurnt();
     }
 
     public String getExerciseLogID() {
@@ -194,8 +226,22 @@ public class ExerciseLog implements Serializable {
     public String toString() {
         return "ExerciseLog{" + "exerciseLogID=" + exerciseLogID + ", logTime=" + logTime + ", logDate=" + logDate + ", set=" + set + ", rep=" + rep + ", weight=" + weight + ", timeSpent=" + timeSpent + ", logNote=" + logNote + ", exerciseID=" + exerciseID + ", userID=" + userID + '}';
     }
-    
-    public String getExerciseType(){
-        return this.exerciseID.substring(2,4);
+
+    public String getExerciseType() {
+        return this.exerciseID.substring(2, 4);
+    }
+
+    public void setCaloriesBurnt() {
+        this.caloriesBurnt = calculateCaloriesBurnt();
+    }
+
+    public double getCaloriesBurnt() {
+        setCaloriesBurnt();
+        System.out.println("why the fuck");
+        return this.caloriesBurnt;
+    }
+
+    public final double calculateCaloriesBurnt() {
+        return this.exercise.getCaloriesPerHour() * (this.timeSpent / 60);
     }
 }

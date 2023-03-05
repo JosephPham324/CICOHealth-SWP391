@@ -99,7 +99,7 @@ public class UserManagementController extends HttpServlet {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (passwordHash == null) {
-            response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
+           // response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
             return;
         }
         login = new Login(userID, username, passwordHash, passwordSalt, false);
@@ -109,10 +109,10 @@ public class UserManagementController extends HttpServlet {
             healthInfo.setUserID(userID);
             healthDao.insertHealthInfo(healthInfo);
         } catch (SQLException ex) {
-            response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
+            //response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
             return;
         }
-        response.sendRedirect("/CICOHealth/view/admin/ViewUserInfo.jsp");
+        response.sendRedirect("/CICOHealth/admin/user-management");
 
     }
 

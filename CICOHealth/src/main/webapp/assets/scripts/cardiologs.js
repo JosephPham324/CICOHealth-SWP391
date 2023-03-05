@@ -92,12 +92,17 @@ function addEditButtonsClickEvent() {
   editButtons.forEach((button) => {
     button.addEventListener("click", function (event) {
       let log = findExerciseLogById(button.dataset.logid);
-      logUpdate = log;
-    //   fillEditForm(logUpdate);
-      displayPopUp("edit-pop-up");
+      // logUpdate = log;
+      logUpdate = JSON.parse(JSON.stringify(log));
       fillEditForm(logUpdate);
-      //Add submit event listener to the edit form
+      // fillEditForm(logUpdate);
+      displayPopUp("edit-pop-up");
       let form_id = "edit-exercise-log-form";
+      logUpdate.logDate = $("#date-picker").val();
+
+      //Add submit event listener to the edit form
+      logUpdate.logTime = logUpdate.logDate + " "+ logUpdate.logTime.split(" ")[0];
+      logUpdate.logTime = new Date(logUpdate.logTime);
       document
         .getElementById(form_id)
         .addEventListener("submit", function (event) {
@@ -105,6 +110,7 @@ function addEditButtonsClickEvent() {
           let formParams = {
             exerciseLog: JSON.stringify(logUpdate),
             _method: "PUT",
+            check: "cardio"
           };
           post("/CICOHealth/user/exercise-logs/cardio", formParams);
         });
@@ -142,4 +148,14 @@ function fillEditForm(log) {
 
 function findExerciseLogById(id) {
     return logsData.find((log) => log.exerciseLogID == id);
+}
+
+function confirmDelete(event){
+    if(confirm("Are you sure you want to delete this exercise log?")){
+         event.preventDefault();
+        document.getElementById("formDelete").submit();
+    }else{
+        event.preventDefault();
+        alert("Oke vay thoi!");
+    }
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <div class="choices">
+        <label for="display-type">Display Type:</label>
+        <select id="display-type">
+          <option value="table">Table</option>
+          <option value="chart">Chart</option>
+        </select>
+
+        <label for="data">Data:</label>
+        <select id="data">
+          <option value="data-1">Data 1</option>
+          <option value="data-2">Data 2</option>
+          <option value="data-3">Data 3</option>
+        </select>
+
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" />
+
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" />
+      </div>
+
+      <div id="statistics-container">
+        <div class="statistics-table"></div>
+        <div class="statistics-chart"></div>
+      </div>
+    </main>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+    <script type="module">
+      import {
+        fetchData,
+        calculateDailyCardioStats,
+        calculateCardioExerciseStats,
+        calculateNutritionStatistics,
+      } from "/CICOHealth/assets/scripts/modules/statistics.js";
+      // const statistics = new Statistics();
+      //Start date picker
+      const startDate = document.getElementById("start-date");
+      //End date picker
+      const endDate = document.getElementById("end-date");
+
+      //Take both dates
+      async function fetchDate() {
+        const startDate = document.getElementById("start-date").value;
+        const endDate = document.getElementById("end-date").value;
+        console.log(startDate);
+        console.log(endDate);
+        let data = await fetchData("exercise/resistance", startDate, endDate);
+        console.log(JSON.stringify(data));
+        // console.log(data.cardioLogs);
+        // console.log(data.mealLogs);
+        // console.log(calculateNutritionStatistics(data));
+        // console.log(calculateDailyCardioStats(data.logs));
+        // console.log(calculateCardioExerciseStats(data.logs));
+      }
+      //Add event listener to both date pickers
+      startDate.addEventListener("change", fetchDate);
+      endDate.addEventListener("change", fetchDate);
+      //Set end date to today
+      endDate.value = new Date().toISOString().substr(0, 10);
+      //Set start date to 1 month ago
+      startDate.value = new Date(new Date().setDate(new Date().getDate() - 30))
+        .toISOString()
+        .substr(0, 10);
+      //Fetch data on page load
+      fetchDate();
+    </script>
+  </body>
+</html>

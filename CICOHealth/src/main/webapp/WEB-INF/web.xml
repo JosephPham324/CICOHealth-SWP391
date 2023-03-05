@@ -86,6 +86,10 @@
         <servlet-name>ExerciseLogController</servlet-name>
         <servlet-class>controller.ExerciseLogController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StatisticsController</servlet-name>
+        <servlet-class>controller.StatisticsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -133,6 +137,10 @@
     <servlet-mapping>
         <servlet-name>ExerciseLogController</servlet-name>
         <url-pattern>/user/exercise-logs/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticsController</servlet-name>
+        <url-pattern>/user/statistics/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

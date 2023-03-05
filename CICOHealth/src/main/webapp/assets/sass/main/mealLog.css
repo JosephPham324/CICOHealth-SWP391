@@ -1,5 +1,37 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
+.no-scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  z-index: 1;
+  display: block;
+  position: fixed;
+}
+.pop-up > .pop-up-content {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -26,6 +58,8 @@
 
 .datepicker-container {
   display: flex;
+  flex-direction: row;
+  align-items: normal;
   justify-content: center;
 }
 
@@ -38,6 +72,20 @@
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   color: #444;
+}
+@media (min-width: 320) {
+  #date-picker {
+    font-size: calc(
+      16px + (32px - 16px) * ((
+              100vw - 320
+            ) / (1080 - 320))
+    );
+  }
+}
+@media (min-width: 1080) {
+  #date-picker {
+    font-size: 32px;
+  }
 }
 
 .title-total {
@@ -64,8 +112,9 @@
 
 .table-body {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .total-content {

@@ -1,26 +1,34 @@
+<%@page import="bean.User"%>
 <%@page import="bean.Login"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="l" value="${loginInfo}" scope="request" />
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/profile.css"/>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+            />
+        <!-- MDB -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+            rel="stylesheet"
+            />
+        <link rel="stylesheet" href="/CICOHealth/assets/css/loginInfo.css"/>
+        <link rel="stylesheet" href="/CICOHealth/assets/css/healthInfo.css"/>
         <title>Login Information</title>
     </head>
     <body>
         <%@include file="/view/general/navbar.jsp" %>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3 bg-light pt-3">
-                    <ul class="list-unstyled">
-                        <li><a href="/CICOHealth/user/profile/user-info" class="sidebar-link">User Info</a></li>
-                        <li><a href="/CICOHealth/user/profile/login-info" class="sidebar-link">Login Info</a></li>
-                        <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>
-                    </ul>
-                </div>
-                <c:set var="l" value="${loginInfo}" scope="request" />
+        <div class="page-wrapper chiller-theme">   
+            <%@include file="sidebarProfile.jsp" %>
+            <!-- sidebar-wrapper  -->
+            <main class="page-content">
                 <div class="container mt-5">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
@@ -37,8 +45,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="firstName">Password</label>
-                                            <input type="text" name="password" value="${l.passwordHash}" class="form-control">
-
+                                            <input type="password" name="password" value="${l.passwordHash}" class="form-control"  id="id_password">
+                                            <i class="far fa-eye" id="togglePassword" onclick="eyeToggle()" data-passwordHash="${l.passwordHash}"></i>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" name="_method" value="put" style="display: none" class="form-control">
@@ -59,7 +67,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
+            </main>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
+       <script src="/CICOHealth/assets/scripts/loginInfo.js"></script>
+        
     </body>
 </html>

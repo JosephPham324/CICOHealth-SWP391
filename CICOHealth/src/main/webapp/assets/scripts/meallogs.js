@@ -20,6 +20,8 @@ date_picker.addEventListener("input", function (event) {
     carbs: 0,
     fat: 0,
   };
+  //log logsData to the console
+  console.log(logsData);
   fillTable(logsData);
   document.getElementById("protein-value").innerText = total.protein.toFixed(1);
   document.getElementById("carbs-value").innerText = total.carbs.toFixed(1);
@@ -39,7 +41,7 @@ function fillTable(logsData) {
   let rowsHTML = "";
   let count = 1;
   logsData.forEach((logData) => {
-    rowsHTML += getRowHTML(count, logData);
+    rowsHTML += getRowHTML(count++, logData);
     addToTotal(logData);
   });
   let tableBody = document.querySelector("#" + table_id + " tbody");
@@ -61,14 +63,21 @@ function addEditButtonsClickEvent() {
       displayPopUp("edit-pop-up");
       //Add submit event listener to the edit form
       let form_id = "edit-meal-log-form";
+      //Get log date in format yyyy-mm-dd from date picker
+      logUpdate.logDate = $("#date-picker").val();
+      
+      //Only get the time part in logTime (excluding AM/PM in hh:mm AM/PM format)
+      logUpdate.logTime = logUpdate.logDate + " "+ logUpdate.logTime.split(" ")[0];
       document
         .getElementById(form_id)
         .addEventListener("submit", function (event) {
           event.preventDefault();
+          console.log(logUpdate);
           let formParams = {
             mealLog: JSON.stringify(logUpdate),
-            _method: "PUT",
+            _method: "PUT"
           };
+          console.log(formParams);
           post("/CICOHealth/user/meal-logs", formParams);
         });
     });

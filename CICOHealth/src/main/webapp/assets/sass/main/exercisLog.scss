@@ -17,8 +17,7 @@
 }
 
 .datepicker-container {
-    display: flex;
-    justify-content: center;
+    @include common.flex-display(row, normal, center);
 }
 
 #date-picker {
@@ -45,10 +44,7 @@
 
 .title-total p {
     margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @include common.absolute-position();
 }
 
 .table-head {
@@ -56,9 +52,7 @@
 }
 
 .table-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include common.flex-display(row, center, center);
 }
 
 .total-content {
@@ -70,10 +64,7 @@
 
 .total-content p {
     margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @include common.absolute-position();
 }
 
 .txt-title-total h2 {

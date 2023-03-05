@@ -7,6 +7,8 @@ package controller;
 import bean.ExerciseLog;
 import bean.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dao.ExerciseLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,10 +69,11 @@ public class ExerciseLogController extends HttpServlet {
         if (URI.endsWith("/data")) {
             String responseData = defaultResponseData();
             Object user = request.getSession().getAttribute("user");
-            String userID = ((User)user).getUserID();
+            String userID = ((User) user).getUserID();
             String date = request.getParameter("date");
             Gson gson = new Gson();
             if (URI.matches(".*/exercise-logs/cardio(/.*)*")) {
+                System.out.println("here");
                 try {
                     ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "CA");
                     responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
@@ -79,6 +82,7 @@ public class ExerciseLogController extends HttpServlet {
                 }
             } else {
                 try {
+                    System.out.println("here");
                     ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDate(userID, date, "RE");
                     responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
                 } catch (SQLException ex) {
@@ -96,7 +100,7 @@ public class ExerciseLogController extends HttpServlet {
         if (URI.matches(".*/exercise-logs/cardio/*.*")) {
             request.getRequestDispatcher("/view/user/exerciseLogs/cardio.jsp").forward(request, response);
             return;
-        } else if (URI.matches(".*/exercise-logs/resistance/*.*")){
+        } else if (URI.matches(".*/exercise-logs/resistance/*.*")) {
             request.getRequestDispatcher("/view/user/exerciseLogs/resistance.jsp").forward(request, response);
             return;
         }
@@ -119,12 +123,23 @@ public class ExerciseLogController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String method = request.getParameter("_method");
+        if (method != null && method.equalsIgnoreCase("delete")) {
+            doDelete(request, response);
+            return;
+        }
+        if (method != null && method.equalsIgnoreCase("put")) {
+            doPut(request, response);
+            return;
+        }
         ExerciseLog log;
         Gson gson = new Gson();
         String exerciseParam = request.getParameter("exercise");
         log = gson.fromJson(exerciseParam, ExerciseLog.class);
         User user = (User) request.getSession().getAttribute("user");
         log.setUserID(user.getUserID());
+        System.out.println(user.getUserID());
+        System.out.println(log.getUserID());
 //        response.getWriter().write(log.toString());
         try {
             new ExerciseLogDao().createLog(log);
@@ -134,6 +149,62 @@ public class ExerciseLogController extends HttpServlet {
             Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect("/CICOHealth/exercise-search?log=failure");
             return;
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String check = request.getParameter("check");
+        if (check != null && check.equalsIgnoreCase("cardio")) {
+            ExerciseLog log;
+            Gson gson = new Gson();
+            String exerciseParam = request.getParameter("exerciseLog");
+            JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
+            gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            log = gson.fromJson(exerciseParam, ExerciseLog.class);
+            User user = (User) request.getSession().getAttribute("user");
+            System.out.println(exerciseParam);
+            log.setUserID(user.getUserID());
+//        response.getWriter().write(log.toString());
+            try {
+                new ExerciseLogDao().updateExerciseLogCardio(log);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/cardio?updatelog=success");
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/cardio?update=failure");
+            }
+
+        }
+        if (check != null && check.equalsIgnoreCase("resistance")) {
+            ExerciseLog log;
+            Gson gson = new Gson();
+            String exerciseParam = request.getParameter("exerciseLog");
+            JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
+            gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            log = gson.fromJson(exerciseParam, ExerciseLog.class);
+            User user = (User) request.getSession().getAttribute("user");
+            System.out.println(exerciseParam);
+            log.setUserID(user.getUserID());
+            try {
+                new ExerciseLogDao().updateExerciseLogResitance(log);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?updatelog=success");
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?update=failure");
+            }
+        }
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String id = req.getParameter("exerciseLogID");
+            ExerciseLogDao exerciseLogDao = new ExerciseLogDao();
+            exerciseLogDao.deleteExerciseLog(id);
+            resp.sendRedirect("/CICOHealth/user/exercise-logs?delelte=successfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

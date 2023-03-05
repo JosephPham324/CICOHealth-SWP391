@@ -1,0 +1,92 @@
+@use '../../mixins/common';
+
+// Main container
+main {
+  @include common.flex-display(column, center, normal);
+  padding: 20px;
+
+  // Choices container
+  .choices {
+    @include common.flex-display(row, center, center);
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    // Choice labels
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+
+    // Choice inputs
+    select,
+    input[type="date"] {
+      padding: 5px;
+      @include common.round-corner(5px);
+      border: none;
+      background-color: #eee;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0px 0px 5px #888;
+      }
+    }
+  }
+
+  // Statistics container
+  #statistics-container {
+    @include common.flex-display(row, center, center);
+    flex-wrap: wrap;
+    gap: 20px;
+    @include common.min-dimension(100%, auto);
+
+    // Statistics table
+    .statistics-table {
+      table{
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+
+        td{
+            padding: 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+      }
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    // Statistics chart
+    .statistics-chart {
+      @include common.dimension(100%, 400px);
+      @include common.max-dimension(800px, 400px);
+    }
+  }
+
+  // Media queries for responsiveness
+  @media screen and (max-width: 768px) {
+    // Choices container
+    .choices {
+      @include common.flex-display(column, normal, center);
+      gap: 20px;
+
+      // Choice labels
+      label {
+        margin-right: 0;
+      }
+    }
+
+    // Statistics container
+    #statistics-container {
+      @include common.flex-display(column, center, center);
+      gap: 20px;
+
+      // Statistics chart
+      .statistics-chart {
+        height: 300px;
+      }
+    }
+  }
+}
