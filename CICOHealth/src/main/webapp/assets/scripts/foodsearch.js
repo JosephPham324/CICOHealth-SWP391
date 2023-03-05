@@ -396,7 +396,7 @@ function displayMealForm() {
   <div class="form-group row">
     <label for="meal-name" class="col-4 col-form-label">Meal Name</label> 
     <div class="col-8">
-      <input id="meal-name" name="meal-name" placeholder="Enter meal name" type="text" class="form-control"
+      <input id="meal-name mealName" name="meal-name mealName" placeholder="Enter meal name" type="text" class="form-control"
       required="required"
       value="${mealName}"
       oninput='mealName = this.value;';
@@ -411,7 +411,7 @@ function displayMealForm() {
   <div class="form-group row">
     <label for="meal-note" class="col-4 col-form-label">Meal Note</label>
     <div class="col-8">
-      <textarea id="meal-note" name="meal-note" cols="40" rows="5" class="form-control"
+      <textarea id="meal-note mealNote" name="meal-note mealNote" cols="40" rows="5" class="form-control"
       value="${logNote}"
       oninput='logNote = this.value;'></textarea>
     </div>
@@ -427,6 +427,7 @@ function displayMealForm() {
     </div>
   </div>
   `;
+  validateMealForm();
 }
 
 /**
@@ -474,8 +475,51 @@ function requestLogCreation() {
     }),
   };
   console.log(formParams);
+  validateMealForm();
   post("/CICOHealth/user/meal-logs", formParams);
 }
 
 let mealName = "";
 let logNote = "";
+
+function validateMealForm() {
+  // Add custom validation method to check if meal form has at least one selected food item
+  $.validator.addMethod("hasSelectedFood", function(value, element) {
+    // Check if the table has any rows (selected foods)
+    return $('#table_id tbody tr').length > 0;
+  }, "Bạn phải thêm món ăn vào!");
+
+  // Add validation rules to the meal form
+  $('#meal-form').validate({
+    rules: {
+      // Call the custom validation method to check if meal form has at least one selected food item
+      "table_id[]": {
+        required: true,
+        hasSelectedFood: true
+      },
+      // Check if meal name is not empty
+      "meal-name": {
+        required: true
+      }
+    },
+    messages: {
+      // Make sure the message key matches the validation rule
+      "table_id[]": {
+        required: "Bạn phải thêm món ăn vào!",
+        hasSelectedFood: "Bạn phải thêm món ăn vào!"
+      },
+      // Make sure the message key matches the validation rule
+      "meal-name": {
+        required: "Meal name cannot be empty!"
+      }
+    },
+    errorPlacement: function(error, element) {
+      // If the error is related to the table, place it in a separate div
+      if (element.attr("id") === "table_id") {
+        error.appendTo("#meal-form-error");
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+}
