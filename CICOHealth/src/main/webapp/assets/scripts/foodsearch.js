@@ -340,10 +340,18 @@ function displayMealForm() {
     let rowHTML = `
     <tr>
       <td>${food.foodName}</td>
-      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(0)}</td>
-      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(
+        0
+      )}</td>
+      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(
+        1
+      )}</td>
+      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(
+        1
+      )}</td>
+      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(
+        1
+      )}</td>
       <td>${food.servingWeight}</td>
       <td>
         <input id="weight-${food.foodName}" 
@@ -357,7 +365,9 @@ function displayMealForm() {
       <td>
         <button id="remove-${food.foodName}"
         class="btn btn-danger"
-        onclick="removeFoodByName('${food.foodName}');showSelected();displayMealForm();"
+        onclick="removeFoodByName('${
+          food.foodName
+        }');showSelected();displayMealForm();"
         >Remove</button>
       </td>
     </tr>
@@ -386,7 +396,7 @@ function displayMealForm() {
   tableHTML += `
       </tbody>
   </table>
-  <div id="meal-form-error"></div>
+  <div id="meal-items-error"></div>
   `;
   //Add table to the meal form
   mealForm.innerHTML += tableHTML;
@@ -396,12 +406,13 @@ function displayMealForm() {
   <div class="form-group row">
     <label for="meal-name" class="col-4 col-form-label">Meal Name</label> 
     <div class="col-8">
-      <input id="meal-name mealName" name="meal-name mealName" placeholder="Enter meal name" type="text" class="form-control"
+      <input id="meal-name" name="meal-name" placeholder="Enter meal name" type="text" class="form-control"
       required="required"
       value="${mealName}"
       oninput='mealName = this.value;';
       >
     </div>
+    <div id="log-name-error"></div>
   </div> 
     `;
   mealForm.innerHTML += htmlMealName;
@@ -411,7 +422,7 @@ function displayMealForm() {
   <div class="form-group row">
     <label for="meal-note" class="col-4 col-form-label">Meal Note</label>
     <div class="col-8">
-      <textarea id="meal-note mealNote" name="meal-note mealNote" cols="40" rows="5" class="form-control"
+      <textarea id="meal-note" name="meal-note" cols="40" rows="5" class="form-control"
       value="${logNote}"
       oninput='logNote = this.value;'></textarea>
     </div>
@@ -427,7 +438,6 @@ function displayMealForm() {
     </div>
   </div>
   `;
-  validateMealForm();
 }
 
 /**
@@ -475,51 +485,26 @@ function requestLogCreation() {
     }),
   };
   console.log(formParams);
-  validateMealForm();
+  //Validate meal form
+  if (formParams.mealLog.mealLogName === "") {
+    document.getElementById("log-name-error").innerHTML =
+      "Please enter a meal name";
+    return;
+  } else {
+    document.getElementById("log-name-error").innerHTML = "";
+  }
+  if (selectedFoods.length === 0) {
+    document.getElementById("meal-items-error").innerHTML =
+      "Please add at least one food to your meal";
+    return;
+  } else {
+    document.getElementById("meal-items-error").innerHTML =
+      "";
+  }
+
   post("/CICOHealth/user/meal-logs", formParams);
 }
 
 let mealName = "";
 let logNote = "";
 
-function validateMealForm() {
-  // Add custom validation method to check if meal form has at least one selected food item
-  $.validator.addMethod("hasSelectedFood", function(value, element) {
-    // Check if the table has any rows (selected foods)
-    return $('#table_id tbody tr').length > 0;
-  }, "Bạn phải thêm món ăn vào!");
-
-  // Add validation rules to the meal form
-  $('#meal-form').validate({
-    rules: {
-      // Call the custom validation method to check if meal form has at least one selected food item
-      "table_id[]": {
-        required: true,
-        hasSelectedFood: true
-      },
-      // Check if meal name is not empty
-      "meal-name": {
-        required: true
-      }
-    },
-    messages: {
-      // Make sure the message key matches the validation rule
-      "table_id[]": {
-        required: "Bạn phải thêm món ăn vào!",
-        hasSelectedFood: "Bạn phải thêm món ăn vào!"
-      },
-      // Make sure the message key matches the validation rule
-      "meal-name": {
-        required: "Meal name cannot be empty!"
-      }
-    },
-    errorPlacement: function(error, element) {
-      // If the error is related to the table, place it in a separate div
-      if (element.attr("id") === "table_id") {
-        error.appendTo("#meal-form-error");
-      } else {
-        error.insertAfter(element);
-      }
-    }
-  });
-}
