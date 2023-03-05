@@ -37,7 +37,8 @@
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Assets/css/adminuserinfo.css">       
+
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/adminuserinfo.css">       
         <title>Users Info</title>
         <style>
 
@@ -47,59 +48,139 @@
             .unbaned {
                 color: blue !important;
             }
+            * {
+                font-family: sans-serif;
+            }
 
+            .content-table {
+                border-collapse: collapse;
+
+                font-size: 0.9em;
+                min-width: 1000px;
+                border-radius: 5px 5px 0 0;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .content-table thead tr {
+                background-color: rgb(131, 184, 46);
+                color: #ffffff;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .content-table th,
+            .content-table td {
+                padding: 12px 15px;
+            }
+
+            .content-table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+            .content-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .content-table tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+
+            .content-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+            .text_title{
+                text-align: center;
+            }
         </style>
-
     </head>
     <body>
-        <div class="nav">
-            <h1 class="navbar-brand mx-auto">USER INFO</h1>
-        </div>
-        <div class="info-container">
-            <button><a href="/CICOHealth/view/admin/addNew.jsp">Add</a></button>
-            <div class="info-table">            
-                <table id="info-table" class="table table-striped table-hover display">
-                    <thead>
-                        <tr style="background-color:  greenyellow">
-                            <th scope="col">UserID</th>
-                            <th scope="col">First name</th>
-                            <th scope="col">Last name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone number</th>
-                            <th scope="col">Actions</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% UserDao dao = new UserDao();
-                            List<User> users = dao.getAllUser();
-                            for (User list : users) {%>
-                        <tr>
-                            <td><%= list.getUserID()%></td>
-                            <td><%= list.getFirstName()%></td>
-                            <td><%= list.getLastName()%></td>
-                            <td><%= list.getEmail()%></td>
-                            <td><%= list.getPhone()%></td>
-                            <td>
-                                <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/user/profile/user-info?userid=<%= list.getUserID()%>"></a> 
-                                <c:set var = "us" scope = "session" value = "<%= list.getUserID()%>"/>
-                                <c:set var = "banned" scope = "session" value = "<%= list.isIsBanned()%>"/>
-                                <c:if test = "${banned}">
-                                    <a  class="unbaned" id="banned" data-value ="1" 
-                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>    
-                                    </c:if>
-                                    <c:if test = "${!banned}">
-                                    <a  class="banned" id="banned" data-value ="1" 
-                                        onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban"></i></a>   
-                                    </c:if>                           
-                            </td>
-                        </tr>
-                        <% }%>                       
-                    </tbody>
-                </table>
+        <%@ include file="/view/general/navbar.jsp" %>
+        <div class="container" style=" margin: auto;
+             padding-top: 6rem;">
+            <div >
+                <h1 class="text_title" >USER INFO</h1> 
             </div>
+            <div class="row  justify-content-md-center">  
+                <div class="col-md-auto">
+                    <div class="content">
+                        <button name="submit" class="btn btn-success" id="add-button" >
+                            Add Account
+                        </button>
+                        <table class="content-table" id ="users-table">
+                            <thead>
+                                <tr>
+                                    <th>UserID</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Email</th>
+                                    <th>Phone number</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% UserDao dao = new UserDao();
+                                    List<User> users = dao.getAllUser();
+                                    for (User list : users) {%>
+                                <tr class="table-active">
+                                    <td><%= list.getUserID()%></td>
+                                    <td><%= list.getFirstName()%></td>
+                                    <td><%= list.getLastName()%></td>
+                                    <td><%= list.getEmail()%></td>
+                                    <td><%= list.getPhone()%></td>
+                                    <td>
+                                        <a class="fa-solid fa-pen-to-square edit-button" style="color: blue;" href="/CICOHealth/user/profile/user-info?userid=<%= list.getUserID()%>"></a> 
+                                        <c:set var = "us" scope = "session" value = "<%= list.getUserID()%>"/>
+                                        <c:set var = "banned" scope = "session" value = "<%= list.isIsBanned()%>"/>
+                                        <c:if test = "${banned}">
+                                            <a  class="unbaned" id="banned" data-value ="1" 
+                                                onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban "></i></a>    
+                                            </c:if>
+                                            <c:if test = "${!banned}">
+                                            <a  class="banned" id="banned" data-value ="1" 
+                                                onclick ="changeStatus('<%= list.getUserID()%>', this)"><i class="fa-solid fa-ban "></i></a>   
+                                            </c:if>                           
+                                    </td>
+                                </tr>
+                                <% }%> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="wrapper">
+            <footer>
+                <div class="row block-footer">
+                    <div class="offset-1 col-3 footer-content">
+                        <span class="school-name"
+                              ><strong>FPT University Can Tho</strong></span
+                        >
+                        <p>600, Nguyen Van Cu, An Binh, Ninh Kieu, Can Tho</p>
+                        <p>Phone: (0292) 360 1996</p>
+                        <p>Email: fptu.cantho@fe.edu.vn</p>
+                    </div>
+                    <div class="offset-1 col-3 footer-content">
+                        <p>Le Duy Khanh</p>
+                        <p>Pham Nhat Quang</p>
+                        <p>Vo Hong Quan</p>
+                        <p>Huynh Gia Khiem</p>
+                        <p>Pham Tan Phat</p>
+                    </div>
+                    <div class="col-3 footer-content">
+                        <p>
+                            © 2023 All rights reserved. Our website services, content, and
+                            products are for informational purposes only. Nutrition does not
+                            provide medical advice, diagnosis, or treatment.
+                        </p>
+                    </div>
+                </div>
+            </footer>
         </div>
         <script>
+
             function changeStatus(userId, sel) {
                 var obj = $(sel).css('color');
                 if (obj === 'rgb(255, 0, 0)') {
@@ -124,5 +205,8 @@
                 }
             }
         </script>
+        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/scripts/popup.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/scripts/adduser.js"></script>
     </body>
 </html>
