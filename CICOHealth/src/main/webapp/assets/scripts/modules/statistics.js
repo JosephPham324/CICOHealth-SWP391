@@ -1,19 +1,44 @@
 /**
- * Fetch statistics data from server
- * @param {String} type Type of data to fetch
- * @param {Date string} startDate Start date of statistics period
- * @param {Date string} endDate End date of statistics period
- * @returns {Object} Data object
- * Object structure:
- * - nutrition: {Object} Nutrition data
- *   {cardioLogs:[Object array], mealLogs:[Object array]}
- *   The cardio logs will contain date, duration, and calories burned
- *   The meal logs will contain date and nutrition data: calories, protein, carbs, fat
- * - exercise (resistance and cardio): {Object} Exercise data
- *   {logs:[ExerciseLog Object array]}
- * - healthInfo: {Object} Health info data
- * @throws {Error} If type is invalid
+ * Fetches data of the specified type within the specified date range from the server.
  *
+ * @param {string} type - The type of data to fetch (e.g. "nutrition", "exercise/resistance").
+ * @param {string} startDate - The start date of the range in "YYYY-MM-DD" format.
+ * @param {string} endDate - The end date of the range in "YYYY-MM-DD" format.
+ * @returns {(Promise<
+ * {
+ *  cardioLogs: Array<{
+ *    logDate: string,
+ *    timeSpent: number,
+ *    caloriesBurnt: number
+ *  }>,
+ *  mealLogs: Array<{
+ *    logDate: string,
+ *    nutrition: [number, number, number, number]
+ *  }>
+ * }
+ * |
+ * {
+ *   logs: Array<{
+ *     exerciseLogID: string,
+ *     logTime: string,
+ *     logDate: string,
+ *     set: number,
+ *     rep: string,
+ *     weight: string,
+ *     timeSpent: number,
+ *     logNote: string,
+ *     exercise: {
+ *       exerciseID: string,
+ *       exerciseName: string,
+ *       exerciseDescription: string,
+ *       caloriesPerHour: number
+ *     },
+ *     caloriesBurnt: number
+ *   }>
+ * }>)} For "nutrition" type, returns an object with "cardioLogs" and "mealLogs" properties,
+ * each of which is an array of logs. For "exercise/resistance" and "exercise/cardio" types, returns an object with
+ * a "logs" property, which is an array of logs.
+ * @throws {Error} If the specified type is not allowed.
  */
 async function fetchData(type, startDate, endDate) {
   let allowedTypes = [
@@ -38,7 +63,7 @@ async function fetchData(type, startDate, endDate) {
   //Return data
   return responseData;
 }
-
+fetch
 function analyzeLogDataByDate(logsCollection, attribute) {
   let datePrevious = null;
   let dateCurrent = null;
@@ -66,95 +91,100 @@ function analyzeLogDataByDate(logsCollection, attribute) {
   }
   return dateData;
 }
+fet;
 //----------------------------------------------------------------------------------------------
 /*----------------Nutrition Statistics-----------------------*/
-function calculateNutritionStatistics(data) {
-  let dailyStats = {};
+/**
+ * Calculates daily statistics for the given exercise and meal logs.
+ *
+ * @param {Object} logs - The logs to calculate statistics for, in the format:
+ *                        {
+ *                          "cardioLogs": [{
+ *                            "logDate": "Feb 26, 2023",
+ *                            "timeSpent": 60,
+ *                            "caloriesBurnt": 300.0
+ *                          }, ...],
+ *                          "mealLogs": [{
+ *                            "logDate": "Feb 27, 2023",
+ *                            "nutrition": [2.9098305084745766, 0.7057627118644068, 51.818474576271186, 202.1]
+ *                          }, ...]
+ *                        }
+ * @return {Array} - An array of daily statistics objects in the format:
+ *                   [{
+ *                     "date": "Feb 26, 2023",
+ *                     "caloriesBurnt": 300.0,
+ *                     "caloriesConsumed": 3076.92,
+ *                     "proteinConsumed": 107.33,
+ *                     "fatConsumed": 45.44,
+ *                     "carbsConsumed": 321.08,
+ *                     "netCalories": -2776.92
+ *                   }, ...]
+ */
+function calculateNutritionStatistics(logs) {
+  // Initialize an empty object to store the daily statistics
+  const dailyStats = {};
 
-  data.cardioLogs.forEach((log) => {
-    if (!dailyStats[log.logDate]) {
-      dailyStats[log.logDate] = {
-        date: log.logDate,
+  // Loop through each cardio log
+  logs.cardioLogs.forEach((log) => {
+    // Get the log date
+    const date = log.logDate;
+
+    // If there is no daily stats object for this date, create one
+    if (!dailyStats[date]) {
+      dailyStats[date] = {
+        date,
         caloriesBurnt: 0,
         caloriesConsumed: 0,
         proteinConsumed: 0,
         fatConsumed: 0,
         carbsConsumed: 0,
-        netCalories: 0,
       };
     }
-    dailyStats[log.logDate].caloriesBurnt += log.caloriesBurnt;
+
+    // Add the calories burnt to the daily stats
+    dailyStats[date].caloriesBurnt += log.caloriesBurnt;
   });
 
-  data.mealLogs.forEach((log) => {
-    if (!dailyStats[log.logDate]) {
-      dailyStats[log.logDate] = {
-        date: log.logDate,
+  // Loop through each meal log
+  logs.mealLogs.forEach((log) => {
+    // Get the log date
+    const date = log.logDate;
+
+    // If there is no daily stats object for this date, create one
+    if (!dailyStats[date]) {
+      dailyStats[date] = {
+        date,
         caloriesBurnt: 0,
         caloriesConsumed: 0,
         proteinConsumed: 0,
         fatConsumed: 0,
         carbsConsumed: 0,
-        netCalories: 0,
       };
     }
-    dailyStats[log.logDate].caloriesConsumed += log.nutrition[3];
-    dailyStats[log.logDate].proteinConsumed += log.nutrition[0];
-    dailyStats[log.logDate].fatConsumed += log.nutrition[1];
-    dailyStats[log.logDate].carbsConsumed += log.nutrition[2];
+
+    // Add the calories and macronutrients consumed to the daily stats
+    const [protein, fat, carbs, calories] = log.nutrition;
+    dailyStats[date].caloriesConsumed += calories;
+    dailyStats[date].proteinConsumed += protein;
+    dailyStats[date].fatConsumed += fat;
+    dailyStats[date].carbsConsumed += carbs;
   });
 
-  for (const date in dailyStats) {
-    const netCalories =
-      dailyStats[date].caloriesConsumed - dailyStats[date].caloriesBurnt;
-    dailyStats[date].netCalories = netCalories;
-  }
+  // Convert the daily stats object to an array
+  const dailyStatsArray = Object.values(dailyStats);
 
-  return Object.values(dailyStats);
-  // const result = {};
+  // Calculate the net calories for each daily stat
+  dailyStatsArray.forEach((stat) => {
+    stat.netCalories = stat.caloriesConsumed - stat.caloriesBurnt;
+  });
 
-  // // Calculate daily calories burnt from exercise
-  // data.cardioLogs.forEach((log) => {
-  //   const date = log.logDate;
-  //   const caloriesBurnt = log.caloriesBurnt;
-  //   if (!result[date]) {
-  //     result[date] = {
-  //       caloriesBurnt: 0,
-  //       caloriesConsumed: 0,
-  //       proteinConsumed: 0,
-  //       fatConsumed: 0,
-  //       carbsConsumed: 0,
-  //     };
-  //   }
-  //   result[date].caloriesBurnt += caloriesBurnt;
-  // });
-
-  // // Calculate daily calories consumed and macronutrients consumed
-  // data.mealLogs.forEach((log) => {
-  //   const date = log.logDate;
-  //   const nutrition = log.nutrition;
-  //   if (!result[date]) {
-  //     result[date] = {
-  //       caloriesBurnt: 0,
-  //       caloriesConsumed: 0,
-  //       proteinConsumed: 0,
-  //       fatConsumed: 0,
-  //       carbsConsumed: 0,
-  //     };
-  //   }
-  //   result[date].caloriesConsumed += nutrition[3];
-  //   result[date].proteinConsumed += nutrition[0];
-  //   result[date].fatConsumed += nutrition[1];
-  //   result[date].carbsConsumed += nutrition[2];
-  // });
-
-  // return result;
+  // Return the daily stats array
+  return dailyStatsArray;
 }
 
 //----------------------------------------------------------------------------------------------
 /*----------------Exercise statistics-----------------------*/
 //----------------Utility functions
-
 /**
  * This function returns the start and end dates for a given week in a given year.
  * @param {number} year - The year for the week

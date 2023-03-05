@@ -51,10 +51,11 @@
         const endDate = document.getElementById("endDate").value;
         console.log(startDate);
         console.log(endDate);
-        let data = await fetchData("nutrition", startDate, endDate);
-        console.log(data.cardioLogs);
-        console.log(data.mealLogs);
-        console.log(calculateNutritionStatistics(data));
+        let data = await fetchData("exercise/resistance", startDate, endDate);
+        console.log(JSON.stringify(data));
+        // console.log(data.cardioLogs);
+        // console.log(data.mealLogs);
+        // console.log(calculateNutritionStatistics(data));
         // console.log(calculateDailyCardioStats(data.logs));
         // console.log(calculateCardioExerciseStats(data.logs));
       }
