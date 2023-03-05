@@ -27,6 +27,7 @@
                 .error {
                     color: red;
                     font-style: initial;
+                    font-weight: bold;
                 }
 
                 input {
