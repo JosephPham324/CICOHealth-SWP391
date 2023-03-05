@@ -8,6 +8,7 @@ import bean.ExerciseLog;
 import bean.MealLog;
 import bean.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dao.ExerciseLogDao;
 import dao.MealLogDao;
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class StatisticsController extends HttpServlet {
         if (URI.endsWith("/data")) {
             String responseData = defaultResponseData();
             Object user = request.getSession().getAttribute("user");
-            String userID = ((User) user).getUserID();
+            String userID = "USME000001";
             String startDate = request.getParameter("start");
             String endDate = request.getParameter("end");
             Gson gson = new Gson();
@@ -98,29 +99,27 @@ public class StatisticsController extends HttpServlet {
                     printResponseJSON(response, defaultResponseData());
                 }
             }
-            
+
             //Nutrition stats (meal and cardio)
             if (URI.matches(".*/statistics/nutrition(/.*)*")) {
                 try {
                     ArrayList<ExerciseLog> queryExercise = new ExerciseLogDao().getLogsOfDateRange(userID, "CA", startDate, endDate);
                     ArrayList<MealLog> queryMeal = new MealLogDao().getLogsOfDateRange(userID, startDate, endDate);
+                    gson = new GsonBuilder()
+                            .excludeFieldsWithoutExposeAnnotation()
+                            .create();
                     responseData = "{\"cardioLogs\":" + gson.toJson(queryExercise) + ","
-                            + "\"mealLogs\":"+ gson.toJson(queryMeal) 
+                            + "\"mealLogs\":" + gson.toJson(queryMeal)
                             + "}";
                     printResponseJSON(response, responseData);
+                    return;
                 } catch (SQLException | IOException ex) {
                     Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
                     printResponseJSON(response, defaultResponseData());
                 }
             }
         }
-//        if (URI.matches(".*/exercise-logs/cardio/*.*")) {
-//            request.getRequestDispatcher("/view/user/exerciseLogs/cardio.jsp").forward(request, response);
-//            return;
-//        } else if (URI.matches(".*/exercise-logs/resistance/*.*")) {
-//            request.getRequestDispatcher("/view/user/exerciseLogs/resistance.jsp").forward(request, response);
-//            return;
-//        }
+        request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
     }
 
     private void printResponseJSON(HttpServletResponse response, String json) throws IOException {

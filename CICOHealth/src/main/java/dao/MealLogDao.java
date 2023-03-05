@@ -173,8 +173,9 @@ public class MealLogDao extends BaseDao {
                 String mealLogID = resultSet.getString("mealLogID");
                 String mealLogName = resultSet.getString("mealLogName");
                 Date logTime = resultSet.getTime("logTime");
+                Date logDate = resultSet.getDate("logDate");
                 String logNote = resultSet.getString("logNote");
-                MealLog log = new MealLog(mealLogID, mealLogName, logTime, logTime, logNote);
+                MealLog log = new MealLog(mealLogID, mealLogName, logTime, logDate, logNote);
                 ArrayList<MealLogItem> logItems = new MealLogItemDao().getLogItems(mealLogID);
                 log.setFoods(logItems);
                 result.add(log);
