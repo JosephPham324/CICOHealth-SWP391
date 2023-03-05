@@ -63,7 +63,6 @@ async function fetchData(type, startDate, endDate) {
   //Return data
   return responseData;
 }
-fetch
 function analyzeLogDataByDate(logsCollection, attribute) {
   let datePrevious = null;
   let dateCurrent = null;
@@ -91,7 +90,6 @@ function analyzeLogDataByDate(logsCollection, attribute) {
   }
   return dateData;
 }
-fet;
 //----------------------------------------------------------------------------------------------
 /*----------------Nutrition Statistics-----------------------*/
 /**
