@@ -94,6 +94,7 @@ public class StatisticsController extends HttpServlet {
                     ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDateRange(userID, "RE", startDate, endDate);
                     responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
                     printResponseJSON(response, responseData);
+                    return;
                 } catch (SQLException | IOException ex) {
                     Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
                     printResponseJSON(response, defaultResponseData());
@@ -118,6 +119,9 @@ public class StatisticsController extends HttpServlet {
                     printResponseJSON(response, defaultResponseData());
                 }
             }
+        }
+        if (URI.endsWith("nutrition")){
+                    request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
         }
         request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
     }

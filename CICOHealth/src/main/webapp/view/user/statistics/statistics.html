@@ -8,27 +8,31 @@
   </head>
   <body>
     <main>
-      <div class="form-group">
-        <!--Start date picker-->
-        <label for="startDate">Start Date</label>
-        <input
-          type="date"
-          class="form-control"
-          id="startDate"
-          name="startDate"
-          required
-        />
-        <!--End date picker-->
-        <label for="endDate">End Date</label>
-        <input
-          type="date"
-          class="form-control"
-          id="endDate"
-          name="endDate"
-          required
-        />
+      <div class="choices">
+        <label for="display-type">Display Type:</label>
+        <select id="display-type">
+          <option value="table">Table</option>
+          <option value="chart">Chart</option>
+        </select>
+
+        <label for="data">Data:</label>
+        <select id="data">
+          <option value="data-1">Data 1</option>
+          <option value="data-2">Data 2</option>
+          <option value="data-3">Data 3</option>
+        </select>
+
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" />
+
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" />
       </div>
-      <canvas id="cardioChart"></canvas>
+
+      <div id="statistics-container">
+        <div class="statistics-table"></div>
+        <div class="statistics-chart"></div>
+      </div>
     </main>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
@@ -37,18 +41,18 @@
         fetchData,
         calculateDailyCardioStats,
         calculateCardioExerciseStats,
-        calculateNutritionStatistics
+        calculateNutritionStatistics,
       } from "/CICOHealth/assets/scripts/modules/statistics.js";
       // const statistics = new Statistics();
       //Start date picker
-      const startDate = document.getElementById("startDate");
+      const startDate = document.getElementById("start-date");
       //End date picker
-      const endDate = document.getElementById("endDate");
+      const endDate = document.getElementById("end-date");
 
       //Take both dates
       async function fetchDate() {
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
+        const startDate = document.getElementById("start-date").value;
+        const endDate = document.getElementById("end-date").value;
         console.log(startDate);
         console.log(endDate);
         let data = await fetchData("exercise/resistance", startDate, endDate);
