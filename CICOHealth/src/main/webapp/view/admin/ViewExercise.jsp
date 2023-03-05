@@ -17,6 +17,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/exercisemanagement.css" />
         <title>View Exercise</title>
+        <style>
+          .error {
+            color: red;
+            font-style: initial;
+          }
+        </style>
       </head>
 
       <body>

@@ -875,7 +875,7 @@
 
                 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
-                <script src="/CICOHealth/assets/scripts/validateform.js"></script>
+                <script src="/CICOHealth/assets/scripts/validate.js"></script>
                 <!--Sending request-->
                 <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
                 <!--Behaviour script-->
