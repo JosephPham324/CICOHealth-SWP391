@@ -3,9 +3,17 @@
  * @param {String} type Type of data to fetch
  * @param {Date string} startDate Start date of statistics period
  * @param {Date string} endDate End date of statistics period
- * @param {Function} successCallback Function to call on success
- * @param {Function} errorCallback Function to call on error
  * @returns {Object} Data object
+ * Object structure:
+ * - nutrition: {Object} Nutrition data
+ *   {cardioLogs:[Object array], mealLogs:[Object array]}
+ *   The cardio logs will contain date, duration, and calories burned
+ *   The meal logs will contain date and nutrition data: calories, protein, carbs, fat
+ * - exercise (resistance and cardio): {Object} Exercise data
+ *   {logs:[ExerciseLog Object array]}
+ * - healthInfo: {Object} Health info data
+ * @throws {Error} If type is invalid
+ *
  */
 async function fetchData(type, startDate, endDate) {
   let allowedTypes = [
@@ -59,6 +67,91 @@ function analyzeLogDataByDate(logsCollection, attribute) {
   return dateData;
 }
 //----------------------------------------------------------------------------------------------
+/*----------------Nutrition Statistics-----------------------*/
+function calculateNutritionStatistics(data) {
+  let dailyStats = {};
+
+  data.cardioLogs.forEach((log) => {
+    if (!dailyStats[log.logDate]) {
+      dailyStats[log.logDate] = {
+        date: log.logDate,
+        caloriesBurnt: 0,
+        caloriesConsumed: 0,
+        proteinConsumed: 0,
+        fatConsumed: 0,
+        carbsConsumed: 0,
+        netCalories: 0,
+      };
+    }
+    dailyStats[log.logDate].caloriesBurnt += log.caloriesBurnt;
+  });
+
+  data.mealLogs.forEach((log) => {
+    if (!dailyStats[log.logDate]) {
+      dailyStats[log.logDate] = {
+        date: log.logDate,
+        caloriesBurnt: 0,
+        caloriesConsumed: 0,
+        proteinConsumed: 0,
+        fatConsumed: 0,
+        carbsConsumed: 0,
+        netCalories: 0,
+      };
+    }
+    dailyStats[log.logDate].caloriesConsumed += log.nutrition[3];
+    dailyStats[log.logDate].proteinConsumed += log.nutrition[0];
+    dailyStats[log.logDate].fatConsumed += log.nutrition[1];
+    dailyStats[log.logDate].carbsConsumed += log.nutrition[2];
+  });
+
+  for (const date in dailyStats) {
+    const netCalories =
+      dailyStats[date].caloriesConsumed - dailyStats[date].caloriesBurnt;
+    dailyStats[date].netCalories = netCalories;
+  }
+
+  return Object.values(dailyStats);
+  // const result = {};
+
+  // // Calculate daily calories burnt from exercise
+  // data.cardioLogs.forEach((log) => {
+  //   const date = log.logDate;
+  //   const caloriesBurnt = log.caloriesBurnt;
+  //   if (!result[date]) {
+  //     result[date] = {
+  //       caloriesBurnt: 0,
+  //       caloriesConsumed: 0,
+  //       proteinConsumed: 0,
+  //       fatConsumed: 0,
+  //       carbsConsumed: 0,
+  //     };
+  //   }
+  //   result[date].caloriesBurnt += caloriesBurnt;
+  // });
+
+  // // Calculate daily calories consumed and macronutrients consumed
+  // data.mealLogs.forEach((log) => {
+  //   const date = log.logDate;
+  //   const nutrition = log.nutrition;
+  //   if (!result[date]) {
+  //     result[date] = {
+  //       caloriesBurnt: 0,
+  //       caloriesConsumed: 0,
+  //       proteinConsumed: 0,
+  //       fatConsumed: 0,
+  //       carbsConsumed: 0,
+  //     };
+  //   }
+  //   result[date].caloriesConsumed += nutrition[3];
+  //   result[date].proteinConsumed += nutrition[0];
+  //   result[date].fatConsumed += nutrition[1];
+  //   result[date].carbsConsumed += nutrition[2];
+  // });
+
+  // return result;
+}
+
+//----------------------------------------------------------------------------------------------
 /*----------------Exercise statistics-----------------------*/
 //----------------Utility functions
 
@@ -67,7 +160,7 @@ function analyzeLogDataByDate(logsCollection, attribute) {
  * @param {number} year - The year for the week
  * @param {number} weekNumber - The week number (1-52)
  * @returns {Object} An object containing the start and end dates for the week
- */  
+ */
 function getWeekEndpoints(year, weekNumber) {
   const januaryFirst = new Date(year, 0, 1);
   const dayOfWeek = januaryFirst.getDay();
@@ -396,8 +489,12 @@ function calculateCardioExerciseStats(exerciseLogs) {
     exercises[exerciseName].totalTimeSpent += timeSpent;
     exercises[exerciseName].totalKcalBurnt += caloriesBurned;
     exercises[exerciseName].frequency++;
-    exercises[exerciseName].averageTimeSpent = exercises[exerciseName].totalTimeSpent / exercises[exerciseName].frequency;
-    exercises[exerciseName].averageKcalBurnt = exercises[exerciseName].totalKcalBurnt / exercises[exerciseName].frequency;
+    exercises[exerciseName].averageTimeSpent =
+      exercises[exerciseName].totalTimeSpent /
+      exercises[exerciseName].frequency;
+    exercises[exerciseName].averageKcalBurnt =
+      exercises[exerciseName].totalKcalBurnt /
+      exercises[exerciseName].frequency;
 
     // Update max time and max kcal if necessary
     if (timeSpent > exercises[exerciseName].maxTimeSpent) {
@@ -420,5 +517,5 @@ export {
   calculateResistanceExerciseStats,
   calculateDailyCardioStats,
   calculateCardioExerciseStats,
+  calculateNutritionStatistics,
 };
-

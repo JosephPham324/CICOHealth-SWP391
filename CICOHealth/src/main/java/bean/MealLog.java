@@ -4,6 +4,7 @@
  */
 package bean;
 
+import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,6 +59,7 @@ public class MealLog implements Serializable {
     @NotNull
     @Column(name = "logDate")
     @Temporal(TemporalType.DATE)
+    @Expose
     private Date logDate;
     @Basic(optional = false)
     @NotNull
@@ -70,6 +72,7 @@ public class MealLog implements Serializable {
     private String userID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mealLogID")
     private ArrayList<MealLogItem> foods;
+    @Expose
     private Double[] nutrition;
 
     public MealLog() {

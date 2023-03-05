@@ -36,7 +36,8 @@
       import {
         fetchData,
         calculateDailyCardioStats,
-        calculateCardioExerciseStats
+        calculateCardioExerciseStats,
+        calculateNutritionStatistics
       } from "/CICOHealth/assets/scripts/modules/statistics.js";
       // const statistics = new Statistics();
       //Start date picker
@@ -50,10 +51,12 @@
         const endDate = document.getElementById("endDate").value;
         console.log(startDate);
         console.log(endDate);
-        let data = await fetchData("exercise/cardio", startDate, endDate);
-        console.log(data.logs);
-        console.log(calculateDailyCardioStats(data.logs));
-        console.log(calculateCardioExerciseStats(data.logs));
+        let data = await fetchData("nutrition", startDate, endDate);
+        console.log(data.cardioLogs);
+        console.log(data.mealLogs);
+        console.log(calculateNutritionStatistics(data));
+        // console.log(calculateDailyCardioStats(data.logs));
+        // console.log(calculateCardioExerciseStats(data.logs));
       }
       //Add event listener to both date pickers
       startDate.addEventListener("change", fetchDate);

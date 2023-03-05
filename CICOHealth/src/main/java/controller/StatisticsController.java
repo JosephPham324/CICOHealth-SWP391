@@ -8,6 +8,7 @@ import bean.ExerciseLog;
 import bean.MealLog;
 import bean.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dao.ExerciseLogDao;
 import dao.MealLogDao;
 import java.io.IOException;
@@ -98,14 +99,17 @@ public class StatisticsController extends HttpServlet {
                     printResponseJSON(response, defaultResponseData());
                 }
             }
-            
+
             //Nutrition stats (meal and cardio)
             if (URI.matches(".*/statistics/nutrition(/.*)*")) {
                 try {
                     ArrayList<ExerciseLog> queryExercise = new ExerciseLogDao().getLogsOfDateRange(userID, "CA", startDate, endDate);
                     ArrayList<MealLog> queryMeal = new MealLogDao().getLogsOfDateRange(userID, startDate, endDate);
+                    gson = new GsonBuilder()
+                            .excludeFieldsWithoutExposeAnnotation()
+                            .create();
                     responseData = "{\"cardioLogs\":" + gson.toJson(queryExercise) + ","
-                            + "\"mealLogs\":"+ gson.toJson(queryMeal) 
+                            + "\"mealLogs\":" + gson.toJson(queryMeal)
                             + "}";
                     printResponseJSON(response, responseData);
                     return;

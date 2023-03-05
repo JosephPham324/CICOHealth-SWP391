@@ -194,6 +194,7 @@ public class ExerciseLogDao extends BaseDao {
                 log.setWeight(resultSet.getString("weight"));
                 log.setTimeSpent(resultSet.getInt("timeSpent"));
                 log.setLogNote(resultSet.getString("logNote"));
+                log.setCaloriesBurnt();
                 result.add(log);
             }
         } finally {
