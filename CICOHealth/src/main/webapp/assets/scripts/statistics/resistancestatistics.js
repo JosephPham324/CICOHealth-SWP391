@@ -110,14 +110,12 @@ import {
     //fetch data
     let data = await fetchDate("nutrition");
     let analyzedData = calculateNutritionStatistics(data);
-    console.log(JSON.stringify(analyzedData));
     if (displayType == "table") {
       fillStatisticsTable(analyzedData);
     } else if (displayType == "chart") {
       let chart = document.getElementById("statistics-chart");
       switch (dataType) {
         case "Macronutrients":
-          console.log("hiHi");
           displayedChart = displayMacronutrientsChart(analyzedData, chart);
           break;
         case "Calories":

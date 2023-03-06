@@ -94,7 +94,7 @@ function fillStatisticsTable(tableType, analyzedNutritionData) {
 
 let displayDataTypes = {
   table: ["Exercises"],
-  chart: ["Calories and time", "Exercise"],
+  chart: ["Calories and time", "Exercises Performance", "Exercise Frequency"],
 };
 
 //Add event listener to display type selector
@@ -134,6 +134,7 @@ async function displayData() {
   let data = await fetchDate("nutrition");
   if (displayType == "table") {
     let analyzedData = await calculateCardioExerciseStats(data.logs);
+    console.log(JSON.stringify(analyzedData));
     fillStatisticsTable(dataType, analyzedData);
   } else if (displayType == "chart") {
     let canvas = document.getElementById("statistics-chart");
@@ -142,9 +143,15 @@ async function displayData() {
       case "Calories and time":
         displayedChart = displayCaloriesAndTimeChart(canvas, analyzedData);
         break;
-      case "Exercise":
-        displayedChart = displayExerciseChart(canvas, analyzedData);
+      case "Exercises Performance":
+        displayedChart = displayExercisePerformanceChart(canvas, analyzedData);
         break;
+      case "Exercise Frequency":
+        analyzedData = await calculateCardioExerciseStats(data.logs);
+        displayedChart = displayExerciseFrequencyChart(canvas, analyzedData);
+        break;
+      default:
+        displayedChart = displayCaloriesAndTimeChart(canvas, analyzedData);
     }
   }
 }
@@ -241,7 +248,7 @@ function displayCaloriesAndTimeChart(canvas, data) {
 }
 //----------------------------------------------------------------------------------------------
 
-function displayExerciseChart(canvas, data) {
+function displayExercisePerformanceChart(canvas, data) {
   //Check if chart already exists
   if (displayedChart) {
     displayedChart.destroy();
@@ -327,5 +334,76 @@ function displayExerciseChart(canvas, data) {
 
   const ctx = canvas.getContext("2d");
   const chart = new Chart(ctx, config);
+  return chart;
+}
+//----------------------------------------------------------------------------------------------
+
+function displayExerciseFrequencyChart(canvas, data) {
+  //Check if chart already exists
+  if (displayedChart) {
+    displayedChart.destroy();
+  }
+  console.log(data)
+  const exerciseNames = data.map((exercise) => exercise.exerciseName);
+  const exerciseFrequencies = {};
+  
+  exerciseNames.forEach((name) => {
+    exerciseFrequencies[name] = data.find((exercise) => exercise.exerciseName === name).frequency;
+  });
+
+  const chartData = {
+    labels: Object.keys(exerciseFrequencies),
+    datasets: [
+      {
+        label: "Exercise Frequencies",
+        data: Object.values(exerciseFrequencies),
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Exercise Frequencies",
+      },
+      tooltip: {
+        mode: "index",
+      },
+    },
+    interaction: {
+      mode: "nearest",
+      axis: "x",
+      intersect: false,
+    },
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "Frequency",
+        },
+        ticks: {
+          stepSize: 1,
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Exercise Name",
+        },
+      },
+    },
+  };
+
+  const chartConfig = {
+    type: "bar",
+    data: chartData,
+    options: chartOptions,
+  };
+  const ctx = canvas.getContext("2d");
+  const chart = new Chart(ctx, chartConfig);
   return chart;
 }
