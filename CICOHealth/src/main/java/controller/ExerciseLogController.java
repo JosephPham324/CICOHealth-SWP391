@@ -7,6 +7,8 @@ package controller;
 import bean.ExerciseLog;
 import bean.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dao.ExerciseLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +39,7 @@ public class ExerciseLogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -126,6 +128,10 @@ public class ExerciseLogController extends HttpServlet {
             doDelete(request, response);
             return;
         }
+        if (method != null && method.equalsIgnoreCase("put")) {
+            doPut(request, response);
+            return;
+        }
         ExerciseLog log;
         Gson gson = new Gson();
         String exerciseParam = request.getParameter("exercise");
@@ -145,7 +151,51 @@ public class ExerciseLogController extends HttpServlet {
             return;
         }
     }
-    
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String check = request.getParameter("check");
+        if (check != null && check.equalsIgnoreCase("cardio")) {
+            ExerciseLog log;
+            Gson gson = new Gson();
+            String exerciseParam = request.getParameter("exerciseLog");
+            JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
+            gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            log = gson.fromJson(exerciseParam, ExerciseLog.class);
+            User user = (User) request.getSession().getAttribute("user");
+            System.out.println(exerciseParam);
+            log.setUserID(user.getUserID());
+//        response.getWriter().write(log.toString());
+            try {
+                new ExerciseLogDao().updateExerciseLogCardio(log);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/cardio?updatelog=success");
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/cardio?update=failure");
+            }
+
+        }
+        if (check != null && check.equalsIgnoreCase("resistance")) {
+            ExerciseLog log;
+            Gson gson = new Gson();
+            String exerciseParam = request.getParameter("exerciseLog");
+            JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
+            gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            log = gson.fromJson(exerciseParam, ExerciseLog.class);
+            User user = (User) request.getSession().getAttribute("user");
+            System.out.println(exerciseParam);
+            log.setUserID(user.getUserID());
+            try {
+                new ExerciseLogDao().updateExerciseLogResitance(log);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?updatelog=success");
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?update=failure");
+            }
+        }
+
+    }
+
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -157,7 +207,6 @@ public class ExerciseLogController extends HttpServlet {
             Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     public void createCardioLog(HttpServletRequest request, HttpServletResponse response) {
     }

@@ -1,0 +1,31 @@
+.history-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.history-container h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.history-items-container {
+  height: 200px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.history-container{
+    align-content: center;
+}
+.history-items-container{
+    background: #96be25;
+}
+
+.history-items{
+    text-decoration: none;
+    color: black;
+}

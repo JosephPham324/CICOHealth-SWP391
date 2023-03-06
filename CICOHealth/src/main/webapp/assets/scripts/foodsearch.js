@@ -215,9 +215,11 @@ function changeButtonText(searchResult, state) {
   switch (state) {
     case "add":
       button.innerText = "Remove";
+      button.style.backgroundColor = "red";
       break;
     case "remove":
       button.innerText = "Add";
+      button.style.backgroundColor = "";
       break;
     default:
       break;
@@ -379,7 +381,7 @@ function displayMealForm() {
   // Sum up the nutrition information of the selected foods
   let mealSum = calculateMealSum(selectedFoods);
   let rowMealSumHTML = `
-  <tr>
+  <tr class="sum">
     <td>Sum</td>
     <td>${mealSum[0].toFixed(0)}</td>
     <td>${mealSum[1].toFixed(1)}</td>
@@ -434,7 +436,7 @@ function displayMealForm() {
   mealForm.innerHTML += `
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+      <button name="submit" type="submit" class="btn btn-submit">Submit</button>
     </div>
   </div>
   `;

@@ -18,6 +18,8 @@
 
 .datepicker-container {
   display: flex;
+  flex-direction: row;
+  align-items: normal;
   justify-content: center;
 }
 
@@ -55,8 +57,9 @@
 
 .table-body {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .total-content {
