@@ -17,12 +17,7 @@ async function fetchDate() {
   const startDate = document.getElementById("start-date").value;
   const endDate = document.getElementById("end-date").value;
   let data = await fetchData("exercise/resistance", startDate, endDate);
-  console.log(data);
   //Log the data after analyzing it with functions from statistics.js
-  console.log(JSON.stringify(calculateResistanceExerciseStats(data.logs)));
-  console.log(JSON.stringify(getDailyTopSets(data.logs)));
-  console.log(JSON.stringify(countExercisesPerWeek(data.logs)));
-  console.log(JSON.stringify(getExerciseFrequency(data.logs)));
   return await data;
 }
 //Add event listener to both date pickers
@@ -76,8 +71,6 @@ function fillStatisticsTable(analyzedData, tableType) {
   for (const exerciseName in analyzedData) {
     let row = document.createElement("tr");
     let record = analyzedData[exerciseName];
-    console.log(exerciseName)
-    console.log(record)
     let HTML = `
             <td>${++i}</td>
             <td>${exerciseName}</td>
@@ -96,7 +89,7 @@ function fillStatisticsTable(analyzedData, tableType) {
 
 let displayDataTypes = {
   table: ["Exercise Summary"],
-  chart: ["Macronutrients", "Calories"],
+  chart: ["Exercises Top Sets", "Exercises Frequency"],
 };
 
 //Add event listener to display type selector
@@ -118,7 +111,7 @@ document.getElementById("display-type").addEventListener("change", (e) => {
     document.querySelector(".statistics-table").style.display = "none";
     document.querySelector(".statistics-chart").style.display = "block";
   }
-  // displayData();
+  displayData();
 });
 //Add event listener to data type selector
 document.getElementById("data").addEventListener("change", displayData);
@@ -144,142 +137,112 @@ async function displayData() {
   } else if (displayType == "chart") {
     /* A switch statement that is checking the value of dataType and then calling the appropriate
     function. */
-    // let chart = document.getElementById("statistics-chart");
-    // switch (dataType) {
-    //   case "Macronutrients":
-    //     displayedChart = displayMacronutrientsChart(analyzedData, chart);
-    //     break;
-    //   case "Calories":
-    //     displayedChart = displayCaloriesChart(analyzedData, chart);
-    //     break;
-    //   default:
-    //     displayedChart = displayCaloriesChart(analyzedData, chart);
-    // }
+    let chart = document.getElementById("statistics-chart");
+    switch (dataType) {
+      case "Exercises Top Sets": {
+        let analyzedData = getDailyTopSets(data.logs);
+        let exerciseSelect = document.createElement("select");
+        exerciseSelect.id = "exercise-select";
+        let exerciseNames = analyzedData.map(
+          (exercise) => exercise.exerciseName
+        );
+        for (let exerciseName of exerciseNames) {
+          let option = document.createElement("option");
+          option.value = exerciseName;
+          option.innerHTML = exerciseName;
+          exerciseSelect.appendChild(option);
+        }
+        //Append exercise select after datatype selector
+        let dataTypeElement = document.getElementById("data");
+        dataTypeElement.parentNode.insertBefore(
+          exerciseSelect,
+          dataTypeElement.nextSibling
+        );
+        //Add event listener to exercise select
+        exerciseSelect.addEventListener("change", () => {
+          let exerciseName = exerciseSelect.value;
+          let exerciseData = analyzedData.find(
+            (exercise) => exercise.exerciseName == exerciseName
+          );
+          displayedChart = displayTopSetsChart(exerciseData, chart);
+        });
+        displayedChart = displayTopSetsChart(analyzedData[0], chart);
+        break;
+      }
+      case "Exercises Frequency": {
+        let analyzedData = countExercisesPerWeek(data.logs);
+        console.log(analyzedData);
+        // displayedChart = displayCaloriesChart(analyzedData, chart);
+        break;
+      }
+      default:
+      // displayedChart = displayCaloriesChart(analyzedData, chart);
+    }
   }
 }
 
 //----------------------------------------------------------------------------------------------
 //Chart display
+function displayTopSetsChart(exerciseData, canvas) {
+  // Check if chart already exists
+  if (displayedChart) {
+    displayedChart.destroy();
+  }
+  //Context
+  var ctx = canvas.getContext("2d");
 
-function displayMacronutrientsChart(analyzedData, chartElement) {
-  // Separate the macronutrient data
-  const proteinData = analyzedData.map((obj) => obj.proteinConsumed);
-  const fatData = analyzedData.map((obj) => obj.fatConsumed);
-  const carbsData = analyzedData.map((obj) => obj.carbsConsumed);
-  const dateLabels = analyzedData.map((obj) => obj.date);
+  // Extract the data for the scatter plot
 
-  // Create the chart using Chart.js
-  const ctx = chartElement.getContext("2d");
-  if (displayedChart) displayedChart.destroy();
-  const chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: dateLabels,
-      datasets: [
-        {
-          label: "Protein",
-          data: proteinData,
-          borderColor: "rgba(255, 99, 132, 1)",
-          backgroundColor: "rgba(255, 99, 132, 0.2)",
-          borderWidth: 1,
-          fill: true,
-        },
-        {
-          label: "Fat",
-          data: fatData,
-          borderColor: "rgba(54, 162, 235, 1)",
-          backgroundColor: "rgba(54, 162, 235, 0.2)",
-          borderWidth: 1,
-          fill: true,
-        },
-        {
-          label: "Carbs",
-          data: carbsData,
-          borderColor: "rgba(255, 206, 86, 1)",
-          backgroundColor: "rgba(255, 206, 86, 0.2)",
-          borderWidth: 1,
-          fill: true,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          stacked: true,
-        },
+  let labels = exerciseData.topSets.map((set) => set.date);
+  let dataWeight = exerciseData.topSets.map((set) => set.weight);
+  let dataReps = exerciseData.topSets.map((set) => set.rep);
+  console.log(exerciseData)
+  let data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Weight",
+        data: dataWeight,
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
-      responsive: true,
+      {
+        label: "Repetitions",
+        type:"line",
+        fill:true,
+        data: dataReps,
+        borderColor: "rgb(54, 162, 235)",
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        yAxisID: "y-axis-2",
+      },
+    ],
+  };
+  let chart = new Chart(ctx, {
+    type: "bar",
+    data: data,
+    options: {
       plugins: {
         title: {
           display: true,
-          text: "Macronutrients consumption trends",
+          text: exerciseData.exerciseName + " Top Sets",
         },
         tooltip: {
           mode: "index",
         },
       },
-    },
-  });
-  return chart;
-}
-
-function displayCaloriesChart(analyzedData, chartElement) {
-  // Separate the data
-  const caloriesBurntData = analyzedData.map((obj) => obj.caloriesBurnt);
-  const caloriesConsumedData = analyzedData.map((obj) => obj.caloriesConsumed);
-  const netCaloriesData = analyzedData.map((obj) => obj.netCalories);
-  const dateLabels = analyzedData.map((obj) => obj.date);
-
-  // Create the chart using Chart.js
-  const ctx = chartElement.getContext("2d");
-  if (displayedChart) displayedChart.destroy();
-  const chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: dateLabels,
-      datasets: [
-        {
-          label: "Calories Burnt",
-          data: caloriesBurntData,
-          borderColor: "rgba(54, 162, 235, 1)",
-          backgroundColor: "rgba(54, 162, 235, 0.2)",
-          borderWidth: 1,
-          fill: true,
-        },
-        {
-          label: "Calories Consumed",
-          data: caloriesConsumedData,
-          borderColor: "rgba(255, 99, 132, 1)",
-          backgroundColor: "rgba(255, 99, 132, 0.2)",
-          borderWidth: 1,
-          fill: true,
-        },
-        {
-          label: "Net Calories",
-          data: netCaloriesData,
-          borderColor: "rgba(255, 206, 86, 1)",
-          backgroundColor: "rgba(255, 206, 86, 0.2)",
-          borderWidth: 1,
-          fill: true,
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: "Calories consumption and expenditure trends",
-        },
-        tooltip: {
-          mode: "index",
-        },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
       },
       scales: {
-        y: {
-          stacked: false,
+        x: {
+          title: {
+            display: true,
+            text: "Date",
+          }
         },
       },
-      responsive: true,
     },
   });
   return chart;

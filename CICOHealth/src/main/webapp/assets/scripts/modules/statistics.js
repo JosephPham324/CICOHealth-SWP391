@@ -267,6 +267,7 @@ function countExercisesPerWeek(data) {
  * @returns {Object} An object containing the name of the exercise, the total number of times it was performed,
  * and an array of objects containing the count for each week the exercise was performed, as well as the start and
  * end dates of the week.
+ * @deprecated
  */
 function getExerciseFrequency(exerciseName, data) {
   const exerciseData = {
