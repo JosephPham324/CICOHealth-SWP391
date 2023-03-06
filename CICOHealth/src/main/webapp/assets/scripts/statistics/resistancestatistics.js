@@ -119,6 +119,18 @@ document.getElementById("data").addEventListener("change", displayData);
 //Invoke change event to initialize data type selector
 document.getElementById("display-type").dispatchEvent(new Event("change"));
 
+let exerciseSelect = document.createElement("select");
+exerciseSelect.id = "exercise-select";
+
+let dataTypeElement = document.getElementById("data");
+dataTypeElement.parentNode.insertBefore(
+  exerciseSelect,
+  dataTypeElement.nextSibling
+);
+
+//Hide exercise select
+exerciseSelect.style.display = "none";
+
 //Function to handle data display
 async function displayData() {
   let displayType = document.getElementById("display-type").value;
@@ -135,29 +147,41 @@ async function displayData() {
         break;
     }
   } else if (displayType == "chart") {
+    if (dataType!="Exercises Top Sets") {
+      exerciseSelect.style.display = "none";
+    }
     /* A switch statement that is checking the value of dataType and then calling the appropriate
     function. */
     let chart = document.getElementById("statistics-chart");
     switch (dataType) {
       case "Exercises Top Sets": {
         let analyzedData = getDailyTopSets(data.logs);
-        let exerciseSelect = document.createElement("select");
-        exerciseSelect.id = "exercise-select";
+
+        //Clear exercise select
+        exerciseSelect.innerHTML = "";
+        //Remove all event listeners from exercise select
+        exerciseSelect = exerciseSelect.cloneNode(true);
+        console.log(exerciseSelect);
+
         let exerciseNames = analyzedData.map(
           (exercise) => exercise.exerciseName
         );
+
+        //Add options to exercise select
         for (let exerciseName of exerciseNames) {
           let option = document.createElement("option");
           option.value = exerciseName;
           option.innerHTML = exerciseName;
           exerciseSelect.appendChild(option);
         }
-        //Append exercise select after datatype selector
-        let dataTypeElement = document.getElementById("data");
+        //Show exercise select
+        exerciseSelect.style.display = "block";
+        //Append exercise select to after data type selector
         dataTypeElement.parentNode.insertBefore(
           exerciseSelect,
           dataTypeElement.nextSibling
         );
+
         //Add event listener to exercise select
         exerciseSelect.addEventListener("change", () => {
           let exerciseName = exerciseSelect.value;
@@ -191,12 +215,17 @@ function displayTopSetsChart(exerciseData, canvas) {
   //Context
   var ctx = canvas.getContext("2d");
 
+  //Sort the data by date
+  exerciseData.topSets.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
   // Extract the data for the scatter plot
 
   let labels = exerciseData.topSets.map((set) => set.date);
   let dataWeight = exerciseData.topSets.map((set) => set.weight);
   let dataReps = exerciseData.topSets.map((set) => set.rep);
-  console.log(exerciseData)
+  console.log(exerciseData);
   let data = {
     labels: labels,
     datasets: [
@@ -205,11 +234,12 @@ function displayTopSetsChart(exerciseData, canvas) {
         data: dataWeight,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
+        yAxisID: "y-axis-1",
       },
       {
         label: "Repetitions",
-        type:"line",
-        fill:true,
+        type: "line",
+        fill: true,
         data: dataReps,
         borderColor: "rgb(54, 162, 235)",
         backgroundColor: "rgba(54, 162, 235, 0.5)",
@@ -240,10 +270,40 @@ function displayTopSetsChart(exerciseData, canvas) {
           title: {
             display: true,
             text: "Date",
-          }
+          },
+        },
+        "y-axis-1": {
+          title: {
+            display: true,
+            text: "Weight",
+            ticks: {
+              beginAtZero: true,
+              stepSize: 1,
+            },
+          },
+        },
+        "y-axis-2": {
+          title: {
+            display: true,
+            text: "Repetitions",
+            ticks: {
+              beginAtZero: true,
+              stepSize: 1,
+            },
+          },
         },
       },
     },
   });
   return chart;
 }
+
+// function displayExerciseFrequencyChart(exerciseData, canvas) {
+//   let ctx = canvas.getContext("2d");
+//   if (displayedChart) {
+//     displayedChart.destroy();
+//   }
+//   //Extract labels from property names
+//   let labels = Object.keys(exerciseData);
+
+// }
