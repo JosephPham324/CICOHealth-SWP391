@@ -7,6 +7,10 @@
         <param-name>webappName</param-name>
         <param-value>CICO Health</param-value>
     </context-param>
+    <context-param>
+        <param-name>JqueryValidationCDN </param-name>
+        <param-value>https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js</param-value>
+    </context-param>
     <error-page>
         <error-code>403</error-code>
         <location>/view/error/error403.jsp</location>

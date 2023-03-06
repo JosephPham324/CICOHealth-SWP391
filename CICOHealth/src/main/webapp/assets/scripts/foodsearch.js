@@ -321,7 +321,7 @@ function displayMealForm() {
   let mealForm = document.getElementById("meal-form");
   mealForm.innerHTML = "";
   let tableHTML = `
-  <table id="table_id" class="display">
+  <table id="table_id" class="display selectedFood">
       <thead>
           <tr>
               <th>Name</th>
@@ -342,10 +342,18 @@ function displayMealForm() {
     let rowHTML = `
     <tr>
       <td>${food.foodName}</td>
-      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(0)}</td>
-      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
-      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(1)}</td>
+      <td>${(food.calories * (food.actualWeight / food.servingWeight)).toFixed(
+        0
+      )}</td>
+      <td>${(food.protein * (food.actualWeight / food.servingWeight)).toFixed(
+        1
+      )}</td>
+      <td>${(food.fat * (food.actualWeight / food.servingWeight)).toFixed(
+        1
+      )}</td>
+      <td>${(food.carbs * (food.actualWeight / food.servingWeight)).toFixed(
+        1
+      )}</td>
       <td>${food.servingWeight}</td>
       <td>
         <input id="weight-${food.foodName}" 
@@ -359,7 +367,9 @@ function displayMealForm() {
       <td>
         <button id="remove-${food.foodName}"
         class="btn btn-danger"
-        onclick="removeFoodByName('${food.foodName}');showSelected();displayMealForm();"
+        onclick="removeFoodByName('${
+          food.foodName
+        }');showSelected();displayMealForm();"
         >Remove</button>
       </td>
     </tr>
@@ -388,6 +398,7 @@ function displayMealForm() {
   tableHTML += `
       </tbody>
   </table>
+  <div id="meal-items-error"></div>
   `;
   //Add table to the meal form
   mealForm.innerHTML += tableHTML;
@@ -398,11 +409,12 @@ function displayMealForm() {
     <label for="meal-name" class="col-4 col-form-label">Meal Name</label> 
     <div class="col-8">
       <input id="meal-name" name="meal-name" placeholder="Enter meal name" type="text" class="form-control"
-      required="required"
+      required = "required"
       value="${mealName}"
       oninput='mealName = this.value;';
       >
     </div>
+    <div id="log-name-error"></div>
   </div> 
     `;
   mealForm.innerHTML += htmlMealName;
@@ -475,8 +487,30 @@ function requestLogCreation() {
     }),
   };
   console.log(formParams);
+  //Validate meal form
+  // if (formParams.mealLog.mealLogName === "") {
+  //   document.getElementById("log-name-error").style.fontWeight = "bold";
+  //   document.getElementById("log-name-error").style.color = "red";
+  //   document.getElementById("log-name-error").innerHTML =
+  //     "Please enter a meal name";
+  //   return;
+  // } else {
+  //   document.getElementById("log-name-error").innerHTML = "";
+  // }
+  if (selectedFoods.length === 0) {
+    document.getElementById("meal-items-error").style.fontWeight = "bold";
+    document.getElementById("meal-items-error").style.color = "red";
+    document.getElementById("meal-items-error").innerHTML =
+      "Please add at least one food to your meal";
+    return;
+  } else {
+    document.getElementById("meal-items-error").innerHTML =
+      "";
+  }
+
   post("/CICOHealth/user/meal-logs", formParams);
 }
 
 let mealName = "";
 let logNote = "";
+

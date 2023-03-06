@@ -1,50 +1,130 @@
-//get form inputs with id: "username" and "password", firstname, lastname, email, phone using document.getElementById
+// //get form inputs with id: "username" and "password", firstname, lastname, email, phone using document.getElementById
 console.log("register.js loaded");
-let username = document.getElementById("txtUsername");
-let password = document.getElementById("txtPassword");
-let firstname = document.getElementById("txtFirstName");
-let lastname = document.getElementById("txtLastName");
-let email = document.getElementById("txtEmail");
-let phone = document.getElementById("txtPhone");
-//Set onblur event for each input
-username.onblur = function () {
-  //Call validateUsername function
-  validateUsername();
-};
-password.onblur = function () {
-  //Call validatePassword function
-  validatePassword();
-};
-firstname.onblur = function () {
-  //Call validateFirstname function
-  validateFirstname();
-};
-lastname.onblur = function () {
-  //Call validateLastname function
-  validateLastname();
-};
-email.onblur = function () {
-  //Call validateEmail function
-  validateEmail();
-};
-phone.onblur = function () {
-  //Call validatePhone function
-  validatePhone();
-};
+// let username = document.getElementById("txtUsername");
+// let password = document.getElementById("txtPassword");
+// let firstname = document.getElementById("txtFirstName");
+// let lastname = document.getElementById("txtLastName");
+// let email = document.getElementById("txtEmail");
+// let phone = document.getElementById("txtPhone");
+// //Set onblur event for each input
+// username.onblur = function () {
+//   //Call validateUsername function
+//   validateUsername();
+// };
+// password.onblur = function () {
+//   //Call validatePassword function
+//   validatePassword();
+// };
+// firstname.onblur = function () {
+//   //Call validateFirstname function
+//   validateFirstname();
+// };
+// lastname.onblur = function () {
+//   //Call validateLastname function
+//   validateLastname();
+// };
+// email.onblur = function () {
+//   //Call validateEmail function
+//   validateEmail();
+// };
+// phone.onblur = function () {
+//   //Call validatePhone function
+//   validatePhone();
+// };
 
-//Validate username
-function validateUsername() {}
-//Validate password
-function validatePassword() {}
-//Validate firstname
-function validateFirstname() {}
-//Validate lastname
-function validateLastname() {}
-//Validate email
-function validateEmail() {}
-//Validate phone
-function validatePhone() {}
+// //Validate username
+// function validateUsername() {}
+// //Validate password
+// function validatePassword() {}
+// //Validate firstname
+// function validateFirstname() {}
+// //Validate lastname
+// function validateLastname() {}
+// //Validate email
+// function validateEmail() {}
+// //Validate phone
+// function validatePhone() {}
 
+//-------------------------------------------------------
+$(function () {
+  $("#register-form").validate({
+    rules: {
+      txtUsername: {
+        required: true,
+        minlength: 5,
+        maxlength: 20
+      },
+      txtPassword: {
+        required: true,
+        minlength: 6,
+        maxlength: 20
+      },
+      txtFirstName: {
+        required: true,
+        maxlength: 30
+      },
+      txtLastName: {
+        required: true,
+        maxlength: 30
+      },
+      txtEmail: {
+        required: true,
+        cEmail: true
+      },
+      txtPhone: {
+        required: true,
+        cPhone: true
+      }
+    },
+    messages: {
+      txtUsername: {
+        required: "Username cannot be empty!",
+        minlength: "Username must be more than 4 characters!",
+        maxlength: "Username must be less than 21 characters!"
+      },
+      txtPassword: {
+        required: "Password cannot be empty!",
+        minlength: "Password must be between 6 to 20 characters!",
+        maxlength: "Password must be between 6 to 20 characters!"
+      },
+      txtFirstName: {
+        required: "First name cannot be empty!",
+        maxlength: "First name must be less than 31 characters!"
+      },
+      txtLastName: {
+        required: "Last name cannot be empty!",
+        maxlength: "Last name must be less than 31 characters!"
+      },
+      txtEmail: {
+        required: "Email cannot be empty!"
+      },
+      txtPhone: {
+        required: "Phone cannot be empty!"
+      }
+    }
+  });
+  $.validator.addMethod("cEmail", function (value, element) {
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return this.optional(element) || emailPattern.test(value);
+  }, "Please enter a valid email address");
+
+  $.validator.addMethod("cPhone", function (value, element) {
+    // Define phone number pattern
+    var phonePattern = /^0[0-9]{9}$/;
+
+    // Return true if phone number is optional
+    if (this.optional(element)) {
+      return true;
+    }
+
+    // Otherwise, return true if phone number matches pattern
+    return phonePattern.test(value);
+  }, "Please enter a valid phone number (only 10 digits and starts with 0)");
+
+});
+
+
+//--------------------------------------------------------------------
 //Hide password element
 
 function handleCredentialResponse(response) {

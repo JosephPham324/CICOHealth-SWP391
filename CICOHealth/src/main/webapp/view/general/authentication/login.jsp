@@ -1,8 +1,4 @@
-<%-- 
-    Document   : login
-    Created on : Feb 9, 2023, 8:00:55 AM
-    Author     : Pham Nhat Quang CE170036 (FPTU CANTHO)
---%>
+<%-- Document : login Created on : Feb 9, 2023, 8:00:55 AM Author : Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,6 +64,9 @@
 
                 </form>
 
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+                <script src="/CICOHealth/assets/scripts/login.js"></script>
                 <script src="https://accounts.google.com/gsi/client" async defer></script>
                 <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
                 <script>

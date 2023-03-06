@@ -1,13 +1,14 @@
-<%-- Document : register.jsp Created on : Feb 7, 2023, 7:18:37 AM Author : Pham
-Nhat Quang CE170036 (FPTU CANTHO) --%> 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%-- Document : register.jsp Created on : Feb 7, 2023, 7:18:37 AM Author : Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/loginscss.css" />       
         <title>Register</title>
     </head>
+
     <body>
         <script src="https://accounts.google.com/gsi/client" async defer></script>
         

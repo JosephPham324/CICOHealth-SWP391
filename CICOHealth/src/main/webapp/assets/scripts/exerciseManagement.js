@@ -29,7 +29,7 @@ addButton.addEventListener("click", function () {
     let html_pop_up_addButton = `
     <div class="overlay"></div>
     <div class="pop-up-content">
-        <form action="/CICOHealth/admin/exercise-management" method="post" id = "add-exercise-form">
+        <form action="/CICOHealth/admin/exercise-management" method="post" id="add-exercise-form">
             <div class="form-group row">
                 <div class="offset-4 col-8">
                 <h2>Add Exercise</h2>
@@ -79,4 +79,22 @@ addButton.addEventListener("click", function () {
     add_clicked = true;
   }
   displayPopUp("add-exercise-popup");
+  $("#add-exercise-form").validate({
+    rules: {
+      txtExerciseName: {
+        required: true
+      },
+      txtExerciseDescription: {
+        required: true
+      }
+    },
+    messages: {
+      txtExerciseName: {
+        required: "Exercise name cannot be empty!"
+      },
+      txtExerciseDescription: {
+        required: "Exercise description cannot be empty!"
+      }
+    }
+  });
 });
