@@ -134,8 +134,8 @@
                 <img src="/CICOHealth/assets/img/registerfillform.png">
             </div>
         </div>
-        
-      
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/register.js"></script>
     </body>
