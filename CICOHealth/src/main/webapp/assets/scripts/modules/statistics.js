@@ -13,7 +13,7 @@
  *  }>,
  *  mealLogs: Array<{
  *    logDate: string,
- *    nutrition: [number, number, number, number]
+ *    nutrition: [number, number, number, number]|
  *  }>
  * }
  * |
@@ -62,33 +62,6 @@ async function fetchData(type, startDate, endDate) {
     });
   //Return data
   return responseData;
-}
-function analyzeLogDataByDate(logsCollection, attribute) {
-  let datePrevious = null;
-  let dateCurrent = null;
-  let dateData = [];
-  let currentDateData = null;
-  for (let i = 0; i < logsCollection.length; i++) {
-    let log = logsCollection[i];
-    dateCurrent = log.logDate;
-    if (datePrevious !== dateCurrent) {
-      //Add previous date data to date data
-      if (currentDateData !== null) dateData.push(currentDateData);
-      //Reset date data
-      currentDateData = {
-        date: dateCurrent,
-        data: log[`${attribute}`],
-      };
-      datePrevious = dateCurrent;
-      continue;
-    }
-    currentDateData.data += log[`${attribute}`];
-    datePrevious = dateCurrent;
-    if (i === logsCollection.length - 1) {
-      dateData.push(currentDateData);
-    }
-  }
-  return dateData;
 }
 //----------------------------------------------------------------------------------------------
 /*----------------Nutrition Statistics-----------------------*/
@@ -457,17 +430,21 @@ function calculateDailyCardioStats(exerciseLogs) {
     const logDate = log.logDate;
     const timeSpent = log.timeSpent;
     const caloriesBurnt = (log.exercise.caloriesPerHour * timeSpent) / 60;
-    const exerciseName = log.exercise.exerciseName;
+    const exerciseObj = {
+      exerciseName: log.exercise.exerciseName,
+      timeSpent: timeSpent,
+      caloriesBurnt: caloriesBurnt,
+    };
 
     if (cardioStats[logDate]) {
       cardioStats[logDate].timeSpent += timeSpent;
       cardioStats[logDate].caloriesBurnt += caloriesBurnt;
-      cardioStats[logDate].exerciseNames.push(exerciseName);
+      cardioStats[logDate].exerciseObjects.push(exerciseObj);
     } else {
       cardioStats[logDate] = {
         timeSpent,
         caloriesBurnt,
-        exerciseNames: [exerciseName],
+        exerciseObjects: [exerciseObj],
       };
     }
   });
@@ -534,11 +511,13 @@ function calculateCardioExerciseStats(exerciseLogs) {
   // Return array of exercise info objects
   return Object.values(exercises);
 }
+//----------------Health information statistics
+
+
 
 //Export fetch data function
 export {
   fetchData,
-  analyzeLogDataByDate,
   getDailyTopSets,
   countExercisesPerWeek,
   getExerciseFrequency,

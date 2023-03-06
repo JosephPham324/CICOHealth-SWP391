@@ -120,8 +120,17 @@ public class StatisticsController extends HttpServlet {
                 }
             }
         }
-        if (URI.endsWith("nutrition")){
-                    request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
+        if (URI.matches(".*/(nutrition(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
+            return;
+        }
+        if (URI.matches(".*/(exercise/cardio(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/cardioStatistics.jsp").forward(request, response);
+            return;
+        }
+        if (URI.matches(".*/(exercise/resistance(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/resistanceStatistics.jsp").forward(request, response);
+            return;
         }
         request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
     }
