@@ -33,16 +33,6 @@ displayData();
 let tableStructure = `
         <table>
           <thead>
-            <tr>
-              <th>No.</th>
-              <th>Date</th>
-              <th>Protein Consumed</th>
-              <th>Fat Consumed</th>
-              <th>Carbs Consumed</th>
-              <th>Calories Consumed</th>
-              <th>Calories Burnt</th>
-              <th>Net Calories</th>
-            </tr>
           </thead>
           <tbody>
           </tbody>

@@ -172,7 +172,15 @@ function getWeekEndpoints(year, weekNumber) {
     firstWeekEnd.getTime() + (weekNumber - 2) * daysInWeek * 86400000
   );
   const endDate = new Date(startDate.getTime() + 6 * 86400000);
-  return { startDate, endDate };
+  //Format the dates into yyyy-mm-dd
+  const formatDate = (date) => {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${date.getFullYear()}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
+  };
+  return { startDate: formatDate(startDate),endDate: formatDate(endDate) };
 }
 
 /**
