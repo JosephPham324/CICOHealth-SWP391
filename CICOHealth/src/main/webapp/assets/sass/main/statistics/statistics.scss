@@ -61,7 +61,7 @@ main {
     // Statistics chart
     .statistics-chart {
       @include common.dimension(100%, 400px);
-      @include common.max-dimension(100%, 400px);
+      @include common.max-dimension(800px, 400px);
     }
   }
 

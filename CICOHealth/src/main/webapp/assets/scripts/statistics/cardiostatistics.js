@@ -63,9 +63,9 @@ function fillStatisticsTable(tableType, analyzedNutritionData) {
             <tr>
                 <th>No.</th>
                 <th>Exercise Name</th>
+                <th>Frequency</th>
                 <th>Total Time Spent (mins)</th>
                 <th>Total Calories Burnt</th>
-                <th>Frequency</th>
                 <th>Max Time Spent (mins)</th>
                 <th>Max Calories Burnt</th>
                 <th>Average Time Spent (mins)</th>
@@ -138,11 +138,15 @@ async function displayData() {
     let analyzedData = await calculateCardioExerciseStats(data.logs);
     fillStatisticsTable(dataType, analyzedData);
   } else if (displayType == "chart") {
-    let chart = document.getElementById("statistics-chart");
+    let canvas = document.getElementById("statistics-chart");
     let analyzedData = await calculateDailyCardioStats(data.logs);
     switch (dataType) {
-      default:
-        displayedChart = displayExerciseChart(chart, analyzedData);
+      case "Calories and time":
+        displayedChart = displayCaloriesAndTimeChart(canvas, analyzedData);
+        break;
+      case "Exercise":
+        displayedChart = displayExerciseChart(canvas, analyzedData);
+        break;
     }
   }
 }
@@ -150,13 +154,12 @@ async function displayData() {
 //----------------------------------------------------------------------------------------------
 //Chart display
 
-function displayExerciseChart(chart, data) {
+function displayCaloriesAndTimeChart(canvas, data) {
   //Check if chart already exists
   if (displayedChart) {
     displayedChart.destroy();
   }
-
-  const ctx = chart.getContext("2d");
+  const ctx = canvas.getContext("2d");
 
   // Extract data for stacked bar chart
   const timeSpentData = [];
@@ -214,31 +217,113 @@ function displayExerciseChart(chart, data) {
       ],
     },
     options: {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-            scaleLabel: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Calories Burnt and Time Spent",
+        },
+        scales: {
+          y: {
+            stacked: false,
+            title: {
               display: true,
-              labelString: "Time Spent (mins)",
+              text: "Minutes / Calories",
             },
           },
-          {
-            id: "y-axis-2",
-            position: "right",
-            ticks: {
-              beginAtZero: true,
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Calories Burnt",
-            },
-          },
-        ],
+        },
       },
     },
   });
   return combinedChart;
+}
+//----------------------------------------------------------------------------------------------
+
+function displayExerciseChart(canvas, data) {
+  //Check if chart already exists
+  if (displayedChart) {
+    displayedChart.destroy();
+  }
+
+  const labels = Object.keys(data);
+  console.log(labels);
+  const uniqueExercises = new Set();
+  labels.forEach((date) => {
+    data[date].exerciseObjects.forEach((exercise) => {
+      uniqueExercises.add(exercise.exerciseName);
+    });
+  });
+
+  const exerciseColors = [
+    "rgb(255, 99, 132)",
+    "rgb(255, 159, 64)",
+    "rgb(255, 205, 86)",
+    "rgb(75, 192, 192)",
+    "rgb(54, 162, 235)",
+    "rgb(153, 102, 255)",
+    "rgb(201, 203, 207)",
+  ];
+  const datasets = Array.from(uniqueExercises).map((exercise, index) => {
+    const color = exerciseColors[index % exerciseColors.length];
+    const exerciseData = labels.map((date) => {
+      const dayData = data[date];
+      const exerciseObject = dayData.exerciseObjects.find(
+        (obj) => obj.exerciseName === exercise
+      );
+      return exerciseObject ? exerciseObject.caloriesBurnt : 0;
+    });
+    return {
+      label: exercise,
+      data: exerciseData,
+      borderColor: color,
+      backgroundColor: color,
+      fill: true,
+    };
+  });
+  console.log(datasets);
+
+  const chartData = {
+    labels: labels,
+    datasets: datasets,
+  };
+
+  const config = {
+    type: "line",
+    data: chartData,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Calories Burnt by Exercise",
+        },
+        tooltip: {
+          mode: "index",
+        },
+      },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Month",
+          },
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: "Kcal",
+          },
+        },
+      },
+    },
+  };
+
+  const ctx = canvas.getContext("2d");
+  const chart = new Chart(ctx, config);
+  return chart;
 }

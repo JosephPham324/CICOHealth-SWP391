@@ -27,5 +27,4 @@
     </div>
   </div>
 </main>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
