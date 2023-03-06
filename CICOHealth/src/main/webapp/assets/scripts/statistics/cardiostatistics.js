@@ -15,8 +15,6 @@ async function fetchDate() {
   const startDate = document.getElementById("start-date").value;
   const endDate = document.getElementById("end-date").value;
   let data = await fetchData("exercise/cardio", startDate, endDate);
-  //   console.log(JSON.stringify(data));
-  console.log(JSON.stringify(calculateDailyCardioStats(data.logs)));
   return await data;
 }
 //Add event listener to both date pickers
@@ -222,6 +220,11 @@ function displayCaloriesAndTimeChart(canvas, data) {
           display: true,
           text: "Calories Burnt and Time Spent",
         },
+        interaction: {
+          mode: "nearest",
+          axis: "x",
+          intersect: false,
+        },
         scales: {
           y: {
             stacked: false,
@@ -245,7 +248,6 @@ function displayExerciseChart(canvas, data) {
   }
 
   const labels = Object.keys(data);
-  console.log(labels);
   const uniqueExercises = new Set();
   labels.forEach((date) => {
     data[date].exerciseObjects.forEach((exercise) => {

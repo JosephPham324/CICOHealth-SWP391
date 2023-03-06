@@ -69,7 +69,7 @@ public class StatisticsController extends HttpServlet {
         String URI = request.getRequestURI();
 
         if (URI.endsWith("/data")) {
-            String responseData = defaultResponseData();
+            String responseData;
             Object user = request.getSession().getAttribute("user");
             String userID = "USME000001";
             String startDate = request.getParameter("start");
@@ -132,7 +132,7 @@ public class StatisticsController extends HttpServlet {
             request.getRequestDispatcher("/view/user/statistics/resistanceStatistics.jsp").forward(request, response);
             return;
         }
-        request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
+        response.sendRedirect("/CICOHealth/user/statistics/nutrition");
     }
 
     private void printResponseJSON(HttpServletResponse response, String json) throws IOException {
