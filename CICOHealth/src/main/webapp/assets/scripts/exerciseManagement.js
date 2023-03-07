@@ -98,3 +98,8 @@ addButton.addEventListener("click", function () {
     }
   });
 });
+
+$(document).ready(function() {
+    console.log("hello");
+    $("#info-table").DataTable();
+});
