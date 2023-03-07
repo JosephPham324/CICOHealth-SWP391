@@ -175,18 +175,33 @@ function displayMacronutrientsChart(analyzedData, chartElement) {
     },
     options: {
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Date",
+          },
+        },
         y: {
           stacked: true,
+          title: {
+            display: true,
+            text: "Grams",
+          },
         },
+      },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
       },
       responsive: true,
       plugins: {
         title: {
           display: true,
-          text: 'Macronutrients consumption trends'
+          text: "Macronutrients consumption trends",
         },
         tooltip: {
-          mode: 'index'
+          mode: "index",
         },
       },
     },
@@ -239,15 +254,30 @@ function displayCaloriesChart(analyzedData, chartElement) {
       plugins: {
         title: {
           display: true,
-          text: 'Calories consumption and expenditure trends'
+          text: "Calories consumption and expenditure trends",
         },
         tooltip: {
           mode: "index",
         },
       },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
+      },
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Date",
+          },
+        },
         y: {
           stacked: false,
+          title: {
+            display: true,
+            text: "Calories",
+          },
         },
       },
       responsive: true,

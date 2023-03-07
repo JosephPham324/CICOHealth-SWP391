@@ -69,7 +69,7 @@ public class StatisticsController extends HttpServlet {
         String URI = request.getRequestURI();
 
         if (URI.endsWith("/data")) {
-            String responseData = defaultResponseData();
+            String responseData;
             Object user = request.getSession().getAttribute("user");
             String userID = "USME000001";
             String startDate = request.getParameter("start");
@@ -120,10 +120,19 @@ public class StatisticsController extends HttpServlet {
                 }
             }
         }
-        if (URI.endsWith("nutrition")){
-                    request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
+        if (URI.matches(".*/(nutrition(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
+            return;
         }
-        request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
+        if (URI.matches(".*/(exercise/cardio(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/cardioStatistics.jsp").forward(request, response);
+            return;
+        }
+        if (URI.matches(".*/(exercise/resistance(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/resistanceStatistics.jsp").forward(request, response);
+            return;
+        }
+        response.sendRedirect("/CICOHealth/user/statistics/nutrition");
     }
 
     private void printResponseJSON(HttpServletResponse response, String json) throws IOException {
