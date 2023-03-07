@@ -4,6 +4,7 @@ import {
   countExercisesPerWeek,
   getExerciseFrequency,
   calculateResistanceExerciseStats,
+  calculateCardioExerciseStats
 } from "../modules/statistics.js";
 // const statistics = new Statistics();
 //Start date picker
@@ -194,13 +195,13 @@ async function displayData() {
         break;
       }
       case "Exercises Frequency": {
-        let analyzedData = countExercisesPerWeek(data.logs);
+        let analyzedData = calculateCardioExerciseStats(data.logs);
         console.log(analyzedData);
-        // displayedChart = displayCaloriesChart(analyzedData, chart);
+        displayedChart = displayExerciseFrequencyChart(chart, analyzedData);
         break;
       }
       default:
-      // displayedChart = displayCaloriesChart(analyzedData, chart);
+        displayedChart = displayExerciseFrequencyChart(chart, analyzedData);
     }
   }
 }
@@ -298,12 +299,72 @@ function displayTopSetsChart(exerciseData, canvas) {
   return chart;
 }
 
-// function displayExerciseFrequencyChart(exerciseData, canvas) {
-//   let ctx = canvas.getContext("2d");
-//   if (displayedChart) {
-//     displayedChart.destroy();
-//   }
-//   //Extract labels from property names
-//   let labels = Object.keys(exerciseData);
+function displayExerciseFrequencyChart(canvas, data) {
+  //Check if chart already exists
+  if (displayedChart) {
+    displayedChart.destroy();
+  }
+  console.log(data)
+  const exerciseNames = data.map((exercise) => exercise.exerciseName);
+  const exerciseFrequencies = {};
+  
+  exerciseNames.forEach((name) => {
+    exerciseFrequencies[name] = data.find((exercise) => exercise.exerciseName === name).frequency;
+  });
 
-// }
+  const chartData = {
+    labels: Object.keys(exerciseFrequencies),
+    datasets: [
+      {
+        label: "Exercise Frequencies",
+        data: Object.values(exerciseFrequencies),
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Exercise Frequencies",
+      },
+      tooltip: {
+        mode: "index",
+      },
+    },
+    interaction: {
+      mode: "nearest",
+      axis: "x",
+      intersect: false,
+    },
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "Frequency",
+        },
+        ticks: {
+          stepSize: 1,
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Exercise Name",
+        },
+      },
+    },
+  };
+
+  const chartConfig = {
+    type: "bar",
+    data: chartData,
+    options: chartOptions,
+  };
+  const ctx = canvas.getContext("2d");
+  const chart = new Chart(ctx, chartConfig);
+  return chart;
+}
