@@ -146,6 +146,7 @@ public class QuestionDao extends BaseDao {
         } finally {
             closeConnections();
         }
+        System.out.println(id);
         return id;
     }
 

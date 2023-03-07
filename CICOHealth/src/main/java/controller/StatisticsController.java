@@ -71,7 +71,7 @@ public class StatisticsController extends HttpServlet {
         if (URI.endsWith("/data")) {
             String responseData;
             Object user = request.getSession().getAttribute("user");
-            String userID = "USME000001";
+            String userID = ((User)user).getUserID();
             String startDate = request.getParameter("start");
             String endDate = request.getParameter("end");
             Gson gson = new Gson();
