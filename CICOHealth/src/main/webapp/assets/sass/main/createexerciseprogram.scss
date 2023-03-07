@@ -1,0 +1,62 @@
+.create-exercise-program-header {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.create-exercise-program-form-content {
+    .btn-submit {
+        margin: 2% 0;
+        text-align: center;
+
+        .btn {
+            font-weight: bold;
+            background-color: rgb(131, 184, 46) !important;
+        }
+
+        .btn:hover {
+            background-color: yellow !important;
+        }
+    }
+
+
+}
+
+.create-exercise-program-form {
+    border: 2px solid black;
+    margin-bottom: 10%;
+
+    .form-item {
+        margin: 20px 0;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .form-item-input input {
+        width: 100%;
+        height: 40px;
+    }
+
+    .form-item-input textarea {
+        width: 100%;
+    }
+
+    .list-exercise-program-item .card-header {
+        text-align: left;
+    }
+
+    .list-exercise-program-item .btn-add-exericse {
+        text-align: right;
+        a {
+            font-weight: bold;
+            background-color: rgb(131, 184, 46) !important;
+        }
+
+        a:hover{
+            background-color: yellow !important;
+
+        }
+    }
+}

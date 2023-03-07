@@ -1,0 +1,48 @@
+.create-exercise-program-header {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
+
+.create-exercise-program-form-content .btn-submit {
+  margin: 2% 0;
+  text-align: center;
+}
+.create-exercise-program-form-content .btn-submit .btn {
+  font-weight: bold;
+  background-color: rgb(131, 184, 46) !important;
+}
+.create-exercise-program-form-content .btn-submit .btn:hover {
+  background-color: yellow !important;
+}
+
+.create-exercise-program-form {
+  border: 2px solid black;
+  margin-bottom: 10%;
+}
+.create-exercise-program-form .form-item {
+  margin: 20px 0;
+}
+.create-exercise-program-form label {
+  font-size: 16px;
+}
+.create-exercise-program-form .form-item-input input {
+  width: 100%;
+  height: 40px;
+}
+.create-exercise-program-form .form-item-input textarea {
+  width: 100%;
+}
+.create-exercise-program-form .list-exercise-program-item .card-header {
+  text-align: left;
+}
+.create-exercise-program-form .list-exercise-program-item .btn-add-exericse {
+  text-align: right;
+}
+.create-exercise-program-form .list-exercise-program-item .btn-add-exericse a {
+  font-weight: bold;
+  background-color: rgb(131, 184, 46) !important;
+}
+.create-exercise-program-form .list-exercise-program-item .btn-add-exericse a:hover {
+  background-color: yellow !important;
+}/*# sourceMappingURL=createexerciseprogram.css.map */
