@@ -193,7 +193,7 @@ public class HealthInfoDao extends BaseDao {
         return healthInfo;
     }
 
-    public HashMap<Date, Double> getCalorieStatistic() {
+    public HashMap<Date, Double> getCalorieInRange(String from, String to, String userID){
         HashMap<Date, Double> calorieStatistic = new HashMap<>();
         try {
             String query = "SELECT \n"
@@ -201,10 +201,12 @@ public class HealthInfoDao extends BaseDao {
                     + "    AVG(dailyCalorie) as avg_daily_calorie\n"
                     + "FROM \n"
                     + "    healthInfo\n"
+                    + "Where userID = ? AND createdDate >= ? AND createdDate <= ?"
                     + "GROUP BY \n"
-                    + "    CONVERT(date, createdDate)";
+                    + "CONVERT(date, createdDate)";
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userID);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 try {
@@ -223,32 +225,54 @@ public class HealthInfoDao extends BaseDao {
         return calorieStatistic;
     }
     
-      public String getCalorieStatisticJson() {
-        HashMap<Date, Double> caloStatistic = new HealthInfoDao().getCalorieStatistic();
+    public HashMap<Date, Double> getCalorieStatistic(String userID) {
+        HashMap<Date, Double> calorieStatistic = new HashMap<>();
+        try {
+            String query = "SELECT \n"
+                    + "    CONVERT(date, createdDate) as date,\n"
+                    + "    AVG(dailyCalorie) as avg_daily_calorie\n"
+                    + "FROM \n"
+                    + "    healthInfo\n"
+                    + "Where userID = ?"
+                    + "GROUP BY \n"
+                    + "    CONVERT(date, createdDate)";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userID);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                try {
+                    Date date = rs.getDate("date");
+                    double avgDailyCalorie = rs.getDouble("avg_daily_calorie");
+                    calorieStatistic.put(date, avgDailyCalorie);
+                } catch (SQLException ex) {
+                    Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return calorieStatistic;
+    }
+    
+      public String getCalorieStatisticJson(String userID) {
+        HashMap<Date, Double> caloStatistic = new HealthInfoDao().getCalorieStatistic(userID);
         Gson gson = new Gson();
         String json = gson.toJson(caloStatistic);
         return json;
     }
 
+      public String getCalorieStatisticInRangeJson(String from, String to, String userID) {
+        HashMap<Date, Double> caloStatistic = new HealthInfoDao().getCalorieInRange(from, to, userID);
+        Gson gson = new Gson();
+        String json = gson.toJson(caloStatistic);
+        return json;
+    } 
+      
+      
     public static void main(String[] args) {
-//        HealthInfo healthInfo = new HealthInfo("USME000001", true, 123, 123, 12, 0, 0, 0, 0, 0, 0);
-//        try {
-//            new HealthInfoDao().insertHealthInfo(healthInfo);
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(HealthInfoDao.class
-//                    .getName()).log(Level.SEVERE, null, ex);
-//        }
-        HashMap<Date, Double> haha = new HealthInfoDao().getCalorieStatistic();
-        HashMap<Date, Double> calorieStatistic = new HealthInfoDao().getCalorieStatistic();
-
-// Iterate through the map entries and print them to the console
-        for (Map.Entry<Date, Double> entry : calorieStatistic.entrySet()) {
-            Date date = entry.getKey();
-            Double avgCalorie = entry.getValue();
-            System.out.println("Date: " + date + ", Average Calorie: " + avgCalorie);
-        }
-        String xia = new HealthInfoDao().getCalorieStatisticJson();
-        System.out.println(xia);
+//        
     }
 }

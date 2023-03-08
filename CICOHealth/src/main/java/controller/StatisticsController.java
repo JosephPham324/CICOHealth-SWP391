@@ -122,8 +122,8 @@ public class StatisticsController extends HttpServlet {
             }
             
              //healthInfo exercise stats
-            if (URI.matches(".*/statistics/healthinfo(/.*)*")) {
-                    responseData = new HealthInfoDao().getCalorieStatisticJson();
+            if (URI.matches(".*/statistics/health-info(/.*)*")) {
+                    responseData = new HealthInfoDao().getCalorieStatisticJson(userID);
                     printResponseJSON(response, responseData);
                     return;
             }
@@ -140,7 +140,7 @@ public class StatisticsController extends HttpServlet {
             request.getRequestDispatcher("/view/user/statistics/resistanceStatistics.jsp").forward(request, response);
             return;
         }
-        if(URI.matches(".*/(healthinfo(/.*)*)$")){
+        if(URI.matches(".*/(health-info(/.*)*)$")){
             request.getRequestDispatcher("/view/user/statistics/healthInfoStatistic.jsp").forward(request, response);
         }
         response.sendRedirect("/CICOHealth/user/statistics/nutrition");
