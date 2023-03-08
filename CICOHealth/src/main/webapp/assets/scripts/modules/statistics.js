@@ -92,6 +92,7 @@ async function fetchData(type, startDate, endDate) {
  *                   }, ...]
  */
 function calculateNutritionStatistics(logs) {
+
   // Initialize an empty object to store the daily statistics
   const dailyStats = {};
 
@@ -147,6 +148,11 @@ function calculateNutritionStatistics(logs) {
   // Calculate the net calories for each daily stat
   dailyStatsArray.forEach((stat) => {
     stat.netCalories = stat.caloriesConsumed - stat.caloriesBurnt;
+  });
+
+  //Sort the daily stats array by date
+  dailyStatsArray.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
   });
 
   // Return the daily stats array
@@ -355,6 +361,20 @@ function getDailyTopSets(data) {
   // return the final result array
   return result;
 }
+
+function findBestSet(topSetsCollection){
+  let bestSet = {
+    weight: 0,
+    rep: 0,
+  }
+  topSetsCollection.forEach(topSet => {
+    if (topSet.weight > bestSet.weight){
+      bestSet = topSet
+    }
+  })
+  return bestSet
+}
+
 /*
  * This function calculates statistics for a set of exercise logs
  * It takes an array of exercise logs as input and returns an object containing statistics
@@ -427,6 +447,22 @@ function calculateResistanceExerciseStats(exerciseLogs) {
   // Return the exerciseStats object
   return exerciseStats;
 }
+
+function calculate1RM(weight,reps){
+  return weight / (1.0278 - 0.0278 * reps);
+}
+
+function calculateRepRange(weight,reps){
+  let _1RM = calculate1RM(weight,reps);
+  let percentages = {};
+  let decrement = 3;
+  for (let reps = 0; reps < 30; reps++) {
+    let weight = _1RM * (100 - decrement * reps) / 100;
+    percentages[reps+1] = weight;
+  }
+  return percentages;
+}
+
 //----------------Cardio exercise statistics
 function calculateDailyCardioStats(exerciseLogs) {
   const cardioLogs = exerciseLogs.filter((log) => {
@@ -534,4 +570,7 @@ export {
   calculateDailyCardioStats,
   calculateCardioExerciseStats,
   calculateNutritionStatistics,
+  calculate1RM,
+  calculateRepRange,
+  findBestSet
 };
