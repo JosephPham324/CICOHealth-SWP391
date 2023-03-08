@@ -297,18 +297,19 @@ public class HealthInfoDao extends BaseDao {
             resultSet = preparedStatement.executeQuery();
             ResultSetMetaData metadata = resultSet.getMetaData();
             int columnCount = metadata.getColumnCount();
-            JsonArray jsonArray = new JsonArray();
-            while (resultSet.next()) {
             JsonObject jsonObject = new JsonObject();
-            for (int i = 1; i <= columnCount; i++) {
-                String columnName = metadata.getColumnName(i);
-                Object columnValue = resultSet.getObject(i);
-                jsonObject.addProperty(columnName, columnValue.toString());
+            while (resultSet.next()) {
+                String date = resultSet.getString("date");
+                JsonObject data = new JsonObject();
+                for (int i = 2; i <= columnCount; i++) {
+                    String columnName = metadata.getColumnName(i);
+                    Object columnValue = resultSet.getObject(i);
+                    data.addProperty(columnName, columnValue.toString());
+                }
+                jsonObject.add(date, data);
             }
-            jsonArray.add(jsonObject);
-        }
-        Gson gson = new Gson();
-        jsonResult = gson.toJson(jsonArray);
+            Gson gson = new Gson();
+            jsonResult = gson.toJson(jsonObject);
         } catch (SQLException ex) {
             Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
