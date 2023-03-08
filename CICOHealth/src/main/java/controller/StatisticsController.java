@@ -119,6 +119,19 @@ public class StatisticsController extends HttpServlet {
                     printResponseJSON(response, defaultResponseData());
                 }
             }
+            
+             //healthInfo exercise stats
+            if (URI.matches(".*/statistics/exercise/cardio(/.*)*")) {
+                try {
+                    ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDateRange(userID, "CA", startDate, endDate);
+                    responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
+                    printResponseJSON(response, responseData);
+                    return;
+                } catch (SQLException | IOException ex) {
+                    Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+                    printResponseJSON(response, defaultResponseData());
+                }
+            }
         }
         if (URI.matches(".*/(nutrition(/.*)*)$")) {
             request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
@@ -131,6 +144,9 @@ public class StatisticsController extends HttpServlet {
         if (URI.matches(".*/(exercise/resistance(/.*)*)$")) {
             request.getRequestDispatcher("/view/user/statistics/resistanceStatistics.jsp").forward(request, response);
             return;
+        }
+        if(URI.matches(".*/(healthinfo(/.*)*)$")){
+            request.getRequestDispatcher("/view/user/statistics/healthInfoStatistic.jsp").forward(request, response);
         }
         response.sendRedirect("/CICOHealth/user/statistics/nutrition");
     }

@@ -4,7 +4,10 @@ import bean.HealthInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -189,6 +192,36 @@ public class HealthInfoDao extends BaseDao {
         return healthInfo;
     }
 
+    public HashMap<Date, Double> getCalorieStatistic() {
+        HashMap<Date, Double> calorieStatistic = new HashMap<>();
+        try {
+            String query = "SELECT \n"
+                    + "    CONVERT(date, createdDate) as date,\n"
+                    + "    AVG(dailyCalorie) as avg_daily_calorie\n"
+                    + "FROM \n"
+                    + "    healthInfo\n"
+                    + "GROUP BY \n"
+                    + "    CONVERT(date, createdDate)";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                try {
+                    Date date = rs.getDate("date");
+                    double avgDailyCalorie = rs.getDouble("avg_daily_calorie");
+                    calorieStatistic.put(date, avgDailyCalorie);
+                } catch (SQLException ex) {
+                    Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return calorieStatistic;
+    }
+
     public static void main(String[] args) {
 //        HealthInfo healthInfo = new HealthInfo("USME000001", true, 123, 123, 12, 0, 0, 0, 0, 0, 0);
 //        try {
@@ -198,11 +231,14 @@ public class HealthInfoDao extends BaseDao {
 //            Logger.getLogger(HealthInfoDao.class
 //                    .getName()).log(Level.SEVERE, null, ex);
 //        }
-        HealthInfo h = null;
-        List<HealthInfo> l = null;
-        l = new HealthInfoDao().getHistory("USME000001");
-        for (HealthInfo healthInfo : l) {
-            System.out.println(healthInfo.getHealthInfoID());
+        HashMap<Date, Double> haha = new HealthInfoDao().getCalorieStatistic();
+        HashMap<Date, Double> calorieStatistic = new HealthInfoDao().getCalorieStatistic();
+
+// Iterate through the map entries and print them to the console
+        for (Map.Entry<Date, Double> entry : calorieStatistic.entrySet()) {
+            Date date = entry.getKey();
+            Double avgCalorie = entry.getValue();
+            System.out.println("Date: " + date + ", Average Calorie: " + avgCalorie);
         }
     }
 }

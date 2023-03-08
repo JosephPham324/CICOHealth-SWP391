@@ -17,7 +17,7 @@
     <body>
         <jsp:include page="mainStructure.jsp" />
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-        <script type="module" src="/CICOHealth/assets/scripts/statistics/cardiostatistics.js"></script>
+        <script type="module" src="/CICOHealth/assets/scripts/statistics/healthinfostatistics.js"></script>
     </body>
 </html>
 
