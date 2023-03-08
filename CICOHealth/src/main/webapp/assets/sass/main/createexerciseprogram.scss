@@ -1,3 +1,69 @@
+@use "../mixins/common";
+
+* {
+    box-sizing: border-box;
+}
+
+.prevent-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.pop-up {
+    @include common.absolute-position();
+    display: none;
+
+    &.active {
+        display: block;
+        position: fixed;
+    }
+
+    &>.pop-up-content {
+        position: relative;
+        z-index: 5;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include common.dimension(100vw, 100vh);
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1 !important;
+    }
+
+    .create-exercise-pop-up-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        background-color: #fff;
+        z-index: 2;
+        border-radius: 20px;
+    }
+
+    .txt-title-pop-up {
+        text-align: center;
+    }
+
+    .create-exercise-form {
+        margin-top: 10%;
+        height: 440px;
+        .btn-submit{
+            background-color: rgb(131, 184, 46) !important;
+        }
+        .btn-submit:hover{
+            background-color: yellow !important;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+    }
+}
+
 .create-exercise-program-header {
     text-align: center;
     margin-top: 5%;
@@ -20,6 +86,12 @@
     }
 
 
+}
+
+.create-exercise-pop-up{
+    textarea {
+        width: 100%;
+    }
 }
 
 .create-exercise-program-form {
@@ -47,16 +119,31 @@
         text-align: left;
     }
 
-    .list-exercise-program-item .btn-add-exericse {
-        text-align: right;
-        a {
-            font-weight: bold;
-            background-color: rgb(131, 184, 46) !important;
+    .list-exercise-program-item {
+        .btn-add-exericse {
+            text-align: right;
+
+            a {
+                font-weight: bold;
+                background-color: rgb(131, 184, 46) !important;
+            }
+
+            a:hover {
+                background-color: yellow !important;
+
+            }
+
         }
 
-        a:hover{
-            background-color: yellow !important;
+        .card-header {
+            background-color: rgb(131, 184, 46) !important;
+            font-weight: bold;
+            padding: 20px 0;
+            text-align: center;
+        }
 
+        .card-header:hover {
+            background-color: yellow !important;
         }
     }
 }

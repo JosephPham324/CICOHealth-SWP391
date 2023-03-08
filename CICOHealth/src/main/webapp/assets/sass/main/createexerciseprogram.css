@@ -1,3 +1,66 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+* {
+  box-sizing: border-box;
+}
+
+.prevent-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  display: block;
+  position: fixed;
+}
+.pop-up > .pop-up-content {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+.pop-up .create-exercise-pop-up-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background-color: #fff;
+  z-index: 2;
+  border-radius: 20px;
+}
+.pop-up .txt-title-pop-up {
+  text-align: center;
+}
+.pop-up .create-exercise-form {
+  margin-top: 10%;
+  height: 440px;
+}
+.pop-up .create-exercise-form .btn-submit {
+  background-color: rgb(131, 184, 46) !important;
+}
+.pop-up .create-exercise-form .btn-submit:hover {
+  background-color: yellow !important;
+}
+.pop-up .form-group {
+  margin-bottom: 8px;
+}
+
 .create-exercise-program-header {
   text-align: center;
   margin-top: 5%;
@@ -14,6 +77,10 @@
 }
 .create-exercise-program-form-content .btn-submit .btn:hover {
   background-color: yellow !important;
+}
+
+.create-exercise-pop-up textarea {
+  width: 100%;
 }
 
 .create-exercise-program-form {
@@ -44,5 +111,14 @@
   background-color: rgb(131, 184, 46) !important;
 }
 .create-exercise-program-form .list-exercise-program-item .btn-add-exericse a:hover {
+  background-color: yellow !important;
+}
+.create-exercise-program-form .list-exercise-program-item .card-header {
+  background-color: rgb(131, 184, 46) !important;
+  font-weight: bold;
+  padding: 20px 0;
+  text-align: center;
+}
+.create-exercise-program-form .list-exercise-program-item .card-header:hover {
   background-color: yellow !important;
 }/*# sourceMappingURL=createexerciseprogram.css.map */
