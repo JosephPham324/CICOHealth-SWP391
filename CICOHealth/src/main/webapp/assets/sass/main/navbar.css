@@ -1,0 +1,60 @@
+.navbar {
+  background-color: rgb(131, 184, 46) !important;
+}
+.navbar .navbar-brand {
+  color: white;
+  font-size: 24px;
+}
+.navbar .navbar-brand .nav-title {
+  color: yellow;
+}
+.navbar .navbar-collapse .nav-item {
+  list-style-type: none !important;
+}
+.navbar .navbar-collapse .nav-item a {
+  color: white;
+  font-size: 20px;
+}
+.navbar .navbar-collapse .nav-item a:hover {
+  color: black;
+}
+.navbar .navbar-collapse .nav-item .dropdown-menu {
+  background-color: rgb(98, 137, 36) !important;
+}
+.navbar .navbar-collapse .nav-item .dropdown-menu li a:hover {
+  color: black;
+  background-color: yellow !important;
+  text-decoration: none !important;
+}
+.navbar .navbar-collapse .nav-right {
+  align-items: center;
+}
+.navbar .navbar-collapse .nav-right a {
+  background-color: white;
+  margin: 0 10px;
+  font-size: 16px;
+  color: black !important;
+}
+.navbar .navbar-collapse .nav-right a:hover {
+  background-color: yellow !important;
+}
+
+.footer {
+  background-color: rgb(131, 184, 46) !important;
+}
+.footer .footer-bottom {
+  background-color: rgb(98, 137, 36) !important;
+  color: white;
+}
+.footer .footer-content .footer-item {
+  margin-top: 15px;
+}
+.footer .footer-content .footer-item .footer-title {
+  color: white;
+}
+.footer .footer-content .footer-item .school-name {
+  color: yellow;
+}
+.footer .footer-content .footer-item p {
+  color: white;
+}/*# sourceMappingURL=navbar.css.map */
