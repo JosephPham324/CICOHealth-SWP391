@@ -213,7 +213,7 @@ function displayWeightChart(data) {
     }
     const dates = Object.keys(data);
     const values = Object.values(data).map(obj => obj.avgWeight);
-    const chart = new Chart(document.getElementById("statistics-chart"), {
+     const chart = new Chart(document.getElementById("statistics-chart"), {
         type: "line",
         data: {
             labels: dates,
@@ -226,7 +226,34 @@ function displayWeightChart(data) {
                     tension: 0.1
                 }]
         },
-        options: {}
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Weight Chart',
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            elements: {
+                line: {
+                    borderWidth: 2,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    pointBorderColor: 'rgba(75, 192, 192, 1)',
+                    pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
+                }
+            },
+            scales: {
+               
+            },
+            backgroundColor: 'rgb(255, 255, 255)'
+        }
     });
     return chart;
 };
