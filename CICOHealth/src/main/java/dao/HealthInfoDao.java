@@ -1,6 +1,7 @@
 package dao;
 
 import bean.HealthInfo;
+import com.google.gson.Gson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -221,6 +222,13 @@ public class HealthInfoDao extends BaseDao {
         }
         return calorieStatistic;
     }
+    
+      public String getCalorieStatisticJson() {
+        HashMap<Date, Double> caloStatistic = new HealthInfoDao().getCalorieStatistic();
+        Gson gson = new Gson();
+        String json = gson.toJson(caloStatistic);
+        return json;
+    }
 
     public static void main(String[] args) {
 //        HealthInfo healthInfo = new HealthInfo("USME000001", true, 123, 123, 12, 0, 0, 0, 0, 0, 0);
@@ -240,5 +248,7 @@ public class HealthInfoDao extends BaseDao {
             Double avgCalorie = entry.getValue();
             System.out.println("Date: " + date + ", Average Calorie: " + avgCalorie);
         }
+        String xia = new HealthInfoDao().getCalorieStatisticJson();
+        System.out.println(xia);
     }
 }

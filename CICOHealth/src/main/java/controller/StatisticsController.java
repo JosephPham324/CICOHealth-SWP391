@@ -10,6 +10,7 @@ import bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.ExerciseLogDao;
+import dao.HealthInfoDao;
 import dao.MealLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -121,16 +122,10 @@ public class StatisticsController extends HttpServlet {
             }
             
              //healthInfo exercise stats
-            if (URI.matches(".*/statistics/exercise/cardio(/.*)*")) {
-                try {
-                    ArrayList<ExerciseLog> queryResult = new ExerciseLogDao().getLogsOfDateRange(userID, "CA", startDate, endDate);
-                    responseData = "{\"logs\":" + gson.toJson(queryResult) + "}";
+            if (URI.matches(".*/statistics/healthinfo(/.*)*")) {
+                    responseData = new HealthInfoDao().getCalorieStatisticJson();
                     printResponseJSON(response, responseData);
                     return;
-                } catch (SQLException | IOException ex) {
-                    Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
-                    printResponseJSON(response, defaultResponseData());
-                }
             }
         }
         if (URI.matches(".*/(nutrition(/.*)*)$")) {
