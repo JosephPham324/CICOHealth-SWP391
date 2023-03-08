@@ -232,8 +232,8 @@ public class HealthInfoDao extends BaseDao {
                     + "    CONVERT(date, createdDate) as date,\n"
                     + "    AVG(dailyCalorie) as avg_daily_calorie\n"
                     + "FROM \n"
-                    + "    healthInfo\n"
-                    + "Where userID = ?"
+                    + "healthInfo\n"
+                    + "Where userID = ? "
                     + "GROUP BY \n"
                     + "    CONVERT(date, createdDate)";
             connection = new DBContext().getConnection();
@@ -273,6 +273,7 @@ public class HealthInfoDao extends BaseDao {
       
       
     public static void main(String[] args) {
-//        
+        String haha = new HealthInfoDao().getCalorieStatisticJson("USME000001");
+        System.out.println(haha);
     }
 }
