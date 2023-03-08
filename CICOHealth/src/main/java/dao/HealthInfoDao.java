@@ -2,7 +2,10 @@ package dao;
 
 import bean.HealthInfo;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -193,7 +196,7 @@ public class HealthInfoDao extends BaseDao {
         return healthInfo;
     }
 
-    public HashMap<Date, Double> getCalorieInRange(String from, String to, String userID){
+    public HashMap<Date, Double> getCalorieInRange(String from, String to, String userID) {
         HashMap<Date, Double> calorieStatistic = new HashMap<>();
         try {
             String query = "SELECT \n"
@@ -201,12 +204,14 @@ public class HealthInfoDao extends BaseDao {
                     + "    AVG(dailyCalorie) as avg_daily_calorie\n"
                     + "FROM \n"
                     + "    healthInfo\n"
-                    + "Where userID = ? AND createdDate >= ? AND createdDate <= ?"
+                    + "Where userID = ? AND createdDate >= ? AND createdDate <= ? "
                     + "GROUP BY \n"
                     + "CONVERT(date, createdDate)";
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, from);
+            preparedStatement.setString(3, to);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 try {
@@ -224,7 +229,7 @@ public class HealthInfoDao extends BaseDao {
         }
         return calorieStatistic;
     }
-    
+
     public HashMap<Date, Double> getCalorieStatistic(String userID) {
         HashMap<Date, Double> calorieStatistic = new HashMap<>();
         try {
@@ -256,24 +261,62 @@ public class HealthInfoDao extends BaseDao {
         }
         return calorieStatistic;
     }
-    
-      public String getCalorieStatisticJson(String userID) {
+
+    public String getCalorieStatisticJson(String userID) {
         HashMap<Date, Double> caloStatistic = new HealthInfoDao().getCalorieStatistic(userID);
         Gson gson = new Gson();
         String json = gson.toJson(caloStatistic);
         return json;
     }
 
-      public String getCalorieStatisticInRangeJson(String from, String to, String userID) {
+    public String getCalorieStatisticInRangeJson(String from, String to, String userID) {
         HashMap<Date, Double> caloStatistic = new HealthInfoDao().getCalorieInRange(from, to, userID);
         Gson gson = new Gson();
         String json = gson.toJson(caloStatistic);
         return json;
-    } 
-      
-      
+    }
+
+    public String getAverageHealthInfo(String from, String to, String userID) {
+        String jsonResult = "";
+        String sql = "SELECT CONVERT(date, createdDate) as date, "
+                + "AVG([height]) AS avgHeight, "
+                + "AVG([weight]) AS avgWeight, "
+                + "AVG(dailyCalorie) AS avgDailyCalorie, "
+                + "AVG(dailyProtein) AS avgDailyProtein, "
+                + "AVG(dailyFat) AS avgDailyFat, "
+                + "AVG(dailyCarb) AS avgDailyCarb "
+                + "FROM [CICOHealth].[dbo].[healthInfo] "
+                + "WHERE userID = ? AND CONVERT(date, createdDate) >= ? AND CONVERT(date, createdDate) <= ? "
+                + "GROUP BY CONVERT(date, createdDate)";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, from);
+            preparedStatement.setString(3, to);
+            resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData metadata = resultSet.getMetaData();
+            int columnCount = metadata.getColumnCount();
+            JsonArray jsonArray = new JsonArray();
+            while (resultSet.next()) {
+            JsonObject jsonObject = new JsonObject();
+            for (int i = 1; i <= columnCount; i++) {
+                String columnName = metadata.getColumnName(i);
+                Object columnValue = resultSet.getObject(i);
+                jsonObject.addProperty(columnName, columnValue.toString());
+            }
+            jsonArray.add(jsonObject);
+        }
+        Gson gson = new Gson();
+        jsonResult = gson.toJson(jsonArray);
+        } catch (SQLException ex) {
+            Logger.getLogger(HealthInfoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return jsonResult;
+    }
+
     public static void main(String[] args) {
-        String haha = new HealthInfoDao().getCalorieStatisticJson("USME000001");
+        String haha = new HealthInfoDao().getAverageHealthInfo("2023-03-02", "2023-03-05", "USME000001");
         System.out.println(haha);
     }
 }

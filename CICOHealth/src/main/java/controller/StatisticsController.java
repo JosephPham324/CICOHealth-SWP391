@@ -123,7 +123,7 @@ public class StatisticsController extends HttpServlet {
             
              //healthInfo exercise stats
             if (URI.matches(".*/statistics/health-info(/.*)*")) {
-                    responseData = new HealthInfoDao().getCalorieStatisticJson(userID);
+                    responseData = new HealthInfoDao().getCalorieStatisticInRangeJson(startDate, endDate, userID);
                     printResponseJSON(response, responseData);
                     return;
             }
