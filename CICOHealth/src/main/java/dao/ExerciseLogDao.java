@@ -4,12 +4,9 @@
  */
 package dao;
 
-import bean.Exercise;
 import bean.ExerciseLog;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -164,7 +161,7 @@ public class ExerciseLogDao extends BaseDao {
         preparedStatement.executeUpdate();
         closeConnections();
     }
-    
+
     public ArrayList<ExerciseLog> getLogsOfDateRange(String userID, String type, String startDate, String endDate) throws SQLException {
         if (!type.matches("CA|RE")) {
             return null;
@@ -203,6 +200,7 @@ public class ExerciseLogDao extends BaseDao {
         }
         return result;
     }
+
     public static void main(String[] args) {
         try {
             ExerciseLog el = new ExerciseLog();
@@ -221,4 +219,21 @@ public class ExerciseLogDao extends BaseDao {
             Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void updateExerciseLogNote(String userID, String ExerciseLogID, String message) {
+        String query = "UPDATE [CICOHealth].[dbo].[ExerciseLog]\n"
+                + "SET [logNote] = ? \n"
+                + "WHERE [userID] = ? AND [exerciseLogID] = ? ";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            int index = 1;
+            preparedStatement.setString(index++, message);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, ExerciseLogID);
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }   
 }
