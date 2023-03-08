@@ -123,56 +123,85 @@
                             </div>
                         </div>
 
-                        <div class="form-item row">
-                            <div class="offset-2 col-2">
-                                <label for="txtExerciseOrder">Exercise Order</label>
-                            </div>
-                            <div class="col-6 form-item-input">
-                                <input id="txtExerciseOrder" name="txtExerciseOrder" placeholder="Enter exercise order"
-                                    type="text">
-                            </div>
-                        </div>
-                        <div class="form-item row">
-                            <div class="offset-2 col-2">
-                                <label for="txtSet">Set</label>
-                            </div>
-                            <div class="col-6 form-item-input">
-                                <input id="txtSet" name="txtSet" placeholder="Enter set number" type="text">
-                            </div>
-                        </div>
-                        <div class="form-item row">
-                            <div class="offset-2 col-2">
-                                <label for="txtRep">Rep</label>
-                            </div>
-                            <div class="col-6 form-item-input">
-                                <input id="txtRep" name="txtRep" placeholder="XX/XX/XX..." type="text">
-                            </div>
-                        </div>
-                        <div class="form-item row">
-                            <div class="offset-2 col-2">
-                                <label for="txtWeight">Weight</label>
-                            </div>
-                            <div class="col-6 form-item-input">
-                                <input id="txtWeight" name="txtWeight" placeholder="XX/XX/XX..." type="text">
-                            </div>
-                        </div>
-                        <div class="form-item row">
-                            <div class="offset-2 col-2">
-                                <label for="txtDuration">Duration</label>
-                            </div>
-                            <div class="col-6 form-item-input">
-                                <input id="txtDuration" name="txtDuration" placeholder="Enter duration" type="text">
-                            </div>
-                        </div>
-                        <div class="form-item row">
-                            <div class="offset-2 col-2">
-                                <label for="txtInstruction">txtInstruction</label>
-                            </div>
-                            <div class="col-6 form-item-input">
-                                <textarea name="txtInstruction" id="txtInstruction" cols="30" rows="5"
-                                    placeholder="Enter instruction"></textarea>
-                            </div>
-                        </div>
+                        <table id="create-table" class="hover table-content" style="width: 100%">
+                            <thead class="pop-up-thead-table">
+                                <tr>
+                                    <th>Exercise Order</th>
+                                    <th>Set</th>
+                                    <th>Rep</th>
+                                    <th>Weight</th>
+                                    <th>Duration</th>
+                                    <th>Instruction</th>
+                                </tr>
+                            </thead>
+                            <tbody class="pop-up-body-table">
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
                         <div class="btn-add-exericse">
                             <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up">Add
                                 exercise</a>
@@ -188,151 +217,58 @@
 
 
         <!-- pop-up-create-exercise -->
-        <!-- <div class="pop-up create-exercise-pop-up" id="create-exercise-pop-up">
+        <div class="pop-up create-exercise-pop-up" id="create-exercise-pop-up">
             <div class="create-exercise-overlay overlay" id="overlay"></div>
             <div class="pop-up-content create-exercise-pop-up-content">
-                <form action="create-exercise" method="post" name="create-exercise-form" id="create-exercise-form" class="create-exercise-form">
+                <form action="create-exercise" method="post" name="create-exercise-form" id="create-exercise-form"
+                    class="create-exercise-form">
                     <h2 class="txt-title-pop-up">Create Exercise</h2>
                     <div class="form-group row">
                         <label for="txtExerciseOrderPopUp" class="offset-1 col-3 col-form-label">Exercise Order</label>
                         <div class="col-7">
-                            <input id="txtExerciseOrderPopUp" name="txtExerciseOrderPopUp" type="text" 
-                            placeholder="Enter exercise order" class="form-control">
+                            <input id="txtExerciseOrderPopUp" name="txtExerciseOrderPopUp" type="text"
+                                placeholder="Enter exercise order" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtSetPopUp" class="offset-1 col-3 col-form-label">Set</label>
                         <div class="col-7">
-                            <input id="txtSetPopUp" name="txtSetPopUp" type="text" class="form-control" placeholder="Enter set number">
+                            <input id="txtSetPopUp" name="txtSetPopUp" type="text" class="form-control"
+                                placeholder="Enter set number">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtRepPopUp" class="offset-1 col-3 col-form-label">Rep</label>
                         <div class="col-7">
-                            <input id="txtRepPopUp" name="txtRepPopUp" type="text" class="form-control" placeholder="Enter rep with format XX/XX/XX...">
+                            <input id="txtRepPopUp" name="txtRepPopUp" type="text" class="form-control"
+                                placeholder="Enter rep with format XX/XX/XX...">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtWeightPopUp" class="offset-1 col-3 col-form-label">Weight</label>
                         <div class="col-7">
-                            <input id="txtWeightPopUp" name="txtWeightPopUp" type="text" class="form-control" placeholder="Enter weight with format XX/XX/XX...">
+                            <input id="txtWeightPopUp" name="txtWeightPopUp" type="text" class="form-control"
+                                placeholder="Enter weight with format XX/XX/XX...">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtDurationPopUp" class="offset-1 col-3 col-form-label">Duration</label>
                         <div class="col-7">
-                            <input id="txtDurationPopUp" name="txtDurationPopUp" type="text" class="form-control" placeholder="Enter duration">
+                            <input id="txtDurationPopUp" name="txtDurationPopUp" type="text" class="form-control"
+                                placeholder="Enter duration">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtInstructionPopUp" class="offset-1 col-3 col-form-label">Instruction</label>
                         <div class="col-7">
                             <textarea name="txtInstructionPopUp" id="txtInstructionPopUp" cols="30" rows="5"
-                                    placeholder="Enter instruction"></textarea>
+                                placeholder="Enter instruction"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="offset-5 col-2">
-                            <button name="btn-submit" type="submit" class="btn btn-submit" id="btn-submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> -->
-
-
-        <!-- pop-up-create-exercise -->
-        <div class="pop-up create-exercise-pop-up" id="create-exercise-pop-up">
-            <div class="create-exercise-overlay overlay" id="overlay"></div>
-            <div class="pop-up-content create-exercise-pop-up-content">
-                <form action="create-exercise" method="post" name="create-exercise-form" class="create-exercise-form"
-                    id="create-exercise-form">
-                    <h2 class="txt-title-pop-up">Create Exercise</h2>
-                    <table id="create-table" class="hover table-content" style="width: 100%">
-                        <thead class="pop-up-thead-table">
-                            <tr>
-                                <th>Exercise Order</th>
-                                <th>Set</th>
-                                <th>Rep</th>
-                                <th>Weight</th>
-                                <th>Duration</th>
-                                <th>Instruction</th>
-                            </tr>
-                        </thead>
-                        <tbody class="pop-up-body-table">
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            <tr>
-                                <td>AAA</td>
-                                <td>3</td>
-                                <td>30/30/40</td>
-                                <td>20/25/30</td>
-                                <td>BBB</td>
-                                <td>CCC</td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-
-                    <div class="form-group row">
-                        <div class="offset-5 col-2">
-                            <button name="btn-submit" type="submit" class="btn btn-submit" id="btn-submit">
-                                Submit
-                            </button>
+                            <button name="btn-submit" type="submit" class="btn btn-submit"
+                                id="btn-submit">Submit</button>
                         </div>
                     </div>
                 </form>

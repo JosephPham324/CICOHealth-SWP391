@@ -62,35 +62,6 @@
         .btn-submit:hover {
             background-color: yellow !important;
         }
-
-        .table-content {
-            border: 1px solid black;
-
-            .pop-up-thead-table {
-                background-color: rgb(131, 184, 46) !important;
-                font-size: 20px;
-            }
-
-            .pop-up-body-table {
-                font-size: 18px;
-            }
-
-            thead {
-                background-color: rgb(131, 184, 46);
-                border: 1px solid black;
-                text-align: center;
-            }
-
-            td,
-            th {
-                border: 1px solid black;
-                padding: 10px 10px;
-            }
-
-
-        }
-
-
     }
 
     .form-group {
@@ -124,8 +95,6 @@
             background-color: yellow !important;
         }
     }
-
-
 }
 
 .create-exercise-pop-up {
@@ -155,9 +124,43 @@
         width: 100%;
     }
 
-    .list-exercise-program-item .card-header {
-        text-align: left;
+    .list-exercise-program-item {
+        .card-header {
+            text-align: left;
+        }
+
+        .card-body{
+            .table-content {
+                border: 1px solid black;
+    
+                .pop-up-thead-table {
+                    background-color: rgb(131, 184, 46) !important;
+                    font-size: 20px;
+                }
+    
+                .pop-up-body-table {
+                    font-size: 18px;
+                }
+    
+                thead {
+                    background-color: rgb(131, 184, 46);
+                    border: 1px solid black;
+                    text-align: center;
+                }
+    
+                td,
+                th {
+                    border: 1px solid black;
+                    padding: 10px 10px;
+                }
+            }
+        }
+
+        .btn-add-exericse{
+            margin-top: 20px;
+        }
     }
+
 
     .list-exercise-program-item {
         .btn-add-exericse {
