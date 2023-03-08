@@ -38,7 +38,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 500px;
+        width: 650px;
         background-color: #fff;
         z-index: 2;
         border-radius: 20px;
@@ -49,19 +49,59 @@
     }
 
     .create-exercise-form {
-        margin-top: 10%;
+        padding: 0 20px;
         height: 440px;
-        .btn-submit{
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .btn-submit {
             background-color: rgb(131, 184, 46) !important;
+            font-weight: bold;
         }
-        .btn-submit:hover{
+
+        .btn-submit:hover {
             background-color: yellow !important;
         }
+
+        .table-content {
+            border: 1px solid black;
+
+            .pop-up-thead-table {
+                background-color: rgb(131, 184, 46) !important;
+                font-size: 20px;
+            }
+
+            .pop-up-body-table {
+                font-size: 18px;
+            }
+
+            thead {
+                background-color: rgb(131, 184, 46);
+                border: 1px solid black;
+                text-align: center;
+            }
+
+            td,
+            th {
+                border: 1px solid black;
+                padding: 10px 10px;
+            }
+
+
+        }
+
+
     }
 
     .form-group {
         margin-bottom: 8px;
+
+        .btn-submit {
+            margin-top: 10px;
+        }
     }
+
+
 }
 
 .create-exercise-program-header {
@@ -88,7 +128,7 @@
 
 }
 
-.create-exercise-pop-up{
+.create-exercise-pop-up {
     textarea {
         width: 100%;
     }

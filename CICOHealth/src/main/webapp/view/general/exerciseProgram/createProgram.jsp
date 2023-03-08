@@ -1,3 +1,10 @@
+<%-- 
+    Document   : createProgram
+    Created on : Mar 8, 2023, 8:10:25 AM
+    Author     : Admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,17 +25,17 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+    <link rel="stylesheet" href="/CICOHealth/assets/css/Homepage.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/sass/main/createexerciseprogram.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+    <link rel="stylesheet" href="/CICOHealth/assets/sass/main/createexerciseprogram.css">
 
     <title>Create Program</title>
 </head>
 
 <body>
+    <%@include file = "/view/general/navbar.jsp"%>
+
     <div class="container">
         <div class="create-exercise-program-header">
             <h1>Create Exercise Program</h1>
@@ -174,8 +181,7 @@
                             </div>
                         </div>
                         <div class="btn-add-exericse">
-                            <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up">Add
-                                exercise</a>
+                            <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up">Add exercise</a>
                         </div>
                     </div>
                 </div>
@@ -239,7 +245,7 @@
                 </form>
             </div>
         </div> -->
-
+        
 
         <!-- pop-up-create-exercise -->
         <div class="pop-up create-exercise-pop-up" id="create-exercise-pop-up">
@@ -365,14 +371,11 @@
             </div>
         </footer>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('#create-table').DataTable();
-        });
-    </script>
 
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/createProgram.js"></script>
+    <script src="/CICOHealth/assets/scripts/popup.js"></script>
+    <script src="/CICOHealth/assets/scripts/createProgram.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>

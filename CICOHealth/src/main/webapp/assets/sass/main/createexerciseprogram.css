@@ -39,7 +39,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
+  width: 650px;
   background-color: #fff;
   z-index: 2;
   border-radius: 20px;
@@ -48,17 +48,43 @@
   text-align: center;
 }
 .pop-up .create-exercise-form {
-  margin-top: 10%;
+  padding: 0 20px;
   height: 440px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .pop-up .create-exercise-form .btn-submit {
   background-color: rgb(131, 184, 46) !important;
+  font-weight: bold;
 }
 .pop-up .create-exercise-form .btn-submit:hover {
   background-color: yellow !important;
 }
+.pop-up .create-exercise-form .table-content {
+  border: 1px solid black;
+}
+.pop-up .create-exercise-form .table-content .pop-up-thead-table {
+  background-color: rgb(131, 184, 46) !important;
+  font-size: 20px;
+}
+.pop-up .create-exercise-form .table-content .pop-up-body-table {
+  font-size: 18px;
+}
+.pop-up .create-exercise-form .table-content thead {
+  background-color: rgb(131, 184, 46);
+  border: 1px solid black;
+  text-align: center;
+}
+.pop-up .create-exercise-form .table-content td,
+.pop-up .create-exercise-form .table-content th {
+  border: 1px solid black;
+  padding: 10px 10px;
+}
 .pop-up .form-group {
   margin-bottom: 8px;
+}
+.pop-up .form-group .btn-submit {
+  margin-top: 10px;
 }
 
 .create-exercise-program-header {
