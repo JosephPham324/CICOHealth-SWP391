@@ -283,5 +283,5 @@ function displayCaloriesChart(analyzedData, chartElement) {
       responsive: true,
     },
   });
-  return chart;
-}
+  return chart
+;}
