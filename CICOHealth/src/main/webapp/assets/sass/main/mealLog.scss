@@ -6,41 +6,39 @@
 }
 
 .container {
-    margin-top: 5%;
-}
 
-.txt-title {
-    text-align: center;
+    .txt-title {
+        margin-top: 3%;
+        text-align: center;
+    }
+    
+    .table-content thead {
+        background-color: rgb(131, 184, 46);
+    }
+    
+    .table-content tfoot {
+        background-color: yellow;
+    }
+    
+    .table-content{
+        margin-bottom: 20px;
+    }
+    .datepicker-container {
+        @include common.flex-display(row,normal,center);
+    }
+    
+    #date-picker {
+        text-align: center;
+        @include common.responsive-font-size(16px, 32px, 320, 1080);
+        // font-size: 16px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        color: #444;
+    }
 }
-
-.table-content thead {
-    background-color: rgb(131, 184, 46);
-}
-
-.table-content tfoot {
-    background-color: yellow;
-}
-
-.table-content{
-    margin-bottom: 20px;
-}
-
-.datepicker-container {
-    @include common.flex-display(row,normal,center);
-}
-
-#date-picker {
-    text-align: center;
-    @include common.responsive-font-size(16px, 32px, 320, 1080);
-    // font-size: 16px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    color: #444;
-}
-
 
 .title-total {
     background-color: rgb(131, 184, 46);

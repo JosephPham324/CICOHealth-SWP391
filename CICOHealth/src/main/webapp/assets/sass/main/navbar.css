@@ -1,9 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+body {
+  font-family: "Roboto", sans-serif !important;
+}
+
 .navbar {
   background-color: rgb(131, 184, 46) !important;
 }
 .navbar .navbar-brand {
   color: white;
-  font-size: 24px;
+  font-size: 24px !important;
+  font-weight: bold !important;
 }
 .navbar .navbar-brand .nav-title {
   color: yellow;
@@ -14,6 +20,7 @@
 .navbar .navbar-collapse .nav-item a {
   color: white;
   font-size: 20px;
+  font-weight: bold;
 }
 .navbar .navbar-collapse .nav-item a:hover {
   color: black;

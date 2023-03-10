@@ -83,7 +83,8 @@ h2 .display-4 {
 
 ::-webkit-scrollbar {
   width: 0px;
-  background: transparent; /* make scrollbar transparent */
+  background: transparent;
+  /* make scrollbar transparent */
 }
 
 .btn-primary {
@@ -97,7 +98,8 @@ h2 .display-4 {
   background-color: yellow !important;
 }
 
-.navbar-brand {
+.nav-title-exercise-search {
+  margin-top: 3%;
   font-weight: bold;
   font-size: 2em !important;
   font-family: "Kanit", sans-serif !important;

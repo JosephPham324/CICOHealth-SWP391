@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif !important;
+}
+
 .navbar {
   background-color: rgb(131, 184, 46) !important;
 
   .navbar-brand {
     color: white;
-    font-size: 24px;
+    font-size: 24px !important;
+    font-weight: bold !important;
 
     .nav-title {
       color: yellow;
@@ -17,6 +24,7 @@
       a {
         color: white;
         font-size: 20px;
+        font-weight: bold;
       }
 
       a:hover {
@@ -63,13 +71,16 @@
   .footer-content {
     .footer-item {
       margin-top: 15px;
-      .footer-title{
+
+      .footer-title {
         color: white;
       }
-      .school-name{
+
+      .school-name {
         color: yellow;
       }
-      p{
+
+      p {
         color: white;
       }
     }

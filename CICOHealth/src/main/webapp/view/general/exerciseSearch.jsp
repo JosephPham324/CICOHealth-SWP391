@@ -14,8 +14,7 @@
               integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
-        <!--        //footer-->
-        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+
 
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -36,7 +35,7 @@
         <div class="nav">
             <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back
                 </span></a>
-            <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
+            <h1 class="navbar-brand nav-title-exercise-search mx-auto">VIEW EXERCISE</h1>
         </div>
         <div class="container">
             <table id="info-table" class="hover" style="width:100%">
