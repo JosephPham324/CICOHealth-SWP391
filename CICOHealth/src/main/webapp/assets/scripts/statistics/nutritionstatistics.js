@@ -14,7 +14,7 @@ async function fetchDate() {
   const startDate = document.getElementById("start-date").value;
   const endDate = document.getElementById("end-date").value;
   let data = await fetchData("nutrition", startDate, endDate);
-  console.log(data);
+  // console.log(data);
   return await data;
 }
 //Add event listener to both date pickers
@@ -110,6 +110,7 @@ async function displayData() {
   //fetch data
   let data = await fetchDate("nutrition");
   let analyzedData = calculateNutritionStatistics(data);
+  console.log(analyzedData)
   console.log(JSON.stringify(analyzedData));
   if (displayType == "table") {
     fillStatisticsTable(analyzedData);
@@ -117,7 +118,6 @@ async function displayData() {
     let chart = document.getElementById("statistics-chart");
     switch (dataType) {
       case "Macronutrients":
-        console.log("hiHi");
         displayedChart = displayMacronutrientsChart(analyzedData, chart);
         break;
       case "Calories":
@@ -175,18 +175,33 @@ function displayMacronutrientsChart(analyzedData, chartElement) {
     },
     options: {
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Date",
+          },
+        },
         y: {
           stacked: true,
+          title: {
+            display: true,
+            text: "Grams",
+          },
         },
+      },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
       },
       responsive: true,
       plugins: {
         title: {
           display: true,
-          text: 'Macronutrients consumption trends'
+          text: "Macronutrients consumption trends",
         },
         tooltip: {
-          mode: 'index'
+          mode: "index",
         },
       },
     },
@@ -239,19 +254,34 @@ function displayCaloriesChart(analyzedData, chartElement) {
       plugins: {
         title: {
           display: true,
-          text: 'Calories consumption and expenditure trends'
+          text: "Calories consumption and expenditure trends",
         },
         tooltip: {
           mode: "index",
         },
       },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
+      },
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Date",
+          },
+        },
         y: {
           stacked: false,
+          title: {
+            display: true,
+            text: "Calories",
+          },
         },
       },
       responsive: true,
     },
   });
-  return chart;
-}
+  return chart
+;}

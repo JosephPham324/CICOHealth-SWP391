@@ -10,6 +10,7 @@ import bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.ExerciseLogDao;
+import dao.HealthInfoDao;
 import dao.MealLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -69,9 +70,9 @@ public class StatisticsController extends HttpServlet {
         String URI = request.getRequestURI();
 
         if (URI.endsWith("/data")) {
-            String responseData = defaultResponseData();
+            String responseData;
             Object user = request.getSession().getAttribute("user");
-            String userID = "USME000001";
+            String userID = ((User)user).getUserID();
             String startDate = request.getParameter("start");
             String endDate = request.getParameter("end");
             Gson gson = new Gson();
@@ -119,11 +120,30 @@ public class StatisticsController extends HttpServlet {
                     printResponseJSON(response, defaultResponseData());
                 }
             }
+            
+             //healthInfo exercise stats
+            if (URI.matches(".*/statistics/health-info(/.*)*")) {
+                    responseData = new HealthInfoDao().getAverageHealthInfo(startDate, endDate, userID);
+                    printResponseJSON(response, responseData);
+                    return;
+            }
         }
-        if (URI.endsWith("nutrition")){
-                    request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
+        if (URI.matches(".*/(nutrition(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/nutritionStatistics.jsp").forward(request, response);
+            return;
         }
-        request.getRequestDispatcher("/view/user/statistics/statistics.html").forward(request, response);
+        if (URI.matches(".*/(exercise/cardio(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/cardioStatistics.jsp").forward(request, response);
+            return;
+        }
+        if (URI.matches(".*/(exercise/resistance(/.*)*)$")) {
+            request.getRequestDispatcher("/view/user/statistics/resistanceStatistics.jsp").forward(request, response);
+            return;
+        }
+        if(URI.matches(".*/(health-info(/.*)*)$")){
+            request.getRequestDispatcher("/view/user/statistics/healthInfoStatistic.jsp").forward(request, response);
+        }
+        response.sendRedirect("/CICOHealth/user/statistics/nutrition");
     }
 
     private void printResponseJSON(HttpServletResponse response, String json) throws IOException {

@@ -13,7 +13,7 @@
  *  }>,
  *  mealLogs: Array<{
  *    logDate: string,
- *    nutrition: [number, number, number, number]
+ *    nutrition: [number, number, number, number]|
  *  }>
  * }
  * |
@@ -63,33 +63,6 @@ async function fetchData(type, startDate, endDate) {
   //Return data
   return responseData;
 }
-function analyzeLogDataByDate(logsCollection, attribute) {
-  let datePrevious = null;
-  let dateCurrent = null;
-  let dateData = [];
-  let currentDateData = null;
-  for (let i = 0; i < logsCollection.length; i++) {
-    let log = logsCollection[i];
-    dateCurrent = log.logDate;
-    if (datePrevious !== dateCurrent) {
-      //Add previous date data to date data
-      if (currentDateData !== null) dateData.push(currentDateData);
-      //Reset date data
-      currentDateData = {
-        date: dateCurrent,
-        data: log[`${attribute}`],
-      };
-      datePrevious = dateCurrent;
-      continue;
-    }
-    currentDateData.data += log[`${attribute}`];
-    datePrevious = dateCurrent;
-    if (i === logsCollection.length - 1) {
-      dateData.push(currentDateData);
-    }
-  }
-  return dateData;
-}
 //----------------------------------------------------------------------------------------------
 /*----------------Nutrition Statistics-----------------------*/
 /**
@@ -119,6 +92,7 @@ function analyzeLogDataByDate(logsCollection, attribute) {
  *                   }, ...]
  */
 function calculateNutritionStatistics(logs) {
+
   // Initialize an empty object to store the daily statistics
   const dailyStats = {};
 
@@ -176,6 +150,11 @@ function calculateNutritionStatistics(logs) {
     stat.netCalories = stat.caloriesConsumed - stat.caloriesBurnt;
   });
 
+  //Sort the daily stats array by date
+  dailyStatsArray.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
   // Return the daily stats array
   return dailyStatsArray;
 }
@@ -199,7 +178,15 @@ function getWeekEndpoints(year, weekNumber) {
     firstWeekEnd.getTime() + (weekNumber - 2) * daysInWeek * 86400000
   );
   const endDate = new Date(startDate.getTime() + 6 * 86400000);
-  return { startDate, endDate };
+  //Format the dates into yyyy-mm-dd
+  const formatDate = (date) => {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${date.getFullYear()}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
+  };
+  return { startDate: formatDate(startDate),endDate: formatDate(endDate) };
 }
 
 /**
@@ -286,6 +273,7 @@ function countExercisesPerWeek(data) {
  * @returns {Object} An object containing the name of the exercise, the total number of times it was performed,
  * and an array of objects containing the count for each week the exercise was performed, as well as the start and
  * end dates of the week.
+ * @deprecated
  */
 function getExerciseFrequency(exerciseName, data) {
   const exerciseData = {
@@ -373,6 +361,20 @@ function getDailyTopSets(data) {
   // return the final result array
   return result;
 }
+
+function findBestSet(topSetsCollection){
+  let bestSet = {
+    weight: 0,
+    rep: 0,
+  }
+  topSetsCollection.forEach(topSet => {
+    if (topSet.weight > bestSet.weight){
+      bestSet = topSet
+    }
+  })
+  return bestSet
+}
+
 /*
  * This function calculates statistics for a set of exercise logs
  * It takes an array of exercise logs as input and returns an object containing statistics
@@ -445,6 +447,22 @@ function calculateResistanceExerciseStats(exerciseLogs) {
   // Return the exerciseStats object
   return exerciseStats;
 }
+
+function calculate1RM(weight,reps){
+  return weight / (1.0278 - 0.0278 * reps);
+}
+
+function calculateRepRange(weight,reps){
+  let _1RM = calculate1RM(weight,reps);
+  let percentages = {};
+  let decrement = 3;
+  for (let reps = 0; reps < 30; reps++) {
+    let weight = _1RM * (100 - decrement * reps) / 100;
+    percentages[reps+1] = weight;
+  }
+  return percentages;
+}
+
 //----------------Cardio exercise statistics
 function calculateDailyCardioStats(exerciseLogs) {
   const cardioLogs = exerciseLogs.filter((log) => {
@@ -457,17 +475,21 @@ function calculateDailyCardioStats(exerciseLogs) {
     const logDate = log.logDate;
     const timeSpent = log.timeSpent;
     const caloriesBurnt = (log.exercise.caloriesPerHour * timeSpent) / 60;
-    const exerciseName = log.exercise.exerciseName;
+    const exerciseObj = {
+      exerciseName: log.exercise.exerciseName,
+      timeSpent: timeSpent,
+      caloriesBurnt: caloriesBurnt,
+    };
 
     if (cardioStats[logDate]) {
       cardioStats[logDate].timeSpent += timeSpent;
       cardioStats[logDate].caloriesBurnt += caloriesBurnt;
-      cardioStats[logDate].exerciseNames.push(exerciseName);
+      cardioStats[logDate].exerciseObjects.push(exerciseObj);
     } else {
       cardioStats[logDate] = {
         timeSpent,
         caloriesBurnt,
-        exerciseNames: [exerciseName],
+        exerciseObjects: [exerciseObj],
       };
     }
   });
@@ -534,11 +556,13 @@ function calculateCardioExerciseStats(exerciseLogs) {
   // Return array of exercise info objects
   return Object.values(exercises);
 }
+//----------------Health information statistics
+
+
 
 //Export fetch data function
 export {
   fetchData,
-  analyzeLogDataByDate,
   getDailyTopSets,
   countExercisesPerWeek,
   getExerciseFrequency,
@@ -546,4 +570,7 @@ export {
   calculateDailyCardioStats,
   calculateCardioExerciseStats,
   calculateNutritionStatistics,
+  calculate1RM,
+  calculateRepRange,
+  findBestSet
 };
