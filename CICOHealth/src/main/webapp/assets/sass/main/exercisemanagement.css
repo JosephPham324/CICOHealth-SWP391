@@ -36,4 +36,16 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+}
+
+.info-table {
+  margin: 0 auto;
+  max-width: 800px !important;
+  padding: 0 50px;
+}
+
+.error {
+  color: red;
+  font-style: initial;
+  font-weight: bold;
 }/*# sourceMappingURL=exercisemanagement.css.map */

@@ -158,7 +158,7 @@
                             <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
                         </div> -->
                         <div class="offset-5 col-2">
-                            <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                            <button name="btn-submit" type="submit" class="btn" id="btn-submit" onclick="submitUpdateLog()">Submit</button>
                         </div>
                     </div>
                 </form>
