@@ -1,0 +1,192 @@
+@use "../mixins/common";
+
+* {
+    box-sizing: border-box;
+}
+
+.prevent-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.pop-up {
+    @include common.absolute-position();
+    display: none;
+
+    &.active {
+        display: block;
+        position: fixed;
+    }
+
+    &>.pop-up-content {
+        position: relative;
+        z-index: 5;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include common.dimension(100vw, 100vh);
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1 !important;
+    }
+
+    .create-exercise-pop-up-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 650px;
+        background-color: #fff;
+        z-index: 2;
+        border-radius: 20px;
+    }
+
+    .txt-title-pop-up {
+        text-align: center;
+    }
+
+    .create-exercise-form {
+        padding: 0 20px;
+        height: 440px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .btn-submit {
+            background-color: rgb(131, 184, 46) !important;
+            font-weight: bold;
+        }
+
+        .btn-submit:hover {
+            background-color: yellow !important;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+
+        .btn-submit {
+            margin-top: 10px;
+        }
+    }
+
+
+}
+
+.create-exercise-program-header {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.create-exercise-program-form-content {
+    .btn-submit {
+        margin: 2% 0;
+        text-align: center;
+
+        .btn {
+            font-weight: bold;
+            background-color: rgb(131, 184, 46) !important;
+        }
+
+        .btn:hover {
+            background-color: yellow !important;
+        }
+    }
+}
+
+.create-exercise-pop-up {
+    textarea {
+        width: 100%;
+    }
+}
+
+.create-exercise-program-form {
+    border: 2px solid black;
+    margin-bottom: 10%;
+
+    .form-item {
+        margin: 20px 0;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .form-item-input input {
+        width: 100%;
+        height: 40px;
+    }
+
+    .form-item-input textarea {
+        width: 100%;
+    }
+
+    .list-exercise-program-item {
+        .card-header {
+            text-align: left;
+        }
+
+        .card-body{
+            .table-content {
+                border: 1px solid black;
+    
+                .pop-up-thead-table {
+                    background-color: rgb(131, 184, 46) !important;
+                    font-size: 20px;
+                }
+    
+                .pop-up-body-table {
+                    font-size: 18px;
+                }
+    
+                thead {
+                    background-color: rgb(131, 184, 46);
+                    border: 1px solid black;
+                    text-align: center;
+                }
+    
+                td,
+                th {
+                    border: 1px solid black;
+                    padding: 10px 10px;
+                }
+            }
+        }
+
+        .btn-add-exericse{
+            margin-top: 20px;
+        }
+    }
+
+
+    .list-exercise-program-item {
+        .btn-add-exericse {
+            text-align: right;
+
+            a {
+                font-weight: bold;
+                background-color: rgb(131, 184, 46) !important;
+            }
+
+            a:hover {
+                background-color: yellow !important;
+
+            }
+
+        }
+
+        .card-header {
+            background-color: rgb(131, 184, 46) !important;
+            font-weight: bold;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .card-header:hover {
+            background-color: yellow !important;
+        }
+    }
+}
