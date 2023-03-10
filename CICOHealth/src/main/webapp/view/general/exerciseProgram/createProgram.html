@@ -18,10 +18,10 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+    <link rel="stylesheet" href="/CICOHealth/assets/css/Homepage.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/sass/main/createexerciseprogram.css">
+    <link rel="stylesheet" href="/CICOHealth/assets/sass/main/createexerciseprogram.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 
@@ -208,7 +208,147 @@
                         </div>
                     </div>
                 </div>
+                <div class="card list-exercise-program-item">
+                    <div class="card-header btn" data-toggle="collapse" data-target="#program1">
+                        Workout 1
+                    </div>
+                    <div class="card-body collapse" data-toggle="collapse" aria-expanded="false" id="program1">
+                        <div class="form-item row">
+                            <div class="offset-2 col-2">
+                                <label for="txtWorkoutID">WorkoutID</label>
+                            </div>
+                            <div class="col-6 form-item-input">
+                                <input id="txtWorkoutID" name="txtWorkoutID" placeholder="Enter workout ID" type="text">
+                            </div>
+                        </div>
+                        <div class="form-item row">
+                            <div class="offset-2 col-2">
+                                <label for="txtProgramID">ProgramID</label>
+                            </div>
+                            <div class="col-6 form-item-input">
+                                <input id="txtProgramID" name="txtProgramID" placeholder="Enter program ID" type="text">
+                            </div>
+                        </div>
+                        <div class="form-item row">
+                            <div class="offset-2 col-2">
+                                <label for="txtWorkoutName">WorkoutName</label>
+                            </div>
+                            <div class="col-6 form-item-input">
+                                <input id="txtWorkoutName" name="txtWorkoutName" placeholder="Enter workout name"
+                                    type="text">
+                            </div>
+                        </div>
+                        <div class="form-item row">
+                            <div class="offset-2 col-2">
+                                <label for="txtWorkoutDate">WorkoutDate</label>
+                            </div>
+                            <div class="col-6 form-item-input">
+                                <input id="txtWorkoutDate" name="txtWorkoutDate" placeholder="Enter workout date"
+                                    type="text">
+                            </div>
+                        </div>
+                        <div class="form-item row">
+                            <div class="offset-2 col-2">
+                                <label for="txtWorkoutDescription">WorkoutDescription</label>
+                            </div>
+                            <div class="col-6 form-item-input">
+                                <textarea name="txtWorkoutDescription" id="txtWorkoutDescription" cols="30" rows="5"
+                                    placeholder="Enter workout description"></textarea>
+                            </div>
+                        </div>
+                        <hr>
 
+                        <div class="form-item row">
+                            <div class="col-2">
+                                <label for="txtListExercises">List Exercises</label>
+                            </div>
+                        </div>
+
+                        <table id="create-table" class="hover table-content" style="width: 100%">
+                            <thead class="pop-up-thead-table">
+                                <tr>
+                                    <th>Exercise Order</th>
+                                    <th>Set</th>
+                                    <th>Rep</th>
+                                    <th>Weight</th>
+                                    <th>Duration</th>
+                                    <th>Instruction</th>
+                                </tr>
+                            </thead>
+                            <tbody class="pop-up-body-table">
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+                                <tr>
+                                    <td>AAA</td>
+                                    <td>3</td>
+                                    <td>30/30/40</td>
+                                    <td>20/25/30</td>
+                                    <td>BBB</td>
+                                    <td>CCC</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="btn-add-exericse">
+                            <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up">Add
+                                exercise</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="btn-submit">
                     <button name="submit" type="submit" class="btn">Submit</button>
                 </div>
@@ -307,8 +447,8 @@
         });
     </script>
 
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/createProgram.js"></script>
+    <script src="/CICOHealth/assets/scripts/popup.js"></script>
+    <script src="/CICOHealth/assets/scripts/createProgram.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>
