@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+
+
+.converter {
+    margin: auto;
+  width: 50%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 10px;
+  background-color: rgba(136, 243, 163, 0.5);
+}
+.converter .header {
+  height: 80px;
+  font-size: 1.5em;
+  border-radius: 10px 10px 0 0;
+}
+.converter .nav-item {
+  z-index: 50;
+  background-color: #e9ecef;
+  padding: 5px;
+  
+}
+.converter .nav-item.active {
+  background-color: rgb(16, 155, 109);
+}
+.converter .nav-item.active a {
+  font-weight: bold;
+  color: white !important;
+}
+.converter .converter-panel {
+  display: none;
+}
+.converter .converter-panel form {
+  padding: 10px;
+  width: 100%;
+  font-size: 1.2em;
+}
+.converter .converter-panel form label {
+  text-transform: uppercase;
+}
+.converter .converter-panel.active {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  justify-content: normal;
+  gap: 20px;
+}
+
+.input-group-append > div {
+  background-color: whitesmoke;
+  color: black;
+  font-weight: bolder !important;
+}
+
+.tooltip_ {
+  position: relative;
+  display: inline-block;
+}
+.tooltip_ .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 10px);
+  left: 40%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip_ .tooltiptext:after {
+  content: "";
+  color: black;
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  transform: rotate(180deg);
+}
+.tooltip_:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.navbar-brand {
+  font-family: "Pattrick Hand";
+  font-style: italic;
+  font-weight: 900;
+  color: green !important;
+}
+
+button[name=submit] {
+  font-size: 1.2em;
+  border-radius: 20px;
+}/*# sourceMappingURL=converter.css.map */

@@ -127,6 +127,14 @@
         <servlet-name>StatisticsController</servlet-name>
         <servlet-class>controller.StatisticsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Conversion</servlet-name>
+        <jsp-file>/view/general/utilities/converter.jsp</jsp-file>
+    </servlet>   
+    <servlet-mapping>
+        <servlet-name>Conversion</servlet-name>
+        <url-pattern>/conversion</url-pattern>
+    </servlet-mapping>     
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -179,6 +187,12 @@
         <servlet-name>StatisticsController</servlet-name>
         <url-pattern>/user/statistics/*</url-pattern>
     </servlet-mapping>
+    
+    
+    
+    
+    
+    
     <session-config>
         <session-timeout>
             60
