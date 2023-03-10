@@ -12,6 +12,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/statistics/statistics.css">
+        ${initParam.Bootstrap}   
+        ${initParam.FontAwesome}
         <title>Cardio Exercise Statistics</title>
     </head>
     <body>

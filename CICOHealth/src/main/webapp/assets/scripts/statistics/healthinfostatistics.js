@@ -55,12 +55,12 @@ document.getElementById("display-type").dispatchEvent(new Event("change"));
 
 //Function to handle data display
 async function displayData() {
-    let displayType = document.getElementById("display-type").value;
+//    let displayType = document.getElementById("display-type").value;
     let dataType = document.getElementById("data").value;
     //fetch data
     let data = await fetchDate();
     console.log(data);
-    let chart = document.getElementById("statistics-chart");
+//    let chart = document.getElementById("statistics-chart");
     switch (dataType) {
         case "Calories":
             displayedChart = displayCalorieChart(data);
