@@ -1,16 +1,29 @@
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function removeWorkout(element) {
+  let target = element.getAttribute("data-target");
+  let workout = document.querySelector(target);
+  workout.parentNode.remove();
+}
+//-----------------------------------------------------------------------
 function addNewWorkout() {
   //Count how many workout in program
   let countWorkout = $(".list-exercise-program-item").length ?? 0;
-  let newID = countWorkout + 1;
+  let newID = uuidv4();
   console.log("newID: " + newID);
   //Create new workout
   let newWorkout = document.createElement("div");
   newWorkout.className = "card list-exercise-program-item";
   newWorkout.innerHTML = `
-                    <div class="card-header btn" data-toggle="collapse" data-target="#program-${newID}">
-                            Workout ${newID}
+                    <div class="card-header btn" data-toggle="collapse" data-target="#workout-${newID}">
+                            Workout ${countWorkout + 1}
                     </div>
-                    <div class="card-body collapse" data-toggle="collapse" aria-expanded="false" id="program-${newID}">
+                    <div class="card-body collapse workout" data-toggle="collapse" aria-expanded="false" id="workout-${newID}" data-id = "${newID}">
                         <div class="form-item row">
                             <div class=" col-3">
                                 <label for="txtWorkoutName">Workout Name</label>
@@ -70,8 +83,12 @@ function addNewWorkout() {
                             </tbody>
                         </table>
                         <div class="btn-add-exericse">
-                            <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up-${newID}" data-target = "#program-${newID}" >Add
+                            <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up-${newID}" data-target = "#workout-${newID}" >Add
                                 exercise</a>
+                        </div>
+                        <div>
+                        <a href="#" class="btn btn-create-exercise-pop-up" id="btn-delete-workout" data-target = "#workout-${newID}" onclick="removeWorkout(this)">Remove
+                            Workout</a>
                         </div>
                     </div>
     `;
@@ -84,14 +101,14 @@ function addNewWorkout() {
   txtWorkoutName.addEventListener("change", function () {
     let workoutName = txtWorkoutName.value;
     let workoutHeader = document.querySelector(
-      `.card-header[data-target="#program-${newID}"]`
+      `.card-header[data-target="#workout-${newID}"]`
     );
     workoutHeader.innerHTML = workoutName;
   });
 
   //Add event listener to button add exercise
   let btnAddExercise = document.querySelector(
-    `#program-${newID} #btn-create-exercise-pop-up-${newID}`
+    `#workout-${newID} #btn-create-exercise-pop-up-${newID}`
   );
   btnAddExercise.addEventListener("click", function () {
     selectedWorkoutIndex = newID;
@@ -135,12 +152,10 @@ function ExerciseListRowHtml(
   exerciseID
 ) {
   //Calculate how many row in table
-  let countRow = document.querySelectorAll(
-    "#create-table-" + selectedWorkoutIndex + " tbody tr"
-  ).length;
+  let rowID = uuidv4();
 
   return `
-    <tr id = "workout-${id}-exercise-${countRow + 1}">
+    <tr id = "workout-${id}-exercise-${rowID}">
         <td data-id = "${exerciseID}">${exerciseName}</td>
         <td>${order}</td>
         <td>${set}</td>
@@ -150,14 +165,14 @@ function ExerciseListRowHtml(
         <td>${instruction}</td>
         <td>
         <a class="btn" id = "btn-edit-${id}-exercise-${
-    countRow + 1
+    rowID
   }" data-target = "#workout-${id}-exercise-${
-    countRow + 1
+    rowID
   }" onclick = "fillEditExerciseForm(this)">Edit</a>
         <a class="btn" id = "btn-delete-${id}-exercise-${
-    countRow + 1
+    rowID
   }" data-target = "#workout-${id}-exercise-${
-    countRow + 1
+    rowID
   }" onclick = "deleteExercise(this)">Delete</a>
         </td>
     </tr>
@@ -271,9 +286,6 @@ function addExerciseToWorkout() {
  * Finally, it logs the completed program object to the console.
  */
 function submitProgramCreationForm() {
-  // Get the number of workouts on the form
-  let numberOfWorkout = document.querySelectorAll(".card-header").length;
-
   // Get the program name and description from the form
   let programName = document.querySelector("#txtProgramName").value;
   let programDescription = document.querySelector(
@@ -288,12 +300,15 @@ function submitProgramCreationForm() {
   };
 
   // Loop through each workout on the form and create an object to represent it
-  for (let i = 0; i < numberOfWorkout; i++) {
-    let id = i + 1;
-    let workout = createWorkoutObject(id);
-    program.workouts.push(workout);
-  }
-
+  //Get workout elements
+  let workoutElements = document.querySelectorAll(".workout");
+  //Loop through workout elements
+  workoutElements.forEach((workoutElement) => {
+    //Get workout id
+    let workoutId = workoutElement.dataset.id;
+    let workout = createWorkoutObject(workoutId);
+    program.workoutCollection.push(workout);
+  });
   // Log the completed program object to the console
   console.log(program);
   post("/CICOHealth/exercise-programs/create", {program:JSON.stringify(program)});
@@ -349,9 +364,9 @@ function createWorkoutObject(id) {
     let exerciseInstruction = document.querySelector(
       `#create-table-${id} tbody tr:nth-child(${j + 1}) td:nth-child(7)`
     ).innerHTML;
-    let exerciseName = document.querySelector(
+    let exerciseID = document.querySelector(
       `#create-table-${id} tbody tr:nth-child(${j + 1}) td:nth-child(1)`
-    ).dataSet.id;
+    ).dataset.id;
 
     let exercise = {
       order: exerciseOrder,
@@ -360,10 +375,11 @@ function createWorkoutObject(id) {
       weight: exerciseWeight,
       duration: exerciseDuration,
       instruction: exerciseInstruction,
-      workoutExercisePK: exerciseName,
+      workoutExercisePK: {exerciseID: exerciseID},
     };
+    // console.log(exercise)
     // Push the exercise object onto the workout's exercises array
-    workout.exercises.push(exercise);
+    workout.workoutExercisesCollection.push(exercise);
   }
   return workout;
 }

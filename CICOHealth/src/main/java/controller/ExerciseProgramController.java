@@ -87,9 +87,9 @@ public class ExerciseProgramController extends HttpServlet {
         Gson gson = new Gson();
         ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
 //        System.out.println(programObject.toString());
-        User user
-                = new User("USME000001");
-//                (User) request.getSession().getAttribute("user");
+        User user =
+//                = new User("USME000001");
+                (User) request.getSession().getAttribute("user");
         programObject.setCreatedBy(user);
         System.out.println(programObject.getCreatedBy().toString());
         try {
