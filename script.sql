@@ -120,9 +120,10 @@ CREATE TABLE Workout (
 CREATE TABLE WorkoutExercises (
   workoutID varchar(10) NOT NULL,
   exerciseID varchar(10) NOT NULL,
+  exerciseOrder int NOT NULL,
   [set] int,
   reps text,
-  weight float,
+  weight text,
   duration int,
   calorieBurnt float,
   instruction text NOT NULL,

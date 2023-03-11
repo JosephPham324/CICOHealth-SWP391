@@ -4,12 +4,19 @@
  */
 package controller;
 
+import bean.ExerciseProgram;
+import bean.User;
+import com.google.gson.Gson;
+import dao.ExerciseProgramDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,7 +41,7 @@ public class ExerciseProgramController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ExerciseProgramController</title>");            
+            out.println("<title>Servlet ExerciseProgramController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ExerciseProgramController at " + request.getContextPath() + "</h1>");
@@ -56,7 +63,11 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
+        if (URI.matches(".*/exercise-programs/create")) {
+            request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
+            return;
+        }
+        response.sendRedirect("/CICOHealth/exercise-programs/create");
     }
 
     /**
@@ -70,7 +81,26 @@ public class ExerciseProgramController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String program = request.getParameter("program");
+        response.getWriter().write(program.toString());
+        Gson gson = new Gson();
+        ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
+//        System.out.println(programObject.toString());
+        User user
+                = new User("USME000001");
+//                (User) request.getSession().getAttribute("user");
+        programObject.setCreatedBy(user);
+        System.out.println(programObject.getCreatedBy().toString());
+        try {
+            new ExerciseProgramDao().insertProgram(programObject);
+            response.sendRedirect("/CICOHealth/exercise-programs/create?insert=success");
+        } catch (Exception ex) {
+            System.err.println(ex);
+            response.getWriter().write(programObject.toString());
+            response.sendRedirect("/CICOHealth/exercise-programs/create?insert=failure");
+        }
+
     }
 
     /**

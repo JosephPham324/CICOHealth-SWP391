@@ -282,9 +282,9 @@ function submitProgramCreationForm() {
 
   // Create a new object to represent the program
   let program = {
-    name: programName,
-    description: programDescription,
-    workouts: [],
+    programName: programName,
+    programDescription: programDescription,
+    workoutCollection: [],
   };
 
   // Loop through each workout on the form and create an object to represent it
@@ -296,6 +296,7 @@ function submitProgramCreationForm() {
 
   // Log the completed program object to the console
   console.log(program);
+  post("/CICOHealth/exercise-programs/create", {program:JSON.stringify(program)});
 }
 //-----------------------------------------------------------------------
 /**
@@ -321,7 +322,7 @@ function createWorkoutObject(id) {
     workoutName: workoutName,
     workoutDate: workoutDate,
     workoutDescription: workoutDescription,
-    exercises: [],
+    workoutExercisesCollection: [],
   };
   // Get the number of exercises on the form
   let numberOfExercise = document.querySelectorAll(
@@ -350,7 +351,7 @@ function createWorkoutObject(id) {
     ).innerHTML;
     let exerciseName = document.querySelector(
       `#create-table-${id} tbody tr:nth-child(${j + 1}) td:nth-child(1)`
-    ).innerHTML;
+    ).dataSet.id;
 
     let exercise = {
       order: exerciseOrder,
@@ -359,7 +360,7 @@ function createWorkoutObject(id) {
       weight: exerciseWeight,
       duration: exerciseDuration,
       instruction: exerciseInstruction,
-      exerciseName: exerciseName,
+      workoutExercisePK: exerciseName,
     };
     // Push the exercise object onto the workout's exercises array
     workout.exercises.push(exercise);
