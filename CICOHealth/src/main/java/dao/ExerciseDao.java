@@ -80,7 +80,28 @@ public class ExerciseDao extends BaseDao {
         }
         closeConnections();
         return null;
+    }
+    
+    public List<String> getExerciseNames() {
+        try {
+            String query = "SELECT *\n"
+                    + "FROM [exercise]";
+            Exercise exercise = null;
+            List<String> exerciseNames = new ArrayList();
 
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exerciseNames.add(resultSet.getString("exerciseName"));
+            }
+            closeConnections();
+            return exerciseNames;
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        closeConnections();
+        return null;
     }
 
     public void deleteExercise(String exerciseID) {
