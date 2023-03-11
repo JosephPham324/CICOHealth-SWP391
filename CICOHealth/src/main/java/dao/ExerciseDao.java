@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,18 +85,18 @@ public class ExerciseDao extends BaseDao {
         return null;
     }
     
-    public List<String> getExerciseNames() {
+    public SortedMap<String,String> getExerciseNames() {
         try {
             String query = "SELECT *\n"
                     + "FROM [exercise]";
             Exercise exercise = null;
-            List<String> exerciseNames = new ArrayList();
+            SortedMap<String,String> exerciseNames = new TreeMap();
 
             connection = new DBContext().getConnection();
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                exerciseNames.add(resultSet.getString("exerciseName"));
+                exerciseNames.put(resultSet.getString("exerciseID"), resultSet.getString("exerciseName"));
             }
             closeConnections();
             return exerciseNames;

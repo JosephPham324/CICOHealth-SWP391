@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,7 +66,7 @@ public class ExerciseSearchController extends HttpServlet {
         String URI = request.getRequestURI();
         if (URI.endsWith("/data")) {
             if (request.getParameter("type") != null) {
-                List<String> names = new ExerciseDao().getExerciseNames();
+                TreeMap<String,String> names = (TreeMap)new ExerciseDao().getExerciseNames();
                 Gson gson = new Gson();
                 printResponseJSON(response, gson.toJson(names));
                 return;
