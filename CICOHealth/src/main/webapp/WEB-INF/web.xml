@@ -101,6 +101,11 @@
         <servlet-name>FoodSearch</servlet-name>
         <jsp-file>/view/general/foodSearch.jsp</jsp-file>
     </servlet>
+     <!--Timer-->
+    <servlet>
+        <servlet-name>Timer</servlet-name>
+        <jsp-file>/view/general/utilities/timer.jsp</jsp-file>
+    </servlet>
     <!--Mappings-->
     <servlet>
         <servlet-name>ExerciseManagementController</servlet-name>
@@ -189,6 +194,10 @@
     <servlet-mapping>
         <servlet-name>StatisticsController</servlet-name>
         <url-pattern>/user/statistics/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Timer</servlet-name>
+        <url-pattern>/timer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ExerciseProgramController</servlet-name>
