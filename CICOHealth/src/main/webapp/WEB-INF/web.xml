@@ -127,6 +127,14 @@
         <servlet-class>controller.StatisticsController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Conversion</servlet-name>
+        <jsp-file>/view/general/utilities/converter.jsp</jsp-file>
+    </servlet>   
+    <servlet-mapping>
+        <servlet-name>Conversion</servlet-name>
+        <url-pattern>/utilities/conversion/*</url-pattern>
+    </servlet-mapping>     
+    <servlet>
         <servlet-name>ExerciseProgramController</servlet-name>
         <servlet-class>controller.ExerciseProgramController</servlet-class>
     </servlet>
