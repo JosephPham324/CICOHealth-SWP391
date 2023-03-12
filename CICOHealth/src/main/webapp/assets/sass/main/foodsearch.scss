@@ -29,15 +29,14 @@
       margin: 10px 0;
     }
   }
-  
 
-  .btn-submit{
+  .btn-submit {
     background-color: rgb(131, 184, 46) !important;
     text-transform: uppercase;
     font-weight: 600;
   }
 
-  .btn-submit:hover{
+  .btn-submit:hover {
     background-color: yellow !important;
   }
 
@@ -62,7 +61,6 @@
       padding: 20px 10px;
     }
   }
-
 }
 
 main {
@@ -144,7 +142,7 @@ main {
 
     // background-color: #f5f5f5;
     box-shadow: 0px 6px 3px 3px #666666;
-    
+
     transition: all 0.3s ease-in-out;
     // background-color: rgba(255, 255, 206, 0.746);
 
@@ -231,6 +229,7 @@ main {
     }
   }
 
-.table-content thead {
-  background-color: rgb(131, 184, 46);
+  .table-content thead {
+    background-color: rgb(131, 184, 46);
+  }
 }

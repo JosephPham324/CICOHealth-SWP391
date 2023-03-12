@@ -4,9 +4,10 @@
  */
 package controller;
 
-import bean.Exercise;
+import bean.ExerciseProgram;
+import bean.User;
 import com.google.gson.Gson;
-import dao.ExerciseDao;
+import dao.ExerciseProgramDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,16 +15,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author khiem
+ * @author Pham Nhat Quang CE170036 (FPTU CANTHO)
  */
-public class ExerciseSearchController extends HttpServlet {
+public class ExerciseProgramController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,10 @@ public class ExerciseSearchController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ExerciseLogController</title>");
+            out.println("<title>Servlet ExerciseProgramController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ExerciseLogController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ExerciseProgramController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,25 +63,11 @@ public class ExerciseSearchController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.endsWith("/data")) {
-            if (request.getParameter("type") != null) {
-                TreeMap<String,String> names = (TreeMap)new ExerciseDao().getExerciseNames();
-                Gson gson = new Gson();
-                printResponseJSON(response, gson.toJson(names));
-                return;
-            }
+        if (URI.matches(".*/exercise-programs/create")) {
+            request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
+            return;
         }
-        ExerciseDao exDAO = new ExerciseDao();
-        List<Exercise> exerciseList = exDAO.getAllExercises();
-        request.setAttribute("exerciseList", exerciseList);
-        request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
-    }
-
-    private void printResponseJSON(HttpServletResponse response, String json) throws IOException {
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print(json);
-        out.flush();
+        response.sendRedirect("/CICOHealth/exercise-programs/create");
     }
 
     /**
@@ -96,7 +81,26 @@ public class ExerciseSearchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String program = request.getParameter("program");
+        response.getWriter().write(program.toString());
+        Gson gson = new Gson();
+        ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
+//        System.out.println(programObject.toString());
+        User user =
+//                = new User("USME000001");
+                (User) request.getSession().getAttribute("user");
+        programObject.setCreatedBy(user);
+        System.out.println(programObject.getCreatedBy().toString());
+        try {
+            new ExerciseProgramDao().insertProgram(programObject);
+            response.sendRedirect("/CICOHealth/exercise-programs/create?insert=success");
+        } catch (Exception ex) {
+            System.err.println(ex);
+            response.getWriter().write(programObject.toString());
+            response.sendRedirect("/CICOHealth/exercise-programs/create?insert=failure");
+        }
+
     }
 
     /**
