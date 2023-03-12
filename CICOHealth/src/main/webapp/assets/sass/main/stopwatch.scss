@@ -1,3 +1,4 @@
+@use "../mixins/common";
 :root {
 	--primary: #DC143C;
 	--dark: #1F2937;
@@ -20,7 +21,7 @@ body {
 	text-align: center;
 	background-color: var(--darkdark);
 	width: 100%;
-	max-width: 360px;
+	max-width: 500px;
 	margin: 4rem auto;
 	padding: 1rem 2rem;
 	border-radius: 1rem;
@@ -63,4 +64,52 @@ body {
 
 .controls button:active {
 	background-color: var(--dark);
+}
+
+
+// pop-up
+
+.prevent-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.pop-up {
+    @include common.absolute-position();
+    display: none;
+
+    &.active {
+        display: block;
+        position: fixed;
+    }
+
+    &>.pop-up-content {
+        position: relative;
+        z-index: 5;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include common.dimension(100vw, 100vh);
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1 !important;
+    }
+
+    .configure-pop-up-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        background-color: #fff;
+        z-index: 2;
+        border-radius: 20px;
+    }
+
+    .txt-title-pop-up {
+        text-align: center;
+    }
 }
