@@ -133,7 +133,7 @@
     </servlet>   
     <servlet-mapping>
         <servlet-name>Conversion</servlet-name>
-        <url-pattern>/conversion</url-pattern>
+        <url-pattern>/utilities/conversion/*</url-pattern>
     </servlet-mapping>     
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
