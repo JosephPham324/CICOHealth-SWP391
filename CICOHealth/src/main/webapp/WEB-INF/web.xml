@@ -9,39 +9,38 @@
     </context-param>
     <context-param>
         <param-name>JqueryValidation</param-name>
-        <param-value><![CDATA[<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>]]></param-value>
+        <param-value>&lt;script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"&gt;&lt;/script&gt;</param-value>
     </context-param>
     <context-param>
         <param-name>Bootstrap</param-name>
         <param-value>
-        <![CDATA[
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-        ]]>
+        
+        &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/&gt;
+        
         </param-value>
     </context-param>
-    
     <context-param>
         <param-name>JQuery</param-name>
-        <param-value><![CDATA[<script src="https://code.jquery.com/jquery-3.5.1.js"></script>]]></param-value>
+        <param-value>&lt;script src="https://code.jquery.com/jquery-3.5.1.js"&gt;&lt;/script&gt;</param-value>
     </context-param>
     <context-param>
         <param-name>FontAwesome</param-name>
-        <param-value><![CDATA[<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        <param-value>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />]]></param-value>
+          crossorigin="anonymous" referrerpolicy="no-referrer" /&gt;</param-value>
     </context-param>
     <context-param>
         <param-name>DataTableCDN</param-name>
         <param-value>
-        <![CDATA[
-        <link
+        
+        &lt;link
             rel="stylesheet"
             href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
-            />
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-        ]]>
+            /&gt;
+        &lt;script src="https://code.jquery.com/jquery-3.5.1.js"&gt;&lt;/script&gt;
+        &lt;script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"&gt;&lt;/script&gt;
+        
         </param-value>
     </context-param>
     <error-page>
@@ -132,6 +131,18 @@
         <servlet-name>StatisticsController</servlet-name>
         <servlet-class>controller.StatisticsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Conversion</servlet-name>
+        <jsp-file>/view/general/utilities/converter.jsp</jsp-file>
+    </servlet>   
+    <servlet-mapping>
+        <servlet-name>Conversion</servlet-name>
+        <url-pattern>/utilities/conversion/*</url-pattern>
+    </servlet-mapping>     
+    <servlet>
+        <servlet-name>ExerciseProgramController</servlet-name>
+        <servlet-class>controller.ExerciseProgramController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -187,6 +198,10 @@
     <servlet-mapping>
         <servlet-name>Timer</servlet-name>
         <url-pattern>/timer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciseProgramController</servlet-name>
+        <url-pattern>/exercise-programs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

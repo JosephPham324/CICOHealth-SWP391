@@ -14,8 +14,7 @@
               integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
-        <!--        //footer-->
-        <link rel="stylesheet" href="/CICOHealth/src/main/webapp/assets/css/Homepage.css">
+
 
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -36,7 +35,7 @@
         <div class="nav">
             <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back
                 </span></a>
-            <h1 class="navbar-brand mx-auto">VIEW EXERCISE</h1>
+            <h1 class="navbar-brand nav-title-exercise-search mx-auto">VIEW EXERCISE</h1>
         </div>
         <div class="container">
             <table id="info-table" class="hover" style="width:100%">
@@ -73,28 +72,8 @@
             </table>
         </div>
 
-        <div class="wrapper">
-            <footer>
-                <div class="row block-footer">
-                    <div class="offset-1 col-3 footer-content">
-                        <span class="school-name"><strong>FPT University Can Tho</strong></span>
-                        <p>600, Nguyen Van Cu, An Binh, Ninh Kieu, Can Tho</p>
-                        <p>Phone: (0292) 360 1996</p>
-                        <p>Email: fptu.cantho@fe.edu.vn</p>
-                    </div>
-                    <div class="offset-1 col-3 footer-content">
-                        <p>Le Duy Khanh</p>
-                        <p>Pham Nhat Quang</p>
-                        <p>Vo Hong Quan</p>
-                        <p>Huynh Gia Khiem</p>
-                        <p>Pham Tan Phat</p>
-                    </div>
-                    <div class="col-3 footer-content">
-                        <p>© 2023 All rights reserved. Our website services, content, and products are for informational purposes only. Nutrition does not provide medical advice, diagnosis, or treatment.</p>
-                    </div>
-                </div>
-            </footer>
-        </div>
+        <%@include file="/view/general/footer.jsp" %>
+
         <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/exercisesearch.js"></script>      
         <script>
