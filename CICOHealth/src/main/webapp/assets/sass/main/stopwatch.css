@@ -1,0 +1,113 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+:root {
+  --primary: #DC143C;
+  --dark: #1F2937;
+  --darkdark: #111827;
+  --light: #F3F4F6;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Fira sans", sans-serif;
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--light);
+}
+
+.watch {
+  text-align: center;
+  background-color: var(--darkdark);
+  width: 100%;
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+}
+
+.watch .time {
+  font-size: 5rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: #FFF;
+  background-color: var(--primary);
+  transition: 0.4s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.controls button:hover {
+  opacity: 0.7;
+}
+
+.controls button:active {
+  background-color: var(--dark);
+}
+
+.prevent-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.pop-up.active {
+  display: block;
+  position: fixed;
+}
+.pop-up > .pop-up-content {
+  position: relative;
+  z-index: 5;
+}
+.pop-up .overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1 !important;
+}
+.pop-up .configure-pop-up-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background-color: #fff;
+  z-index: 2;
+  border-radius: 20px;
+}
+.pop-up .txt-title-pop-up {
+  text-align: center;
+}/*# sourceMappingURL=stopwatch.css.map */
