@@ -12,15 +12,18 @@
   transform: translate(-50%, -50%);
   display: none;
 }
+
 .pop-up.active {
   z-index: 1;
   display: block;
   position: fixed;
 }
-.pop-up > .pop-up-content {
+
+.pop-up>.pop-up-content {
   position: relative;
   z-index: 5;
 }
+
 .pop-up .overlay {
   position: fixed;
   top: 50%;
@@ -36,4 +39,16 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+}
+
+.btn-submit {
+  margin-top: 10px;
+  float: right !important;
+  background-color: rgb(131, 184, 46) !important;
+  color: white !important;
+}
+
+.btn-submit:hover {
+  background-color: yellow !important;
+  color: black !important;
 }
