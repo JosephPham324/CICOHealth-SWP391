@@ -8,8 +8,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
         ${initParam.Bootstrap}
+        ${initParam.DataTableCDN}
         <link rel="stylesheet" href="/CICOHealth/assets/css/sidebar.css">
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/exercisLog.css">
         <style>
@@ -193,8 +193,6 @@
         <%@include file="/view/general/footer.jsp" %>
 
     </body>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="/CICOHealth/assets/scripts/formLog.js"></script>
     <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
     <script src="/CICOHealth/assets/scripts/formhandling.js"></script>

@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         ${initParam.Bootstrap}
         ${initParam.FontAwesome}
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/foodsearch.css" />
         <title>Food Search</title>
     </head>
 
