@@ -1,3 +1,4 @@
+ <%@include file = "/view/general/navbar.jsp"%>
 <main>
   <div class="choices">
     <label for="display-type">Display Type:</label>

@@ -33,7 +33,7 @@
                         <a class="nav-link" href="/CICOHealth/exercise-search">Exercise</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-1" role="button"
                            data-mdb-toggle="dropdown" aria-expanded="false">
                             Utilities
                         </a>
@@ -50,7 +50,7 @@
                 <c:choose>
                     <c:when test="${user!=null && user.getUserRole() == 'AD'}">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-2" role="button"
                                data-mdb-toggle="dropdown" aria-expanded="false">
                                 FAQ
                             </a>
@@ -82,7 +82,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-3" role="button"
                            data-mdb-toggle="dropdown" aria-expanded="false">
                             User
                         </a>
@@ -97,10 +97,29 @@
                                 <a class="dropdown-item" href="/CICOHealth/user/exercise-logs">Exericse Log</a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="/CICOHealth/user/statistics">Statistics</a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="/CICOHealth/log-out">Log out</a>
                             </li>
                         </ul>
                     </li>
+                    <c:if test="${user.getUserRole() == 'AD'}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-4" role="button"
+                               data-mdb-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown-4">
+                                <li>
+                                    <a class="dropdown-item" href="/CICOHealth/user/profile">Manage Users</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/CICOHealth/user/meal-logs">Manage Exercises</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>

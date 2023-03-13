@@ -361,7 +361,7 @@ function displayMealForm() {
         type="number" class="form-control"
         required="required" 
         value="${food.actualWeight}" 
-        onblur="updateFoodItem('${food.foodName}', this.value)"
+        onchange="updateFoodItem('${food.foodName}', this.value)"
         />
       </td>
       <td>

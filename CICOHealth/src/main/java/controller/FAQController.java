@@ -45,11 +45,11 @@ public class FAQController extends HttpServlet {
             throws ServletException, IOException {
         String URI = request.getRequestURI();
         if (URI.endsWith("/questions")) {
-            request.getRequestDispatcher("/view/general/FAQQuestions.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/general/faq/FAQQuestions.jsp").forward(request, response);
             return;
         }
         if (URI.endsWith("/answers")) {
-            request.getRequestDispatcher("/view/general/FAQ.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/general/faq/FAQ.jsp").forward(request, response);
             return;
         }
         if (URI.endsWith("/data")) {
