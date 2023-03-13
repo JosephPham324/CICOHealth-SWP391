@@ -1,12 +1,13 @@
 @use "../../modules/popup";
 @use "../../mixins/common";
 
-button {
+.button {
   padding: 0.5rem 1rem;
   border: none;
   background-color: #333;
   color: #fff;
   cursor: pointer;
+  height: auto;
 }
 .pop-up{
     .pop-up-content{
@@ -172,3 +173,6 @@ button {
     }
 }
 
+.cert-wrapper{
+  @include common.flex-display(row,normal,space-around);
+}

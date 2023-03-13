@@ -18,72 +18,74 @@
   </head>
   <body>
     <div class="profile">
-        <div class="profile-header">
-          <div class="profile-picture">
-            <div class="img-wrapper">
-              <img
-                src="/CICOHealth/src/main/webapp/assets/img/book.png"
-                alt="Profile Picture"
-              />
-            </div>
-            <button id="btn-update-pfp">Update</button>
+      <div class="profile-header">
+        <div class="profile-picture">
+          <div class="img-wrapper">
+            <img
+              src="/CICOHealth/src/main/webapp/assets/img/book.png"
+              alt="Profile Picture"
+            />
           </div>
-          <div class="profile-info">
-            <h2 class="profile-name">User's Name</h2>
-            <p class="profile-bio">expertProfile.bio</p>
+          <button class="button" id="btn-update-pfp">Update Photo</button>
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-name" id="username">User's Name</h2>
+          <div class="form-group">
+            <label for="expert-bio">Bio</label>
+            <textarea
+              name="expert-bio"
+              id="expert-bio"
+              cols="30"
+              rows="10"
+              style="resize: none"
+            ></textarea>
           </div>
         </div>
-        <div class="certifications">
-          <h2>Certifications</h2>
-          <ul>
-            <li class="certification">
-              <div class="certification-info">
-                <h3 class="certification-name">certification.certName</h3>
-                <p class="certification-date">certification.certDate</p>
-              </div>
-              <button class="details-button">Details</button>
-            </li>
-            <li class="certification">
-              <div class="certification-info">
-                <h3 class="certification-name">certification.certName</h3>
-                <p class="certification-date">certification.certDate</p>
-              </div>
-              <button class="details-button">Details</button>
-            </li>
-            <!-- Repeat the above list item for each certification -->
-          </ul>
-          <button id="btn-add-cert">Add</button>
-          <div class="collapse">
-            <form id="frm-add-cert" onsubmit="event.preventDefault();">
-              <div class="form-group">
-                <label for="new-cert-name">Certification Name</label>
-                <input type="text" name="cert-name" id="new-cert-name" />
-              </div>
-              <div class="form-group">
-                <label for="new-cert-date">Certification Date</label>
-                <input type="text" name="cert-name" id="new-cert-date" />
-              </div>
-              <div class="form-group">
-                <label for="new-cert-cert-issuer">Certification Issuer</label>
-                <input type="text" name="cert-name" id="new-cert-cert-issuer" />
-              </div>
-              <button id="btn-upload-cert-img">Upload image</button>
-            </form>
-          </div>
+        <div class="profile-actions">
+          <button class="button" id="btn-update-profile">Save Changes</button>
         </div>
       </div>
+      <div class="certs">
+        <h2>Certifications</h2>
+        <ul class="cert-list">
+        </ul>
+        <button class="button" id="btn-add-cert">Add</button>
+        <div class="collapse">
+          <form id="frm-add-cert" onsubmit="event.preventDefault();addCert();">
+            <div class="form-group">
+              <label for="new-cert-name">cert Name</label>
+              <input type="text" name="cert-name" id="new-cert-name" />
+            </div>
+            <div class="form-group">
+              <label for="new-cert-date">cert Date</label>
+              <input type="date" name="cert-name" id="new-cert-date" />
+            </div>
+            <div class="form-group">
+              <label for="new-cert-issuer">cert Issuer</label>
+              <input type="text" name="cert-name" id="new-cert-issuer" />
+            </div>
+            <div class="form-group">
+              <label for="new-cert-image">cert Image</label>
+              <img src="https://res.cloudinary.com/cicohealth/image/upload/v1678676494/u0gewgadkqdwgu6fnuv1.png" alt="Certification photo" id="new-cert-image" width="300px" height="200px" />
+              <a class="button" id="btn-upload-cert-img">Upload image</a>
+            </div>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </div>
 
-    <div class="pop-up" id="certification-detail">
+    <div class="pop-up" id="cert-detail">
       <div class="overlay"></div>
       <div class="pop-up-content">
-        <div class="certification-details-header">
-          <h2 class="certification-details-name">certification.certName</h2>
-          <button class="close-button">X</button>
+        <div class="cert-details-header">
+          <h2 class="cert-details-name">cert.certName</h2>
+          <button class="button">X</button>
         </div>
-        <div class="certification-details-body">
-          <p class="certification-details-date">certification.certDate</p>
-          <p class="certification-details-issuer">certification.certIssuer</p>
-          <img src="certification.certPhoto" alt="Certificate Photo" />
+        <div class="cert-details-body">
+          <p class="cert-details-date">cert.certDate</p>
+          <p class="cert-details-issuer">cert.certIssuer</p>
+          <img src="cert.certPhoto" alt="Certificate Photo" />
         </div>
       </div>
     </div>

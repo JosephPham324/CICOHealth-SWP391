@@ -32,12 +32,13 @@
   z-index: 1 !important;
 }
 
-button {
+.button {
   padding: 0.5rem 1rem;
   border: none;
   background-color: #333;
   color: #fff;
   cursor: pointer;
+  height: auto;
 }
 
 .pop-up .pop-up-content {
@@ -197,4 +198,11 @@ button {
   align-items: center;
   justify-content: normal;
   gap: 10px;
+}
+
+.cert-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: normal;
+  justify-content: space-around;
 }/*# sourceMappingURL=expert.css.map */
