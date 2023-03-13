@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <head>
+            <meta charset="UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0" />
+            <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+                rel="stylesheet"
+                />
+            <!-- MDB -->
+            <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+                rel="stylesheet"
+                />
+            <link rel="stylesheet" href="../../../assets/css/healthInfo.css"/>
+            <link rel="stylesheet" href="../../../assets/css/healthInfo.css"/>
+            <link rel="stylesheet"
+                href="../../../assets/sass/main/loginInfo.css">
+            <title>Login Information</title>
+        </head>
+        <body>
+            <div class="page-wrapper chiller-theme">
+                <!-- sidebar-wrapper  -->
+                <main class="page-content">
+                    <div class="container mt-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <form action="ProfileController" method="post">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Login Information
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="firstName">Username</label>
+                                                <input type="text"
+                                                    name="username"
+                                                    value="${l.username}"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="firstName">Password</label>
+                                                <input type="password"
+                                                    name="password"
+                                                    value="${l.passwordHash}"
+                                                    class="form-control"
+                                                    id="id_password">
+                                                <i class="far fa-eye"
+                                                    id="togglePassword"
+                                                    onclick="eyeToggle()"
+                                                    data-passwordHash="${l.passwordHash}"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text"
+                                                    name="_method" value="put"
+                                                    style="display: none"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="userID"
+                                                    value="${l.userID}"
+                                                    style="display: none"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text"
+                                                    name="googleID"
+                                                    value="${l.googleID}"
+                                                    style="display: none"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <input type="hidden" value="PUT"
+                                                name="_method">
+                                            <button id="config" type="button"
+                                                name="btnUpdate"
+                                                value="updateLogin" class="btn
+                                                btn-light">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- confirm-form -->
+
+
+
+                                <div class="popup-form pop-up"
+                                    id="configure-pop-up">
+                                    <div class="configure-overlay overlay"
+                                        id="overlay"></div>
+                                    <div class="pop-up-content
+                                        configure-pop-up-content">
+                                        <h3 class="txt-title-pop-up">Confirm
+                                            Password</h3>
+                                        <form>
+                                            <div class="config-form row">
+                                                <div class="offset-1 col-4">
+                                                    <label for="password">Password</label>
+                                                </div>
+                                                <div class="col-5">
+                                                    <input type="password"
+                                                        class="form-control"
+                                                        id="password">
+                                                </div>
+
+                                            </div>
+                                            <div class="config-form row">
+                                                <div class="offset-1 col-4">
+                                                    <label for="confirm">Confirm
+                                                        Password</label>
+                                                </div>
+                                                <div class="col-5">
+                                                    <input type="password"
+                                                        class="form-control"
+                                                        id="confirm">
+                                                </div>
+                                                <small id="confirmError"
+                                                    style="color:red;display:none;">Passwords
+                                                    do not match.</small>
+                                            </div>
+                                            <div class="config-form row">
+                                                <div class="offset-5">
+                                                    <button type="submit"
+                                                        class="btn
+                                                        btn-primary">Confirm</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <script>
+                                function showConfirm() {
+                                    document.getElementById("confirmPassword").style.display = "block";
+                                }
+                            
+                                function hideConfirm() {
+                                    document.getElementById("confirmPassword").style.display = "none";
+                                }
+                            
+                                function confirmSave() {
+                                    var password = document.getElementById("id_password").value;
+                                    var confirm = document.getElementById("confirm").value;
+                                    if (password !== confirm) {
+                                        document.getElementById("confirmError").style.display = "block";
+                                         return false;
+                                    }
+                                    hideConfirm();
+                                    return true;
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <script src="../../../assets/scripts/popup.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../../../assets/scripts/sidebar.js"></script>
+        <script src="../../../assets/scripts/loginInfo.js"></script>
+
+        <script>
+
+            const configButton = document.getElementById('config');
+          
+            configButton.addEventListener('click',()=>{
+                displayPopUp("configure-pop-up")                
+            });                                                                                                                        
+          </script>
+    </body>
+</html>
