@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Inter", sans-serif;
-  background: linear-gradient(45deg, rgb(131, 184, 46), rgb(98, 137, 36));
+  background: linear-gradient(45deg, rgb(131, 184, 46), yellow);
   padding: 40px;
 }
 
@@ -110,7 +110,7 @@ input[type=checkbox] {
 
 button {
   border: none;
-  background: linear-gradient(45deg, rgb(131, 184, 46), rgb(98, 137, 36));
+  background: linear-gradient(45deg, rgb(131, 184, 46), yellow);
   color: white;
   padding: 1rem;
   border-radius: 100px;
