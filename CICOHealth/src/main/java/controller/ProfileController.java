@@ -84,7 +84,14 @@ public class ProfileController extends HttpServlet {
             List<HealthInfo> history = new HealthInfoDao().getHistory(userID);
             request.setAttribute("history", history);
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
-
+        } else if (URI.matches(".*/expert-info(/.*)*")){
+            if (("AD").equalsIgnoreCase(role)) {
+                request.setAttribute("expertProfile", "");
+                request.setAttribute("certifications", "");
+            } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
+                response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + user.getUserID());
+                return;
+            }
         }
     }
 

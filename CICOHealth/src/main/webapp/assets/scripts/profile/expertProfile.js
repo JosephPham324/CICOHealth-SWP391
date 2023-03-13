@@ -1,5 +1,5 @@
 //--------------------Cloudinary--------------------
-function openUploadWidget() {
+function openUploadWidget(triggerElement) {
   return new Promise((resolve, reject) => {
     const myWidget = cloudinary.createUploadWidget(
       {
@@ -8,20 +8,37 @@ function openUploadWidget() {
         max_files: 1,
       },
       (error, result) => {
+        //Enable the button
+        triggerElement.disabled = false;
         if (error) {
+          //Destroy the widget
+          myWidget.destroy();
           reject(error);
         } else if (result && result.event === "success") {
+          //Destroy the widget
+          myWidget.destroy();
           resolve(result.info);
+        } else if (result && result.event === "close") {
+          //Destroy the widget
+          myWidget.destroy();
         }
       }
     );
+    triggerElement.disabled = true;
     myWidget.open();
   });
 }
 
-async function handleUpload() {
+async function handleUpload(triggerElement) {
   try {
-    const uploadedImageInfo = await openUploadWidget();
+    console.log(triggerElement);
+    const uploadedImageInfo = await openUploadWidget(triggerElement);
+    console.log(uploadedImageInfo);
+    //Check if rejected
+    if (uploadedImageInfo == undefined) {
+      console.log("Rejected");
+      return;
+    }
     return uploadedImageInfo;
   } catch (error) {
     console.error("Error uploading image:", error);
@@ -35,15 +52,13 @@ function addCert() {
   let certDate = document.querySelector("#new-cert-date").value;
   let certIssuer = document.querySelector("#new-cert-issuer").value;
   let certImg = document.querySelector("#new-cert-image").src;
-  console.log(certName);
-  console.log(certDate);
-  console.log(certIssuer);
-  console.log(certImg);
+  //Create the HTML for the new certification
   let html = `
   <div class="cert-wrapper">
+    <input type="hidden" name="cert-id" id="cert-id" value = "">
     <div class="cert-photo">
       <img src="${certImg}" alt="Certificate ${certName} Photo" />
-      <button class="btn-update-cert button">Update</button>
+      <button class="btn-update-cert button" onclick="updateCertPhoto(this);">Update</button>
     </div>
     <div class="cert-info">
       <h3 class="cert-name">${certName}</h3>
@@ -64,6 +79,12 @@ function addCert() {
   document.querySelector("#new-cert-date").value = "";
   document.querySelector("#new-cert-issuer").value = "";
   document.querySelector("#new-cert-image").src = "";
+}
+
+async function updateCertPhoto(btnElement) {
+  let imgElement = btnElement.parentElement.querySelector("img");
+  let newsrc = await handleUpload(btnElement);
+  imgElement.src = newsrc.secure_url;
 }
 
 //--------------------PopUp--------------------
@@ -89,7 +110,7 @@ $("document").ready(function () {
   //--------------------Main body-------------------------------------------
   btnUploadPfp.addEventListener("click", async () => {
     //Close handler to update the image
-    let info = await openUploadWidget();
+    let info = await handleUpload(btnUploadPfp);
     //Check if rejected
     if (info == undefined) {
       return;
@@ -114,7 +135,7 @@ $("document").ready(function () {
   //Upload the image to cloudinary using the widget
   //and get the link to the image
   btnUploadCertImg.addEventListener("click", async () => {
-    let info = await handleUpload();
+    let info = await handleUpload(btnUploadCertImg);
     document.querySelector("#new-cert-image").src = info.secure_url;
   });
 
@@ -137,23 +158,30 @@ $("document").ready(function () {
     let certs = document.querySelectorAll(".cert");
     let certList = [];
     certs.forEach((cert) => {
-      let certName = cert.querySelector(".cert-name").innerHTML;
-      let certDate = cert.querySelector(".cert-date").innerHTML;
-      let certIssuer = cert.querySelector(".cert-issuer").innerHTML;
+      let certID = cert.querySelector("#cert-id").value;
+      let certName = cert.querySelector(".cert-name").textContent;
+      //Cut from end of this pattern "Issue Date: "
+      let certDate = cert.querySelector(".cert-date").textContent.substring(12);
+      //Cut from end of this pattern "Issuer: "
+      let certIssuer = cert
+        .querySelector(".cert-issuer")
+        .textContent.substring(9);
       let certImg = cert.querySelector(".cert-photo img").src;
       certList.push({
-        name: certName,
-        date: certDate,
-        issuer: certIssuer,
-        img: certImg,
+        certID: certID,
+        certName: certName,
+        certDate: certDate,
+        certIssuer: certIssuer,
+        certPhoto: certImg,
       });
     });
     //Put the data into a JSON
     let data = {
-      username: username,
-      bio: bio,
-      pfp: pfp,
-      certs: certList,
+      expertProfile: {
+        bio: bio,
+        profilePicture: pfp,
+      },
+      certificationCollection: certList,
     };
     //Log JSON
     console.log(data);
