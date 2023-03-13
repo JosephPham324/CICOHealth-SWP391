@@ -26,18 +26,18 @@
         </div>
         <main>
             <div class="search-bar">
-                <form
-                    onsubmit="event.preventDefault();sendRequest(document.getElementById('foodSearchInput').value)"
-                    class="search-bar-input">
-                    <div class="search-bar-input-field">
-                        <input type="search" name="foodSearchInput" id="foodSearchInput" />
-                        <input type="submit" value="Search" />
-                    </div>
+                <form onsubmit="event.preventDefault();sendRequest(document.getElementById('foodSearchInput').value)"
+                  class="search-bar-input">
+                  <div class="search-box">
+                    <button class="btn-search"><i class="fas fa-search"></i></button>
+                    <input type="search" class="input-search" name="foodSearchInput" id="foodSearchInput" placeholder="Type to Search...">
+                  </div>
                 </form>
                 <button id="food-cart">
-                    <span id="selected-number">0</span><i class="fa-solid fa-bowl-food"></i>
+                  <span id="selected-number">0</span><i class="fa-solid fa-bowl-food"></i>
                 </button>
-            </div>
+              </div>
+              
             <div class="search-results" id="search-results">
                 <div class="search-result"
                      data-food="{&quot;foodName&quot;:&quot;apple&quot;,&quot;servingWeight&quot;:182,&quot;calories&quot;:94.64,&quot;protein&quot;:0.47,&quot;fat&quot;:0.31,&quot;carbs&quot;:25.13,&quot;photo&quot;:&quot;https://nix-tag-images.s3.amazonaws.com/384_highres.jpg&quot;,&quot;actualWeight&quot;:182}">

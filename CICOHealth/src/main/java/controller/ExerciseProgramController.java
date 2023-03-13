@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,6 +66,12 @@ public class ExerciseProgramController extends HttpServlet {
         String URI = request.getRequestURI();
         if (URI.matches(".*/exercise-programs/create")) {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
+            return;
+        }
+        if(URI.matches(".*/exercise-programs")){
+            List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
+            request.setAttribute("listProgram", list);
+            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
             return;
         }
         response.sendRedirect("/CICOHealth/exercise-programs/create");
