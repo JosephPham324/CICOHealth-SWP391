@@ -93,4 +93,19 @@ public class ExerciseProgramDao extends BaseDao {
         }
         return programs;
     }
+    
+    public void deleteProgram(String programID) throws SQLException {
+        // Delete all the workouts associated with the program
+        // Delete the program
+        String QUERY_DELETE = "DELETE FROM [ExerciseProgram] WHERE programID = ?";
+
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(QUERY_DELETE);
+        preparedStatement.setString(1, programID);
+        preparedStatement.executeUpdate();
+        closeConnections();
+    }
+    
+    
+    
 }
