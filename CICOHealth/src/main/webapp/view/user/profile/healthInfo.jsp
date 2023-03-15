@@ -69,7 +69,6 @@
                             <a class="history-items" href="/CICOHealth/user/profile/health-info?userid=${healthInfo.userID}&healthinfo=${healthInfo.healthInfoID}">${healthInfo.createdDate}</a><br>
                         </c:forEach>
                     </div>
-
                 </div>
             </main>
         </div>

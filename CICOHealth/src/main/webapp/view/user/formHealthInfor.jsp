@@ -19,7 +19,7 @@
 </div>
 <div class="form-group row">
     <label class="col-4 col-form-label">Gender</label>
-    <div class="col-8">
+    <div class="col-8 gender">
         <div class="custom-control custom-radio custom-control-inline">
             <input
                 checked=""
@@ -73,7 +73,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="selectActiveness" class="col-4 col-form-label"
+    <label for="selectActiveness" class="col-4  col-form-label"
            >Activeness</label
     >
     <div class="col-8">
@@ -90,6 +90,7 @@
             <option value="3" <%= active == 3 ? "selected" : ""%>>Active</option>
             <option value="4" <%= active == 4 ? "selected" : ""%>>Extremely active</option>
         </select>
+        <br>
         <span id="selectActivenessHelpBlock" class="form-text text-muted"
               >Estimate how much activity you perform during a day</span
         >

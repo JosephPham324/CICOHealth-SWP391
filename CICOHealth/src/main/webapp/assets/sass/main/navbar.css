@@ -44,24 +44,4 @@ body {
 }
 .navbar .navbar-collapse .nav-right a:hover {
   background-color: yellow !important;
-}
-
-.footer {
-  background-color: rgb(131, 184, 46) !important;
-}
-.footer .footer-bottom {
-  background-color: rgb(98, 137, 36) !important;
-  color: white;
-}
-.footer .footer-content .footer-item {
-  margin-top: 15px;
-}
-.footer .footer-content .footer-item .footer-title {
-  color: white;
-}
-.footer .footer-content .footer-item .school-name {
-  color: yellow;
-}
-.footer .footer-content .footer-item p {
-  color: white;
 }/*# sourceMappingURL=navbar.css.map */

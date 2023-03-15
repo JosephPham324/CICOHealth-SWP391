@@ -75,6 +75,7 @@ function getRowHTML(count, logData) {
             <a href="#" class="btn-edit-pop-up" data-logid = "${
               logData.exerciseLogID
             }"><i class="fa-solid fa-pen-to-square"></i></a>/
+
             <form action="/CICOHealth/user/exercise-logs" method="POST" style="display: inline-block;" id="formDelete">
                 <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="exerciseLogID" value="${
@@ -125,6 +126,7 @@ function addNoteButtonsClickEvent() {
       let log = findExerciseLogById(button.dataset.logid);
       document.getElementById("txtNote").innerText = log.logNote;
       displayPopUp("note-pop-up");
+      
     });
   });
 }

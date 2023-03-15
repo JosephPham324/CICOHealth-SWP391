@@ -24,7 +24,7 @@
   border-radius: 16px;
   padding: 64px 32px 0;
   color: #e9eaec;
-  overflow-y: hidden;
+  overflow-y: visible;
   margin: 20px;
 }
 .card-container .body-content .block-card .card-body img {

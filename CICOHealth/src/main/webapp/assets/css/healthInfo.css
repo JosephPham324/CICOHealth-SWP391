@@ -1,8 +1,9 @@
 .history-container {
   border: 1px solid #ccc;
   padding: 10px;
-  max-width: 500px;
+  width: 820px;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 .history-container h3 {
@@ -18,14 +19,45 @@
   padding: 10px;
 }
 
-.history-container{
-    align-content: center;
-}
-.history-items-container{
-    background: #96be25;
+.history-container {
+  align-content: center;
 }
 
-.history-items{
-    text-decoration: none;
-    color: black;
+.history-items-container {
+  background: #96be25;
 }
+
+.history-items {
+  text-decoration: none;
+  color: black;
+}
+
+.card-header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.txt-center{
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+select#selectActiveness {
+  height: 30px;
+  margin: 4px 0;
+}
+
+.gender {
+  display: flex;
+  align-items: center;
+}
+
+.gender .custom-control {
+  margin-right: 10px;
+}
+
+/* .page-content{
+  margin-bottom: 500px;
+} */
