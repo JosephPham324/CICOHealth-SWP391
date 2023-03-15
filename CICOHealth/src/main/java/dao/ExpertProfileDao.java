@@ -35,18 +35,25 @@ public class ExpertProfileDao extends BaseDao {
     }
 
     public void updateExpertProfile(ExpertProfile profile) throws SQLException {
-        // prepare the UPDATE query
-        String query = "UPDATE expertProfile SET profilePicture = ?, bio = ? WHERE userID = ?";
-        connection = new DBContext().getConnection();
-        preparedStatement = connection.prepareStatement(query);
+        //Check if expert profile exist
+        Object existingProfile = this.getExpertProfileByID(profile.getUserID());
+        if (existingProfile != null) {
+            // prepare the UPDATE query
+            String query = "UPDATE expertProfile SET profilePicture = ?, bio = ? WHERE userID = ?";
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
 
-        // set the values of the parameters in the query
-        preparedStatement.setString(1, profile.getProfilePicture());
-        preparedStatement.setString(2, profile.getBio());
-        preparedStatement.setString(3, profile.getUserID());
+            // set the values of the parameters in the query
+            preparedStatement.setString(1, profile.getProfilePicture());
+            preparedStatement.setString(2, profile.getBio());
+            preparedStatement.setString(3, profile.getUserID());
 
-        // execute the query
-        preparedStatement.executeUpdate();
+            // execute the query
+            preparedStatement.executeUpdate();
+            closeConnections();
+        } else {
+            this.insertExpertProfile(profile);
+        }
     }
 
     public void deleteExpertProfile(String userID) throws SQLException {
@@ -65,7 +72,7 @@ public class ExpertProfileDao extends BaseDao {
     public ExpertProfile getExpertProfileByID(String userID) throws SQLException {
         String QUERY_SELECT = "SELECT * FROM [expertProfile]\n"
                 + "WHERE userID = ?";
-        ExpertProfile profile = new ExpertProfile();
+        ExpertProfile profile = null;
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(QUERY_SELECT);
 
@@ -74,10 +81,12 @@ public class ExpertProfileDao extends BaseDao {
         resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
+            profile = new ExpertProfile();
             profile.setBio(resultSet.getString("bio"));
             profile.setProfilePicture(resultSet.getString("profilePicture"));
             profile.setUserID(userID);
         }
+        closeConnections();
         return profile;
     }
 }

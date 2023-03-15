@@ -61,7 +61,7 @@ public class Certification implements Serializable {
     private String certPhoto;
     @JoinColumn(name = "userID", referencedColumnName = "userID")
     @ManyToOne(optional = false)
-    private User userID;
+    private String userID;
 
     public Certification() {
     }
@@ -118,11 +118,11 @@ public class Certification implements Serializable {
         this.certPhoto = certPhoto;
     }
 
-    public User getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(User userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

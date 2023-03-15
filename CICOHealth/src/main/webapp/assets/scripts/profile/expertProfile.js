@@ -6,8 +6,8 @@ function openUploadWidget(triggerElement) {
         cloudName: "cicohealth",
         uploadPreset: "liyqe8q0",
         max_files: 1,
-        cropping:true,
-        resourceType:"image",
+        cropping: true,
+        resourceType: "image",
       },
       (error, result) => {
         //Enable the button
@@ -59,10 +59,10 @@ function addCert() {
   //Create the HTML for the new certification
   let html = `
   <div class="cert-wrapper">
-    <input type="hidden" name="cert-id" id="cert-id" value = "">
+    <input type="hidden" name="cert-action" value = "insert">
+    <input type="hidden" name="cert-id" value = "">
     <div class="cert-photo">
       <img src="${certImg}" alt="Certificate ${certName} Photo" />
-      <button class="btn-update-cert button" onclick="updateCertPhoto(this);">Update</button>
     </div>
     <div class="cert-info">
       <h3 class="cert-name">${certName}</h3>
@@ -71,7 +71,7 @@ function addCert() {
     </div>
     <div class="cert-actions">
       <button class="button" onclick = "fillUpdateCertForm(this)">Update</button>
-      <button class="button">Delete</button>
+      <button class="button delete-button">Delete</button>
     </div>
   </div>
   `;
@@ -93,13 +93,14 @@ async function updateCertPhoto(btnElement) {
   let newsrc = await handleUpload(btnElement);
   imgElement.src = newsrc.secure_url;
 }
-
+let certToUpdateAction = null;
 function fillUpdateCertForm(btnElement) {
   let cert = btnElement.parentElement.parentElement;
   certToUpdate = cert;
   cert.id = "cert-to-update";
   console.log(cert);
   let certName = document.querySelector("#cert-to-update .cert-name").innerHTML;
+  certToUpdateAction = document.querySelector("#cert-to-update input[name='cert-action']").value;
   let certDate = document
     .querySelector("#cert-to-update .cert-date")
     .textContent.substring(12);
@@ -108,7 +109,9 @@ function fillUpdateCertForm(btnElement) {
     .querySelector("#cert-to-update .cert-issuer")
     .textContent.substring(9);
   let certImg = document.querySelector("#cert-to-update .cert-photo img").src;
+  let certId = document.querySelector("#cert-to-update input[name='cert-id']").value;
 
+  document.querySelector("#update-cert-id").value = certId;
   document.querySelector("#update-cert-name").value = certName;
   document.querySelector("#update-cert-date").value = certDate;
   document.querySelector("#update-cert-issuer").value = certIssuer;
@@ -123,13 +126,13 @@ function updateCert() {
   let certDate = document.querySelector("#update-cert-date").value;
   let certIssuer = document.querySelector("#update-cert-issuer").value;
   let certImg = document.querySelector("#update-cert-image").src;
-  console.log(certToUpdate);
+  let certId = document.querySelector("#update-cert-id").value;
   if (certToUpdate != null) {
     certToUpdate.innerHTML = `
-  <input type="hidden" name="cert-id" id="cert-id" value = "">
+    <input type="hidden" name="cert-action" value = ${certToUpdateAction == "insert"?"insert":"update"}>
+    <input type="hidden" name="cert-id" value = "${certId}">
     <div class="cert-photo">
       <img src="${certImg}" alt="Certificate ${certName} Photo" />
-      <button class="btn-update-cert button" onclick="updateCertPhoto(this);">Update</button>
     </div>
     <div class="cert-info">
       <h3 class="cert-name">${certName}</h3>
@@ -143,6 +146,7 @@ function updateCert() {
   `;
   }
   certToUpdate = null;
+  certToUpdateAction = null;
   document.querySelector("#cert-update .overlay").click();
 }
 
@@ -202,7 +206,15 @@ let crtDelete = document.querySelectorAll(".cert-actions .delete-button");
 crtDelete.forEach((btn) => {
   btn.addEventListener("click", () => {
     let cert = btn.parentElement.parentElement.parentElement;
-    cert.remove();
+    cert.id="cert-to-delete";
+    let action = document.querySelector("#cert-to-delete input[name='cert-action']");
+    if (action.value == "insert") {//If the cert is not in the database
+      cert.remove();
+    } else {//If the cert is in the database
+      cert.id="";
+      console.log(cert.innerHTML)
+      cert.style.display="none";
+    }
   });
 });
 btnSaveChanges.addEventListener("click", () => {
@@ -216,8 +228,11 @@ btnSaveChanges.addEventListener("click", () => {
   //Certifications
   let certs = document.querySelectorAll(".cert");
   let certList = [];
+  let certActions = [];
   certs.forEach((cert) => {
-    let certID = cert.querySelector("#cert-id").value;
+    let action = cert.querySelector("input[name='cert-action']").value;
+    certActions.push(action);
+    let certID = cert.querySelector("input[name='cert-id']").value;
     let certName = cert.querySelector(".cert-name").textContent;
     //Cut from end of this pattern "Issue Date: "
     let certDate = cert.querySelector(".cert-date").textContent.substring(12);
@@ -237,13 +252,17 @@ btnSaveChanges.addEventListener("click", () => {
   let userId = getRequestParameter("userid");
   //Put the data into a JSON
   let data = {
-    userId: userId,
-    expertProfile: {
+    _method: "PUT",
+    userID: userId,
+    btnUpdate: "updateExpertProfile",
+    expertProfile: JSON.stringify({
       bio: bio,
       profilePicture: pfp,
-    },
-    certificationCollection: certList,
+    }),
+    certificationCollection: JSON.stringify(certList),
+    actions: JSON.stringify(certActions),
   };
   //Log JSON
   console.log(data);
+  post("CICOHealth/user/profile/", data);
 });
