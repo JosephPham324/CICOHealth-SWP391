@@ -12,7 +12,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
-    <script src="/CICOHealth/src/main/webapp/assets/scripts/profile/expertProfile.js"></script>
 
     <title>Expert Profile</title>
   </head>
@@ -48,25 +47,58 @@
       <div class="certs">
         <h2>Certifications</h2>
         <ul class="cert-list">
+          <li class="cert">
+            <div class="cert-wrapper">
+              <input type="hidden" name="cert-id" id="cert-id" value="" />
+              <div class="cert-photo">
+                <img
+                  src="https://res.cloudinary.com/cicohealth/image/upload/v1678676494/u0gewgadkqdwgu6fnuv1.png"
+                  alt="Certificate asd Photo"
+                />
+              </div>
+              <div class="cert-info">
+                <h3 class="cert-name">asd</h3>
+                <p class="cert-issuer"><span>Issuer: </span> asdsda</p>
+                <p class="cert-date"><span>Issue Date: </span>2023-03-08</p>
+              </div>
+              <div class="cert-actions">
+                <button class="button" onclick="fillUpdateCertForm(this)">
+                  Update
+                </button>
+                <button class="button">Delete</button>
+              </div>
+            </div>
+          </li>
         </ul>
         <button class="button" id="btn-add-cert">Add</button>
         <div class="collapse">
           <form id="frm-add-cert" onsubmit="event.preventDefault();addCert();">
             <div class="form-group">
               <label for="new-cert-name">cert Name</label>
-              <input type="text" name="cert-name" id="new-cert-name" required/>
+              <input type="text" name="cert-name" id="new-cert-name" required />
             </div>
             <div class="form-group">
               <label for="new-cert-date">cert Date</label>
-              <input type="date" name="cert-name" id="new-cert-date"required />
+              <input type="date" name="cert-name" id="new-cert-date" required />
             </div>
             <div class="form-group">
               <label for="new-cert-issuer">cert Issuer</label>
-              <input type="text" name="cert-name" id="new-cert-issuer" required/>
+              <input
+                type="text"
+                name="cert-issuer"
+                id="new-cert-issuer"
+                required
+              />
             </div>
             <div class="form-group">
               <label for="new-cert-image">cert Image</label>
-              <img src="https://res.cloudinary.com/cicohealth/image/upload/v1678676494/u0gewgadkqdwgu6fnuv1.png" alt="Certification photo" id="new-cert-image" width="300px" height="200px" />
+              <img
+                src="https://res.cloudinary.com/cicohealth/image/upload/v1678676494/u0gewgadkqdwgu6fnuv1.png"
+                alt="Certification photo"
+                id="new-cert-image"
+                width="300px"
+                height="200px"
+              />
               <a class="button" id="btn-upload-cert-img">Upload image</a>
             </div>
             <input type="submit" value="Submit" />
@@ -75,18 +107,50 @@
       </div>
     </div>
 
-    <div class="pop-up" id="cert-detail">
+    <div class="pop-up" id="cert-update">
       <div class="overlay"></div>
       <div class="pop-up-content">
-        <div class="cert-details-header">
-          <h2 class="cert-details-name">cert.certName</h2>
-          <button class="button">X</button>
-        </div>
-        <div class="cert-details-body">
-          <p class="cert-details-date">cert.certDate</p>
-          <p class="cert-details-issuer">cert.certIssuer</p>
-          <img src="cert.certPhoto" alt="Certificate Photo" />
-        </div>
+        <form id="frm-update-cert" onsubmit="event.preventDefault();updateCert();">
+          <div class="form-group">
+            <label for="update-cert-name">cert Name</label>
+            <input
+              type="text"
+              name="cert-name"
+              id="update-cert-name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-cert-date">cert Date</label>
+            <input
+              type="date"
+              name="cert-name"
+              id="update-cert-date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-cert-issuer">cert Issuer</label>
+            <input
+              type="text"
+              name="cert-issuer"
+              id="update-cert-issuer"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-cert-image">cert Image</label>
+            <img
+              src=""
+              alt="Certification photo"
+              id="update-cert-image"
+              width="300px"
+              height="200px"
+            />
+            <a class="button" id="btn-upload-cert-img">Upload image</a>
+          </div>
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     </div>
 
@@ -94,5 +158,6 @@
       src="https://upload-widget.cloudinary.com/global/all.js"
       type="text/javascript"
     ></script>
+    <script src="/CICOHealth/src/main/webapp/assets/scripts/profile/expertProfile.js"></script>
   </body>
 </html>

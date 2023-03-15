@@ -1,8 +1,10 @@
 package controller;
 
+import bean.ExpertProfile;
 import bean.HealthInfo;
 import bean.Login;
 import bean.User;
+import dao.ExpertProfileDao;
 import dao.HealthInfoDao;
 import dao.LoginDao;
 import dao.UserDao;
@@ -38,13 +40,14 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         String URI = request.getRequestURI();
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") == null) {
-            response.sendRedirect("/CICOHealth");
-            return;
-        }
-        User user = (User) session.getAttribute("user");
-        String role = user.getUserRole();
-        String userIDRequest = request.getParameter("userid");
+//        if (session.getAttribute("user") == null) {
+//            response.sendRedirect("/CICOHealth");
+//            return;
+//        }
+        User user = 
+                new UserDao().getUser("USME000001");
+//                (User) session.getAttribute("user");
+        String role = user.getUserRole();String userIDRequest = request.getParameter("userid");
         if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
             request.setAttribute("user", new UserDao().getUser(user.getUserID()));
             if (("AD").equalsIgnoreCase(role)) {
@@ -85,13 +88,16 @@ public class ProfileController extends HttpServlet {
             request.setAttribute("history", history);
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
         } else if (URI.matches(".*/expert-info(/.*)*")){
-            if (("AD").equalsIgnoreCase(role)) {
-                request.setAttribute("expertProfile", "");
-                request.setAttribute("certifications", "");
-            } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
-                response.sendRedirect("/CICOHealth/user/profile/health-info?userid=" + user.getUserID());
-                return;
+            ExpertProfile expertProfile = null;
+            try {
+                 expertProfile = new ExpertProfileDao().getExpertProfileByID(userIDRequest);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/");
             }
+            request.setAttribute("user", new UserDao().getUser(userIDRequest));
+            request.setAttribute("expertProfile", expertProfile);
+            request.getRequestDispatcher("/view/user/profile/expertProfile.jsp").forward(request, response);
         }
     }
 

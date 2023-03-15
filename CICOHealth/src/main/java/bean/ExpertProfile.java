@@ -9,11 +9,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,11 +44,11 @@ public class ExpertProfile implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "bio")
     private String bio;
-    @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private User user;
 
     public ExpertProfile() {
+        this.userID ="";
+        this.profilePicture="";
+        this.bio = "";
     }
 
     public ExpertProfile(String userID) {
@@ -85,14 +83,6 @@ public class ExpertProfile implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
