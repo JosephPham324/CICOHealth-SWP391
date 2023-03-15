@@ -1,8 +1,13 @@
 package controller;
 
+import bean.Certification;
+import bean.ExpertProfile;
 import bean.HealthInfo;
 import bean.Login;
 import bean.User;
+import com.google.gson.Gson;
+import dao.CertificationDao;
+import dao.ExpertProfileDao;
 import dao.HealthInfoDao;
 import dao.LoginDao;
 import dao.UserDao;
@@ -13,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,13 +45,40 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         String URI = request.getRequestURI();
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") == null) {
-            response.sendRedirect("/CICOHealth");
-            return;
-        }
-        User user = (User) session.getAttribute("user");
-        String role = user.getUserRole();
+//        if (session.getAttribute("user") == null) {
+//            response.sendRedirect("/CICOHealth");
+//            return;
+//        }
+        User user
+                = session.getAttribute("user") != null ? (User) session.getAttribute("user") : null;
         String userIDRequest = request.getParameter("userid");
+        if (new UserDao().getUser(userIDRequest)==null){
+            response.sendError(404);
+        }
+        if (URI.matches(".*/expert-info(/.*)*")) {
+            boolean allowUpdate;
+            allowUpdate = user!= null && user.getUserID().equalsIgnoreCase(userIDRequest);
+            ExpertProfile expertProfile = null;
+            List<Certification> certs = null;
+            try {
+                expertProfile = new ExpertProfileDao().getExpertProfileByID(userIDRequest);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/");
+            }
+            try {
+                certs = new CertificationDao().getUserCertifications(userIDRequest);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("/");
+            }
+            request.setAttribute("user", new UserDao().getUser(userIDRequest));
+            request.setAttribute("expertProfile", expertProfile);
+            request.setAttribute("certifications", certs);
+            request.setAttribute("allowUpdate", allowUpdate);
+            request.getRequestDispatcher("/view/user/profile/expertProfile.jsp").forward(request, response);
+        }
+        String role = user.getUserRole();
         if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
             request.setAttribute("user", new UserDao().getUser(user.getUserID()));
             if (("AD").equalsIgnoreCase(role)) {
@@ -84,7 +118,6 @@ public class ProfileController extends HttpServlet {
             List<HealthInfo> history = new HealthInfoDao().getHistory(userID);
             request.setAttribute("history", history);
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
-
         }
     }
 
@@ -168,8 +201,34 @@ public class ProfileController extends HttpServlet {
                 userDao.updateUserInfo(user);
                 response.sendRedirect("/CICOHealth/user/profile/user-info?userid=" + userID);
                 return;
+            case "updateExpertProfile":
+                Gson gson = new Gson();
+                String expertProfileJson = request.getParameter("expertProfile");
+                String certCollection = request.getParameter("certificationCollection");
+                String certCollectionAction = request.getParameter("actions");
+                ExpertProfile profile = gson.fromJson(expertProfileJson, ExpertProfile.class);
+                Certification[] certs = gson.fromJson(certCollection, Certification[].class);
+                String[] actions = gson.fromJson(certCollectionAction, String[].class);
+
+                try {
+                    profile.setUserID(userID);
+                    new ExpertProfileDao().updateExpertProfile(profile);
+                } catch (SQLException ex) {
+                    response.sendRedirect("/CICOHealth/user/profile/expert-info?userid=" + userID + "&error=" + ex.getMessage());
+                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
+                }
+                try {
+                    new CertificationDao().updateProfileCertification(userID, Arrays.asList(certs), Arrays.asList(actions));
+                } catch (SQLException ex) {
+                    response.sendRedirect("/CICOHealth/user/profile/expert-info?userid=" + userID + "&error=" + ex.getMessage());
+                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
+                }
+                response.sendRedirect("/CICOHealth/user/profile/expert-info?userid=" + userID);
+                break;
             default:
-                throw new AssertionError();
+                response.sendRedirect("/CICOHealth/user/profile/user-info" + userID);
         }
 
     }
