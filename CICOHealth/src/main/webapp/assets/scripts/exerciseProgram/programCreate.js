@@ -374,7 +374,7 @@ function createWorkoutObject(id) {
       weight: exerciseWeight,
       duration: exerciseDuration === ""? "0": exerciseDuration,
       instruction: exerciseInstruction,
-      workoutExercisePK: {exerciseID: exerciseID},
+      workoutExercisesPK: {exerciseID: exerciseID},
     };
     // console.log(exercise)
     // Push the exercise object onto the workout's exercises array
