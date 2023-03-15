@@ -45,6 +45,7 @@
                         <th scope="col">Program Description</th>
                         <th scope="col">Created By</th>
                         <th scope="col">Action</th>
+                        <th scope="col">Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,6 +57,9 @@
                             <td><c:out value="${program.createdBy.firstName} ${program.createdBy.lastName}" /></td>
                             <td>
                                 <a href="#">Delete</a>
+                            </td>
+                            <td>
+                                <a href="/CICOHealth/exercise-programs/detail?id=${program.programID}">See detail</a>
                             </td>
                         </tr>
                     </c:forEach>
