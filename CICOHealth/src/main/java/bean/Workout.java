@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
 public class Workout implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private String programId;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -66,6 +67,14 @@ public class Workout implements Serializable {
 
     public Workout(String workoutID) {
         this.workoutID = workoutID;
+    }
+
+    public Workout(String programId, String workoutID, String workoutName, String workoutDate, String workoutDescription) {
+        this.programId = programId;
+        this.workoutID = workoutID;
+        this.workoutName = workoutName;
+        this.workoutDate = workoutDate;
+        this.workoutDescription = workoutDescription;
     }
 
     public Workout(String workoutID, String workoutName, String workoutDate, String workoutDescription) {

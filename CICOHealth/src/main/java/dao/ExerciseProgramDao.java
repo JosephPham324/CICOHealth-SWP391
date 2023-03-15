@@ -94,6 +94,33 @@ public class ExerciseProgramDao extends BaseDao {
         return programs;
     }
     
+     public ExerciseProgram getProgramsByID(String id) {
+        ExerciseProgram program = new ExerciseProgram();
+        try {
+            connection = new DBContext().getConnection();
+            String sql = "select * from ExerciseProgram where programID=? ";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            resultSet = preparedStatement.executeQuery();
+            // Iterate through the result set and create ExerciseProgram objects for each row
+            while (resultSet.next()) {
+                program = new ExerciseProgram();
+                program.setProgramID(resultSet.getString("programID"));
+                String userID = resultSet.getString("createdBy");
+                program.setCreatedBy(new UserDao().getUser(userID));
+                program.setProgramName(resultSet.getString("programName"));
+                program.setProgramDescription(resultSet.getString("programDescription"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseProgramDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+        return program;
+    }
+     public static void main(String[] args) {
+         System.out.println(new ExerciseProgramDao().getProgramsByID("EXPG000001"));
+    }
     public void deleteProgram(String programID) throws SQLException {
         // Delete all the workouts associated with the program
         // Delete the program
