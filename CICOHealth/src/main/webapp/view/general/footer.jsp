@@ -27,7 +27,7 @@
     </section>
 
     <div class="text-center p-4 footer-bottom">
-        Â© 2023 All rights reserved.
+        © 2023 All rights reserved.
          Our website services, content, and products are for
         informational purposes only. Nutrition does not provide medical advice,
         diagnosis, or treatment.

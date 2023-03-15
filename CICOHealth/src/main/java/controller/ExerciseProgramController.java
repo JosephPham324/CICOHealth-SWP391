@@ -64,7 +64,7 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.matches(".*/exercise-programs/create")) {
+        if (URI.matches(".*/exercise-programs/create(/.*)*")) {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
             return;
         }
@@ -89,6 +89,10 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String method = request.getParameter("_method");
+        if (method!=null && method.equalsIgnoreCase("delete")){
+            doDelete(request, response);
+        }
         String program = request.getParameter("program");
         response.getWriter().write(program.toString());
         Gson gson = new Gson();
