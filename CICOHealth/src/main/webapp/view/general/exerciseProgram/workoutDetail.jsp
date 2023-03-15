@@ -40,7 +40,7 @@
         <table class="table table-striped">
             <tr>
                 <th>Exercise Name</th>
-                <th>Exercise Ordeer</th>
+                <th>Exercise Order</th>
                 <th>Set</th>
                 <th>Rep</th>
                 <th>Weight</th>
@@ -50,11 +50,13 @@
             </tr>
             <c:forEach var="exercise" items="${workout}">
                 <tr>
-                    
-                    <td>${workout.workoutID}</td>
-                    <td>${workout.workoutName}</td>
-                    <td>${workout.workoutDate}</td>
-                    <td>${workout.workoutDescription}</td>
+                    <td>${exercise.workoutExercisesPK.exercise.getExerciseID()}</td>
+                    <td>${exercise.exerciseOrder}</td>
+                    <td>${exercise.set}</td>
+                    <td>${exercise.reps}</td>
+                    <td>${exercise.weight}</td>
+                    <td>${exercise.duration}</td>
+                    <td>${exercise.duration}</td>
                 </tr>
             </c:forEach>
         </table>

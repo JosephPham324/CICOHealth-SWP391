@@ -4,7 +4,11 @@
  */
 package bean;
 
+import dao.ExerciseDao;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -28,13 +32,14 @@ public class WorkoutExercisesPK implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "exerciseID")
     private String exerciseID;
+    private Exercise exercise;
 
     public WorkoutExercisesPK() {
     }
 
     public WorkoutExercisesPK(String workoutID, String exerciseID) {
         this.workoutID = workoutID;
-        this.exerciseID = exerciseID;
+        this.setExerciseID(exerciseID);
     }
 
     public String getWorkoutID() {
@@ -51,7 +56,17 @@ public class WorkoutExercisesPK implements Serializable {
 
     public void setExerciseID(String exerciseID) {
         this.exerciseID = exerciseID;
+        try {
+            this.exercise = new ExerciseDao().getExerciseByID(exerciseID);
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkoutExercisesPK.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+    
 
     @Override
     public int hashCode() {

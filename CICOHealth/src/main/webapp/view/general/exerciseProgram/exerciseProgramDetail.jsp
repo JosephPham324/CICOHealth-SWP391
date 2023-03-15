@@ -47,7 +47,6 @@
             </tr>
             <c:forEach var="workout" items="${workouts}">
                 <tr>
-                    
                     <td>${workout.workoutID}</td>
                     <td>${workout.workoutName}</td>
                     <td>${workout.workoutDate}</td>
