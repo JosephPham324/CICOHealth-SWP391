@@ -56,18 +56,22 @@
                             <td><c:out value="${program.programDescription}" /></td>
                             <td><c:out value="${program.createdBy.firstName} ${program.createdBy.lastName}" /></td>
                             <td>
-                                <a href="#">Delete</a>
+                                <form action="/CICOHealth/exercise-programs" method="post">
+                                        <input type="hidden" value = "${program.programID}" name="programID">
+                                        <input type="hidden" value = "delete" name="_method">
+                                        <input type="submit" value="Delete"> 
+                                </form>
                             </td>
                             <td>
                                 <a href="/CICOHealth/exercise-programs/detail?id=${program.programID}">See detail</a>
                             </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-                </c:if>
-                   <!-- footer -->
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
+        <!-- footer -->
         <div class="wrapper">
             <footer>
                 <div class="row block-footer">

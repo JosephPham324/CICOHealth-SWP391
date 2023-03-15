@@ -14,7 +14,8 @@
             <ul class="list-unstyled">
                 <li><a href="/CICOHealth/user/profile/user-info" class="sidebar-link">User Info</a></li>
                 <li><a href="/CICOHealth/user/profile/login-info" class="sidebar-link">Login Info</a></li>
-                <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>
+                <li><a href="/CICOHealth/user/profile/health-info" class="sidebar-link">Health Info</a></li>                
+                <li><a href="/CICOHealth/user/profile/expert-info" class="sidebar-link">Expert Info</a></li>
             </ul>
         </div>
     </div>

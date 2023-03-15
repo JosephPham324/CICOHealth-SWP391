@@ -114,7 +114,7 @@ CREATE TABLE Workout (
   workoutDate text NOT NULL,
   workoutDescription text NOT NULL,
   PRIMARY KEY (workoutID),
-  FOREIGN KEY (programID) REFERENCES ExerciseProgram(programID)
+  FOREIGN KEY (programID) REFERENCES ExerciseProgram(programID) ON DELETE CASCADE
   );
 
 CREATE TABLE WorkoutExercises (
@@ -128,8 +128,8 @@ CREATE TABLE WorkoutExercises (
   calorieBurnt float,
   instruction text NOT NULL,
   PRIMARY KEY (workoutID, exerciseID),
-  FOREIGN KEY (workoutID) REFERENCES workout(workoutID),
-  FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID)
+  FOREIGN KEY (workoutID) REFERENCES workout(workoutID) ON DELETE CASCADE,
+  FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID) ON DELETE CASCADE
 )
 CREATE TABLE ProgramOrder (
   userID varchar(10) NOT NULL,

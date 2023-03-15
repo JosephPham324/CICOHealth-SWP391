@@ -9,6 +9,7 @@ import bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import dao.ExerciseDao;
 import dao.ExerciseLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -154,6 +155,7 @@ public class ExerciseLogController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
         String check = request.getParameter("check");
         if (check != null && check.equalsIgnoreCase("cardio")) {
             ExerciseLog log;
@@ -162,7 +164,6 @@ public class ExerciseLogController extends HttpServlet {
             JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
             gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             log = gson.fromJson(exerciseParam, ExerciseLog.class);
-            User user = (User) request.getSession().getAttribute("user");
             System.out.println(exerciseParam);
             log.setUserID(user.getUserID());
 //        response.getWriter().write(log.toString());
@@ -182,7 +183,6 @@ public class ExerciseLogController extends HttpServlet {
             JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
             gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             log = gson.fromJson(exerciseParam, ExerciseLog.class);
-            User user = (User) request.getSession().getAttribute("user");
             System.out.println(exerciseParam);
             log.setUserID(user.getUserID());
             try {
@@ -192,6 +192,13 @@ public class ExerciseLogController extends HttpServlet {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
                 response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?update=failure");
             }
+        }
+        String updateNote = request.getParameter("btnNote");
+        if (updateNote != null) {
+            String exerciseLogID = request.getParameter("exerciseLogID");
+            String note = request.getParameter("note");
+            new ExerciseLogDao().updateExerciseLogNote(user.getUserID(), exerciseLogID, note);
+            response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?updateLog=success");
         }
 
     }

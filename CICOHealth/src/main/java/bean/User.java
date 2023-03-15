@@ -21,6 +21,11 @@ import javax.validation.constraints.Size;
 @Table(name = "user")
 public class User implements Serializable {
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private ExpertProfile expertProfile;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    private Collection<Certification> certificationCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private Collection<ExerciseProgram> exerciseProgramCollection;
 
@@ -200,6 +205,22 @@ public class User implements Serializable {
 
     public void setExerciseProgramCollection(Collection<ExerciseProgram> exerciseProgramCollection) {
         this.exerciseProgramCollection = exerciseProgramCollection;
+    }
+
+    public ExpertProfile getExpertProfile() {
+        return expertProfile;
+    }
+
+    public void setExpertProfile(ExpertProfile expertProfile) {
+        this.expertProfile = expertProfile;
+    }
+
+    public Collection<Certification> getCertificationCollection() {
+        return certificationCollection;
+    }
+
+    public void setCertificationCollection(Collection<Certification> certificationCollection) {
+        this.certificationCollection = certificationCollection;
     }
 
 }

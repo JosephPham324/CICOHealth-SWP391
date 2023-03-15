@@ -25,7 +25,6 @@ public class WorkoutExerciseDao extends BaseDao {
     }
 
     void insertExercise(WorkoutExercises exercise) throws SQLException {
-        //Insert workout first
         String QUERY_INSERT = "INSERT INTO WorkoutExercises (workoutID, exerciseID, exerciseOrder, [set], reps, weight, duration, instruction)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
