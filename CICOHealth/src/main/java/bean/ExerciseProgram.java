@@ -55,6 +55,7 @@ public class ExerciseProgram implements Serializable {
     private String programDescription;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programID")
     private Collection<Workout> workoutCollection;
+    
 
     public ExerciseProgram() {
     }
@@ -69,6 +70,7 @@ public class ExerciseProgram implements Serializable {
         this.programDescription = programDescription;
     }
 
+    
     public String getProgramID() {
         return programID;
     }

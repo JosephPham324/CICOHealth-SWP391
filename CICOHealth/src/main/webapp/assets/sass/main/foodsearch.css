@@ -243,4 +243,94 @@ main {
 }
 .search-results .table-content thead {
   background-color: rgb(131, 184, 46);
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+}
+.search-bar .search-bar-input * {
+  font-size: 1.2rem;
+  box-sizing: border-box;
+}
+.search-bar .search-bar-input .search-box {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+}
+.search-bar .search-bar-input .input-search {
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all 0.5s ease-in-out;
+  background-color: rgb(131, 184, 46) !important;
+  padding-right: 40px;
+  color: black;
+}
+.search-bar .search-bar-input .input-search::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+.search-bar .search-bar-input .input-search::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+.search-bar .search-bar-input .btn-search {
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color: black;
+  background-color: transparent;
+  pointer-events: painted;
+}
+.search-bar .search-bar-input .btn-search:focus ~ .input-search {
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+.search-bar .search-bar-input .input-search:focus {
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+.search-bar #food-cart {
+  border: 0;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+.search-bar #food-cart * {
+  font-size: 3rem;
+}
+.search-bar #food-cart:active {
+  transform: scale(0.95);
+}
+.search-bar #food-cart:hover {
+  background-color: yellow;
 }/*# sourceMappingURL=foodsearch.css.map */

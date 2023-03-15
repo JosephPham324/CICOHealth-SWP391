@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +37,7 @@ public class ExerciseProgramController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -63,8 +64,14 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.matches(".*/exercise-programs/create")) {
+        if (URI.matches(".*/exercise-programs/create(/.*)*")) {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
+            return;
+        }
+        if (URI.matches(".*/exercise-programs")) {
+            List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
+            request.setAttribute("listProgram", list);
+            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
             return;
         }
         response.sendRedirect("/CICOHealth/exercise-programs/create");
@@ -82,13 +89,17 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        String method = request.getParameter("_method");
+        if (method!=null && method.equalsIgnoreCase("delete")){
+            doDelete(request, response);
+        }
         String program = request.getParameter("program");
         response.getWriter().write(program.toString());
         Gson gson = new Gson();
         ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
 //        System.out.println(programObject.toString());
-        User user =
-//                = new User("USME000001");
+        User user
+                = //                = new User("USME000001");
                 (User) request.getSession().getAttribute("user");
         programObject.setCreatedBy(user);
         System.out.println(programObject.getCreatedBy().toString());
@@ -101,6 +112,26 @@ public class ExerciseProgramController extends HttpServlet {
             response.sendRedirect("/CICOHealth/exercise-programs/create?insert=failure");
         }
 
+    }
+
+    /**
+     * Handles the HTTP <code>DELETE</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String id = req.getParameter("programID");
+            ExerciseProgramDao exerciseProgramDao = new ExerciseProgramDao();
+            exerciseProgramDao.deleteProgram(id);
+            resp.sendRedirect("/CICOHealth/exercise-programs?delelte=successfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

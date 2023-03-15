@@ -55,11 +55,10 @@ function addNewWorkout() {
                             </div>
                             <div class="col-9 form-item-input">
                                 <textarea name="txtWorkoutDescription" id="txtWorkoutDescription-${newID}" cols="30" rows="5"
-                                    placeholder="Enter workout description"></textarea>
+                                    placeholder="Enter workout description" required></textarea>
                             </div>
                         </div>
                         <hr>
-
                         <div class="form-item row">
                             <div class="col-2">
                                 <label for="txtListExercises">List Exercises</label>
@@ -373,7 +372,7 @@ function createWorkoutObject(id) {
       set: exerciseSet,
       rep: exerciseRep,
       weight: exerciseWeight,
-      duration: exerciseDuration,
+      duration: exerciseDuration === ""? "0": exerciseDuration,
       instruction: exerciseInstruction,
       workoutExercisePK: {exerciseID: exerciseID},
     };
@@ -402,8 +401,8 @@ formAddExercise.addEventListener("submit", function (event) {
 //Add event listener to button submit program
 let btnSubmitProgram = document.querySelector("#btn-submit-program");
 btnSubmitProgram.addEventListener("click", (event) => {
-  event.preventDefault();
   submitProgramCreationForm();
+  event.preventDefault();
 });
 
 //Add event listener to button add workout
