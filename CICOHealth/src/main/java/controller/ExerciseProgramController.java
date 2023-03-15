@@ -7,9 +7,11 @@ package controller;
 import bean.ExerciseProgram;
 import bean.User;
 import bean.Workout;
+import bean.WorkoutExercises;
 import com.google.gson.Gson;
 import dao.ExerciseProgramDao;
 import dao.WorkoutDao;
+import dao.WorkoutExerciseDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,15 +72,24 @@ public class ExerciseProgramController extends HttpServlet {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
             return;
         }
-        if(URI.matches(".*/exercise-programs/detail")){
+        if (URI.matches(".*/exercise-programs/detail/workout")) {
+                String workoutID = request.getParameter("workoutid");
+                List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
+                request.setAttribute("workout", workout);
+                request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
+                return;
+            }
+        
+        if (URI.matches(".*/exercise-programs/detail")) {
             String ID = request.getParameter("id");
-            if(ID!=null){
+            if (ID != null) {
                 List<Workout> workouts = new WorkoutDao().getWorkoutByProgramID(ID);
                 request.setAttribute("workouts", workouts);
                 request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
+                return;
             }
         }
-        if(URI.matches(".*/exercise-programs")){
+        if (URI.matches(".*/exercise-programs")) {
             List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
             request.setAttribute("listProgram", list);
             request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
@@ -104,8 +115,8 @@ public class ExerciseProgramController extends HttpServlet {
         Gson gson = new Gson();
         ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
 //        System.out.println(programObject.toString());
-        User user =
-//                = new User("USME000001");
+        User user
+                = //                = new User("USME000001");
                 (User) request.getSession().getAttribute("user");
         programObject.setCreatedBy(user);
         System.out.println(programObject.getCreatedBy().toString());

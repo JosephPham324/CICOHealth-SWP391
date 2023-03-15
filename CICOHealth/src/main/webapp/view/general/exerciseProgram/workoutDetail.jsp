@@ -39,24 +39,22 @@
     <body>
         <table class="table table-striped">
             <tr>
-                <th>Workout ID</th>
-                <th>Workout Name</th>
-                <th>Workout Date</th>
-                <th>Workout Description</th>
-                <th>Details</th>
+                <th>Exercise Name</th>
+                <th>Exercise Ordeer</th>
+                <th>Set</th>
+                <th>Rep</th>
+                <th>Weight</th>
+                <th>Duration</th>
+                <th>Calorie Burnt</th>
+                <th>Instruction</th>
             </tr>
-            <c:forEach var="workout" items="${workouts}">
+            <c:forEach var="exercise" items="${workout}">
                 <tr>
                     
                     <td>${workout.workoutID}</td>
                     <td>${workout.workoutName}</td>
                     <td>${workout.workoutDate}</td>
                     <td>${workout.workoutDescription}</td>
-                    <td>
-                        <a href="/CICOHealth/exercise-programs/detail/workout?workoutid=${workout.workoutID}" target="target">
-                            Details
-                        </a>
-                    </td>
                 </tr>
             </c:forEach>
         </table>

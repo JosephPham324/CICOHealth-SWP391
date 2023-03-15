@@ -61,6 +61,17 @@ public class WorkoutExercises implements Serializable {
     public WorkoutExercises() {
     }
 
+    public WorkoutExercises(WorkoutExercisesPK workoutExercisesPK, int exerciseOrder, Integer set, String reps, String weight, Integer duration, Double calorieBurnt, String instruction) {
+        this.workoutExercisesPK = workoutExercisesPK;
+        this.exerciseOrder = exerciseOrder;
+        this.set = set;
+        this.reps = reps;
+        this.weight = weight;
+        this.duration = duration;
+        this.calorieBurnt = calorieBurnt;
+        this.instruction = instruction;
+    } 
+
     public WorkoutExercises(WorkoutExercisesPK workoutExercisesPK) {
         this.workoutExercisesPK = workoutExercisesPK;
     }
