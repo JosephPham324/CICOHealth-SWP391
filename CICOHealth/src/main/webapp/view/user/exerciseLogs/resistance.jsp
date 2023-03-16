@@ -101,30 +101,32 @@
         </div>
 
         <!-- pop-up-notes -->
-        <div class="pop-up note-pop-up" id="note-pop-up">
-            <div class="note-overlay overlay" id="overlay"></div>
-            <div class="pop-up-content note-pop-up-content">
-                <!-- <div class="note-pop-up"> -->
-                <h2 class="txt-title-pop-up">Notes Exercise Logs</h2>
+     <form action="exercise-log" method="post" name="edit-exercise-log-note" id="edit-exercise-log-note">
+            <!-- pop-up-notes -->
+            <div class="pop-up note-pop-up" id="note-pop-up">
+                <div class="note-overlay overlay" id="overlay"></div>
+                <div class="pop-up-content note-pop-up-content">
+                    <!-- <div class="note-pop-up"> -->
+                    <h2 class="txt-title-pop-up">Notes Exercise Logs</h2>
 
-                <div class="form-group row">
-                    <div class="offset-1 col-10">
-                        <textarea id="txtNote" name="txtNote" type="text" class="form-control"></textarea>
+                    <div class="form-group row">
+                        <div class="offset-1 col-10">
+                            <textarea id="txtNote" name="txtNote" type="text" class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <!-- <div class="offset-3 col-2">
-                        <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
-                    </div> -->
-                    <div class="offset-5 col-2 btn-submit">
-                        <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                    <div class="form-group row">
+                        <!-- <div class="offset-3 col-2">
+                            <button name="btn-cancel" type="button" class="btn" id="btn-cancel">Cancel</button>
+                        </div> -->
+                        <div class="offset-5 col-2 btn-submit">
+                            <button name="btn-submit" type="submit" class="btn" id="btn-submit">Submit</button>
+                        </div>
                     </div>
+                    <!-- </div> -->
                 </div>
-                <!-- </div> -->
             </div>
-        </div>
-
+        </form>
         <!-- footer -->
         <%@include file="/view/general/footer.jsp" %>
 
