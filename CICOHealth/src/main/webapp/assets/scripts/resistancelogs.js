@@ -94,12 +94,10 @@ function addNoteButtonsClickEvent() {
             document.getElementById("txtNote").innerText = log.logNote;
             displayPopUp("note-pop-up");
             let formNoteLog = "edit-exercise-log-note";
+            
             document.getElementById(formNoteLog).addEventListener("submit", function (event) {
-            event.preventDefault();
-                let updateNote = document.getElementById("txtNote").value;
-               
-                alert(updateNote + ", " + logID);
-                
+            let updateNote = document.getElementById("txtNote").value;
+                event.preventDefault();
                 let formParams = {
                     note: updateNote,
                     _method: "PUT",
@@ -111,6 +109,7 @@ function addNoteButtonsClickEvent() {
         });
     });
 };
+
 function findExerciseLogById(id) {
   return logsData.find((log) => log.exerciseLogID == id);
 }
