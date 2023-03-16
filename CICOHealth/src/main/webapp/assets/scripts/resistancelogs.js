@@ -86,16 +86,30 @@ let popup_id = "exercise-log-pop-up";
 let popup_content = document.querySelector(`#${popup_id} .pop-up-content`);
 
 function addNoteButtonsClickEvent() {
-  let noteButtons = document.querySelectorAll(".btn-note-pop-up");
-  noteButtons.forEach((button) => {
-    button.addEventListener("click", function (event) {
-      let log = findExerciseLogById(button.dataset.logid);
-      document.getElementById("txtNote").innerText = log.logNote;
-      displayPopUp("note-pop-up");
+    let noteButtons = document.querySelectorAll(".btn-note-pop-up");
+    noteButtons.forEach((button) => {
+        button.addEventListener("click", function (event) {
+            let log = findExerciseLogById(button.dataset.logid);
+            let logID = button.dataset.logid;
+            document.getElementById("txtNote").innerText = log.logNote;
+            displayPopUp("note-pop-up");
+            let formNoteLog = "edit-exercise-log-note";
+            
+            document.getElementById(formNoteLog).addEventListener("submit", function (event) {
+            let updateNote = document.getElementById("txtNote").value;
+                alert(updateNote + ", " + logID);
+                event.preventDefault();
+                let formParams = {
+                    note: updateNote,
+                    _method: "PUT",
+                    updateNote: "resistance",
+                    exerciseLogID: logID
+                };
+                post("/CICOHealth/user/exercise-logs", formParams);
+            });
+        });
     });
-  });
-}
-
+};
 function findExerciseLogById(id) {
   return logsData.find((log) => log.exerciseLogID == id);
 }
