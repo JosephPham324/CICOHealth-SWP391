@@ -132,12 +132,9 @@ CREATE TABLE WorkoutExercises (
   FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID) ON DELETE CASCADE
 );
 CREATE TABLE ProgramInventory (
-  inventoryID varchar(10) NOT NULL,
-  userID varchar(10) NOT NULL,
-  programID varchar(10) NOT NULL,
-  PRIMARY KEY (inventoryID),
-  FOREIGN KEY (userID) REFERENCES [user](userID),
-  FOREIGN KEY (programID) REFERENCES exerciseProgram(programID)
+  userID varchar(10) NOT NULL REFERENCES [user](userID),
+  programID varchar(10) NOT NULL REFERENCES [exerciseProgram](programID),
+  PRIMARY KEY (userID, programID)
 );
 
 CREATE TABLE expertProfile (
@@ -172,13 +169,3 @@ BEGIN
     WHERE healthInfo.healthInfoID = (SELECT healthInfoID from INSERTED)
 END
 GO
-
-CREATE TRIGGER delete_program_inventory
-ON ProgramInventory
-AFTER INSERT
-AS
-BEGIN
-    DELETE FROM ProgramInventory
-    WHERE userID = (SELECT userID FROM inserted)
-      AND inventoryID != (SELECT inventoryID FROM inserted);
-END;
