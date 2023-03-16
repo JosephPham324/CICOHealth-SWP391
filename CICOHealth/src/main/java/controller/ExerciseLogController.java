@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Utility;
 
 /**
  *
@@ -144,11 +145,11 @@ public class ExerciseLogController extends HttpServlet {
 //        response.getWriter().write(log.toString());
         try {
             new ExerciseLogDao().createLog(log);
-            response.sendRedirect("/CICOHealth/exercise-search?log=success");
+            response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-search", "success", "Successfully created log!"));
             return;
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("/CICOHealth/exercise-search?log=failure");
+            response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-search", "failure", "Log creating failed!"));
             return;
         }
     }
@@ -169,10 +170,10 @@ public class ExerciseLogController extends HttpServlet {
 //        response.getWriter().write(log.toString());
             try {
                 new ExerciseLogDao().updateExerciseLogCardio(log);
-                response.sendRedirect("/CICOHealth/user/exercise-logs/cardio?updatelog=success");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/cardio", "success", "Update log successfully!"));
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("/CICOHealth/user/exercise-logs/cardio?update=failure");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/cardio", "failure", "Log update failed!"));
             }
 
         }
@@ -187,10 +188,10 @@ public class ExerciseLogController extends HttpServlet {
             log.setUserID(user.getUserID());
             try {
                 new ExerciseLogDao().updateExerciseLogResitance(log);
-                response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?updatelog=success");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/resistance", "success", "Update log successfully!"));
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?update=failure");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/resistance", "failure", "Log update failed!"));
             }
         }
         String updateNote = request.getParameter("updateNote");

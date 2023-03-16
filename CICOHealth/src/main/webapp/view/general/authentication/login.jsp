@@ -64,21 +64,20 @@
                     </div>
 
                 </form>
-
-                ${initParam.JqueryValidation}
                 ${initParam.JQuery}
+                ${initParam.JqueryValidation}
                 <script src="/CICOHealth/assets/scripts/login.js"></script>
                 <script src="https://accounts.google.com/gsi/client" async defer></script>
                 <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
                 <script>
-                    function handleCredentialResponse(response) {
-                        const responsePayload = parseJwt(response.credential);
-                        const formParams = {
-                            googleID: responsePayload.sub
-                        };
-                        console.log(formParams);
-                        post("login", formParams);
-                    }
+                                function handleCredentialResponse(response) {
+                                    const responsePayload = parseJwt(response.credential);
+                                    const formParams = {
+                                        googleID: responsePayload.sub
+                                    };
+                                    console.log(formParams);
+                                    post("login", formParams);
+                                }
                 </script>
                 <p id="email"></p>
             </div>

@@ -229,7 +229,6 @@ public class RequestFilter implements Filter {
             }
         } else {            // If the requested URL is not protected, just forward the request
             //But check if user is logged in to prevent accessing login and register page
-            System.out.println(httpRequest.getSession().getAttribute("user"));
             if (httpRequest.getSession().getAttribute("user") != null) {
                 if (pathParts.length > 1 && (pathParts[1].equals("login") || pathParts[1].equals("register"))) {
                     httpResponse.sendRedirect(contextPath + "/");
