@@ -202,9 +202,9 @@ public class ExerciseLogController extends HttpServlet {
                 System.out.println(user.getUserID());
                 System.out.println(note + exerciseLogID);
                 new ExerciseLogDao().updateExerciseLogNote(user.getUserID(), exerciseLogID, note);
-                response.sendRedirect("/CICOHealth/user/exercise-logs/" + updateNote + "?updateLog=success");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/"+updateNote, "success", "Update log successfully!"));
             } catch (Exception e) {
-                response.sendRedirect("/CICOHealth/user/exercise-logs/" + updateNote + "?updateLog=failure");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/"+updateNote, "failure", "Log update failed!"));
             }
 
         }
@@ -212,21 +212,16 @@ public class ExerciseLogController extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String id = req.getParameter("exerciseLogID");
+            String id = request.getParameter("exerciseLogID");
+            String exerciseType = id.substring(2,4).equals("CA")? "cardio":"resistance";
             ExerciseLogDao exerciseLogDao = new ExerciseLogDao();
             exerciseLogDao.deleteExerciseLog(id);
-            resp.sendRedirect("/CICOHealth/user/exercise-logs?delelte=successfully");
+            response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/" + exerciseType, "success", "Successfully deleted log!"));
         } catch (SQLException ex) {
             Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void createCardioLog(HttpServletRequest request, HttpServletResponse response) {
-    }
-
-    public void createResistanceLog(HttpServletRequest request, HttpServletResponse response) {
     }
 
     /**
