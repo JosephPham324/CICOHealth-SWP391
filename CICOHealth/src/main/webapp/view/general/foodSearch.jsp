@@ -20,7 +20,7 @@
         <div class="pop-up" id="meal-pop-up">
             <div class="overlay"></div>
             <div class="pop-up-content">
-                <form id="meal-form" onsubmit="event.preventDefault();requestLogCreation();">
+                <form id="meal-form" onsubmit="event.preventDefault();requestLogCreation();" data-enabled="${sessionScope.user != null}">
                 </form>
             </div>
         </div>

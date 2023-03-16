@@ -65,9 +65,10 @@ function addEditButtonsClickEvent() {
       let form_id = "edit-meal-log-form";
       //Get log date in format yyyy-mm-dd from date picker
       logUpdate.logDate = $("#date-picker").val();
-      
+
       //Only get the time part in logTime (excluding AM/PM in hh:mm AM/PM format)
-      logUpdate.logTime = logUpdate.logDate + " "+ logUpdate.logTime.split(" ")[0];
+      logUpdate.logTime =
+        logUpdate.logDate + " " + logUpdate.logTime.split(" ")[0];
       document
         .getElementById(form_id)
         .addEventListener("submit", function (event) {
@@ -75,7 +76,7 @@ function addEditButtonsClickEvent() {
           console.log(logUpdate);
           let formParams = {
             mealLog: JSON.stringify(logUpdate),
-            _method: "PUT"
+            _method: "PUT",
           };
           console.log(formParams);
           post("/CICOHealth/user/meal-logs", formParams);
@@ -135,7 +136,7 @@ function fillEditForm(logData) {
             <td>
                 <a href="#" class="btn-delete-pop-up"
                 onclick = "removeFoodItem(logUpdate, '${
-                  food.itemID 
+                  food.itemID
                 }'); fillEditForm(logUpdate);"
                 ><i class="fa-solid fa-trash"></i
                 ></a>
@@ -167,28 +168,32 @@ function getFoodItem(mealLog, itemID) {
 }
 
 function addNoteButtonsClickEvent() {
-    let noteButtons = document.querySelectorAll(".btn-note-pop-up");
-    noteButtons.forEach((button) => {
-        button.addEventListener("click", function (event) {
-            let log = findExerciseLogById(button.dataset.logid);
-            let logID = button.dataset.logid;
-            document.getElementById("txtNote").innerText = log.logNote;
-            displayPopUp("note-pop-up");
-            let formNoteLog = "edit-meals-log-note";
-            document.getElementById(formNoteLog).addEventListener("submit", function (event) {
-            let updateNote = document.getElementById("txtNote").value;
-                event.preventDefault();
-                let formParams = {
-                    note: updateNote,
-                    _method: "PUT",
-                    mealLogID: logID,
-                    updateNote: "meal"
-                };
-                post("/CICOHealth/user/meal-logs", formParams);
-            });
+  let noteButtons = document.querySelectorAll(".btn-note-pop-up");
+  noteButtons.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      let log = findExerciseLogById(button.dataset.logid);
+      let logID = button.dataset.logid;
+      document.getElementById("txtNote").innerText = log.logNote;
+      displayPopUp("note-pop-up");
+      let formNoteLog = "edit-meals-log-note";
+      document
+        .getElementById(formNoteLog)
+        .addEventListener("submit", function (event) {
+          console.log('lol')
+          let updateNote = document.getElementById("txtNote").value;
+          event.preventDefault();
+          let formParams = {
+            note: updateNote,
+            _method: "PUT",
+            mealLogID: logID,
+            updateNote: "meal",
+          };
+          console.log(formParams)
+          post("/CICOHealth/user/meal-logs", formParams);
         });
     });
-};
+  });
+}
 
 function addToTotal(logData) {
   total.protein += logData.nutrition[0];
@@ -217,7 +222,9 @@ function getRowHTML(count, logData) {
             }"><i class="fa-solid fa-pen-to-square"></i></a>/
             <form action="/CICOHealth/user/meal-logs" method="POST" style="display: inline-block;" id="formDelete">
                 <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="mealLogID" value="${logData.mealLogID}">
+                <input type="hidden" name="mealLogID" value="${
+                  logData.mealLogID
+                }">
                 <button style="border:0; background-color:transparent; color:red;" type="submit" class="btn-delete-pop-up" onclick="confirmDelete()"><i style = "font-size:20;" class="fa-solid fa-trash" id="btnDelete"></i></button>
             </form>
         </td>
@@ -233,7 +240,7 @@ function getDatePickerData() {
   //Send a synchronous GET request to the server
   let response = $.ajax({
     url: "/CICOHealth/user/meal-logs/data?date=" + date,
-    async: false
+    async: false,
   }).responseText;
   let data = JSON.parse(response);
   return data.logs;
@@ -254,13 +261,12 @@ document.querySelectorAll('a[name="btn-cancel"]').forEach((button) => {
   });
 });
 
-
-function confirmDelete(event){
-    if(confirm("Are you sure you want to delete this meal log?")){
-         event.preventDefault();
-        document.getElementById("formDelete").submit();
-    }else{
-        event.preventDefault();
-        alert("Oke vay thoi!");
-    }
+function confirmDelete(event) {
+  if (confirm("Are you sure you want to delete this meal log?")) {
+    event.preventDefault();
+    document.getElementById("formDelete").submit();
+  } else {
+    event.preventDefault();
+    alert("Oke vay thoi!");
+  }
 }

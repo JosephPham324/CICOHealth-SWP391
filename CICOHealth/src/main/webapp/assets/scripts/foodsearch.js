@@ -319,6 +319,7 @@ function displayMealForm() {
   displayPopUp("meal-pop-up");
   // Clear meal form
   let mealForm = document.getElementById("meal-form");
+  let enabled = mealForm.dataset.enabled;
   mealForm.innerHTML = "";
   let tableHTML = `
   <table id="table_id" class="display selectedFood">
@@ -433,13 +434,15 @@ function displayMealForm() {
   mealForm.innerHTML += htmlMealNote;
 
   //Add submit button to meal form
-  mealForm.innerHTML += `
-  <div class="form-group row">
-    <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-submit">Submit</button>
+  if (enabled === "true") {
+    mealForm.innerHTML += `
+    <div class="form-group row">
+      <div class="offset-4 col-8">
+        <button name="submit" type="submit" class="btn btn-submit">Submit</button>
+      </div>
     </div>
-  </div>
-  `;
+    `;
+  }
 }
 
 /**

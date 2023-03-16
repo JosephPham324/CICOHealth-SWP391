@@ -202,14 +202,13 @@
         </div>
 
         <!-- pop-up-notes -->
-        <form action="meal-log" method="post" class="edit-meal-log-note-form"
+        <form action="meal-logs" method="post" class="edit-meal-log-note-form"
               id="edit-meals-log-note">
             <div class="pop-up note-pop-up" id="note-pop-up">
                 <div class="note-overlay overlay" id="overlay"></div>
                 <div class="pop-up-content note-pop-up-content">
                     <!-- <div class="note-pop-up"> -->
                     <h2 class="txt-title-pop-up">Notes Meal Logs</h2>
-
                     <div class="form-group row">
                         <div class="offset-1 col-10">
                             <textarea id="txtNote" name="txtNote" type="text" class="form-control"></textarea>
