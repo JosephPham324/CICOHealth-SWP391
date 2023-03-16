@@ -100,8 +100,7 @@
             <div class="pop-up-content">Hello</div>
         </div>
 
-        <!-- pop-up-notes -->
-     <form action="exercise-log" method="post" name="edit-exercise-log-note" id="edit-exercise-log-note">
+      <form action="exercise-log" method="post" name="edit-exercise-log-note" id="edit-exercise-log-note">
             <!-- pop-up-notes -->
             <div class="pop-up note-pop-up" id="note-pop-up">
                 <div class="note-overlay overlay" id="overlay"></div>

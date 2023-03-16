@@ -31,7 +31,7 @@ date_picker.addEventListener("input", function (event) {
 });
 
 function findExerciseLogById(id) {
-  return logsData.find((log) => log.mealLogID == id);
+  return logsData.find((log) => log.mealLogID === id);
 }
 
 //Fill the table with data
@@ -167,15 +167,28 @@ function getFoodItem(mealLog, itemID) {
 }
 
 function addNoteButtonsClickEvent() {
-  let noteButtons = document.querySelectorAll(".btn-note-pop-up");
-  noteButtons.forEach((button) => {
-    button.addEventListener("click", function (event) {
-      let log = findExerciseLogById(button.dataset.logid);
-      document.getElementById("txtNote").innerText = log.logNote;
-      displayPopUp("note-pop-up");
+    let noteButtons = document.querySelectorAll(".btn-note-pop-up");
+    noteButtons.forEach((button) => {
+        button.addEventListener("click", function (event) {
+            let log = findExerciseLogById(button.dataset.logid);
+            let logID = button.dataset.logid;
+            document.getElementById("txtNote").innerText = log.logNote;
+            displayPopUp("note-pop-up");
+            let formNoteLog = "edit-meals-log-note";
+            document.getElementById(formNoteLog).addEventListener("submit", function (event) {
+            let updateNote = document.getElementById("txtNote").value;
+                event.preventDefault();
+                let formParams = {
+                    note: updateNote,
+                    _method: "PUT",
+                    mealLogID: logID,
+                    updateNote: "meal"
+                };
+                post("/CICOHealth/user/meal-logs", formParams);
+            });
+        });
     });
-  });
-}
+};
 
 function addToTotal(logData) {
   total.protein += logData.nutrition[0];

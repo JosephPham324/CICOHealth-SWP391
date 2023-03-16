@@ -206,7 +206,21 @@ public class MealLogDao extends BaseDao {
             closeConnections();
         }
     }
-    
+      public void updateMealLogNote(String userID, String MealLogID, String message) {
+        String query ="UPDATE mealLog SET logNote = ? WHERE userID = ? AND mealLogID = ?";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            int index = 1;
+            preparedStatement.setString(index++, message);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, MealLogID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     public static void main(String[] args) {
         try {
             ArrayList<MealLog> result = new MealLogDao().getLogsOfDate("USME000001", "2023-02-24");

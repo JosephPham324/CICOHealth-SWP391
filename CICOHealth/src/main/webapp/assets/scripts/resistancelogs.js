@@ -94,11 +94,12 @@ function addNoteButtonsClickEvent() {
             document.getElementById("txtNote").innerText = log.logNote;
             displayPopUp("note-pop-up");
             let formNoteLog = "edit-exercise-log-note";
-            
             document.getElementById(formNoteLog).addEventListener("submit", function (event) {
-            let updateNote = document.getElementById("txtNote").value;
+            event.preventDefault();
+                let updateNote = document.getElementById("txtNote").value;
+               
                 alert(updateNote + ", " + logID);
-                event.preventDefault();
+                
                 let formParams = {
                     note: updateNote,
                     _method: "PUT",
