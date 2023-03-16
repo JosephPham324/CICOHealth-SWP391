@@ -9,39 +9,38 @@
     </context-param>
     <context-param>
         <param-name>JqueryValidation</param-name>
-        <param-value><![CDATA[<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>]]></param-value>
+        <param-value>&lt;script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"&gt;&lt;/script&gt;</param-value>
     </context-param>
     <context-param>
         <param-name>Bootstrap</param-name>
         <param-value>
-        <![CDATA[
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-        ]]>
+        
+        &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/&gt;
+        
         </param-value>
     </context-param>
-    
     <context-param>
         <param-name>JQuery</param-name>
-        <param-value><![CDATA[<script src="https://code.jquery.com/jquery-3.5.1.js"></script>]]></param-value>
+        <param-value>&lt;script src="https://code.jquery.com/jquery-3.5.1.js"&gt;&lt;/script&gt;</param-value>
     </context-param>
     <context-param>
         <param-name>FontAwesome</param-name>
-        <param-value><![CDATA[<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />]]></param-value>
+        <param-value>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" /&gt;</param-value>
     </context-param>
     <context-param>
         <param-name>DataTableCDN</param-name>
         <param-value>
-        <![CDATA[
-        <link
+        
+        &lt;link
             rel="stylesheet"
             href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
-            />
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-        ]]>
+            /&gt;
+        &lt;script src="https://code.jquery.com/jquery-3.5.1.js"&gt;&lt;/script&gt;
+        &lt;script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"&gt;&lt;/script&gt;
+        
         </param-value>
     </context-param>
     <error-page>
@@ -70,6 +69,8 @@
         <filter-name>RequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <!--Register-->
     <servlet>
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.RegisterController</servlet-class>
@@ -79,6 +80,7 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
+    <!--Ban-->
     <servlet>
         <servlet-name>BanController</servlet-name>
         <servlet-class>controller.BanController</servlet-class>
@@ -101,6 +103,11 @@
     <servlet>
         <servlet-name>FoodSearch</servlet-name>
         <jsp-file>/view/general/foodSearch.jsp</jsp-file>
+    </servlet>
+    <!--Timer-->
+    <servlet>
+        <servlet-name>Timer</servlet-name>
+        <jsp-file>/view/general/utilities/timer.jsp</jsp-file>
     </servlet>
     <!--Mappings-->
     <servlet>
@@ -127,57 +134,92 @@
         <servlet-name>StatisticsController</servlet-name>
         <servlet-class>controller.StatisticsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Conversion</servlet-name>
+        <jsp-file>/view/general/utilities/converter.jsp</jsp-file>
+    </servlet>   
+    <servlet-mapping>
+        <servlet-name>Conversion</servlet-name>
+        <url-pattern>/utilities/conversion/*</url-pattern>
+    </servlet-mapping>     
+    <servlet>
+        <servlet-name>ExerciseProgramController</servlet-name>
+        <servlet-class>controller.ExerciseProgramController</servlet-class>
+    </servlet>
+    <!--Register-->
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+    <!--Login-->
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/log-out</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProfileController</servlet-name>
-        <url-pattern>/user/profile/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UserManagementController</servlet-name>
-        <url-pattern>/admin/user-management/*</url-pattern>
-    </servlet-mapping>
+    <!--Ban-->
     <servlet-mapping>
         <servlet-name>BanController</servlet-name>
         <url-pattern>/banController</url-pattern>
     </servlet-mapping>
+    <!--Log out-->
     <servlet-mapping>
-        <servlet-name>ExerciseManagementController</servlet-name>
-        <url-pattern>/admin/exercise-management/*</url-pattern>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/log-out</url-pattern>
     </servlet-mapping>
+    <!--Profile-->
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/user/profile/*</url-pattern>
+    </servlet-mapping>
+    <!--User management-->
+    <servlet-mapping>
+        <servlet-name>UserManagementController</servlet-name>
+        <url-pattern>/admin/user-management/*</url-pattern>
+    </servlet-mapping>
+    <!--Food Search-->
     <servlet-mapping>
         <servlet-name>FoodSearch</servlet-name>
         <url-pattern>/food-search</url-pattern>
     </servlet-mapping>
+    <!--Timer-->
+    <servlet-mapping>
+        <servlet-name>Timer</servlet-name>
+        <url-pattern>/utilities/timer/*</url-pattern>
+    </servlet-mapping>
+    <!--Exericse management-->
+    <servlet-mapping>
+        <servlet-name>ExerciseManagementController</servlet-name>
+        <url-pattern>/admin/exercise-management/*</url-pattern>
+    </servlet-mapping>
+    <!--Exericse Search-->
     <servlet-mapping>
         <servlet-name>ExerciseSearchController</servlet-name>
         <url-pattern>/exercise-search/*</url-pattern>
     </servlet-mapping>
+    <!--Meal Log-->
     <servlet-mapping>
         <servlet-name>MealLogController</servlet-name>
         <url-pattern>/user/meal-logs/*</url-pattern>
     </servlet-mapping>
+    <!--FAQ-->
     <servlet-mapping>
         <servlet-name>FAQController</servlet-name>
         <url-pattern>/faq/*</url-pattern>
     </servlet-mapping>
+    <!--Exericse Log-->
     <servlet-mapping>
         <servlet-name>ExerciseLogController</servlet-name>
         <url-pattern>/user/exercise-logs/*</url-pattern>
     </servlet-mapping>
+    <!--Statistics-->
     <servlet-mapping>
         <servlet-name>StatisticsController</servlet-name>
         <url-pattern>/user/statistics/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ExerciseProgramController</servlet-name>
+        <url-pattern>/exercise-programs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

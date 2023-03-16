@@ -5,6 +5,7 @@
 package controller;
 
 import bean.Exercise;
+import com.google.gson.Gson;
 import dao.ExerciseDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +37,7 @@ public class ExerciseSearchController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -61,10 +63,26 @@ public class ExerciseSearchController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String URI = request.getRequestURI();
+        if (URI.endsWith("/data")) {
+            if (request.getParameter("type") != null) {
+                TreeMap<String,String> names = (TreeMap)new ExerciseDao().getExerciseNames();
+                Gson gson = new Gson();
+                printResponseJSON(response, gson.toJson(names));
+                return;
+            }
+        }
         ExerciseDao exDAO = new ExerciseDao();
         List<Exercise> exerciseList = exDAO.getAllExercises();
         request.setAttribute("exerciseList", exerciseList);
         request.getRequestDispatcher("/view/general/exerciseSearch.jsp").forward(request, response);
+    }
+
+    private void printResponseJSON(HttpServletResponse response, String json) throws IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.print(json);
+        out.flush();
     }
 
     /**

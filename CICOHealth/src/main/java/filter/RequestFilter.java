@@ -4,6 +4,7 @@
  */
 package filter;
 
+import bean.User;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -105,6 +106,82 @@ public class RequestFilter implements Filter {
         }
     }
 
+    private boolean isProtectedUrl(String[] pathParts) {
+        // Check if the requested URL is protected
+        if (pathParts.length >= 2) {
+            String section = pathParts[1];
+            return section.equals("user") || section.equals("exercise-programs") || section.equals("faq");
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isUserAuthorized(HttpServletRequest httpRequest, String[] pathParts) {
+        Object user = httpRequest.getSession().getAttribute("user");
+        // Check if the user is authorized to access the requested URL
+        String userType = user == null ? null : ((User) user).getUserRole();
+
+        if (userType == null) {
+            // If the user is not logged in, only allow access to the public pages
+            return isPublicUrl(pathParts);
+        } else if (userType.equals("ME")) {
+            // If the user is a member, allow access to member pages and public pages
+            return isPublicUrl(pathParts) || isMemberUrl(pathParts);
+        } else if (userType.equals("FE")) {
+            // If the user is a fitness expert, allow access to fitness expert pages, member pages, and public pages
+            return isPublicUrl(pathParts) || isMemberUrl(pathParts) || isFitnessExpertUrl(pathParts);
+        } else if (userType.equals("AD")) {
+            // If the user is an administrator, allow access to all pages
+            return true;
+        } else {
+            // If the user type is not recognized, deny access
+            return false;
+        }
+    }
+
+    private boolean isPublicUrl(String[] pathParts) {
+        // Check if the requested URL is a public page
+        if (pathParts.length >= 2) {
+            String section = pathParts[1];
+            return section.equals("utilities") || section.equals("food-search") || section.equals("exercise-search") || (section.equals("faq") && pathParts.length == 2
+                    || section.equals("faq") && pathParts.length > 2 && pathParts[2].equals("answers"));
+        } else {
+
+            return false;
+        }
+    }
+
+    private boolean isMemberUrl(String[] pathParts) {
+        // Check if the requested URL is a member page
+        if (pathParts.length >= 2) {
+            String section = pathParts[1];
+            if (section.equals("user"))
+                    return true;
+            if (section.equals("exercise-programs")) {
+                if (pathParts.length == 2) {
+                    return true;
+                } else if (pathParts.length == 3) {
+                    String action = pathParts[2];
+                    return action.equals("detail");
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isFitnessExpertUrl(String[] pathParts) {
+        // Check if the requested URL is a fitness expert page
+        if (pathParts.length >= 3) {
+            String section = pathParts[1];
+            String action = pathParts[2];
+            return section.equals("exercise-programs") && (action.equals("create") || action.equals("edit"));
+        } else {
+            return false;
+        }
+    }
+//    private boolean isAdminUrl(String[] pathParts){
+//    }
+
     /**
      *
      * @param request The servlet request we are processing
@@ -122,48 +199,52 @@ public class RequestFilter implements Filter {
             log("RequestFilter:doFilter()");
         }
         doBeforeProcessing(request, response);
-//        HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        HttpServletResponse httpResponse = (HttpServletResponse) response;
-//        //URI 
-//        String URI = httpRequest.getRequestURI();
-//        System.out.println(URI);
-//        String regex = "/CICOHealth/(\\w*(-*\\w*)*)/*.*";
-//        Pattern pattern = Pattern.compile(regex);
-//        Matcher matcher = pattern.matcher(URI);
-//        if (matcher.find()) {
-//            String part = matcher.group(1);
-//            HttpSession session;
-//            Object user = null;
-//            //Authorization for accounts access
-//            if (part.matches("user|admin")) {
-//                session = httpRequest.getSession();
-//                user = session.getAttribute("user");
-//                if (user == null) {
-//                    redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
-//                    return;
-//                }
-//            }
-//            switch (part) {
-//                case "user"://User pages
-//                    break;
-//                case "admin"://Admin pages
-//                    if (!((bean.User) user).getUserRole().equals("AD")) {
-//                        redirectToErrorPage(httpRequest, httpResponse, HttpServletResponse.SC_FORBIDDEN);
-//                        return;
-//                    }
-//                default:
-//                    break;
-//            }
-//        }
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        String requestedUrl = httpRequest.getRequestURI().substring(1);
+        String contextPath = httpRequest.getContextPath();
+        String[] pathParts = requestedUrl.split("/");
+        // Check if the requested URL is protected
         Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
+
+        if (isProtectedUrl(pathParts)) {
+            // Check if the user is authorized to access the requested URL
+            if (isUserAuthorized(httpRequest, pathParts)) {
+
+                // If the user is authorized, forward the request to the requested URL
+                try {
+                    chain.doFilter(request, response);
+                } catch (Throwable t) {
+                    // If an exception is thrown somewhere down the filter chain,
+                    // we still want to execute our after processing, and then
+                    // rethrow the problem after that.
+                    problem = t;
+                    t.printStackTrace();
+                }
+            } else {
+                // If the user is not authorized, redirect to the unauthorized error page
+                httpResponse.sendError(403);
+                return;
+            }
+        } else {            // If the requested URL is not protected, just forward the request
+            //But check if user is logged in to prevent accessing login and register page
+            System.out.println(httpRequest.getSession().getAttribute("user"));
+            if (httpRequest.getSession().getAttribute("user") != null) {
+                if (pathParts.length > 1 && (pathParts[1].equals("login") || pathParts[1].equals("register"))) {
+                    httpResponse.sendRedirect(contextPath + "/");
+                    return;
+                }
+            }
+            try {
+                chain.doFilter(request, response);
+            } catch (Throwable t) {
+                // If an exception is thrown somewhere down the filter chain,
+                // we still want to execute our after processing, and then
+                // rethrow the problem after that.
+                problem = t;
+                t.printStackTrace();
+            }
         }
         doAfterProcessing(request, response);
 

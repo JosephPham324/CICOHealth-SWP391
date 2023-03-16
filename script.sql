@@ -114,47 +114,27 @@ CREATE TABLE Workout (
   workoutDate text NOT NULL,
   workoutDescription text NOT NULL,
   PRIMARY KEY (workoutID),
-  FOREIGN KEY (programID) REFERENCES ExerciseProgram(programID)
+  FOREIGN KEY (programID) REFERENCES ExerciseProgram(programID) ON DELETE CASCADE
   );
 
 CREATE TABLE WorkoutExercises (
   workoutID varchar(10) NOT NULL,
   exerciseID varchar(10) NOT NULL,
+  exerciseOrder int NOT NULL,
   [set] int,
   reps text,
-  weight float,
+  weight text,
   duration int,
   calorieBurnt float,
   instruction text NOT NULL,
   PRIMARY KEY (workoutID, exerciseID),
-  FOREIGN KEY (workoutID) REFERENCES workout(workoutID),
-  FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID)
-)
-CREATE TABLE ProgramOrder (
-  userID varchar(10) NOT NULL,
-  orderID varchar(10) NOT NULL,
-  programID varchar(10) NOT NULL,
-  isPaid bit NOT NULL,
-  PRIMARY KEY (orderID),
-  FOREIGN KEY (userID) REFERENCES [user](userID),
-  FOREIGN KEY (programID) REFERENCES exerciseProgram(programID)
+  FOREIGN KEY (workoutID) REFERENCES workout(workoutID) ON DELETE CASCADE,
+  FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID) ON DELETE CASCADE
 );
 CREATE TABLE ProgramInventory (
-  inventoryID varchar(10) NOT NULL,
-  userID varchar(10) NOT NULL,
-  programID varchar(10) NOT NULL,
-  usInUse bit NOT NULL,
-  PRIMARY KEY (inventoryID),
-  FOREIGN KEY (userID) REFERENCES [user](userID),
-  FOREIGN KEY (programID) REFERENCES exerciseProgram(programID)
-);
-
-CREATE TABLE paymentInfo (
-  userID varchar(10) NOT NULL,
-  paymentInfoID varchar(10) NOT NULL,
-  paymentMethod text NOT NULL,
-  PRIMARY KEY (paymentInfoID),
-  FOREIGN KEY (userID) REFERENCES [user](userID)
+  userID varchar(10) NOT NULL REFERENCES [user](userID),
+  programID varchar(10) NOT NULL REFERENCES [exerciseProgram](programID),
+  PRIMARY KEY (userID, programID)
 );
 
 CREATE TABLE expertProfile (
@@ -181,11 +161,11 @@ ALTER TABLE EXERCISELOG
 ADD FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID); 
 GO
 --Trigger to add createdDate when a new healthInfo is created
-CREATE TRIGGER addCreatedDateHealthInfo ON healthInfo AFTER INSERT AS
+CREATE TRIGGER add_created_date_health_info ON healthInfo AFTER INSERT AS
 BEGIN
     UPDATE healthInfo
     SET createdDate = GETDATE()
     FROM healthInfo
     WHERE healthInfo.healthInfoID = (SELECT healthInfoID from INSERTED)
 END
-
+GO

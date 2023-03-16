@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.navbar {
+  background-color: rgb(131, 184, 46) !important;
+
+  .navbar-brand {
+    color: white;
+    font-size: 24px !important;
+    font-weight: bold !important;
+
+    .nav-title {
+      color: yellow;
+    }
+  }
+
+  .navbar-collapse {
+    .nav-item {
+      list-style-type: none !important;
+
+      a {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      a:hover {
+        color: black;
+      }
+
+      .dropdown-menu {
+        background-color: rgb(98, 137, 36) !important;
+
+        li a:hover {
+          color: black;
+          background-color: yellow !important;
+          text-decoration: none !important;
+        }
+
+      }
+    }
+
+    .nav-right {
+      align-items: center;
+
+      a {
+        background-color: white;
+        margin: 0 10px;
+        font-size: 16px;
+        color: black !important;
+      }
+
+      a:hover {
+        background-color: yellow !important;
+      }
+    }
+  }
+}
+
+.footer {
+  background-color: rgb(131, 184, 46) !important;
+
+  .footer-bottom {
+    background-color: rgb(98, 137, 36) !important;
+    color: white;
+  }
+
+  .footer-content {
+    .footer-item {
+      margin-top: 15px;
+
+      .footer-title {
+        color: white;
+      }
+
+      .school-name {
+        color: yellow;
+      }
+
+      p {
+        color: white;
+      }
+    }
+  }
+}

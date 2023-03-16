@@ -1,10 +1,13 @@
 import {
   fetchData,
   getDailyTopSets,
-  countExercisesPerWeek,
+  // countExercisesPerWeek,
   getExerciseFrequency,
   calculateResistanceExerciseStats,
-  calculateCardioExerciseStats
+  calculateCardioExerciseStats,
+  findBestSet,
+  // calculate1RM,
+  calculateRepRange,
 } from "../modules/statistics.js";
 // const statistics = new Statistics();
 //Start date picker
@@ -50,6 +53,31 @@ function fillStatisticsTable(analyzedData, tableType) {
   let tableHead = document.querySelector(".statistics-table thead");
   tableHead.innerHTML = "";
   switch (tableType) {
+    case "Weight Recommendation":
+      tableHead.innerHTML = `
+            <tr>
+                <th>Repetition(s)</th>
+                <th>Weight Recommendation</th>
+            </tr>          
+            `
+      tableBody.innerHTML = "";
+      let selectedExerciseName = exerciseSelect.value;
+      console.log(selectedExerciseName)
+      console.log(analyzedData)
+      let exercise = analyzedData.find((exercise) => exercise.exerciseName === selectedExerciseName);
+      console.log(exercise)
+      let bestSet = findBestSet(exercise.topSets);
+      let repRange = calculateRepRange(bestSet.weight, bestSet.rep);
+      for (let i in repRange) {
+        let row = document.createElement("tr");
+        let HTML = `
+                      <td>${i}</td>
+                      <td>${repRange[i].toFixed(1)}</td>
+                      `;
+        row.innerHTML = HTML;
+        tableBody.appendChild(row);
+      }
+      break;
     case "Exercise Summary":
     default:
       tableHead.innerHTML = `
@@ -65,31 +93,31 @@ function fillStatisticsTable(analyzedData, tableType) {
                 <th>Average Reps</th>
             </tr>
             `;
+      tableBody.innerHTML = "";
+      let i = 0;
+      for (const exerciseName in analyzedData) {
+        let row = document.createElement("tr");
+        let record = analyzedData[exerciseName];
+        let HTML = `
+                      <td>${++i}</td>
+                      <td>${exerciseName}</td>
+                      <td>${record.frequency}</td>
+                      <td>${record.totalSets}</td>
+                      <td>${record.totalReps}</td>
+                      <td>${record.totalWeight}</td>
+                      <td>${record.maxWeight}</td>
+                      <td>${record.averageWeight.toFixed(1)}</td>
+                      <td>${record.averageReps.toFixed(0)}</td>
+                      `;
+        row.innerHTML = HTML;
+        tableBody.appendChild(row);
+      }
       break;
-  }
-  tableBody.innerHTML = "";
-  let i = 0;
-  for (const exerciseName in analyzedData) {
-    let row = document.createElement("tr");
-    let record = analyzedData[exerciseName];
-    let HTML = `
-            <td>${++i}</td>
-            <td>${exerciseName}</td>
-            <td>${record.frequency}</td>
-            <td>${record.totalSets}</td>
-            <td>${record.totalReps}</td>
-            <td>${record.totalWeight}</td>
-            <td>${record.maxWeight}</td>
-            <td>${record.averageWeight.toFixed(1)}</td>
-            <td>${record.averageReps.toFixed(0)}</td>
-            `;
-    row.innerHTML = HTML;
-    tableBody.appendChild(row);
   }
 }
 
 let displayDataTypes = {
-  table: ["Exercise Summary"],
+  table: ["Exercise Summary", "Weight Recommendation"],
   chart: ["Exercises Top Sets", "Exercises Frequency"],
 };
 
@@ -122,6 +150,7 @@ document.getElementById("display-type").dispatchEvent(new Event("change"));
 
 let exerciseSelect = document.createElement("select");
 exerciseSelect.id = "exercise-select";
+exerciseSelect.classList.add("exercise-select");
 
 let dataTypeElement = document.getElementById("data");
 dataTypeElement.parentNode.insertBefore(
@@ -138,19 +167,33 @@ async function displayData() {
   let dataType = document.getElementById("data").value;
   //fetch data
   let data = await fetchDate("nutrition");
+  //Hide exercise select if not Weight Recommendation and Top Sets
+  if (
+    dataType !== "Weight Recommendation" &&
+    dataType !== "Exercises Top Sets"
+  ) {
+    exerciseSelect.style.display = "none";
+  }
+
   if (displayType == "table") {
     let analyzedData = calculateResistanceExerciseStats(data.logs);
     // A switch statement that is checking the value of dataType and then calling the appropriate
     switch (dataType) {
+      case "Weight Recommendation":
+        analyzedData = getDailyTopSets(data.logs);
+        //Clear exercise select
+        addExerciseOptions(analyzedData);
+        exerciseSelect.addEventListener("change", () => {
+          displayedChart = fillStatisticsTable(analyzedData, dataType);
+        });
+        fillStatisticsTable(analyzedData, dataType)
+        break;
       case "Exercise Summary":
       default:
         fillStatisticsTable(analyzedData, dataType);
         break;
     }
   } else if (displayType == "chart") {
-    if (dataType!="Exercises Top Sets") {
-      exerciseSelect.style.display = "none";
-    }
     /* A switch statement that is checking the value of dataType and then calling the appropriate
     function. */
     let chart = document.getElementById("statistics-chart");
@@ -158,30 +201,7 @@ async function displayData() {
       case "Exercises Top Sets": {
         let analyzedData = getDailyTopSets(data.logs);
 
-        //Clear exercise select
-        exerciseSelect.innerHTML = "";
-        //Remove all event listeners from exercise select
-        exerciseSelect = exerciseSelect.cloneNode(true);
-        console.log(exerciseSelect);
-
-        let exerciseNames = analyzedData.map(
-          (exercise) => exercise.exerciseName
-        );
-
-        //Add options to exercise select
-        for (let exerciseName of exerciseNames) {
-          let option = document.createElement("option");
-          option.value = exerciseName;
-          option.innerHTML = exerciseName;
-          exerciseSelect.appendChild(option);
-        }
-        //Show exercise select
-        exerciseSelect.style.display = "block";
-        //Append exercise select to after data type selector
-        dataTypeElement.parentNode.insertBefore(
-          exerciseSelect,
-          dataTypeElement.nextSibling
-        );
+        addExerciseOptions(analyzedData);
 
         //Add event listener to exercise select
         exerciseSelect.addEventListener("change", () => {
@@ -204,6 +224,33 @@ async function displayData() {
         displayedChart = displayExerciseFrequencyChart(chart, analyzedData);
     }
   }
+}
+
+function addExerciseOptions(analyzedData) {
+  exerciseSelect.innerHTML = "";
+  let newExerciseSelect = exerciseSelect.cloneNode(true);
+  //Remove current exercise select
+  exerciseSelect.parentNode.removeChild(exerciseSelect);
+  //Set exercise select to new exercise select
+  exerciseSelect = newExerciseSelect;
+
+  let exerciseNames = analyzedData.map((exercise) => exercise.exerciseName);
+
+  //Add options to exercise select
+  for (let exerciseName of exerciseNames) {
+    let option = document.createElement("option");
+    option.value = exerciseName;
+    option.innerHTML = exerciseName;
+    exerciseSelect.appendChild(option);
+  }
+
+  //Show exercise select
+  exerciseSelect.style.display = "block";
+  //Append exercise select to after data type selector
+  dataTypeElement.parentNode.insertBefore(
+    exerciseSelect,
+    dataTypeElement.nextSibling
+  );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -304,12 +351,14 @@ function displayExerciseFrequencyChart(canvas, data) {
   if (displayedChart) {
     displayedChart.destroy();
   }
-  console.log(data)
+  console.log(data);
   const exerciseNames = data.map((exercise) => exercise.exerciseName);
   const exerciseFrequencies = {};
-  
+
   exerciseNames.forEach((name) => {
-    exerciseFrequencies[name] = data.find((exercise) => exercise.exerciseName === name).frequency;
+    exerciseFrequencies[name] = data.find(
+      (exercise) => exercise.exerciseName === name
+    ).frequency;
   });
 
   const chartData = {

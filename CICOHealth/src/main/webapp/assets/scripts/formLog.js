@@ -30,10 +30,3 @@ noteButtons.forEach(button => {
         displayPopUp("note-pop-up");
     });
 });
-
-// cancelButton.forEach(button => {
-//     button.addEventListener('click', () => {
-//         editPopUp.style.display = 'none';
-//         notePopUp.style.display = 'none';
-//     });
-// });

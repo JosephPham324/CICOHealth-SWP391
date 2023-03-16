@@ -36,34 +36,26 @@
   box-sizing: border-box;
 }
 
-.container {
-  margin-top: 5%;
-}
-
-.txt-title {
+.container .txt-title {
+  margin-top: 3%;
   text-align: center;
 }
-
-.table-content thead {
+.container .table-content thead {
   background-color: rgb(131, 184, 46);
 }
-
-.table-content tfoot {
+.container .table-content tfoot {
   background-color: yellow;
 }
-
-.table-content {
+.container .table-content {
   margin-bottom: 20px;
 }
-
-.datepicker-container {
+.container .datepicker-container {
   display: flex;
   flex-direction: row;
   align-items: normal;
   justify-content: center;
 }
-
-#date-picker {
+.container #date-picker {
   text-align: center;
   font-size: 16px;
   padding: 8px;
@@ -74,7 +66,7 @@
   color: #444;
 }
 @media (min-width: 320) {
-  #date-picker {
+  .container #date-picker {
     font-size: calc(
       16px + (32px - 16px) * ((
               100vw - 320
@@ -83,7 +75,7 @@
   }
 }
 @media (min-width: 1080) {
-  #date-picker {
+  .container #date-picker {
     font-size: 32px;
   }
 }

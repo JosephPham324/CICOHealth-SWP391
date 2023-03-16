@@ -4,6 +4,7 @@
 #info-table {
   tbody tr {
     cursor: pointer;
+
     &:hover {
       background-color: #f5f5f5;
     }
@@ -26,19 +27,20 @@
   padding: 5px;
   margin: 5px;
   cursor: pointer;
+
   &:hover {
     background-color: #ccc;
   }
 }
 
-.pop-up{
+.pop-up {
   z-index: 1;
 }
 
 body {
   font-size: 0.9rem !important;
-    background-color: white !important;
-    font-family: "Kanit", sans-serif !important;
+  background-color: white !important;
+  font-family: "Kanit", sans-serif !important;
 }
 
 h2 .display-4 {
@@ -51,29 +53,31 @@ h2 .display-4 {
 
 ::-webkit-scrollbar {
   width: 0px;
-  background: transparent; /* make scrollbar transparent */
-  }
+  background: transparent;
+  /* make scrollbar transparent */
+}
 
-  .btn-primary {
-    background-color: rgb(131, 184, 46) !important;
-    border: none !important;
-    color: black !important;
-    text-transform: uppercase !important;
-    
-  }
+.btn-primary {
+  background-color: rgb(131, 184, 46) !important;
+  border: none !important;
+  color: black !important;
+  text-transform: uppercase !important;
+
+}
 
 
-  .btn-primary:hover {
-    background-color: yellow !important;
-  }
+.btn-primary:hover {
+  background-color: yellow !important;
+}
 
-  .navbar-brand{
-    font-weight: bold;
-    font-size: 2em !important;
-    font-family: "Kanit", sans-serif !important;
-  }
+.nav-title-exercise-search{
+  margin-top: 3%;
+  font-weight: bold;
+  font-size: 2em !important;
+  font-family: "Kanit", sans-serif !important;
+}
 
-  thead {
-    background-color: rgb(131, 184, 46) !important;
+thead {
+  background-color: rgb(131, 184, 46) !important;
 
-  }
+}

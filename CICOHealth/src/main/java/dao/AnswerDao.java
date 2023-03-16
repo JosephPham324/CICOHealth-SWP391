@@ -5,7 +5,6 @@
 package dao;
 
 import bean.Answer;
-import bean.Exercise;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -161,7 +160,7 @@ public class AnswerDao extends BaseDao {
         try {
             PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
             statement.setString(1, answerID);
-            ResultSet resultSet = statement.executeQuery();
+             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String createBy = resultSet.getString("createdBy");
                 String questionTopic = resultSet.getString("questionTopic");
