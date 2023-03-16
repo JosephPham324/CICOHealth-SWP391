@@ -201,12 +201,29 @@ public class ExerciseLogDao extends BaseDao {
         return result;
     }
 
+    public void updateExerciseLogNote(String userID, String ExerciseLogID, String message) {
+        String query ="UPDATE ExerciseLog SET logNote = ? WHERE userID = ? AND exerciseLogID = ?";
+        connection = new DBContext().getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            int index = 1;
+            preparedStatement.setString(index++, message);
+            preparedStatement.setString(index++, userID);
+            preparedStatement.setString(index++, ExerciseLogID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public static void main(String[] args) {
         try {
             ExerciseLog el = new ExerciseLog();
 
             System.out.println(new ExerciseLogDao().getLogsOfDate("USME000001", "2023-03-01", "RE"));
             ArrayList<ExerciseLog> arrayList = new ExerciseLogDao().getLogsOfDate("USME000001", "2023-03-01", "RE");
+            new ExerciseLogDao().updateExerciseLogNote("USME000001", "CALG000002", "1111zzCALG000002");
 //            if(arrayList!=null){
 //                for (ExerciseLog exerciseLog : arrayList) {
 //                    el = exerciseLog;
@@ -220,20 +237,4 @@ public class ExerciseLogDao extends BaseDao {
         }
     }
 
-    public void updateExerciseLogNote(String userID, String ExerciseLogID, String message) {
-        String query = "UPDATE [CICOHealth].[dbo].[ExerciseLog]\n"
-                + "SET [logNote] = ? \n"
-                + "WHERE [userID] = ? AND [exerciseLogID] = ? ";
-        connection = new DBContext().getConnection();
-        try {
-            preparedStatement = connection.prepareStatement(query);
-            int index = 1;
-            preparedStatement.setString(index++, message);
-            preparedStatement.setString(index++, userID);
-            preparedStatement.setString(index++, ExerciseLogID);
-        } catch (SQLException ex) {
-            Logger.getLogger(ExerciseLogDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }   
 }

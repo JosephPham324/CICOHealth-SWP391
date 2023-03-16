@@ -193,12 +193,19 @@ public class ExerciseLogController extends HttpServlet {
                 response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?update=failure");
             }
         }
-        String updateNote = request.getParameter("btnNote");
+        String updateNote = request.getParameter("updateNote");
         if (updateNote != null) {
-            String exerciseLogID = request.getParameter("exerciseLogID");
-            String note = request.getParameter("note");
-            new ExerciseLogDao().updateExerciseLogNote(user.getUserID(), exerciseLogID, note);
-            response.sendRedirect("/CICOHealth/user/exercise-logs/resistance?updateLog=success");
+            try {
+                String exerciseLogID = request.getParameter("exerciseLogID");
+                String note = request.getParameter("note");
+                System.out.println(user.getUserID());
+                System.out.println(note + exerciseLogID);
+                new ExerciseLogDao().updateExerciseLogNote(user.getUserID(), exerciseLogID, note);
+                response.sendRedirect("/CICOHealth/user/exercise-logs/" + updateNote + "?updateLog=success");
+            } catch (Exception e) {
+                response.sendRedirect("/CICOHealth/user/exercise-logs/" + updateNote + "?updateLog=failure");
+            }
+
         }
 
     }
