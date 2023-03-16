@@ -130,32 +130,14 @@ CREATE TABLE WorkoutExercises (
   PRIMARY KEY (workoutID, exerciseID),
   FOREIGN KEY (workoutID) REFERENCES workout(workoutID) ON DELETE CASCADE,
   FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID) ON DELETE CASCADE
-)
-CREATE TABLE ProgramOrder (
-  userID varchar(10) NOT NULL,
-  orderID varchar(10) NOT NULL,
-  programID varchar(10) NOT NULL,
-  isPaid bit NOT NULL,
-  PRIMARY KEY (orderID),
-  FOREIGN KEY (userID) REFERENCES [user](userID),
-  FOREIGN KEY (programID) REFERENCES exerciseProgram(programID)
 );
 CREATE TABLE ProgramInventory (
   inventoryID varchar(10) NOT NULL,
   userID varchar(10) NOT NULL,
   programID varchar(10) NOT NULL,
-  usInUse bit NOT NULL,
   PRIMARY KEY (inventoryID),
   FOREIGN KEY (userID) REFERENCES [user](userID),
   FOREIGN KEY (programID) REFERENCES exerciseProgram(programID)
-);
-
-CREATE TABLE paymentInfo (
-  userID varchar(10) NOT NULL,
-  paymentInfoID varchar(10) NOT NULL,
-  paymentMethod text NOT NULL,
-  PRIMARY KEY (paymentInfoID),
-  FOREIGN KEY (userID) REFERENCES [user](userID)
 );
 
 CREATE TABLE expertProfile (
@@ -182,11 +164,21 @@ ALTER TABLE EXERCISELOG
 ADD FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID); 
 GO
 --Trigger to add createdDate when a new healthInfo is created
-CREATE TRIGGER addCreatedDateHealthInfo ON healthInfo AFTER INSERT AS
+CREATE TRIGGER add_created_date_health_info ON healthInfo AFTER INSERT AS
 BEGIN
     UPDATE healthInfo
     SET createdDate = GETDATE()
     FROM healthInfo
     WHERE healthInfo.healthInfoID = (SELECT healthInfoID from INSERTED)
 END
+GO
 
+CREATE TRIGGER delete_program_inventory
+ON ProgramInventory
+AFTER INSERT
+AS
+BEGIN
+    DELETE FROM ProgramInventory
+    WHERE userID = (SELECT userID FROM inserted)
+      AND inventoryID != (SELECT inventoryID FROM inserted);
+END;

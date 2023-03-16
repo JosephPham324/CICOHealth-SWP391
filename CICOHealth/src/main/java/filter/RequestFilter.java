@@ -144,9 +144,9 @@ public class RequestFilter implements Filter {
         if (pathParts.length >= 2) {
             String section = pathParts[1];
             return section.equals("utilities") || section.equals("food-search") || section.equals("exercise-search") || (section.equals("faq") && pathParts.length == 2
-                    || section.equals("faq") && pathParts.length>2 && pathParts[2].equals("answers"));
+                    || section.equals("faq") && pathParts.length > 2 && pathParts[2].equals("answers"));
         } else {
-            
+
             return false;
         }
     }
@@ -155,10 +155,18 @@ public class RequestFilter implements Filter {
         // Check if the requested URL is a member page
         if (pathParts.length >= 2) {
             String section = pathParts[1];
-            return section.equals("user") || (section.equals("exercise-programs") && pathParts.length == 2);
-        } else {
-            return false;
+            if (section.equals("user"))
+                    return true;
+            if (section.equals("exercise-programs")) {
+                if (pathParts.length == 2) {
+                    return true;
+                } else if (pathParts.length == 3) {
+                    String action = pathParts[2];
+                    return action.equals("detail");
+                }
+            }
         }
+        return false;
     }
 
     private boolean isFitnessExpertUrl(String[] pathParts) {
@@ -171,6 +179,8 @@ public class RequestFilter implements Filter {
             return false;
         }
     }
+//    private boolean isAdminUrl(String[] pathParts){
+//    }
 
     /**
      *
@@ -201,7 +211,6 @@ public class RequestFilter implements Filter {
         if (isProtectedUrl(pathParts)) {
             // Check if the user is authorized to access the requested URL
             if (isUserAuthorized(httpRequest, pathParts)) {
-                System.out.println("hello");
 
                 // If the user is authorized, forward the request to the requested URL
                 try {
@@ -214,7 +223,6 @@ public class RequestFilter implements Filter {
                     t.printStackTrace();
                 }
             } else {
-                System.out.println("woa");
                 // If the user is not authorized, redirect to the unauthorized error page
                 httpResponse.sendError(403);
                 return;
