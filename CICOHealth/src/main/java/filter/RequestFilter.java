@@ -110,7 +110,7 @@ public class RequestFilter implements Filter {
         // Check if the requested URL is protected
         if (pathParts.length >= 2) {
             String section = pathParts[1];
-            return section.equals("user") || section.equals("exercise-programs") || section.equals("faq");
+            return section.equals("user") || section.equals("admin") || section.equals("exercise-programs") || section.equals("faq");
         } else {
             return false;
         }

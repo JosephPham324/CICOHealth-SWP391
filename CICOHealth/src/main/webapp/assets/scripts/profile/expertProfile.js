@@ -266,3 +266,8 @@ btnSaveChanges.addEventListener("click", () => {
   console.log(data);
   post("CICOHealth/user/profile/", data);
 });
+
+document.getElementById("btn-upload-cert-img").addEventListener("click", async () => {
+  let info = await handleUpload(document.getElementById("btn-upload-cert-img"));
+  document.querySelector("#update-cert-image").src = info.secure_url;
+});

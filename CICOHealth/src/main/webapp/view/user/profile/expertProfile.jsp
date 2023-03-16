@@ -20,6 +20,7 @@ Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
         <title>Expert Profile</title>
     </head>
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
         <div class="profile" data-allowUpdate = ${allowUpdate}>
             <div class="profile-header">
                 <div class="profile-picture">
@@ -42,6 +43,7 @@ Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
                             cols="30"
                             rows="10"
                             style="resize: none"
+                            ${allowUpdate ? "" : "disabled"}
                             >${expertProfile.bio}</textarea>
                     </div>
                 </div>
@@ -85,7 +87,7 @@ Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
                 </ul>
                 <c:if test="${allowUpdate}">
                     <button class="button" id="btn-add-cert">Add</button>
-                    <div class="collapse">
+                    <div class="frm-collapse">
                         <form id="frm-add-cert" onsubmit="event.preventDefault();addCert();">
                             <div class="form-group">
                                 <label for="new-cert-name">cert Name</label>
@@ -177,6 +179,7 @@ Pham Nhat Quang CE170036 (FPTU CANTHO) --%>
             src="https://upload-widget.cloudinary.com/global/all.js"
             type="text/javascript"
         ></script>
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/profile/expertProfile.js"></script>
     </body>
 </html>
