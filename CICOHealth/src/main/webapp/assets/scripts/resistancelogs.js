@@ -179,6 +179,7 @@ function createResistancePopupContent(exercise_info) {
   //HTML for form
   let exercise_info_html = `
    <form id = "create-log-form" onsubmit = "submitResistanceLog(event)">
+   <h2 class="txt-title">Edit Resistance Exercises Logs</h2>
     <div class="form-group row">
         <label for="txtExerciseName" class="col-4 col-form-label">Exercise Name</label> 
         <div class="col-8">
@@ -203,7 +204,7 @@ function createResistancePopupContent(exercise_info) {
 
     <div class="form-group row">
         <div class="offset-4 col-8">
-        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        <button name="submit" type="submit" class="btn">Submit</button>
         </div>
     </div>
     </form>

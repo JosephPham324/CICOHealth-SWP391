@@ -97,7 +97,7 @@
 
         <div class="pop-up" id="exercise-log-pop-up">
             <div class="overlay"></div>
-            <div class="pop-up-content">Hello</div>
+            <div class="pop-up-content edit-pop-up-content">Hello</div>
         </div>
 
         <!-- pop-up-notes -->

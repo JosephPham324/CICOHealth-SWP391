@@ -125,4 +125,20 @@
 }
 .pop-up .form-group {
   margin-bottom: 8px;
+}
+
+#create-log-form {
+  padding: 15px;
+}
+#create-log-form .txt-title {
+  text-align: center;
+}
+#create-log-form .btn {
+  color: white;
+  font-weight: 800;
+}
+#create-log-form .btn:hover {
+  background-color: yellow;
+  color: black;
+  font-weight: 800;
 }/*# sourceMappingURL=exercisLog.css.map */
