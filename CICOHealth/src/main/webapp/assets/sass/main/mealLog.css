@@ -195,12 +195,17 @@
 .pop-up .pop-up-foot-table th {
   border: 1px solid black;
 }
-.pop-up #edit-table tbody tr th {
-  border: 1px solid black;
-}
 .pop-up #edit-table tfoot {
   background-color: yellow;
 }
-.pop-up #edit-table tfoot tr th {
-  border: 1px solid black;
+.pop-up .btn {
+  margin-top: 15px;
+  background-color: rgb(131, 184, 46);
+  color: white;
+  font-weight: 800;
+}
+.pop-up .btn:hover {
+  background-color: yellow;
+  color: black;
+  font-weight: 800;
 }/*# sourceMappingURL=mealLog.css.map */

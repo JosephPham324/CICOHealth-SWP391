@@ -165,20 +165,24 @@
 
     #edit-table {
         tbody{
-            tr{
-                th{
-                    border: 1px solid black;
-                }
-            }
+
         }
 
         tfoot{
             background-color: yellow;
-            tr{
-                th{
-                    border: 1px solid black;
-                }
-            }
         }
+    }
+
+    .btn{
+        margin-top: 15px;
+        background-color: rgb(131, 184, 46);
+        color: white;
+        font-weight: 800;
+    }
+
+    .btn:hover {
+        background-color: yellow;
+        color: black;
+        font-weight: 800;
     }
 }

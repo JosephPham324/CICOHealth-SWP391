@@ -103,7 +103,7 @@ function fillEditForm(logData) {
       food.calories * (food.actualWeight / food.servingWeight);
     //Create the html for the food item
     let htmlFood = `
-        <tr>
+        <tr style="border: 1px solid black;>
             <td>${food.foodName}</td>
             <td>${(
               food.protein *
