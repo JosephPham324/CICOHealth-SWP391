@@ -2,192 +2,229 @@
 @use "../modules/popup";
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .container {
+  .txt-title {
+    margin-top: 3%;
+    text-align: center;
+  }
 
-    .txt-title {
-        margin-top: 3%;
-        text-align: center;
-    }
+  .table-content thead {
+    background-color: rgb(131, 184, 46);
+  }
 
-    .table-content thead {
-        background-color: rgb(131, 184, 46);
-    }
+  .table-content tfoot {
+    background-color: yellow;
+  }
 
-    .table-content tfoot {
-        background-color: yellow;
-    }
+  .table-content {
+    margin-bottom: 20px;
+  }
 
-    .table-content {
-        margin-bottom: 20px;
-    }
+  .datepicker-container {
+    @include common.flex-display(row, normal, center);
+  }
 
-    .datepicker-container {
-        @include common.flex-display(row, normal, center);
-    }
-
-    #date-picker {
-        text-align: center;
-        @include common.responsive-font-size(16px, 32px, 320, 1080);
-        // font-size: 16px;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-        color: #444;
-    }
+  #date-picker {
+    text-align: center;
+    @include common.responsive-font-size(16px, 32px, 320, 1080);
+    // font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    color: #444;
+  }
 }
 
 .title-total {
-    background-color: rgb(131, 184, 46);
-    text-align: center;
-    font-weight: bold;
-    height: 50px;
-    position: relative;
-    border: 1px solid black;
+  background-color: rgb(131, 184, 46);
+  text-align: center;
+  font-weight: bold;
+  height: 50px;
+  position: relative;
+  border: 1px solid black;
 }
 
 .title-total p,
 .meal-info-item p {
-    margin: 0;
-    @include common.absolute-position();
+  margin: 0;
+  @include common.absolute-position();
 }
 
 .table-head {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .table-body {
-    @include common.flex-display(row, center, center);
+  @include common.flex-display(row, center, center);
 }
 
 .total-content {
-    height: 50px;
-    position: relative;
-    text-align: center;
-    border: 1px solid black;
+  height: 50px;
+  position: relative;
+  text-align: center;
+  border: 1px solid black;
 }
 
 .total-content p {
-    margin: 0;
-    @include common.absolute-position();
+  margin: 0;
+  @include common.absolute-position();
 }
 
 .txt-title-total h2 {
-    text-align: center;
+  text-align: center;
 }
 
 // pop-up
 
 .prevent-scrolling {
-    height: 100%;
-    overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 
 .pop-up {
-    .edit-pop-up-content,
-    .note-pop-up-content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 600px;
-        background-color: #fff;
-        z-index: 2;
-        border-radius: 20px;
+  .edit-pop-up-content,
+  .note-pop-up-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 20px;
+  }
+
+  .txt-title-pop-up {
+    text-align: center;
+  }
+
+  #edit-meal-log-form {
+    height: auto;
+    max-height: max-content;
+    padding: 10px;
+    @include common.flex-display(column, normal, normal);
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .pop-up-head-item {
+    text-align: center;
+    font-size: 18px;
+    border-bottom: 1px solid black;
+  }
+
+  .mass {
+    width: 50px;
+  }
+
+  @media screen and (max-width: 625px) {
+    .edit-pop-up-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      background-color: #fff;
+      z-index: 2;
+      border-radius: 20px;
     }
+  }
 
-    .txt-title-pop-up {
-        text-align: center;
-    }
+  .pop-up-thead-table {
+    font-size: 20px;
 
-    .edit-meal-log-form {
-        margin-top: 10%;
-        height: 340px;
-        padding: 10px;
-    }
-
-    .form-group {
-        margin-bottom: 8px;
-    }
-
-    .pop-up-head-item {
-        text-align: center;
-        font-size: 18px;
-        border-bottom: 1px solid black;
-    }
-
-    .mass {
-        width: 50px;
-    }
-
-    @media screen and (max-width: 625px) {
-        .edit-pop-up-content {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            background-color: #fff;
-            z-index: 2;
-            border-radius: 20px;
-        }
-    }
-
-    .pop-up-thead-table {
-        font-size: 20px;
-
-        tr {
-            background-color: rgb(131, 184, 46);
-            th {
-                border: 1px solid black;
-                text-align: center;
-            }
-        }
-    }
-
-    .pop-up-body-table {
-        font-size: 18px;
+    tr {
+      background-color: rgb(131, 184, 46);
+      th {
         border: 1px solid black;
+        text-align: center;
+      }
+      td {
+        text-align: center;
+        &:nth-child(1) {
+          background-color: lighten(#000000, 50);
+        }
+        &:nth-child(2) {
+          background-color: lighten(#000000, 75);
+        }
+      }
     }
+  }
 
-    .pop-up-foot-table {
-        font-size: 18px;
+  .pop-up-body-table {
+    font-size: 18px;
+    border: 1px solid black;
+  }
 
+  .pop-up-foot-table {
+    font-size: 18px;
+
+    th {
+      border: 1px solid black;
+    }
+  }
+
+  #edit-table {
+    max-width: 100%;
+    box-sizing: border-box;
+    thead {
+      background-color: rgb(131, 184, 46);
+    }
+    tbody {
+      tr {
         th {
-            border: 1px solid black;
-
+          border: 1px solid black;
         }
-    }
-
-    #edit-table {
-        tbody{
-
+        td:first-child{
+            text-align: left !important;
         }
-
-        tfoot{
-            background-color: yellow;
-            tr{
-                td{
-                    border: 1px solid black;
-                }
-            }
+        &:nth-child(odd) {
+          background-color: lighten(#b4d866, 80);
         }
+        &:nth-child(even) {
+          background-color: lighten(#b4d866, 95);
+        }
+        &:hover {
+          background-color: lighten(#a4db2c, 20);
+        }
+        input{
+            width:100%;
+        }
+      }
     }
 
-    .btn{
-        margin-top: 15px;
-        background-color: rgb(131, 184, 46);
-        color: white;
-        font-weight: 800;
+    td,th {
+      padding: 5px;
+      text-align: center;
     }
 
-    .btn:hover {
-        background-color: yellow;
-        color: black;
-        font-weight: 800;
+    tfoot {
+      background-color: yellow;
+      tr {
+        td {
+          border: 1px solid black;
+        }
+      }
     }
+  }
+
+  .btn {
+    margin-top: 15px;
+    background-color: rgb(131, 184, 46);
+    color: white;
+    font-weight: 800;
+  }
+
+  .btn:hover {
+    background-color: yellow;
+    color: black;
+    font-weight: 800;
+  }
 }

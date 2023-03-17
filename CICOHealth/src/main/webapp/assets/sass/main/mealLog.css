@@ -147,10 +147,15 @@
 .pop-up .txt-title-pop-up {
   text-align: center;
 }
-.pop-up .edit-meal-log-form {
-  margin-top: 10%;
-  height: 340px;
+.pop-up #edit-meal-log-form {
+  height: auto;
+  max-height: -moz-max-content;
+  max-height: max-content;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  justify-content: normal;
 }
 .pop-up .form-group {
   margin-bottom: 8px;
@@ -185,6 +190,15 @@
   border: 1px solid black;
   text-align: center;
 }
+.pop-up .pop-up-thead-table tr td {
+  text-align: center;
+}
+.pop-up .pop-up-thead-table tr td:nth-child(1) {
+  background-color: gray;
+}
+.pop-up .pop-up-thead-table tr td:nth-child(2) {
+  background-color: #bfbfbf;
+}
 .pop-up .pop-up-body-table {
   font-size: 18px;
   border: 1px solid black;
@@ -194,6 +208,35 @@
 }
 .pop-up .pop-up-foot-table th {
   border: 1px solid black;
+}
+.pop-up #edit-table {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.pop-up #edit-table thead {
+  background-color: rgb(131, 184, 46);
+}
+.pop-up #edit-table tbody tr th {
+  border: 1px solid black;
+}
+.pop-up #edit-table tbody tr td:first-child {
+  text-align: left !important;
+}
+.pop-up #edit-table tbody tr:nth-child(odd) {
+  background-color: white;
+}
+.pop-up #edit-table tbody tr:nth-child(even) {
+  background-color: white;
+}
+.pop-up #edit-table tbody tr:hover {
+  background-color: #caea83;
+}
+.pop-up #edit-table tbody tr input {
+  width: 100%;
+}
+.pop-up #edit-table td, .pop-up #edit-table th {
+  padding: 5px;
+  text-align: center;
 }
 .pop-up #edit-table tfoot {
   background-color: yellow;
