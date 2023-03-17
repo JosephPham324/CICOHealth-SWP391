@@ -124,3 +124,21 @@
         margin-bottom: 8px;
     }
 }
+
+#create-log-form{
+    padding: 15px;
+    .txt-title{
+        text-align: center;
+    }
+
+    .btn{
+        color: white;
+        font-weight: 800;
+    }
+
+    .btn:hover {
+        background-color: yellow;
+        color: black;
+        font-weight: 800;
+    }
+}

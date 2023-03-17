@@ -143,11 +143,12 @@ function fillEditForm(logData) {
             </td>
         </tr>
         `;
+    console.log(htmlFood);
     bodyHTML += htmlFood;
   });
   document.querySelector("#edit-table tbody").innerHTML = bodyHTML;
   document.querySelector("#edit-table tfoot").innerHTML = `
-        <tr>
+        <tr style="border: 1px solid black;">
             <td>${logData.mealLogName}</td>
             <td>${totalMealNutrition.protein.toFixed(1)}</td>
             <td>${totalMealNutrition.fat.toFixed(1)}</td>
@@ -158,6 +159,7 @@ function fillEditForm(logData) {
         </tr>
     `;
 }
+
 function removeFoodItem(mealLog, itemID) {
   let index = mealLog.foods.findIndex((food) => food.itemID == itemID);
   mealLog.foods.splice(index, 1);
