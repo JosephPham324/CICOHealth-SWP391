@@ -11,6 +11,8 @@
         <title>Login Page</title>
     </head>
     <body>
+        <%@include file="/view/segments/message.jsp" %>
+
         <div class="container">
             <div class="login-left">
                 <div class="login-header">
