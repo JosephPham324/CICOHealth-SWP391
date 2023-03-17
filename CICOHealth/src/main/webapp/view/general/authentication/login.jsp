@@ -11,6 +11,8 @@
         <title>Login Page</title>
     </head>
     <body>
+        <%@include file="/view/segments/message.jsp" %>
+
         <div class="container">
             <div class="login-left">
                 <div class="login-header">
@@ -21,11 +23,11 @@
                     <div class="login-form-content">
                         <div class="form-item">
                             <label for="txtUsername">Username</label>                           
-                            <input id="txtUsername" name="txtUsername" placeholder="Enter username" type="text">                      
+                            <input required id="txtUsername" name="txtUsername" placeholder="Enter username" type="text">                      
                         </div>
                         <div class="form-item">
                             <label for="txtPassword">Password</label> 
-                            <input id="txtPassword" name="txtPassword" placeholder="Enter password" type="password" aria-describedby="txtPasswordHelpBlock"> 
+                            <input required id="txtPassword" name="txtPassword" placeholder="Enter password" type="password" aria-describedby="txtPasswordHelpBlock"> 
                         </div>
                         <div class="form-item">
                             <div class="checkbox">
@@ -36,12 +38,13 @@
 
                         <div>                          
                             <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
-                            <button name="submit" type="submit" class="btn btn-primary">Register</button>
+                            <button class="btn btn-primary" onclick="event.Preventdefault();window.location.replace('/CICOHealth/register')">  
+                                <a href="/CICOHealth/register" style="text-decoration: none; color: white;">Register</a>
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="login-form-footer">
 
+                    <div class="login-form-footer">
                         <div
                             id="g_id_onload"
                             data-client_id="641593933823-qlfnb62fuif3fcsu01b0hf9vijetfepj.apps.googleusercontent.com"
@@ -63,21 +66,20 @@
                     </div>
 
                 </form>
-
-                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+                ${initParam.JQuery}
+                ${initParam.JqueryValidation}
                 <script src="/CICOHealth/assets/scripts/login.js"></script>
                 <script src="https://accounts.google.com/gsi/client" async defer></script>
                 <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
                 <script>
-                    function handleCredentialResponse(response) {
-                        const responsePayload = parseJwt(response.credential);
-                        const formParams = {
-                            googleID: responsePayload.sub
-                        };
-                        console.log(formParams);
-                        post("login", formParams);
-                    }
+                                function handleCredentialResponse(response) {
+                                    const responsePayload = parseJwt(response.credential);
+                                    const formParams = {
+                                        googleID: responsePayload.sub
+                                    };
+                                    console.log(formParams);
+                                    post("login", formParams);
+                                }
                 </script>
                 <p id="email"></p>
             </div>

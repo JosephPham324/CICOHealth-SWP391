@@ -9,6 +9,7 @@ import bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import dao.ExerciseLogDao;
 import dao.MealLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -93,6 +94,12 @@ public class MealLogController extends HttpServlet {
         request.getRequestDispatcher("/view/user/mealLogs/mealLogs.jsp").forward(request, response);
     }
 
+    /**
+     *
+     * @param response
+     * @param responseData
+     * @throws IOException
+     */
     private void printJSONResponse(HttpServletResponse response, String responseData) throws IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
@@ -100,6 +107,11 @@ public class MealLogController extends HttpServlet {
         out.flush();
     }
 
+    /**
+     *
+     * @param logs
+     * @return
+     */
     private String createMealLogsJSON(ArrayList<MealLog> logs) {
         Gson gson = new Gson();
         String logsJSON = "{\"logs\":";
@@ -160,13 +172,26 @@ public class MealLogController extends HttpServlet {
      */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String updateNote = request.getParameter("updateNote");
+        // Get the user object from the session
+        User user = (User) request.getSession().getAttribute("user");
+        if (updateNote != null) {
+            try {
+                String mealLogID = request.getParameter("mealLogID");
+                String note = request.getParameter("note");
+                new MealLogDao().updateMealLogNote(user.getUserID(), mealLogID, note);
+                response.sendRedirect("/CICOHealth/user/meal-logs?updateLog=successful");
+            } catch (Exception e) {
+                response.sendRedirect("/CICOHealth/user/meal-logs?updateLog=failure");
+            }
+            return;
+        }
+
         // Get the meal log data from the request parameters
         String meal = request.getParameter("mealLog");
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         System.out.println(meal);
         MealLog mealLog = gson.fromJson(meal, MealLog.class);
-        // Get the user object from the session
-        User user = (User) request.getSession().getAttribute("user");
         // Set the user ID on the meal log object
         mealLog.setUserID(user.getUserID());
         System.out.println(mealLog.getMealLogID());
@@ -175,7 +200,7 @@ public class MealLogController extends HttpServlet {
         try {
             mealLogDao.deleteMealLog(mealLog.getMealLogID());
             // Call the createMealLog method to insert the new meal log into the database
-            mealLogDao.createMealLog(mealLog,true);
+            mealLogDao.createMealLog(mealLog, true);
             // Redirect the user to the food search page with a success message
             response.sendRedirect("/CICOHealth/user/meal-logs?update=success");
         } catch (SQLException ex) {
@@ -185,6 +210,13 @@ public class MealLogController extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

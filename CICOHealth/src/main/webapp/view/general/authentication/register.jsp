@@ -10,6 +10,8 @@
     </head>
 
     <body>
+        <%@include file="/view/segments/message.jsp" %>
+
         <script src="https://accounts.google.com/gsi/client" async defer></script>
         
         <div class="container">

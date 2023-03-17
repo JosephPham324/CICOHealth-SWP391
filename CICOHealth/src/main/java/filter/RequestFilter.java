@@ -29,16 +29,32 @@ import java.util.regex.Pattern;
 @WebFilter(filterName = "RequestFilter", urlPatterns = {"/*"})
 public class RequestFilter implements Filter {
 
+    /**
+     *
+     */
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
+    /**
+     *
+     */
     private FilterConfig filterConfig = null;
 
+    /**
+     *
+     */
     public RequestFilter() {
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -67,6 +83,13 @@ public class RequestFilter implements Filter {
          */
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -92,30 +115,32 @@ public class RequestFilter implements Filter {
          */
     }
 
-    private void redirectToHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/CICOHealth/").forward(request, response);
-    }
-
-    private void redirectToErrorPage(HttpServletRequest request, HttpServletResponse response, int errorCode) throws ServletException, IOException {
-        switch (errorCode) {
-            case HttpServletResponse.SC_FORBIDDEN:
-                request.getRequestDispatcher("/view/error/error403.jsp").forward(request, response);
-                break;
-            default:
-                request.getRequestDispatcher("/view/error/error404.jsp").forward(request, response);
-        }
-    }
-
+    /**
+     *
+     * Determines whether a given URL path is protected or not.
+     *
+     * @param pathParts the array of path parts extracted from the requested URL
+     * @return true if the requested URL is protected, false otherwise
+     */
     private boolean isProtectedUrl(String[] pathParts) {
         // Check if the requested URL is protected
         if (pathParts.length >= 2) {
             String section = pathParts[1];
-            return section.equals("user") || section.equals("exercise-programs") || section.equals("faq");
+            return section.equals("user") || section.equals("admin") || section.equals("exercise-programs") || section.equals("faq");
         } else {
             return false;
         }
     }
 
+    /**
+     * Determines if a user is authorized to access a given URL.
+     *
+     * @param httpRequest the HttpServletRequest object for the current request
+     * @param pathParts an array of String objects containing the parts of the
+     * URL path
+     * @return a boolean indicating whether the user is authorized to access the
+     * requested URL
+     */
     private boolean isUserAuthorized(HttpServletRequest httpRequest, String[] pathParts) {
         Object user = httpRequest.getSession().getAttribute("user");
         // Check if the user is authorized to access the requested URL
@@ -139,6 +164,14 @@ public class RequestFilter implements Filter {
         }
     }
 
+    /**
+     *
+     *
+     * Determines whether the requested URL is a public page or not.
+     *
+     * @param pathParts an array of path parts that make up the requested URL
+     * @return true if the URL is a public page, false otherwise
+     */
     private boolean isPublicUrl(String[] pathParts) {
         // Check if the requested URL is a public page
         if (pathParts.length >= 2) {
@@ -151,12 +184,20 @@ public class RequestFilter implements Filter {
         }
     }
 
+    /**
+     *
+     * Check if the requested URL is a member page.
+     *
+     * @param pathParts an array of path parts parsed from the request URL
+     * @return true if the requested URL is a member page, false otherwise
+     */
     private boolean isMemberUrl(String[] pathParts) {
         // Check if the requested URL is a member page
         if (pathParts.length >= 2) {
             String section = pathParts[1];
-            if (section.equals("user"))
-                    return true;
+            if (section.equals("user")) {
+                return true;
+            }
             if (section.equals("exercise-programs")) {
                 if (pathParts.length == 2) {
                     return true;
@@ -169,6 +210,13 @@ public class RequestFilter implements Filter {
         return false;
     }
 
+    /**
+     * Determines if the requested URL is a fitness expert page.
+     *
+     * @param pathParts an array of path segments that make up the requested URL
+     * @return true if the requested URL is a fitness expert page, false
+     * otherwise
+     */
     private boolean isFitnessExpertUrl(String[] pathParts) {
         // Check if the requested URL is a fitness expert page
         if (pathParts.length >= 3) {
@@ -229,7 +277,6 @@ public class RequestFilter implements Filter {
             }
         } else {            // If the requested URL is not protected, just forward the request
             //But check if user is logged in to prevent accessing login and register page
-            System.out.println(httpRequest.getSession().getAttribute("user"));
             if (httpRequest.getSession().getAttribute("user") != null) {
                 if (pathParts.length > 1 && (pathParts[1].equals("login") || pathParts[1].equals("register"))) {
                     httpResponse.sendRedirect(contextPath + "/");
@@ -263,6 +310,8 @@ public class RequestFilter implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
+     *
+     * @return
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -285,6 +334,8 @@ public class RequestFilter implements Filter {
 
     /**
      * Init method for this filter
+     *
+     * @param filterConfig
      */
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
@@ -309,6 +360,11 @@ public class RequestFilter implements Filter {
         return (sb.toString());
     }
 
+    /**
+     *
+     * @param t
+     * @param response
+     */
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);
 
@@ -339,6 +395,11 @@ public class RequestFilter implements Filter {
         }
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -353,6 +414,10 @@ public class RequestFilter implements Filter {
         return stackTrace;
     }
 
+    /**
+     *
+     * @param msg
+     */
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }

@@ -33,6 +33,7 @@ function createPopupContent(exercise_type, exercise_info) {
 }
 function createCardioPopupContent(exercise_info) {
   let JSON_exercise_info = JSON.parse(exercise_info);
+  let action = document.getElementById("exercise-log-pop-up").dataset.action;
   //HTML for form
   let exercise_info_html = `
     <form id = "create-log-form" onsubmit = "submitCardioLog(event)">
@@ -48,28 +49,36 @@ function createCardioPopupContent(exercise_info) {
         <div class="form-group row">
             <label for="txtExerciseName" class="col-4 col-form-label">Exercise Name</label> 
             <div class="col-8">
-            <input value= "${JSON_exercise_info.exerciseName}" id="txtExerciseName" name="txtExerciseName" type="text" required="required" class="form-control" readonly>
+            <input value= "${
+              JSON_exercise_info.exerciseName
+            }" id="txtExerciseName" name="txtExerciseName" type="text" required="required" class="form-control" readonly>
             </div>
         </div>
         <!-- Exercise Type -->
         <div class="form-group row">
             <label for="txtType" class="col-4 col-form-label">Exercise Type</label> 
             <div class="col-8">
-            <input value = "${JSON_exercise_info.exerciseType}" id="txtType" name="txtType" type="text" class="form-control" required="required" readonly>
+            <input value = "${
+              JSON_exercise_info.exerciseType
+            }" id="txtType" name="txtType" type="text" class="form-control" required="required" readonly>
             </div>
         </div>
         <!-- Exercise Description -->
         <div class="form-group row">
             <label for="txtDescription" class="col-4 col-form-label">Description</label> 
             <div class="col-8">
-            <textarea  id="txtDescription" name="txtDescription" cols="40" rows="5" class="form-control" required="required" readonly>${JSON_exercise_info.exerciseDescription}</textarea>
+            <textarea  id="txtDescription" name="txtDescription" cols="40" rows="5" class="form-control" required="required" readonly>${
+              JSON_exercise_info.exerciseDescription
+            }</textarea>
             </div>
         </div>
         <!-- Exercise Calories Per Hour -->
         <div class="form-group row">
             <label for="numCalPerHour" class="col-4 col-form-label">Kcal Per Hour</label> 
             <div class="col-8">
-            <input value = "${JSON_exercise_info.caloriesPerHour}" id="numCalPerHour" name="numCalPerHour" type="text" required="required" class="form-control" readonly>
+            <input value = "${
+              JSON_exercise_info.caloriesPerHour
+            }" id="numCalPerHour" name="numCalPerHour" type="text" required="required" class="form-control" readonly>
             </div>
         </div>
         <!-- Exercise Time Performed -->
@@ -83,10 +92,15 @@ function createCardioPopupContent(exercise_info) {
         <div class="form-group row">
             <label for="numCalBurned" class="col-4 col-form-label">Kcal Burned</label> 
             <div class="col-8">
-            <input value = "${JSON_exercise_info.caloriesPerHour}" id="numCalBurned" name="numCalBurned" type="text" required="required" class="form-control" readonly>
+            <input value = "${
+              JSON_exercise_info.caloriesPerHour
+            }" id="numCalBurned" name="numCalBurned" type="text" required="required" class="form-control" readonly>
             </div>
         </div>
-        <!-- Exercise Note Performed -->
+        ${
+          action === "log"
+            ? `
+        <!-- Exercise Note -->
         <div class="form-group row">
             <label for="txtNote" class="col-4 col-form-label">Note</label> 
             <div class="col-8">
@@ -100,65 +114,81 @@ function createCardioPopupContent(exercise_info) {
             <button name="submit" type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
+      `
+            : ``
+        } 
     </form>
     `;
   return exercise_info_html;
 }
 function createResistancePopupContent(exercise_info) {
-  console.log(exercise_info);
   let JSON_exercise_info = JSON.parse(exercise_info);
+  let action = document.getElementById("exercise-log-pop-up").dataset.action;
+  console.log(action);
   //HTML for form
   let exercise_info_html = `
     <form id = "create-log-form" onsubmit = "submitResistanceLog(event)">
         <div class="form-group row">
             <label for="txtExerciseName" class="col-4 col-form-label">Exercise Name</label> 
             <div class="col-8">
-            <input value= "${JSON_exercise_info.exerciseName}" id="txtExerciseName" name="exerciseName" type="text" required="required" class="form-control" readonly>
+            <input value= "${
+              JSON_exercise_info.exerciseName
+            }" id="txtExerciseName" name="exerciseName" type="text" required="required" class="form-control" readonly>
             </div>
         </div>
         <div class="form-group row">
             <label for="txtType" class="col-4 col-form-label">Exercise Type</label> 
             <div class="col-8">
-            <input value = "${JSON_exercise_info.exerciseType}" id="txtType" name="exerciseType" type="text" class="form-control" required="required" readonly>
+            <input value = "${
+              JSON_exercise_info.exerciseType
+            }" id="txtType" name="exerciseType" type="text" class="form-control" required="required" readonly>
             </div>
         </div>
         <div class="form-group row">
             <label for="txtDescription" class="col-4 col-form-label">Exercise Description</label> 
             <div class="col-8">
-            <textarea  id="txtDescription" name="exerciseDescription" cols="40" rows="5" class="form-control" required="required" readonly>${JSON_exercise_info.exerciseDescription}</textarea>
+            <textarea  id="txtDescription" name="exerciseDescription" cols="40" rows="5" class="form-control" required="required" readonly>${
+              JSON_exercise_info.exerciseDescription
+            }</textarea>
             </div>
         </div>
         <div class="form-group row" id = "num-set-input">
-            <label for="numSet" class="col-4 col-form-label">Set</label> 
-            <div class="col-8">
-            <input id="numSet" name="set" placeholder="Enter number of sets" type="number" min="1" value = "1" required class="form-control">
+                <label for="numSet" class="col-4 col-form-label">Set</label> 
+                <div class="col-8">
+                <input max="30" id="numSet" name="set" placeholder="Enter number of sets" type="number" min="1" value = "1" required class="form-control">
+                </div>
+            </div>
+            <div class="form-group row set-input">
+                <label for="numWeightSet1" class="col-4 col-form-label">Weight - Set 1</label> 
+                <div class="col-8">
+                <input id="numWeightSet1" name="numWeightSet1" placeholder="Enter amount of weight used" type="text" class="form-control" required="required">
+                </div>
+            </div>
+            <div class="form-group row set-input">
+                <label for="numRepSet1" class="col-4 col-form-label">Reps - Set 1</label> 
+                <div class="col-8">
+                <input id="numRepSet1" name="numRepSet1" placeholder="Enter how many repetition performed" type="text" class="form-control" required="required">
             </div>
         </div>
-        <div class="form-group row set-input">
-            <label for="numWeightSet1" class="col-4 col-form-label">Weight - Set 1</label> 
-            <div class="col-8">
-            <input id="numWeightSet1" name="numWeightSet1" placeholder="Enter amount of weight used" type="text" class="form-control" required="required">
+        ${
+          action === "log"
+            ? `
+            <div class="form-group row">
+                <label for="txtNote" class="col-4 col-form-label">Note</label> 
+                <div class="col-8">
+                <textarea id="txtNote" name="logNote" cols="40" rows="3" class="form-control" aria-describedby="txtNoteHelpBlock"></textarea> 
+                <span id="txtNoteHelpBlock" class="form-text text-muted">Optional</span>
+                </div>
             </div>
-        </div>
-        <div class="form-group row set-input">
-            <label for="numRepSet1" class="col-4 col-form-label">Reps - Set 1</label> 
-            <div class="col-8">
-            <input id="numRepSet1" name="numRepSet1" placeholder="Enter how many repetition performed" type="text" class="form-control" required="required">
+            <input type = "hidden" name = "exerciseID" value = "${JSON_exercise_info.exerciseID}">
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label for="txtNote" class="col-4 col-form-label">Note</label> 
-            <div class="col-8">
-            <textarea id="txtNote" name="logNote" cols="40" rows="3" class="form-control" aria-describedby="txtNoteHelpBlock"></textarea> 
-            <span id="txtNoteHelpBlock" class="form-text text-muted">Optional</span>
-            </div>
-        </div> 
-        <input type = "hidden" name = "exerciseID" value = "${JSON_exercise_info.exerciseID}">
-        <div class="form-group row">
-            <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
+    `
+            : ``
+        }
     </form>
     `;
   //log exercise info
@@ -192,7 +222,7 @@ function addCardioFormInputListener() {
 }
 
 function addResistanceFormInputListener() {
-//   console.log("Resistance");
+  //   console.log("Resistance");
   let num_set = document.getElementById("numSet");
   let num_set_input = document.getElementById("num-set-input");
   num_set.addEventListener("input", function () {
@@ -200,24 +230,32 @@ function addResistanceFormInputListener() {
     let set_input_html = "";
     //Clear previous set input
     let set_input = document.getElementsByClassName("set-input");
-    console.log(set_input)
+    console.log(set_input);
     while (set_input.length > 0) {
-        console.log('here')
-        set_input = document.getElementsByClassName("set-input");
-        set_input[0].parentNode.removeChild(set_input[0]);
+      console.log("here");
+      set_input = document.getElementsByClassName("set-input");
+      set_input[0].parentNode.removeChild(set_input[0]);
     }
     for (let i = 0; i < number_of_set; i++) {
       set_input_html += `
         <div class="form-group row set-input">
-            <label for="numWeightSet${i+1}" class="col-4 col-form-label">Set ${i+1} - Weight </label> 
+            <label for="numWeightSet${
+              i + 1
+            }" class="col-4 col-form-label">Set ${i + 1} - Weight </label> 
             <div class="col-8">
-            <input id="numWeightSet${i+1}" name="numWeightSet${i+1}" placeholder="Enter amount of weight used" type="number" class="form-control" required="required">
+            <input id="numWeightSet${i + 1}" name="numWeightSet${
+        i + 1
+      }" placeholder="Enter amount of weight used" type="number" class="form-control" required="required">
             </div>
         </div>
         <div class="form-group row set-input">
-            <label for="numRepSet${i+1}" class="col-4 col-form-label">Set ${i+1} - Reps</label> 
+            <label for="numRepSet${i + 1}" class="col-4 col-form-label">Set ${
+        i + 1
+      } - Reps</label> 
             <div class="col-8">
-            <input id="numRepSet${i+1}" name="numRepSet${i+1}" placeholder="Enter how many repetition performed" type="number" class="form-control" required="required">
+            <input id="numRepSet${i + 1}" name="numRepSet${
+        i + 1
+      }" placeholder="Enter how many repetition performed" type="number" class="form-control" required="required">
             </div>
         </div>
         `;
@@ -227,49 +265,49 @@ function addResistanceFormInputListener() {
   });
 }
 
-function submitCardioLog(event){
-    event.preventDefault();
-    //Get form data
-    let form_data = new FormData(document.getElementById("create-log-form"));
-    console.log(form_data);
-    //Convert form data to JSON
-    let form_data_json = {};
-    for (const pair of form_data.entries()) {
-        form_data_json[pair[0]] = pair[1];
-    }
-    data_send = {
-        exercise : JSON.stringify(form_data_json)
-    }
-    console.log(form_data_json);
-    post("/CICOHealth/user/exercise-logs/cardio", data_send)
+function submitCardioLog(event) {
+  event.preventDefault();
+  //Get form data
+  let form_data = new FormData(document.getElementById("create-log-form"));
+  console.log(form_data);
+  //Convert form data to JSON
+  let form_data_json = {};
+  for (const pair of form_data.entries()) {
+    form_data_json[pair[0]] = pair[1];
+  }
+  data_send = {
+    exercise: JSON.stringify(form_data_json),
+  };
+  console.log(form_data_json);
+  post("/CICOHealth/user/exercise-logs/cardio", data_send);
 }
 
-function submitResistanceLog(event){
-    event.preventDefault();
-    let reps = '';
-    let weights = '';
-    let form_data = new FormData(document.getElementById("create-log-form"));
-    console.log(form_data);
-    //Convert form data to JSON
-    let form_data_json = {};
-    for (const pair of form_data.entries()) {
-        if (pair[0].startsWith('numWeightSet')){
-            weights += pair[1] + '/';
-            continue;
-        }
-        if (pair[0].startsWith('numRepSet')){
-            reps += pair[1] + '/';
-            continue;
-        }
-        form_data_json[pair[0]] = pair[1];
+function submitResistanceLog(event) {
+  event.preventDefault();
+  let reps = "";
+  let weights = "";
+  let form_data = new FormData(document.getElementById("create-log-form"));
+  console.log(form_data);
+  //Convert form data to JSON
+  let form_data_json = {};
+  for (const pair of form_data.entries()) {
+    if (pair[0].startsWith("numWeightSet")) {
+      weights += pair[1] + "/";
+      continue;
     }
-    //Remove last slash in weights and reps
-    reps = reps.slice(0,reps.length-1);
-    form_data_json['rep'] = reps;
-    weights = weights.slice(0,weights.length-1);
-    form_data_json['weight'] = weights;
-    data_send = {
-        exercise : JSON.stringify(form_data_json)
+    if (pair[0].startsWith("numRepSet")) {
+      reps += pair[1] + "/";
+      continue;
     }
-    post("/CICOHealth/user/exercise-logs/cardio", data_send)
+    form_data_json[pair[0]] = pair[1];
+  }
+  //Remove last slash in weights and reps
+  reps = reps.slice(0, reps.length - 1);
+  form_data_json["rep"] = reps;
+  weights = weights.slice(0, weights.length - 1);
+  form_data_json["weight"] = weights;
+  data_send = {
+    exercise: JSON.stringify(form_data_json),
+  };
+  post("/CICOHealth/user/exercise-logs/cardio", data_send);
 }

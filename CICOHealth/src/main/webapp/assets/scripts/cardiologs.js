@@ -130,7 +130,6 @@ function addNoteButtonsClickEvent() {
             
             document.getElementById(formNoteLog).addEventListener("submit", function (event) {
             let updateNote = document.getElementById("txtNote").value;
-                alert(updateNote + ", " + logID);
                 event.preventDefault();
                 let formParams = {
                     note: updateNote,

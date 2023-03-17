@@ -183,16 +183,16 @@
   margin-bottom: 1rem;
 }
 
-.collapse {
+.frm-collapse {
   transform-origin: left top;
   transform: scaleY(0);
   overflow: hidden;
   transition: all 0.5s ease-in-out;
 }
-.collapse.show {
+.frm-collapse.show {
   transform: scaleY(1);
 }
-.collapse #frm-add-cert {
+.frm-collapse #frm-add-cert {
   display: flex;
   flex-direction: column;
   align-items: center;

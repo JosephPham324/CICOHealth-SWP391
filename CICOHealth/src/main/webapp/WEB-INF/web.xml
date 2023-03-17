@@ -65,12 +65,11 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>-->
     <!--Register-->
+    <!--Register-->
     <filter-mapping>
         <filter-name>RequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
-    <!--Register-->
     <servlet>
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.RegisterController</servlet-class>
@@ -137,11 +136,11 @@
     <servlet>
         <servlet-name>Conversion</servlet-name>
         <jsp-file>/view/general/utilities/converter.jsp</jsp-file>
-    </servlet>   
+    </servlet>
     <servlet-mapping>
         <servlet-name>Conversion</servlet-name>
         <url-pattern>/utilities/conversion/*</url-pattern>
-    </servlet-mapping>     
+    </servlet-mapping>
     <servlet>
         <servlet-name>ExerciseProgramController</servlet-name>
         <servlet-class>controller.ExerciseProgramController</servlet-class>
@@ -216,7 +215,6 @@
         <servlet-name>StatisticsController</servlet-name>
         <url-pattern>/user/statistics/*</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ExerciseProgramController</servlet-name>
         <url-pattern>/exercise-programs/*</url-pattern>

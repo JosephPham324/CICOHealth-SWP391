@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Utility;
 
 /**
  *
@@ -41,7 +42,7 @@ public class ExerciseProgramController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -73,13 +74,13 @@ public class ExerciseProgramController extends HttpServlet {
             return;
         }
         if (URI.matches(".*/exercise-programs/detail/workout")) {
-                String workoutID = request.getParameter("workoutid");
-                List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
-                request.setAttribute("workout", workout);
-                request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
-                return;
-            }
-        
+            String workoutID = request.getParameter("workoutid");
+            List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
+            request.setAttribute("workout", workout);
+            request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
+            return;
+        }
+
         if (URI.matches(".*/exercise-programs/detail")) {
             String ID = request.getParameter("id");
             if (ID != null) {
@@ -109,25 +110,40 @@ public class ExerciseProgramController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Check if the HTTP method is DELETE, and call doDelete() if it is
         String method = request.getParameter("_method");
-        if (method!=null && method.equalsIgnoreCase("delete")){
+        if (method != null && method.equalsIgnoreCase("delete")) {
             doDelete(request, response);
         }
+
+        // Get the exercise program data from the request
         String program = request.getParameter("program");
-        response.getWriter().write(program.toString());
+//        response.getWriter().write(program.toString());
+
+        // Parse the exercise program data as a JSON object using the Gson library
         Gson gson = new Gson();
         ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
-        User user
-                = (User) request.getSession().getAttribute("user");
+
+        // Get the current user from the session, and set them as the creator of the exercise program
+        User user = (User) request.getSession().getAttribute("user");
         programObject.setCreatedBy(user);
+
+        // Debugging output to the console
         System.out.println(programObject.getCreatedBy().toString());
+
+        // Attempt to insert the exercise program into the database
         try {
             new ExerciseProgramDao().insertProgram(programObject);
-            response.sendRedirect("/CICOHealth/exercise-programs/create?insert=success");
+
+            // Redirect to the create exercise program page with a success message
+            String redirectUrl = Utility.appendStatus("/CICOHealth/exercise-programs/create", "insert", "Program created successfully!");
+            response.sendRedirect(redirectUrl);
         } catch (Exception ex) {
-            System.err.println(ex);
             response.getWriter().write(programObject.toString());
-            response.sendRedirect("/CICOHealth/exercise-programs/create?insert=failure");
+
+            // Redirect to the create exercise program page with a failure message
+            String redirectUrl = Utility.appendStatus("/CICOHealth/exercise-programs/create", "insert", "Failed creating program!");
+            response.sendRedirect(redirectUrl);
         }
 
     }

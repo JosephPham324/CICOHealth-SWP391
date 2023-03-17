@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.AuthenticationLogic;
+import util.Utility;
 
 /**
  *
@@ -39,7 +40,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -81,56 +82,75 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);\
-        LoginDao loginDao = new LoginDao();
-        String googleID = request.getParameter("googleID");
-        if (googleID != null) {
+        LoginDao loginDao = new LoginDao(); // Instantiate the LoginDao class to interact with login-related data
+
+        String googleID = request.getParameter("googleID"); // Get the "googleID" parameter from the HTTP request
+        String redirectUrl;
+        if (googleID != null) { // If the "googleID" parameter is present, the user is trying to log in with Google
             try {
                 String userID = null;
-                userID = loginDao.getLoginInfoByGoogle(googleID);
-                //Check if user is banned
-                if (userID == null) {
-                    response.sendRedirect("/CICOHealth/login?error=nosuchuser");
-                    return;
+                userID = loginDao.getLoginInfoByGoogle(googleID); // Get the user's ID from the database using their Google ID
+
+                // Check if the user is banned
+                if (userID == null) { // If the user doesn't exist
+                    redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "This account doesn't exist!");
+                    response.sendRedirect(redirectUrl);
+                    return; // Stop the execution of the method
                 }
-                request.getSession().setAttribute("user", new UserDao().getUser(userID));
-                response.sendRedirect("/CICOHealth/");
-                return;
-            } catch (SQLException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("/CICOHealth/login?error=database");
+
+                request.getSession().setAttribute("user", new UserDao().getUser(userID)); // Store the user's details in the session
+                response.sendRedirect("/CICOHealth/"); // Redirect the user to the home page
+                return; // Stop the execution of the method
+            } catch (SQLException ex) { // If there is a problem with the database connection
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex); // Log the error
+                response.sendRedirect("/CICOHealth/login?error=database"); // Redirect the user to the login page with an error message
             }
-        } else {
-            String username = request.getParameter("txtUsername");
-            String password = request.getParameter("txtPassword");
-            UserDao userDao = new UserDao();
-            util.AuthenticationLogic authentication = new AuthenticationLogic();
+        } else { // If the "googleID" parameter is not present, the user is trying to log in with a username and password
+            String username = request.getParameter("txtUsername"); // Get the "txtUsername" parameter from the HTTP request
+            String password = request.getParameter("txtPassword"); // Get the "txtPassword" parameter from the HTTP request
+            UserDao userDao = new UserDao(); // Instantiate the UserDao class to interact with user-related data
+            util.AuthenticationLogic authentication = new AuthenticationLogic(); // Instantiate the AuthenticationLogic class to verify the user's password
             Login login = null;
-            if (username == null || password == null) {
-                response.sendRedirect("/CICOHealth/login");
+
+            if (username == null || password == null) { // If either the username or password is missing
+                redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "Missing input, please fill in the form!");
+                response.sendRedirect(redirectUrl); // Redirect the user to the login page
+                return; // Stop the execution of the method
+            }
+            login = loginDao.getLoginInfo(username); // Get the user's login information from the database using their username
+
+            if (login == null) { // If the user doesn't exist
+                redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "This account doesn't exist!");
+                response.sendRedirect(redirectUrl); // Redirect the user to the login page
+                return; // Stop the execution of the method
+            }
+
+            // Check if the user is banned
+            if (login.getIsBanned() == true) {
+                redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "This account is banned!");
+                response.sendRedirect(redirectUrl);
                 return;
             }
-            login = loginDao.getLoginInfo(username);
-            if (login == null) {
-                response.sendRedirect("/CICOHealth/login");
-                return;
-            }
-            Login login1 = loginDao.getLoginInfo(username);
-            if (login1.getIsBanned() == true) {
-                response.sendRedirect("/CICOHealth/login?error=banned");
-                return;
-            }
+
             try {
+                // Verify the user's login credentials
                 response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
                 if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())) {
+                    // Get the user's information and store it in the session
                     User user = userDao.getUser(login.getUserID());
                     request.getSession().setAttribute("user", user);
+                    // Redirect to the home page
                     response.sendRedirect("/CICOHealth/");
                     return;
                 }
-                response.sendRedirect("/CICOHealth/login");
-                return;
+                // Redirect to the login page if the user's credentials are incorrect
+                redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "Incorrect username or password!");
+                response.sendRedirect(redirectUrl);
             } catch (Exception ex) {
+                // Log any exceptions that occur
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "Your request couldn't be serviced!");
+                response.sendRedirect(redirectUrl);
             }
         }
     }

@@ -8,29 +8,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/exercisesearch.css">
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        ${initParam.Bootstrap}
         <!--FontAwesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-              integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-              crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
-
-
+        ${initParam.FontAwesome}
+        <!<!-- DataTable display -->
+        ${initParam.DataTableCDN}
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-        <title>JSP Page</title>
+        <title>Exercise Search | ${initParam.webappName}</title>
     </head>
 
     <body>
         <%@include file="/view/general/navbar.jsp" %>
-        <form id="exerciseForm" action="/CICOHealth/exercise-search" method="get" style="display:none;">
-            <input type="text" name="txtExercise">
-            <button  id ="autoSubmit" type="submit" name="btnSearch">Search</button>
-        </form>
-        <div class="pop-up" id="exercise-log-pop-up">
+        <div class="pop-up" id="exercise-log-pop-up" data-action="${sessionScope.user!=null?"log":"view"}">
             <div class="overlay"></div>
-            <div class="pop-up-content">Hello</div>
+            <div class="pop-up-content"></div>
         </div>
         <div class="nav">
             <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back
@@ -64,8 +55,16 @@
                             <td>${exercise.exerciseName}</td>
                             <td>${exercise.exerciseDescription}</td>
                             <td>${exercise.caloriesPerHour}</td>
-                            <td class="btn-select"><i class="fa-solid fa-pen-nib"
-                                                      style="color:blue"></i>&nbsp;Log</td>
+                            <td class="btn-select">
+                                <c:if test="${sessionScope.user!=null}">
+                                    <i class="fa-solid fa-pen-nib"
+                                       style="color:blue"></i>&nbsp;Log
+                                </c:if>
+                                <c:if test="${sessionScope.user==null}">
+                                    <i class="fa-solid fa-eye"
+                                       style="color:blue"></i>&nbsp;View
+                                </c:if>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

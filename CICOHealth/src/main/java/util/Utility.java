@@ -1,5 +1,7 @@
 package util;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,8 +37,8 @@ public class Utility {
         // Return the formatted date or time as a string
         return res;
     }
-    
-       /**
+
+    /**
      * Returns the current date or time in a specified format as a string.
      *
      * @param type A string argument that specifies the desired output format.
@@ -61,5 +63,17 @@ public class Utility {
 
         // Return the formatted date or time as a string
         return res;
+    }
+
+    public static String appendStatus(String url, String status, String message) {
+        StringBuilder sb = new StringBuilder(url);
+        if (url.contains("?")) {
+            sb.append("&");
+        } else {
+            sb.append("?");
+        }
+        sb.append("status=").append(status);
+        sb.append("&message=").append(URLEncoder.encode(message, StandardCharsets.UTF_8));
+        return sb.toString();
     }
 }
