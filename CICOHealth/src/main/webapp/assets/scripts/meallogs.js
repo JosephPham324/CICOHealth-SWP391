@@ -146,7 +146,7 @@ function fillEditForm(logData) {
   });
   document.querySelector("#edit-table tbody").innerHTML = bodyHTML;
   document.querySelector("#edit-table tfoot").innerHTML = `
-        <tr>
+        <tr style="border: 1px solid black;">
             <td>${logData.mealLogName}</td>
             <td>${totalMealNutrition.protein.toFixed(1)}</td>
             <td>${totalMealNutrition.fat.toFixed(1)}</td>

@@ -43,75 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>10:28:10</td>
-                                    <td>Breakfast</td>
-                                    <td>45.4</td>
-                                    <td>66.0</td>
-                                    <td>6.4</td>
-                                    <td>787.8</td>
-                                    <td>
-                                        <a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn-edit-pop-up"><i
-                                                class="fa-solid fa-pen-to-square"></i></a>/
-                                        <a href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>10:48:40</td>
-                                    <td>Dinner</td>
-                                    <td>45.4</td>
-                                    <td>66.0</td>
-                                    <td>6.4</td>
-                                    <td>787.8</td>
-                                    <td>
-                                        <a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn-edit-pop-up"><i
-                                                class="fa-solid fa-pen-to-square"></i></a>/
-                                        <a href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>10:38:30</td>
-                                    <td>Breakfast</td>
-                                    <td>45.4</td>
-                                    <td>66.0</td>
-                                    <td>6.4</td>
-                                    <td>787.8</td>
-                                    <td>
-                                        <a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn-edit-pop-up"><i
-                                                class="fa-solid fa-pen-to-square"></i></a>/
-                                        <a href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>12:28:20</td>
-                                    <td>Lunch</td>
-                                    <td>45.4</td>
-                                    <td>66.0</td>
-                                    <td>6.4</td>
-                                    <td>787.8</td>
-                                    <td>
-                                        <a href="#" class="btn-note-pop-up"><i class="fa-solid fa-note-sticky"></i></a>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn-edit-pop-up"><i
-                                                class="fa-solid fa-pen-to-square"></i></a>/
-                                        <a href="#" class="btn-delete-pop-up"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                         <hr />
@@ -172,17 +104,11 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody class="pop-up-body-table"></tbody>
+                                <tbody class="pop-up-body-table">
+
+                                </tbody>
                                 <tfoot class="pop-up-foot-table">
-                                    <tr>
-                                        <td>Breakfast</td>
-                                        <td>45.4</td>
-                                        <td>66.0</td>
-                                        <td>6.4</td>
-                                        <td>787.8</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+
                                 </tfoot>
                             </table>
 

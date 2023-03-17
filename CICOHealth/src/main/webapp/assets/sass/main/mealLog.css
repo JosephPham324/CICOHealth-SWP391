@@ -133,32 +133,8 @@
   overflow: hidden;
 }
 
-.pop-up {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: none;
-}
-.pop-up.active {
-  display: block;
-  position: fixed;
-}
-.pop-up > .pop-up-content {
-  position: relative;
-  z-index: 5;
-}
-.pop-up .overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1 !important;
-}
-.pop-up .edit-pop-up-content, .pop-up .note-pop-up-content {
+.pop-up .edit-pop-up-content,
+.pop-up .note-pop-up-content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -174,6 +150,7 @@
 .pop-up .edit-meal-log-form {
   margin-top: 10%;
   height: 340px;
+  padding: 10px;
 }
 .pop-up .form-group {
   margin-bottom: 8px;
@@ -201,6 +178,29 @@
 .pop-up .pop-up-thead-table {
   font-size: 20px;
 }
-.pop-up .pop-up-body-table, .pop-up .pop-up-foot-table {
+.pop-up .pop-up-thead-table tr {
+  background-color: rgb(131, 184, 46);
+}
+.pop-up .pop-up-thead-table tr th {
+  border: 1px solid black;
+  text-align: center;
+}
+.pop-up .pop-up-body-table {
   font-size: 18px;
+  border: 1px solid black;
+}
+.pop-up .pop-up-foot-table {
+  font-size: 18px;
+}
+.pop-up .pop-up-foot-table th {
+  border: 1px solid black;
+}
+.pop-up #edit-table tbody tr th {
+  border: 1px solid black;
+}
+.pop-up #edit-table tfoot {
+  background-color: yellow;
+}
+.pop-up #edit-table tfoot tr th {
+  border: 1px solid black;
 }/*# sourceMappingURL=mealLog.css.map */
