@@ -156,57 +156,69 @@ public class ExerciseLogController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the user session information
         User user = (User) request.getSession().getAttribute("user");
+
+        // Check if the exercise type is cardio or resistance
         String check = request.getParameter("check");
         if (check != null && check.equalsIgnoreCase("cardio")) {
+            // Initialize a new ExerciseLog object
             ExerciseLog log;
+
+            // Convert the exercise parameter to JSON object using GSON
             Gson gson = new Gson();
             String exerciseParam = request.getParameter("exerciseLog");
             JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
+
+            // Create a new GSON object with the desired date format and convert the exercise parameter to ExerciseLog object
             gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             log = gson.fromJson(exerciseParam, ExerciseLog.class);
-            System.out.println(exerciseParam);
+
+            // Set the user ID for the log and update it in the database
             log.setUserID(user.getUserID());
-//        response.getWriter().write(log.toString());
             try {
                 new ExerciseLogDao().updateExerciseLogCardio(log);
-                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/cardio", "success", "Update log successfully!"));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/cardio", "success", "Update log for cardio type successfully!"));
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/cardio", "failure", "Log update failed!"));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/cardio", "failure", "Log update for cardio type failed!"));
             }
-
         }
+        // If the exercise type is resistance, update the exercise log for resistance type
         if (check != null && check.equalsIgnoreCase("resistance")) {
+            // Initialize a new ExerciseLog object
             ExerciseLog log;
+
+            // Convert the exercise parameter to JSON object using GSON
             Gson gson = new Gson();
             String exerciseParam = request.getParameter("exerciseLog");
             JsonObject obj = gson.fromJson(exerciseParam, JsonObject.class);
+
+            // Create a new GSON object with the desired date format and convert the exercise parameter to ExerciseLog object
             gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             log = gson.fromJson(exerciseParam, ExerciseLog.class);
-            System.out.println(exerciseParam);
+
+            // Set the user ID for the log and update it in the database
             log.setUserID(user.getUserID());
             try {
                 new ExerciseLogDao().updateExerciseLogResitance(log);
-                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/resistance", "success", "Update log successfully!"));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/resistance", "success", "Update log for resistance type successfully!"));
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/resistance", "failure", "Log update failed!"));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/resistance", "failure", "Log update for resistance type failed!"));
             }
         }
+        // Update the exercise log note for the given exercise log ID
         String updateNote = request.getParameter("updateNote");
         if (updateNote != null) {
             try {
                 String exerciseLogID = request.getParameter("exerciseLogID");
                 String note = request.getParameter("note");
-                System.out.println(user.getUserID());
-                System.out.println(note + exerciseLogID);
                 new ExerciseLogDao().updateExerciseLogNote(user.getUserID(), exerciseLogID, note);
-                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/"+updateNote, "success", "Update log successfully!"));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/" + updateNote, "success", "Update log note successfully!"));
             } catch (Exception e) {
-                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/"+updateNote, "failure", "Log update failed!"));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/" + updateNote, "failure", "Log note update failed!"));
             }
-
         }
 
     }
@@ -215,7 +227,7 @@ public class ExerciseLogController extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String id = request.getParameter("exerciseLogID");
-            String exerciseType = id.substring(2,4).equals("CA")? "cardio":"resistance";
+            String exerciseType = id.substring(2, 4).equals("CA") ? "cardio" : "resistance";
             ExerciseLogDao exerciseLogDao = new ExerciseLogDao();
             exerciseLogDao.deleteExerciseLog(id);
             response.sendRedirect(Utility.appendStatus("/CICOHealth/user/exercise-logs/" + exerciseType, "success", "Successfully deleted log!"));

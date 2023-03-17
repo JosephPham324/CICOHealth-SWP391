@@ -94,6 +94,12 @@ public class MealLogController extends HttpServlet {
         request.getRequestDispatcher("/view/user/mealLogs/mealLogs.jsp").forward(request, response);
     }
 
+    /**
+     *
+     * @param response
+     * @param responseData
+     * @throws IOException
+     */
     private void printJSONResponse(HttpServletResponse response, String responseData) throws IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
@@ -101,6 +107,11 @@ public class MealLogController extends HttpServlet {
         out.flush();
     }
 
+    /**
+     *
+     * @param logs
+     * @return
+     */
     private String createMealLogsJSON(ArrayList<MealLog> logs) {
         Gson gson = new Gson();
         String logsJSON = "{\"logs\":";
@@ -168,8 +179,6 @@ public class MealLogController extends HttpServlet {
             try {
                 String mealLogID = request.getParameter("mealLogID");
                 String note = request.getParameter("note");
-                System.out.println(user.getUserID());
-                System.out.println(note + mealLogID);
                 new MealLogDao().updateMealLogNote(user.getUserID(), mealLogID, note);
                 response.sendRedirect("/CICOHealth/user/meal-logs?updateLog=successful");
             } catch (Exception e) {
@@ -201,6 +210,13 @@ public class MealLogController extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

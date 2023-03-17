@@ -44,52 +44,81 @@ public class FAQController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
+
+// If URI ends with "/questions", forward the request to FAQQuestions.jsp
         if (URI.endsWith("/questions")) {
             request.getRequestDispatcher("/view/general/faq/FAQQuestions.jsp").forward(request, response);
             return;
         }
+
+// If URI ends with "/answers", forward the request to FAQ.jsp
         if (URI.endsWith("/answers")) {
             request.getRequestDispatcher("/view/general/faq/FAQ.jsp").forward(request, response);
             return;
         }
+
+// If URI ends with "/data"
         if (URI.endsWith("/data")) {
+            // Get the topic parameter from the request
             String topic = request.getParameter("topic");
-            System.out.println(topic);
             String responseData = null;
+            System.out.println(topic);
+
+            // If the topic parameter is not in the list of FAQ topics, return empty data
             if (!getFaqTopics().contains(topic)) {
                 printJSONResponse(response, "{\"data\":[]}");
                 return;
             }
+
+            // Create a Gson object
             Gson gson = new Gson();
+
+            // If URI ends with "/questions/data"
             if (URI.endsWith("/questions/data")) {
+                // Create a QuestionDao object
                 QuestionDao qDao = new QuestionDao();
                 ArrayList<Question> queryRes;
-                System.out.println(topic);
+
+                // If the topic is "All", get all questions from the database, else get questions by topic
                 if (topic.equalsIgnoreCase("All")) {
                     queryRes = (ArrayList) qDao.getAllQuestions();
                 } else {
                     queryRes = (ArrayList) qDao.getQuestionsByTopic("topic");
                 }
+
+                // Set the response data to the questions in JSON format
                 responseData = "{\"questions\":" + gson.toJson(queryRes) + "}";
             }
+
+            // If URI ends with "/answers/data"
             if (URI.endsWith("/answers/data")) {
+                // Create an AnswerDao object
                 AnswerDao aDao = new AnswerDao();
                 ArrayList<Answer> queryRes;
+
+                // If the topic is "All", get all answers from the database, else get answers by topic
                 if (topic.equalsIgnoreCase("All")) {
                     queryRes = (ArrayList) aDao.getAllAnswers();
                 } else {
                     queryRes = (ArrayList) aDao.getAnswersByTopic(topic);
                 }
+
+                // Set the response data to the answers in JSON format
                 String userRole = "";
-                if (request.getSession().getAttribute("user")!=null){
-                    userRole = ",\"userRole\":\""+((User)request.getSession().getAttribute("user")).getUserRole()+"\"";
+                if (request.getSession().getAttribute("user") != null) {
+                    userRole = ",\"userRole\":\"" + ((User) request.getSession().getAttribute("user")).getUserRole() + "\"";
                 }
                 responseData = "{\"answers\":" + gson.toJson(queryRes) + userRole + "}";
             }
+
+            // Print the response data in JSON format
             printJSONResponse(response, responseData);
             return;
         }
+
+// Redirect to "/faq/answers" if none of the above conditions are met
         response.sendRedirect("/CICOHealth/faq/answers");
+
     }
 
     private HashSet<String> getFaqTopics() {
@@ -203,12 +232,6 @@ public class FAQController extends HttpServlet {
         String questionContent = request.getParameter("questionContent");
         String answerContent = request.getParameter("answerContent");
         Answer answer = new Answer(answerID, createdBy, questionTopic, questionContent, answerContent);
-                System.out.println(questionTopic);
-                System.out.println(answerID);
-                System.out.println(answerContent);
-                System.out.println(questionTopic);
-                System.out.println(questionContent);
-        System.out.println(answer.getQuestionContent());
         new AnswerDao().updateAnswer(answer);
         response.sendRedirect("/CICOHealth/faq/answers?updateid=" + answerID);
         return;

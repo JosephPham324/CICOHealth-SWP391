@@ -142,6 +142,7 @@ public class StatisticsController extends HttpServlet {
         }
         if(URI.matches(".*/(health-info(/.*)*)$")){
             request.getRequestDispatcher("/view/user/statistics/healthInfoStatistic.jsp").forward(request, response);
+            return;
         }
         response.sendRedirect("/CICOHealth/user/statistics/nutrition");
     }

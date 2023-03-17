@@ -164,7 +164,7 @@ public class RegisterController extends HttpServlet {
                 response.sendRedirect("/CICOHealth/register?error=databasefailure");
                 return;
             }
-            response.sendRedirect("/CICOHealth/");
+            response.sendRedirect("/CICOHealth/login");
         }
     }
 
