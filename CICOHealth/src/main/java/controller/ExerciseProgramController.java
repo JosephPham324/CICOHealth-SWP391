@@ -69,11 +69,11 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.matches(".*/exercise-programs/create(/.*)*")) {
+        if (URI.matches(".*/create(/.*)*")) {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
             return;
         }
-        if (URI.matches(".*/exercise-programs/detail/workout")) {
+        if (URI.matches(".*/detail/workout(/.*)*")) {
             String workoutID = request.getParameter("workoutid");
             List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
             request.setAttribute("workout", workout);
@@ -81,7 +81,7 @@ public class ExerciseProgramController extends HttpServlet {
             return;
         }
 
-        if (URI.matches(".*/exercise-programs/detail")) {
+        if (URI.matches(".*/detail(/.*)*")) {
             String ID = request.getParameter("id");
             if (ID != null) {
                 List<Workout> workouts = new WorkoutDao().getWorkoutByProgramID(ID);
@@ -90,13 +90,16 @@ public class ExerciseProgramController extends HttpServlet {
                 return;
             }
         }
-        if (URI.matches(".*/exercise-programs")) {
-            List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
-            request.setAttribute("listProgram", list);
-            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
+
+        if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {
             return;
         }
-        response.sendRedirect("/CICOHealth/exercise-programs/create");
+
+        
+        //Default
+        List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
+        request.setAttribute("listProgram", list);
+        request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
     }
 
     /**

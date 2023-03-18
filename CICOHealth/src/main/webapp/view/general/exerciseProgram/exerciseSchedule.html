@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
+      integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+      integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Exercise Schedule</title>
+  </head>
+  <body>
+    <header>
+      <h1>Workout Tracker</h1>
+    </header>
+    <main>
+      <div class="date-picker">
+        <label for="date-input">Select a date:</label>
+        <input type="date" id="workoutDate" placeholder="Select a date"/>
+      </div>
+      <div class="workout-container"></div>
+    </main>
+  </body>
+  <script>
+    flatpickr("#workoutDate", {
+      dateFormat: "Y-m-d", // Set the date format to year-month-day
+      onChange: function (selectedDates, dateStr, instance) {
+        // Call a function to fetch and display workouts for the selected date
+        fetchWorkouts(dateStr);
+      },
+    });
+    function fetchWorkouts(dateStr) {
+      // Fetch workouts for the selected date
+      fetch(`/exerciseProgram/workouts/${dateStr}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Display the workouts
+          displayWorkouts(data);
+        });
+    }
+  </script>
+</html>
