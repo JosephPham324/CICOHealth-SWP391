@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="/CICOHealth/assets/css/healthInfo.css" /> 
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/loginInfo.css">
 
+
+
         <title>Login Information</title>
     </head>
 
@@ -82,13 +84,15 @@
 
             </main>
 
-           
-        <%@include file="/view/general/footer.jsp" %>
 
-        <script src="/CICOHealth/assets/scripts/popup.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
-        <script src="/CICOHealth/assets/scripts/loginInfo.js"></script>
+            <%@include file="/view/general/footer.jsp" %>
+
+            <script src="/CICOHealth/assets/scripts/popup.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="sweetalert2.all.min.js"></script>
+            <script src="/CICOHealth/assets/scripts/loginInfo.js"></script>
 
 
     </body>
