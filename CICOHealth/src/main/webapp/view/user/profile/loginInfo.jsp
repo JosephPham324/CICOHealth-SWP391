@@ -37,7 +37,7 @@
                 <div class="container mt-5">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
-                            <form action="ProfileController" method="post" id="loginInfoForm">
+                            <form id="loginInfoForm" action="ProfileController" method="post">
                                 <div class="card">
                                     <div class="card-header">
                                         Login Information ${originPass}
@@ -73,8 +73,8 @@
                                     </div>
                                     <div class="card-footer text-right">
                                         <input type="hidden" value="PUT" name="_method">
-                                        <button name="btnUpdate" id="btnUpdate" value="updateLogin" class="btn btnUpdate" onclick="confirm(${originPass})">Save</button>
-
+                                        <input type="text" name="btnUpdate" value="updateLogin" hidden="true">
+                                        <button id="btnUpdate" class="btn btnUpdate" onclick="confirm(${originPass})">Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -86,12 +86,13 @@
 
 
             <%@include file="/view/general/footer.jsp" %>
-
+             
             <script src="/CICOHealth/assets/scripts/popup.js"></script>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="sweetalert2.all.min.js"></script>
+           
+            <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
             <script src="/CICOHealth/assets/scripts/loginInfo.js"></script>
 
 

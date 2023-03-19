@@ -1,12 +1,4 @@
-Swal.fire({
-  title: 'Error!',
-  text: 'Do you want to continue',
-  icon: 'error',
-  confirmButtonText: 'Cool'
-})
-document.getElementById("id_password").addEventListener("blur", () => {
 
-});
 
 function getPassword(originPass) {
     originPass = originPass.toString();
@@ -41,6 +33,7 @@ function getPassword(originPass) {
 }
 
 function confirm(originPass) {
+    event.preventDefault();
     originPass = originPass.toString();
     Swal.fire({
         title: "Enter your password:",
@@ -55,10 +48,13 @@ function confirm(originPass) {
         }
     }).then((result) => {
         if (result.value === originPass) {
-            var password = document.querySelector('#id_password');
-            document.getElementById("loginInfoForm").submit();
+            var form = document.getElementById("loginInfoForm");
+            var formData = new FormData(form);
+            console.log(formData.get("username"));
+            console.log(formData.get("password"));
+            form.submit();
         } else if (result.value) {
-            swal("Incorrect password", "Please try again", "error");
+            Swal.fire("Incorrect password", "Please try again", "error");
         }
     });
 }
