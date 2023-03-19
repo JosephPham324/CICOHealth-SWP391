@@ -1,115 +1,530 @@
-@use "../mixins/common";
-:root {
-	--primary: #DC143C;
-	--dark: #1F2937;
-	--darkdark: #111827;
-	--light: #F3F4F6;
+$dark-grey: #212121; //grey darken-4
+$mute-grey: #424242;
+$red: #f44336; //red
+$green: #66bb6a; //green lighten-1
+$main: #00bcd4;
+$main-dark: #00acc1;
+$button-color: #ff9800; //orange
+$button-color-dark: #f57c00; // orange darken-2
+@mixin border {
+  border: 5px solid $dark-grey;
 }
 
-* {
-	margin: 0;
-	box-sizing: border-box;
-	font-family: 'Fira sans', sans-serif;
+@mixin center-el {
+  display: block;
+  left: 0;
+  right: 0;
 }
 
-body {
-	background-color: var(--dark);
-	color: var(--light);
+
+/* Default/layout
+===================================*/
+
+// For flash of unstyled content
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
 
-.watch {
-	text-align: center;
-	background-color: var(--darkdark);
-	width: 100%;
-	max-width: 500px;
-	margin: 4rem auto;
-	padding: 1rem 2rem;
-	border-radius: 1rem;
+html {
+  color: $dark-grey;
+  background-color: #fdfdfd;
 }
 
-.watch .time {
-	font-size: 5rem;
-	font-weight: 300;
-	margin-bottom: 1rem;
+.hidden {
+  display: none;
+}
+
+#wrapper {
+  @include center-el;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 2000px;
+  min-height: 34em;
+}
+
+
+/* Top Bar
+===================================*/
+
+#top-bar {
+  background-color: $main;
+  margin-top: -1.5em;
+  color: $dark-grey;
+  h3 {
+    padding-top: .1em;
+    font-weight: 500;
+    text-align: center;
+  }
+  h5 {
     color: white;
+    background-color: $main-dark;
+    text-align: center;
+    margin-top: -1.3em;
+    padding-bottom: .2em;
+  }
 }
 
-.controls {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.controls button {
-	appearance: none;
-	background: none;
-	outline: none;
-	border: none;
-	cursor: pointer;
-
-	margin: 0 0.5rem;
-	padding: 0.5rem 1rem;
-	border-radius: 0.5rem;
-
-	color: #FFF;
-	background-color: var(--primary);
-
-	transition: 0.4s;
-	user-select: none;
-}
-
-.controls button:hover {
-	opacity: 0.7;
-}
-
-.controls button:active {
-	background-color: var(--dark);
+#css-switch {
+  position: absolute;
+  font-weight: 700;
+  margin-left: 90%;
+  margin-top: -2.6em;
+  a {
+    color: #00695c;
+  }
+  a:hover {
+    color: #00897b;
+  }
 }
 
 
-// pop-up
+/* Main app
+====================================*/
 
-.prevent-scrolling {
-    height: 100%;
-    overflow: hidden;
+#app-wrapper {
+  @include border;
+  @include center-el;
+  height: 21.5em;
+  background-color: white;
+  text-align: center;
 }
 
-.pop-up {
-    @include common.absolute-position();
-    display: none;
+// Buttons
+#button-wrapper {
+  @include center-el;
+  margin-top: 3em;
+  margin-bottom: .5em;
+  text-align: center;
+}
 
-    &.active {
-        display: block;
-        position: fixed;
+// Time left and rounds left
+#timer {
+  padding: 0;
+  margin: 0;
+}
+
+#current-timer {
+  border-right: 5px solid $dark-grey;
+  height: 20.85em;
+  margin-left: -.8em;
+  background-color: #ef9a9a;
+  h3 {
+    font-weight: 500;
+    color: $mute-grey;
+    margin-top: .2em;
+    margin-bottom: .3em;
+  }
+}
+
+.time-left-numbers {
+  font-weight: 600;
+  font-size: 5em;
+  color: $dark-grey;
+}
+
+#round {
+  height: 20.85em;
+  h4 {
+    font-weight: 500;
+    color: $mute-grey;
+  }
+}
+
+#round-numbers {
+  margin-top: 1.5em;
+  font-weight: 600;
+  font-size: 5em;
+  color: $main-dark;
+}
+
+// Right bar of options
+#options {
+  border-left: 5px solid $dark-grey;
+  display: block;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.option-input {
+  height: 5em;
+  border-top: 5px solid $dark-grey;
+  box-sizing: border-box;
+  width: 105.1%;
+  p {
+    display: inline-block;
+    margin-left: .8em;
+    margin-right: .8em;
+    width: 4em;
+  }
+}
+
+.adjust {
+  position: absolute;
+  margin-top: .6em;
+  margin-left: -.5em;
+  color: #f57c00;
+  // Prevents blue hilight
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  user-select: none;
+  &:hover {
+    cursor: pointer;
+    color: $dark-grey;
+  }
+}
+
+
+/* Footer
+====================================*/
+
+footer {
+  background-color: $main;
+  color: white;
+}
+
+.fa {
+  color: $button-color;
+  font-size: 2em;
+  display: inline;
+  margin-left: .5em;
+  &:hover {
+    color: $button-color-dark;
+  }
+}
+
+#lower-footer {
+  background-color: $main-dark;
+  height: 4em;
+  p {
+    display: inline;
+    font-size: 1.2em;
+    margin-left: 2em;
+    color: $dark-grey;
+  }
+  p>a {
+    color: $button-color;
+    font-weight: 600;
+    margin-left: .3em;
+  }
+  p>a:hover {
+    color: $button-color-dark;
+  }
+}
+
+#about-tabata {
+  max-width: 38em;
+  margin-left: 3em;
+}
+
+#about-developer {
+  max-width: 38em;
+  float: right;
+  padding-right: 1em;
+}
+
+
+/* Media Queries
+====================================*/
+
+@media screen and (min-width: 1600px) {
+  #about-tabata {
+    margin-left: 11em;
+  }
+  #about-developer {
+    max-width: 38em;
+    padding-right: 1em;
+    margin-right: 7em;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .option-input {
+    width: 107%;
+  }
+}
+
+@media screen and (max-width: 1215px) {
+  .adjust-minus {
+    margin-left: -.4em;
+  }
+  .adjust-plus {
+    margin-left: -.8em;
+  }
+  .option-input {
+    p {
+      margin-left: .2em;
+      margin-right: .6em;
     }
-
-    &>.pop-up-content {
-        position: relative;
-        z-index: 5;
+  }
+  #about-tabata {
+    max-width: 32em;
+    margin-left: 3em;
+  }
+  #about-developer {
+    max-width: 32em;
+    float: right;
+    padding-right: 1em;
+  }
+} // End media 1115px
+// grid - m
+@media screen and (max-width: 992px) {
+  .adjust-minus {
+    margin-left: -.2em;
+  }
+  .adjust-plus {
+    margin-left: -.7em;
+  }
+  .option-input {
+    p {
+      margin-left: .8em;
+      margin-right: .8em;
     }
-
-    .overlay {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        @include common.dimension(100vw, 100vh);
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1 !important;
+  }
+  #about-tabata {
+    width: 30em;
+    margin-left: 2em;
+  }
+} // End media 992px (grid -m)
+@media screen and (max-width: 915px) {
+  #about-tabata {
+    max-width: 27em;
+    margin-left: 2em;
+  }
+  #about-developer {
+    max-width: 27em;
+    float: right;
+    padding-right: 1em;
+  }
+} // End media 915px
+@media screen and (max-width: 840px) {
+  .adjust-minus {
+    margin-left: -.6em;
+  }
+  .adjust-plus {
+    margin-left: -1.1em;
+  }
+  .option-input {
+    p {
+      margin-left: 0em;
+      margin-right: 1.2em;
     }
-
-    .configure-pop-up-content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 500px;
-        background-color: #fff;
-        z-index: 2;
-        border-radius: 20px;
+  }
+  #about-tabata {
+    max-width: 25em;
+    margin-left: 1em;
+  }
+  #about-developer {
+    max-width: 25em;
+    float: right;
+    padding-right: .5em;
+  }
+  #css-switch {
+    margin-left: 80%;
+  }
+} // End media 840px
+@media screen and (max-width: 765px) {
+  .option-input {
+    p {
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-top: .5em;
+      margin-bottom: -.2em;
     }
+  }
+  .adjust-minus {
+    margin-left: -1.9em;
+    margin-top: .2em;
+  }
+  .adjust-plus {
+    margin-left: 1em;
+    margin-top: -.8em;
+  }
+} // End media 764px
+@media screen and (max-width: 747px) {
+  #about-tabata {
+    width: 23em;
+    margin-left: .4em;
+  }
+  #about-developer {
+    width: 23em;
+    padding-right: .5em;
+  }
+} // End media 747px
+@media screen and (max-width: 670px) {
+  #about-tabata {
+    width: 20em;
+    margin-left: .2em;
+  }
+  #about-developer {
+    width: 20em;
+    padding-right: .2em;
+  }
+}
 
-    .txt-title-pop-up {
-        text-align: center;
+// grid -s
+@media screen and (max-width: 600px) {
+  footer {
+    margin-top: 24em;
+  }
+  #current-timer {
+    border-right: 5px solid $dark-grey;
+    height: 12em;
+    h3 {
+      margin-top: 0em;
+      margin-bottom: -.5em;
     }
+  }
+  #app-wrapper {
+    @include center-el;
+    height: 12.7em;
+    background-color: white;
+  }
+  #round {
+    height: 12em;
+    h4 {
+      margin-top: .2em;
+      margin-bottom: -.6em;
+    }
+  }
+  #options {
+    border: 5px solid $dark-grey;
+  }
+  .option-input {
+    width: 100%;
+    height: 4.5em;
+    p {
+      display: block;
+      text-align: center;
+      font-weight: 500;
+      width: auto;
+      margin-top: .3em;
+      margin-bottom: -.1em;
+    }
+  }
+  .switch {
+    height: 4.5em;
+    font-weight: 500;
+    p {
+      margin-top: .2em;
+    }
+  }
+  .adjust-minus {
+    margin-left: -2.5em;
+  }
+  .adjust-plus {
+    margin-left: .9em;
+  }
+  #about-tabata,
+  #about-developer {
+    @include center-el;
+    position: relative;
+    width: 30em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    float: none;
+    h4 {
+      padding-top: .5em;
+      margin-bottom: -1em;
+    }
+  }
+  #top-bar {
+    h5 {
+      font-size: 1.3em;
+      padding-left: .3em;
+      padding-right: .3em;
+    }
+  }
+} // End media 600px (grid -s)
+@media screen and (max-width: 500px) {
+  #round {
+    h4 {
+      margin-top: .6em;
+      font-size: 1.8em;
+      margin-bottom: .5em;
+    }
+  }
+  #round-numbers {
+    font-size: 2.5em;
+  }
+  #current-timer {
+    h3 {
+      margin-top: .1em;
+      margin-bottom: -.2em;
+    }
+  }
+  .time-left-numbers {
+    font-size: 3.5em;
+  }
+  #lower-footer {
+    height: 4em;
+    p {
+      font-size: 1em;
+      margin-left: .7em;
+    }
+    p>a {
+      font-weight: 600;
+      margin-left: .3em;
+    }
+  }
+  #css-switch {
+    margin-left: 79%;
+  }
+  #top-bar {
+    h3 {
+      padding-top: .5em;
+      font-size: 2.5em;
+    }
+  }
+} // End media 500px
+@media screen and (max-width: 410px) {
+  #about-tabata,
+  #about-developer {
+    width: 22em;
+    padding-left: .3em;
+    padding-right: .3em;
+  }
+  #lower-footer {
+    height: 6em;
+    p {
+      font-size: 1em;
+      margin-left: .7em;
+      display: block;
+    }
+    p>a {
+      font-weight: 600;
+      margin-left: .3em;
+    }
+  }
+  #css-switch {
+    position: relative;
+    display: block;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -1em;
+  }
+} // End media 410px
+@media screen and (max-width: 370px) {
+  #round {
+    h4 {
+      font-size: 1.6em;
+      margin-bottom: .5em;
+    }
+  }
+} // End media 370px
+@media screen and (max-width: 350px) {
+  #about-tabata,
+  #about-developer {
+    width: 18em;
+  }
+} // End media 350px
+
+.row {
+    margin-right: 15% !important;
 }

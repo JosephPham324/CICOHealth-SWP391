@@ -1,116 +1,197 @@
-// Global variables
-const time_el = document.querySelector('.watch .time');
-const start_btn = document.getElementById('start');
-const stop_btn = document.getElementById("stop");
-const reset_btn = document.getElementById("reset");
-const config_btn = document.getElementById("config");
-const popup_form = document.querySelector(".popup-form");
-const save_btn = document.getElementById("save-btn");
-const cancel_btn = document.getElementById("cancel-btn");
+// Note: The codepen version of this timer does not have sound, as I cannot host assets. 
+// Sorry.
+// to-do: Mute option buttons if interval running
+// combine interval functions
+// Add "only works with JavaScript"
+// Make options text editable
 
-let seconds = 0;
-let interval = null;
-let numSets = 1;
-let setTime = 60;
-let restTime = 10;
-let setCounter = 0;
+var app = angular.module("tabataApp", []);
+app.controller("tabataAppCtrl", ["$scope", function($scope) {
 
-// Event listeners
-start_btn.addEventListener('click', start);
-stop_btn.addEventListener('click', stop);
-reset_btn.addEventListener('click', reset);
-config_btn.addEventListener('click', togglePopupForm);
-save_btn.addEventListener('click', saveSettings);
-cancel_btn.addEventListener('click', closePopupForm);
+  // 	Set default volume as on
+  // $("#volume-switch").prop("checked", true);
 
-// Update the timer
-function timer() {
-	seconds++;
-  
-	// Format our time
-	let hrs = Math.floor(seconds / 3600);
-	let mins = Math.floor((seconds - (hrs * 3600)) / 60);
-	let secs = seconds % 60;
-  
-	if (secs < 10) secs = '0' + secs;
-	if (mins < 10) mins = '0' + mins;
-	if (hrs < 10) hrs = '0' + hrs;
-  
-	time_el.innerText = `${hrs}:${mins}:${secs}`;
-  
-	// Check if set is complete
-	if (seconds >= setTime && setCounter < numSets) {
-	  clearInterval(interval);
-	  interval = null;
-	  seconds = 0;
-	  setCounter++;
-	  time_el.innerText = 'Set complete!';
-  
-	  // Check if workout is complete
-	  if (setCounter < numSets) {
-		setTimeout(() => {
-		  seconds = 0;
-		  time_el.innerText = 'Resting...';
-		  setTimeout(() => {
-			start();
-		  }, restTime * 1000);
-		}, 1000);
-	  } else {
-		setCounter = 0;
-		seconds = 0;
-		time_el.innerText = 'Workout complete!';
-		resetSettings();
-	  }
-	}
-}
+  $scope.rounds = {
+    roundsLeft: 1,
+    totalRounds: 8
+  };
 
-function start () {
-  if (interval) {
-    return;
+  $scope.optionTimes = {
+    timeOff: "00:10",
+    timeOn: "00:20"
+  };
+
+  $scope.timerTimes = {
+    breakTime: "00:10",
+    workTime: "00:20"
+  };
+
+  $scope.timerStates = {
+    breakRunning: false,
+    workRunning: false
+  };
+
+  /* ===============================*/
+
+  // Parse time string to integers
+  function parseTime(time) {
+    var time = time.split(":");
+    var SECONDS = parseInt(time[1]);
+    var MINUTES = parseInt(time[0]);
+    return [MINUTES, SECONDS];
   }
 
-  interval = setInterval(timer, 1000);
-}
-
-function stop () {
-  clearInterval(interval);
-  interval = null;
-}
-
-function reset() {
-	stop();
-	seconds = 0;
-	time_el.innerText = "00:00:00";
-	setCounter = 0;
-	clearInterval(interval);
-	interval = null;
-	resetSettings();
-}
-
-function togglePopupForm() {
-  if (popup_form.style.display === "block") {
-    popup_form.style.display = "none";
-  } else {
-    popup_form.style.display = "block";
+  // Put 0 in front if digit less than 10
+  function minTwoDigits(n) {
+    return (n < 10 ? "0" : "") + n;
   }
-}
 
-function closePopupForm() {
-  popup_form.style.display = "none";
-}
+  // function makeSound(currentSeconds) {
+  // 	if (currentSeconds >= 2) {
+  // 		var beep = new buzz.sound("dist/buzz/beep-07.mp3").play();
+  // 	} else {
+  // 		var endBeep = new buzz.sound("dist/buzz/beep-08b.mp3").play();
+  // 	}
+  // }
 
-function resetSettings() {
-  numSets = 1;
-  setTime = 60;
-  restTime = 10;
-  closePopupForm();
-}
+  // Adds or removes 1 second
+  $scope.changeTime = function(currentTime, deltaTime) {
+    var time = parseTime(currentTime);
+    var minutes = time[0];
+    var seconds = time[1];
+    var newTime = "";
+    // If interval is running, make sound
+    // if (seconds <= 4 && minutes === 0 && $("#volume-switch").prop("checked") && ($scope.timerStates.breakRunning || $scope.timerStates.workRunning)) {
+    // 	makeSound(seconds);
+    // }
+    if (seconds === 59 && deltaTime === "+1") {
+      newTime = (minTwoDigits(minutes + 1) + ":" + "00").toString();
+    } else if (minutes >= 1 && seconds === 0 && deltaTime === "-1") {
+      newTime = (minTwoDigits(minutes - 1) + ":" + "59").toString();
+    } else if (minutes === 0 && seconds === 0 && deltaTime === "-1") {
+      newTime = (minTwoDigits(minutes) + ":" + minTwoDigits(seconds)).toString();
+    } else {
+      var tempTime = minTwoDigits(eval(seconds + deltaTime));
+      newTime = (minTwoDigits(minutes) + ":" + tempTime).toString();
+    }
+    return newTime;
+  };
 
-function saveSettings(event) {
-  event.preventDefault();
-  numSets = parseInt(document.getElementById("num-sets").value);
-  setTime = parseInt(document.getElementById("set-time").value);
-  restTime = parseInt(document.getElementById("rest-time").value);
-  closePopupForm();
-  start(); // start the timer with the new settings
-}
+  /* Functions to change the option numbers
+  ================================================*/
+
+  // Change the number of rounds
+  $scope.changeRounds = function(currentRounds, deltaRounds) {
+    if ($scope.rounds.totalRounds === 0 && deltaRounds === "-1") {
+      return;
+    }
+    $scope.rounds.totalRounds = eval(currentRounds + deltaRounds);
+  };
+
+  // Could not find a way to pass property, so this is the hacky temporary solution
+  $scope.changeTimeOff = function(currentTime, deltaTime) {
+    var newTime = $scope.changeTime(currentTime, deltaTime);
+    $scope.optionTimes.timeOff = newTime;
+    $scope.timerTimes.breakTime = newTime;
+  };
+
+  $scope.changeTimeOn = function(currentTime, deltaTime) {
+    var newTime = $scope.changeTime(currentTime, deltaTime);
+    $scope.optionTimes.timeOn = newTime;
+    $scope.timerTimes.workTime = newTime;
+  };
+
+  // Switch between break screen and work screen
+  function switchScreens(value) {
+    if (value === "toWork") {
+      $("#time-left").removeClass("hidden");
+      $("#break-left").addClass("hidden");
+      $("#current-timer").css("background-color", "#a5d6a7");
+      $scope.timerStates.workRunning = true;
+    } else {
+      $("#break-left").removeClass("hidden");
+      $("#time-left").addClass("hidden");
+      $("#current-timer").css("background-color", "#ef9a9a");
+      $scope.timerStates.breakRunning = true;
+    }
+    $scope.startClock();
+  } // End switchScreens
+
+  // Start the timer
+  $scope.startClock = function() {
+    $("#pause-button").removeClass("hidden");
+    $("#start-button").addClass("hidden");
+    // If work is showing on click, change state
+    if ($("#break-left").hasClass("hidden")) {
+      $scope.timerStates.workRunning = true;
+    }
+
+    // If there is a round left
+    if ($scope.rounds.roundsLeft <= $scope.rounds.totalRounds) {
+      if (!$scope.timerStates.workRunning) {
+        breakInterval = setInterval(function() {
+          $scope.timerStates.breakRunning = true;
+          var newTime = $scope.changeTime($scope.timerTimes.breakTime, "-1");
+          $scope.timerTimes.breakTime = newTime;
+          if (newTime === "00:00") {
+            stopCurrentInterval();
+            $scope.timerStates.breakRunning = false;
+            var temp = $scope.optionTimes.timeOff;
+            $scope.timerTimes.breakTime = temp;
+            $scope.$apply();
+            switchScreens("toWork");
+          }
+          $scope.$apply();
+        }, 1000);
+      } else if (!$scope.timerStates.breakRunning) {
+        workInterval = setInterval(function() {
+          $scope.timerStates.workRunning = true;
+          var newTime = $scope.changeTime($scope.timerTimes.workTime, "-1");
+          $scope.timerTimes.workTime = newTime;
+          if (newTime === "00:00") {
+            stopCurrentInterval();
+            $scope.timerStates.workRunning = false;
+            var temp = $scope.optionTimes.timeOn;
+            $scope.timerTimes.workTime = temp;
+            $scope.$apply();
+            $scope.rounds.roundsLeft++;
+            switchScreens("toBreak");
+          }
+          $scope.$apply();
+        }, 1000);
+      }
+    } else {
+      $("#pause-button").addClass("hidden");
+      $("#start-button").removeClass("hidden");
+      $scope.clear();
+    }
+  }; // End startClock()
+
+  // Clear whichever interval is running
+  function stopCurrentInterval() {
+    if ($scope.timerStates.workRunning) {
+      $scope.timerStates.workRunning = false;
+      clearInterval(workInterval);
+    } else {
+      $scope.timerStates.breakRunning = false;
+      clearInterval(breakInterval);
+    }
+  }
+
+  $scope.pauseClock = function() {
+    $("#pause-button").addClass("hidden");
+    $("#start-button").removeClass("hidden");
+    stopCurrentInterval();
+  };
+
+  $scope.clear = function() {
+    $scope.timerTimes.breakTime = $scope.optionTimes.timeOff;
+    $scope.timerTimes.workTime = $scope.optionTimes.timeOn;
+    $scope.rounds.roundsLeft = 1;
+    $("#break-left").removeClass("hidden");
+    $("#time-left").addClass("hidden");
+    $("#current-timer").css("background-color", "#ef9a9a");
+    $scope.pauseClock();
+  };
+
+}]); // End controller
