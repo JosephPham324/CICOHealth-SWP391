@@ -31,7 +31,8 @@ displayData();
 
 //Add statistics table skeleton
 let tableStructure = `
-      <table>
+    <div class="container">
+      <table id="statistics-tb" class="statistics-tb">
         <thead>
           <tr>
             <th>No.</th>
@@ -47,6 +48,7 @@ let tableStructure = `
         <tbody>
         </tbody>
       </table>
+    </div>
       `;
 document.querySelector(".statistics-table").innerHTML = tableStructure;
 
@@ -284,4 +286,5 @@ function displayCaloriesChart(analyzedData, chartElement) {
     },
   });
   return chart
-;}
+    ;
+}

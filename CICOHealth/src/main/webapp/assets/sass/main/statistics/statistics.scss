@@ -1,5 +1,6 @@
 @use '../../mixins/common';
-
+  $primary-color: rgb(131, 184, 46);
+  $secondary-color: yellow;
 // Main container
 main {
   @include common.flex-display(column, center, normal);
@@ -88,5 +89,14 @@ main {
         height: 300px;
       }
     }
+  }
+}
+
+.statistics-tb{
+  thead {
+    background-color: $primary-color;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
   }
 }

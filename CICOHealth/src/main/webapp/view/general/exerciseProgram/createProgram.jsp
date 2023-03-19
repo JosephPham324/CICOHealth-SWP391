@@ -25,8 +25,6 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/CICOHealth/assets/css/Homepage.css">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/CICOHealth/assets/sass/main/createexerciseprogram.css">
 
@@ -281,31 +279,8 @@
         </div>
     </div>
 
-    <!-- footer -->
-    <div class="wrapper">
-        <footer>
-            <div class="row block-footer">
-                <div class="offset-1 col-3 footer-content">
-                    <span class="school-name"><strong>FPT University Can Tho</strong></span>
-                    <p>600, Nguyen Van Cu, An Binh, Ninh Kieu, Can Tho</p>
-                    <p>Phone: (0292) 360 1996</p>
-                    <p>Email: fptu.cantho@fe.edu.vn</p>
-                </div>
-                <div class="offset-1 col-3 footer-content">
-                    <p>Le Duy Khanh</p>
-                    <p>Pham Nhat Quang</p>
-                    <p>Vo Hong Quan</p>
-                    <p>Huynh Gia Khiem</p>
-                    <p>Pham Tan Phat</p>
-                </div>
-                <div class="col-3 footer-content">
-                    <p>© 2023 All rights reserved. Our website services, content, and products are for
-                        informational
-                        purposes only. Nutrition does not provide medical advice, diagnosis, or treatment.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
+    <%@include file = "/view/general/footer.jsp"%>
+    
 
     <script src="/CICOHealth/assets/scripts/popup.js"></script>
     <script src="/CICOHealth/assets/scripts/createProgram.js"></script>

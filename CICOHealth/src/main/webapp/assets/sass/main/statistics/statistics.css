@@ -84,4 +84,11 @@ main #statistics-container .statistics-chart {
   main #statistics-container .statistics-chart {
     height: 300px;
   }
+}
+
+.statistics-tb thead {
+  background-color: rgb(131, 184, 46);
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
 }/*# sourceMappingURL=statistics.css.map */
