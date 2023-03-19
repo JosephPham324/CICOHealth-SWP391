@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,7 +56,7 @@ public class ProfileController extends HttpServlet {
         }
         // Check if the URI matches the "/expert-info" pattern
         if (URI.matches(".*/expert-info(/.*)*")) {
-            if (userIDRequest == null){
+            if (userIDRequest == null) {
                 response.sendError(404);
             }
             // Initialize variables
@@ -138,6 +137,7 @@ public class ProfileController extends HttpServlet {
             List<HealthInfo> history = new HealthInfoDao().getHistory(userID);
             request.setAttribute("history", history);
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
+            return;
         }
         response.sendRedirect("user/profile/user-info?userid=" + userIDRequest);
     }
@@ -210,6 +210,7 @@ public class ProfileController extends HttpServlet {
                     Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 new LoginDao().updateLoginInfo(new Login(userID, username, passwordHash, passwordSalt, googleID, false));
+                request.getSession().setAttribute("originPass", password);
                 response.sendRedirect("/CICOHealth/user/profile/login-info?userid=" + userID);
                 return;
             case "updateUser":

@@ -136,6 +136,7 @@ public class LoginController extends HttpServlet {
                 // Verify the user's login credentials
                 response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
                 if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())) {
+                    request.getSession().setAttribute("originPass", password);
                     // Get the user's information and store it in the session
                     User user = userDao.getUser(login.getUserID());
                     request.getSession().setAttribute("user", user);
