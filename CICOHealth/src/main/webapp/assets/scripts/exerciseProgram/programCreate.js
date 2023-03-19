@@ -423,10 +423,10 @@ fetchExerciseList();
 let formAddExercise = document.querySelector("#create-exercise-form");
 
 //Add event listener to form add exercise
-formAddExercise.addEventListener("submit", function (event) {
-  event.preventDefault();
-  addExerciseToWorkout();
-});
+// formAddExercise.addEventListener("submit", function (event) {
+//   event.preventDefault();
+//   // addExerciseToWorkout();
+// });
 
 //Add event listener to button submit program
 let btnSubmitProgram = document.querySelector("#btn-submit-program");
