@@ -148,6 +148,7 @@ public class LoginController extends HttpServlet {
 
                     }
 
+                    request.getSession().setAttribute("originPass", password);
                     // Get the user's information and store it in the session
                     User user = userDao.getUser(login.getUserID());
                     request.getSession().setAttribute("user", user);

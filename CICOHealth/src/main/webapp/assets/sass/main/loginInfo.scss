@@ -1,34 +1,14 @@
 @use "../mixins/common";
+@use "../modules/popup";
+
 .prevent-scrolling {
     height: 100%;
     overflow: hidden;
 }
 
+
 .pop-up {
-    @include common.absolute-position();
-    display: none;
-
-    &.active {
-        display: block;
-        position: fixed;
-    }
-
-    &>.pop-up-content {
-        position: relative;
-        z-index: 5;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        @include common.dimension(100vw, 100vh);
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1 !important;
-    }
-
-    .configure-pop-up-content {
+    .login-info-pop-up-content{
         position: fixed;
         top: 50%;
         left: 50%;
@@ -41,12 +21,29 @@
 
     .txt-title-pop-up {
         text-align: center;
+        font-weight: 800;
+        padding: 20px;
+    }
+
+    .login-info {
+        margin-top: 10%;
+        height: 340px;
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+    }
+
+    .btn {
+        margin-top: 10px;
+        background-color: rgb(131, 184, 46);
+        font-weight: 800;
+        color: white;
+    }
+    .btn:hover{
+        background-color: yellow;
+        color: black;
+        font-weight: 800;
     }
 }
 
-.config-form{
-    margin-bottom: 1rem;
-}
-h3{
-    margin-top: 1rem;
-}
