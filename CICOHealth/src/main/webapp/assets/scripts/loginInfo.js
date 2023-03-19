@@ -1,9 +1,39 @@
-const togglePassword = document.querySelector('#togglePassword');
-const password = document.querySelector('#id_password');
-function eyeToggle() {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
+document.getElementById("id_password").addEventListener("blur", () => {
+
+});
+
+function getPassword(originPass) {
+    originPass = originPass.toString();
+    var password = document.querySelector('#id_password');
+    let type = password.getAttribute('type');
+    if (type === "password") {
+        var passwordPrompt = prompt("Enter your password:");
+        if (passwordPrompt !== null) {
+            if (passwordPrompt === originPass) {
+                type = "text";
+                document.getElementById("id_password").value = originPass;
+                password.setAttribute('type', type);
+            } else {
+                alert("Passwords is wrong. Please try again.");
+            }
+        }
+
+    } else if (type === "text") {
+        type = "password";
+        password.setAttribute('type', type);
+    }
+    originPass = originPass.toString();
+}
+
+function confirm(originPass) {
+    originPass = originPass.toString();
+    var passwordPrompt = prompt("Enter your password:");
+    if (passwordPrompt !== null) {
+        if (passwordPrompt === originPass) {
+            var password = document.querySelector('#id_password');
+            document.getElementById("loginInfoForm").submit();
+        } else {
+            alert("Passwords is wrong. Please try again.");
+        }
+    }
 }

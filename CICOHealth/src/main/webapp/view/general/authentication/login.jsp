@@ -37,7 +37,7 @@
                         </div>
 
                         <div>                          
-                            <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
+                            <button name="submit" type="submit" id="login-button" class="btn btn-primary">Sign In</button>
                             <button class="btn btn-primary" onclick="event.Preventdefault();window.location.replace('/CICOHealth/register')">  
                                 <a href="/CICOHealth/register" style="text-decoration: none; color: white;">Register</a>
                             </button>
