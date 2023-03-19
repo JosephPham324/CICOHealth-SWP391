@@ -1,0 +1,36 @@
+@use "../mixins/common";
+
+$primary-color: rgb(131, 184, 46);
+$secondary-color: yellow;
+
+body {
+    .page-tlt {
+        font-size: 34px;
+        font-weight: bold;
+        text-align: center;
+        margin: 2% 0;
+    }
+
+    table {
+        border: 1px solid black;
+
+        thead {
+            background-color: $primary-color;
+            color: white;
+            font-size: 18px;
+        }
+
+        tbody {
+            i {
+                color: black !important;
+            }
+
+            i:hover {
+                color: blue !important;
+                font-size: 20px;
+                transition: .1s all ease;
+            }
+        }
+
+    }
+}

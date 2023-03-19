@@ -1,0 +1,34 @@
+/*Make an element display flex, specify the flex-direction , align items and justify content*/
+/*Round the corners of an element*/
+.page-tlt {
+  font-size: 34px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 2%;
+}
+
+.btn-add-program {
+  background-color: rgb(131, 184, 46) !important;
+  color: white !important;
+  margin: 15px 0;
+}
+
+.btn-add-program:hover {
+  background-color: yellow !important;
+  color: black !important;
+}
+
+.container table thead {
+  background-color: rgb(131, 184, 46);
+}
+.container table thead tr {
+  color: white;
+}
+.container table tbody i {
+  color: black !important;
+}
+.container table tbody i:hover {
+  color: blue !important;
+  font-size: 20px;
+  transition: 0.1s all ease;
+}/*# sourceMappingURL=exerciseProgram.css.map */

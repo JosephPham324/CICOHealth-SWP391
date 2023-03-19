@@ -1,0 +1,46 @@
+@use "../mixins/common";
+
+$primary-color: rgb(131, 184, 46);
+$secondary-color: yellow;
+
+.page-tlt {
+    font-size: 34px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.btn-add-program {
+    background-color: $primary-color !important;
+    color: white !important;
+    margin: 15px 0;
+}
+
+.btn-add-program:hover {
+    background-color: $secondary-color !important;
+    color: black !important;
+}
+
+.container {
+    table {
+        thead {
+            background-color: $primary-color;
+
+            tr {
+                color: white;
+            }
+        }
+
+        tbody {
+            i {
+                color: black !important;
+            }
+
+            i:hover {
+                color: blue !important;
+                font-size: 20px;
+                transition: .1s all ease;
+            }
+        }
+    }
+}
