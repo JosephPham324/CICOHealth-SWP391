@@ -27,7 +27,7 @@ public class WorkoutExerciseDao extends BaseDao {
     void insertExercise(WorkoutExercises exercise) throws SQLException {
         String QUERY_INSERT = "INSERT INTO WorkoutExercises (workoutID, exerciseID, exerciseOrder, [set], reps, weight, duration, instruction)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
+        System.out.println(exercise.getReps());
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(QUERY_INSERT);
         int index = 1;
@@ -53,12 +53,19 @@ public class WorkoutExerciseDao extends BaseDao {
             preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                WorkoutExercises workoutExercise = new WorkoutExercises();
                 WorkoutExercisesPK pk = new WorkoutExercisesPK();
                 pk.setWorkoutID(resultSet.getString("workoutID"));
                 pk.setExerciseID(resultSet.getString("exerciseID"));
-                WorkoutExercises workoutExercise = new WorkoutExercises(pk, resultSet.getInt("exerciseOrder"), resultSet.getInt("set"), resultSet.getString("reps"),
-                        resultSet.getString("weight"), resultSet.getInt("duration"),
-                         resultSet.getDouble("calorieBurnt"), resultSet.getString("instruction"));
+                //Set values
+                workoutExercise.setWorkoutExercisesPK(pk);
+                workoutExercise.setExerciseOrder(resultSet.getInt("exerciseOrder"));
+                workoutExercise.setDuration(resultSet.getInt("duration"));
+                workoutExercise.setSet(resultSet.getInt("set"));
+                workoutExercise.setReps(resultSet.getString("reps"));
+                workoutExercise.setWeight(resultSet.getString("weight"));
+                workoutExercise.setInstruction(resultSet.getString("weight"));
+                System.out.println(workoutExercise.getReps());
                 workoutExercies.add(workoutExercise);
             }
         } catch (SQLException ex) {

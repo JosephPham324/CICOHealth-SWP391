@@ -48,40 +48,16 @@ public class HealthInfoDao extends BaseDao {
         return null;
     }
 
-//    @Override
-//    public String createID() {
-//        //Query to get the latest ID
-//        String query = "SELECT TOP 1 healthInfoID\n"
-//                + "from [healthInfo] \n"
-//                + "ORDER BY healthInfoID DESC ";
-//        try {
-//            connection = new DBContext().getConnection();
-//            preparedStatement = connection.prepareStatement(query);
-//            resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {//If there is a record in the table
-//                //Generate new ID based on the record
-//                closeConnections();
-//                return "HLTH" + String.format("%06d", Integer.parseInt(resultSet.getString("healthInfoID").substring(4)) + 1);
-//            }
-//            //If not return the lowest ID
-//            closeConnections();
-//            return "HLTH000001";
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        closeConnections();
-//        return null;
-//    }
     @Override
     public String createID(String type) {
-        return new UserDao().createID(type);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void insertHealthInfo(HealthInfo healthInfo) throws SQLException {
-        String QUERY_INSERT = "INSERT INTO healthInfo (userID, healthInfoID, gender, height, weight, age, activeness, tdee, dailyCalorie, dailyProtein, dailyFat, dailyCarb)\n"
+        String QUERY_INSERT = "INSERT INTO healthInfo "
+                + "(userID, healthInfoID, gender, height, weight, age, activeness, tdee, dailyCalorie, dailyProtein, dailyFat, dailyCarb)\n"
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-//        System.out.println(healthInfo);
         String id = this.createID();
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(QUERY_INSERT);

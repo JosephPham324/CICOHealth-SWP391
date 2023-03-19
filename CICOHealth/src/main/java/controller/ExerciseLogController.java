@@ -9,7 +9,6 @@ import bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import dao.ExerciseDao;
 import dao.ExerciseLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;

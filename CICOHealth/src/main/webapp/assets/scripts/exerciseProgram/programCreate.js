@@ -370,7 +370,7 @@ function createWorkoutObject(id) {
     let exercise = {
       order: exerciseOrder,
       set: exerciseSet,
-      rep: exerciseRep,
+      reps: exerciseRep,
       weight: exerciseWeight,
       duration: exerciseDuration === ""? "0": exerciseDuration,
       instruction: exerciseInstruction,

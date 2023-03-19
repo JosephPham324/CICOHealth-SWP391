@@ -69,34 +69,59 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
-        if (URI.matches(".*/exercise-programs/create(/.*)*")) {
-            request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
+        if (URI.matches(".*/data(/.*)*")) {
+            serveData(URI, request, response);
+        }
+        serveView(URI, request, response);
+
+        
+    }
+
+    private void serveData(String URI, HttpServletRequest request, HttpServletResponse response) {
+        if (URI.endsWith("/data")){
+            if (URI.matches(".*/workouts(/.*)*")) {
+            }
+        }
+    }
+
+    private void serveView(String URI, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (URI.matches(".*/create(/.*)*")) {
+            request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.jsp").forward(request, response);
             return;
         }
-        if (URI.matches(".*/exercise-programs/detail/workout")) {
+        if (URI.matches(".*/detail/workout(/.*)*")) {
             String workoutID = request.getParameter("workoutid");
             List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
             request.setAttribute("workout", workout);
             request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
             return;
         }
-
-        if (URI.matches(".*/exercise-programs/detail")) {
+        if (URI.matches(".*/detail(/.*)*") || URI.matches(".*/update(/.*)*")) {
             String ID = request.getParameter("id");
             if (ID != null) {
-                List<Workout> workouts = new WorkoutDao().getWorkoutByProgramID(ID);
-                request.setAttribute("workouts", workouts);
-                request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
-                return;
+                try {
+                    ExerciseProgram program = new ExerciseProgramDao().getProgramsByID(ID);
+                    request.setAttribute("program", program);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(util.Utility.appendStatus("/CICOHealth/exercise-programs", "error", "Couldn't fetch data for program " + ID));
+                }
+                if (URI.matches(".*/detail(/.*)*")){
+                    request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
+                    return;
+                }
+                request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramUpdate.jsp").forward(request, response);
+                    return;
             }
         }
-        if (URI.matches(".*/exercise-programs")) {
-            List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
-            request.setAttribute("listProgram", list);
-            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
+        if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {
             return;
         }
-        response.sendRedirect("/CICOHealth/exercise-programs/create");
+        
+        //Default
+        List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
+        request.setAttribute("listProgram", list);
+        request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
     }
 
     /**
@@ -125,7 +150,9 @@ public class ExerciseProgramController extends HttpServlet {
         ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
 
         // Get the current user from the session, and set them as the creator of the exercise program
-        User user = (User) request.getSession().getAttribute("user");
+        User user = 
+                new User("USFE000001");
+//                (User) request.getSession().getAttribute("user");
         programObject.setCreatedBy(user);
 
         // Debugging output to the console

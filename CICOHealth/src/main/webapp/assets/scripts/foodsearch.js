@@ -244,6 +244,7 @@ function showSelected(selectedFoods) {
       changeButtonText(searchResult, "add");
       updateFoodCartButton();
     } else {
+      console.log('here')
       searchResult.classList.remove("selected");
       changeButtonText(searchResult, "remove");
       updateFoodCartButton();
@@ -261,7 +262,7 @@ function showSelected() {
     //Check if the food is in the selectedFoods array
     if (
       selectedFoods.find(
-        (food) => food.foodName === searchResult.children[0].innerText //If a selected food has name equal to search result name
+        (food) => (food.foodName).toUpperCase() === searchResult.children[0].innerText //If a selected food has name equal to search result name
       )
     ) {
       //Add "selected" class to search-result element
@@ -370,7 +371,7 @@ function displayMealForm() {
         class="btn btn-danger"
         onclick="removeFoodByName('${
           food.foodName
-        }');showSelected();displayMealForm();"
+        }');showSelected(selectedFoods);displayMealForm();console.log(selectedFoods);"
         >Remove</button>
       </td>
     </tr>
@@ -418,8 +419,9 @@ function displayMealForm() {
     <div id="log-name-error"></div>
   </div> 
     `;
-  mealForm.innerHTML += htmlMealName;
-
+  if (enabled === "true") {
+    mealForm.innerHTML += htmlMealName;
+  }
   //Add meal log note
   let htmlMealNote = `
   <div class="form-group row">
@@ -431,8 +433,9 @@ function displayMealForm() {
     </div>
   </div>
   `;
-  mealForm.innerHTML += htmlMealNote;
-
+  if (enabled === "true") {
+    mealForm.innerHTML += htmlMealNote;
+  }
   //Add submit button to meal form
   if (enabled === "true") {
     mealForm.innerHTML += `
@@ -507,8 +510,7 @@ function requestLogCreation() {
       "Please add at least one food to your meal";
     return;
   } else {
-    document.getElementById("meal-items-error").innerHTML =
-      "";
+    document.getElementById("meal-items-error").innerHTML = "";
   }
 
   post("/CICOHealth/user/meal-logs", formParams);
@@ -516,4 +518,3 @@ function requestLogCreation() {
 
 let mealName = "";
 let logNote = "";
-

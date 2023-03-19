@@ -3,7 +3,11 @@ package util;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.WeekFields;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -65,6 +69,19 @@ public class Utility {
         return res;
     }
 
+    /**
+     * Appends the given status and message parameters to a URL string and
+     * returns the resulting string. The new parameters are added to the URL
+     * string as query parameters following the original ones.
+     *
+     * @param url The URL string to append the status and message parameters to.
+     * @param status The value of the "status" parameter to be appended to the
+     * URL string.
+     * @param message The value of the "message" parameter to be appended to the
+     * URL string.
+     * @return A new string representing the updated URL with the appended
+     * parameters.
+     */
     public static String appendStatus(String url, String status, String message) {
         StringBuilder sb = new StringBuilder(url);
         if (url.contains("?")) {
@@ -75,5 +92,33 @@ public class Utility {
         sb.append("status=").append(status);
         sb.append("&message=").append(URLEncoder.encode(message, StandardCharsets.UTF_8));
         return sb.toString();
+    }
+
+    /**
+     * Converts a given java.util.Date object to a java.time.LocalDate object
+     * using the system default time zone.
+     *
+     * @param date The java.util.Date object to be converted.
+     * @return A java.time.LocalDate object representing the same date as the
+     * input Date object.
+     */
+    public static LocalDate convertDateToLocalDate(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    /**
+     * Returns the week date of a given java.time.LocalDate object, where the
+     * week date represents the number of days since the start of the week, with
+     * Monday as day 0.
+     *
+     * @param date The java.time.LocalDate object to get the week date of.
+     * @return An integer representing the week date of the input LocalDate
+     * object.
+     */
+    public static int getWeekDate(LocalDate date) {
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        return date.get(weekFields.dayOfWeek()) == 7 ? 0 : date.get(weekFields.dayOfWeek());
     }
 }

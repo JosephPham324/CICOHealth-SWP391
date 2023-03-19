@@ -1,6 +1,6 @@
 /*Make an element display flex, specify the flex-direction , align items and justify content*/
 /*Round the corners of an element*/
-.prevent-scrolling {
+.no-scroll {
   height: 100%;
   overflow: hidden;
 }
@@ -13,6 +13,7 @@
   display: none;
 }
 .pop-up.active {
+  z-index: 1;
   display: block;
   position: fixed;
 }
@@ -30,7 +31,13 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1 !important;
 }
-.pop-up .configure-pop-up-content {
+
+.prevent-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pop-up .login-info-pop-up-content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -42,12 +49,24 @@
 }
 .pop-up .txt-title-pop-up {
   text-align: center;
+  font-weight: 800;
+  padding: 20px;
 }
-
-.config-form {
-  margin-bottom: 1rem;
+.pop-up .login-info {
+  margin-top: 10%;
+  height: 340px;
 }
-
-h3 {
-  margin-top: 1rem;
+.pop-up .form-group {
+  margin-bottom: 8px;
+}
+.pop-up .btn {
+  margin-top: 10px;
+  background-color: rgb(131, 184, 46);
+  font-weight: 800;
+  color: white;
+}
+.pop-up .btn:hover {
+  background-color: yellow;
+  color: black;
+  font-weight: 800;
 }/*# sourceMappingURL=loginInfo.css.map */

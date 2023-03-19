@@ -97,9 +97,11 @@ public class UserManagementController extends HttpServlet {
             passwordHash = authLogic.encryptPassword(password, passwordSalt);//Encrypt password using salt
         } catch (Exception ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(util.Utility.appendStatus("/CICOHealth/admin/user-management", "error", "Couldn't create account!"));
+            return;
         }
         if (passwordHash == null) {
-           // response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
+            response.sendRedirect(util.Utility.appendStatus("/CICOHealth/admin/user-management", "error", "Coulndn't create account!"));
             return;
         }
         login = new Login(userID, username, passwordHash, passwordSalt, false);
@@ -109,10 +111,10 @@ public class UserManagementController extends HttpServlet {
             healthInfo.setUserID(userID);
             healthDao.insertHealthInfo(healthInfo);
         } catch (SQLException ex) {
-            //response.sendRedirect("/CICOHealth/view/admin/addNew.jsp");
+            response.sendRedirect(util.Utility.appendStatus("/CICOHealth/admin/user-management", "error", "Coulndn't create account!"));
             return;
         }
-        response.sendRedirect("/CICOHealth/admin/user-management");
+        response.sendRedirect(util.Utility.appendStatus("/CICOHealth/admin/user-management", "success", "Successfully created account!"));
 
     }
 
