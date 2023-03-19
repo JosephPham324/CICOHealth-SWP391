@@ -11,144 +11,130 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="">
-        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/timer.css">
-        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/stopwatch.css">
+        <!-- Compiled and minified CSS -->
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet">
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous">
-        <title>Document</title>
-        <style>
-            .popup-form {
-                display: none;
-            }
-        </style>
+              rel="stylesheet">
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>
+        <link rel="stylesheet" href="/CICOHealth/assets/sass/main/stopwatch.css">
+        <title>Timer</title>
     </head>
     <body>
         <%@include file="/view/general/navbar.jsp" %>
-            <div class="buttons">
-                <button class="btn" id="btn_diva">STOP WATCH</button>
-                <button class="btn" id="btn_divb"> TIMER</button>
-            </div>
-            <div class="main_container" style=" position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);">
 
-                <div class="diva" id="diva">
-                    <div class="watch">
-                        <div class="time">
-                            00:00:00
-                        </div>
-                        <div class="controls">
-                            <button id="start">Start</button>
-                            <button id="stop">Stop</button>
-                            <button id="reset">Reset</button>
-                            <button id="config">Configure</button>
+    <body ng-app="tabataApp">
+
+        <div id="wrapper" ng-controller="tabataAppCtrl">
+
+
+
+
+            <!--Timer control buttons-->
+            <div id="button-wrapper">
+                <a class="waves-effect waves-light btn orange darken-2"
+                   id="start-button" ng-click="startClock()"><i
+                        class="material-icons left">alarm_on</i>Start</a>
+                <a class="waves-effect waves-light btn pink orange darken-2
+                   hidden" id="pause-button" ng-click="pauseClock()"><i
+                        class="material-icons left">pause</i>Pause</a>
+                <a class="waves-effect waves-light btn orange"
+                   ng-click="clear()"><i class="material-icons left">stop</i>Clear</a>
+            </div>
+            <!--End timer control buttons-->
+
+
+            <div class="row">
+                <div class="col s12 m10 offset-m1 l8 offset-l2 z-depth-2"
+                     id="app-wrapper">
+                    <!--Clock-->
+                    <div class="col s12 m9 l9" id="timer">
+                        <div class="row">
+                            <div class="col s9 m8 l8" id="current-timer">
+                                <div id="time-left" class="hidden">
+                                    <h3>Time left</h3>
+                                    <br><span class="time-left-numbers"
+                                              ng-cloak>{{timerTimes.workTime}}</span>
+                                </div>
+                                <div id="break-left">
+                                    <h3>Break</h3>
+                                    <br><span class="time-left-numbers"
+                                              ng-cloak>{{timerTimes.breakTime}}</span>
+                                </div>
+                            </div>
+                            <div class="col s3 m4 l4" id="round">
+                                <h4>Round</h4>
+                                <br><span id="round-numbers" ng-cloak>{{rounds.roundsLeft}}/{{rounds.totalRounds}}</span>
+                            </div>
                         </div>
                     </div>
+                    <!--End clock-->
 
-                    <!-- Pop-up form -->
-                    <div class="popup-form pop-up" id="configure-pop-up">
-                        <div class="configure-overlay overlay" id="overlay"></div>
-                        <div class="pop-up-content configure-pop-up-content">
-                            <h2 class="txt-title-pop-up">Configure Timer</h2>
-                            <form>
-                                <div class="config-form row">
-                                    <div class="offset-1 col-4">
-                                <label for="num-sets">Number of Sets:</label>
-                            </div>
-                            <div class="col-5">
-                                <input type="number" id="num-sets"
-                                    name="num-sets" min="1" required>
-                                </div>
-                                </div>
-                                <br>
-                                
-                                <div class="config-form row">
-                                    <div class="offset-1 col-4">
-                                <label for="set-time">Set Time (seconds):</label>
-                                    </div>
-                                    <div class="col-5">
-                                <input type="number" id="set-time"
-                                    name="set-time" min="1" required>
-                                </div>
-                                </div>
-                                <br>
+                    <!--Options grid-->
+                    <div class="col s10 offset-s1 m3 l3" id="options">
+                        <div class="switch">
+                            <p>Volume:
+                            <p>
+                                <label>
+                                    Off
+                                    <input type="checkbox"
+                                           id="volume-switch">
+                                    <span class="lever"></span>
+                                    On
+                                </label>
+                        </div>
+                        <div class="option-input">
+                            <p>Time on:</p>
+                            <i class="material-icons adjust
+                               adjust-minus"
+                               ng-click="changeTimeOn(optionTimes.timeOn,
+                                                   '-1')">remove</i>
+                            <p class="option-time" ng-cloak>{{optionTimes.timeOn}}</p>
+                            <i class="material-icons adjust
+                               adjust-plus"
+                               ng-click="changeTimeOn(optionTimes.timeOn,
+                                                   '+1')">add</i>
+                        </div>
 
-                                <div class="config-form row">
-                                    <div class="offset-1 col-4">
-                                <label for="rest-time">Rest Time (seconds):</label>
-                                    </div>
-                                    <div class="col-5">
-                                <input type="number" id="rest-time"
-                                    name="rest-time" min="1" required>
-                                </div>
-                            </div>
-                                <br>
-                                <div class="config-form row">
-                                    <div class="offset-5">
-                                <button type="submit" id="save-btn">Save</button>
-                                <button type="button" id="cancel-btn">Cancel</button>
-                                    </div>
-                            </form>
+                        <div class="option-input">
+                            <p>Time off:</p>
+                            <i class="material-icons adjust
+                               adjust-minus"
+                               ng-click="changeTimeOff(optionTimes.timeOff,
+                                                   '-1')">remove</i>
+                            <p class="option-time" ng-cloak>{{optionTimes.timeOff}}</p>
+                            <i class="material-icons adjust
+                               adjust-plus"
+                               ng-click="changeTimeOff(optionTimes.timeOff,
+                                                   '+1')">add</i>
+                        </div>
+
+                        <div class="option-input">
+                            <p>Rounds:</p>
+                            <i class="material-icons adjust
+                               adjust-minus"
+                               ng-click="changeRounds(rounds.totalRounds,
+                                                   '-1')">remove</i>
+                            <p class="option-time" ng-cloak>{{rounds.totalRounds}}</p>
+                            <i class="material-icons adjust
+                               adjust-plus"
+                               ng-click="changeRounds(rounds.totalRounds,
+                                                   '+1')">add</i>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="divb" id="divb" style="display: none
-                ;">
-                <div class="timer"></div>
-
-            </div>
-
 
         </div>
-
-        <audio id="alarm" src="/CICOHealth/assets/mp3/alarm.mp3"></audio>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="/CICOHealth/src/main/webapp/assets/scripts/popup.js"></script>
-
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+        <!--End wrapper-->
         <script src="/CICOHealth/assets/scripts/stopwatch.js"></script>
-        <script src="/CICOHealth/assets/scripts/timer.js"></script></body>
-
-    <script>
-            var btn_diva = document.getElementById("btn_diva");
-            var btn_divb = document.getElementById("btn_divb");
-            var diva = document.getElementById("diva");
-            var divb = document.getElementById("divb");
-            btn_diva.addEventListener('click', ()=> {
-                diva.style.display='block';
-                divb.style.display='none';
-
-            }
-            );
-
-            btn_divb.addEventListener('click', ()=> {
-                diva.style.display='none';
-                divb.style.display='block';
-
-            }
-            );
-        </script>
-
-        <script>
-            const configButton = document.getElementById('config');
-
-            configButton.forEach(button => {
-    button.addEventListener('click', () => {
-        displayPopUp("configure-pop-up");
-    });
-});
-
-        </script>
+    </body>
 </html>

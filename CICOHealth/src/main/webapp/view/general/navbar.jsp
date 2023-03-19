@@ -70,12 +70,12 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item" href="/CICOHealth/conversion"
+                                <a class="dropdown-item" href="/CICOHealth/utilities/conversion"
                                    >Convert Unit</a
                                 >
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/CICOHealth/timer">Timer</a>
+                                <a class="dropdown-item" href="/CICOHealth/utilities/timer">Timer</a>
                             </li>
                             <li></li>
                         </ul>

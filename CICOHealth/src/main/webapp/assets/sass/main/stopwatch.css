@@ -1,113 +1,483 @@
-/*Make an element display flex, specify the flex-direction , align items and justify content*/
-/*Round the corners of an element*/
-:root {
-  --primary: #DC143C;
-  --dark: #1F2937;
-  --darkdark: #111827;
-  --light: #F3F4F6;
+/* Default/layout
+===================================*/
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
 
-* {
-  margin: 0;
-  box-sizing: border-box;
-  font-family: "Fira sans", sans-serif;
+html {
+  color: #212121;
+  background-color: #fdfdfd;
 }
 
-body {
-  background-color: var(--dark);
-  color: var(--light);
+.hidden {
+  display: none;
 }
 
-.watch {
+#wrapper {
+  display: block;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 2000px;
+  min-height: 34em;
+}
+
+/* Top Bar
+===================================*/
+#top-bar {
+  background-color: #00bcd4;
+  margin-top: -1.5em;
+  color: #212121;
+}
+#top-bar h3 {
+  padding-top: 0.1em;
+  font-weight: 500;
   text-align: center;
-  background-color: var(--darkdark);
-  width: 100%;
-  max-width: 500px;
-  margin: 4rem auto;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
+}
+#top-bar h5 {
+  color: white;
+  background-color: #00acc1;
+  text-align: center;
+  margin-top: -1.3em;
+  padding-bottom: 0.2em;
 }
 
-.watch .time {
-  font-size: 5rem;
-  font-weight: 300;
-  margin-bottom: 1rem;
+#css-switch {
+  position: absolute;
+  font-weight: 700;
+  margin-left: 90%;
+  margin-top: -2.6em;
+}
+#css-switch a {
+  color: #00695c;
+}
+#css-switch a:hover {
+  color: #00897b;
+}
+
+/* Main app
+====================================*/
+#app-wrapper {
+  border: 5px solid #212121;
+  display: block;
+  left: 0;
+  right: 0;
+  height: 21.5em;
+  background-color: white;
+  text-align: center;
+}
+
+#button-wrapper {
+  display: block;
+  left: 0;
+  right: 0;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+
+#timer {
+  padding: 0;
+  margin: 0;
+}
+
+#current-timer {
+  border-right: 5px solid #212121;
+  height: 20.85em;
+  margin-left: -0.8em;
+  background-color: #ef9a9a;
+}
+#current-timer h3 {
+  font-weight: 500;
+  color: #424242;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+}
+
+.time-left-numbers {
+  font-weight: 600;
+  font-size: 5em;
+  color: #212121;
+}
+
+#round {
+  height: 20.85em;
+}
+#round h4 {
+  font-weight: 500;
+  color: #424242;
+}
+
+#round-numbers {
+  margin-top: 1.5em;
+  font-weight: 600;
+  font-size: 5em;
+  color: #00acc1;
+}
+
+#options {
+  border-left: 5px solid #212121;
+  display: block;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.option-input {
+  height: 5em;
+  border-top: 5px solid #212121;
+  box-sizing: border-box;
+  width: 105.1%;
+}
+.option-input p {
+  display: inline-block;
+  margin-left: 0.8em;
+  margin-right: 0.8em;
+  width: 4em;
+}
+
+.adjust {
+  position: absolute;
+  margin-top: 0.6em;
+  margin-left: -0.5em;
+  color: #f57c00;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  /* IE10+ */
+  user-select: none;
+}
+.adjust:hover {
+  cursor: pointer;
+  color: #212121;
+}
+
+/* Footer
+====================================*/
+footer {
+  background-color: #00bcd4;
   color: white;
 }
 
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.fa {
+  color: #ff9800;
+  font-size: 2em;
+  display: inline;
+  margin-left: 0.5em;
+}
+.fa:hover {
+  color: #f57c00;
 }
 
-.controls button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background: none;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  color: #FFF;
-  background-color: var(--primary);
-  transition: 0.4s;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+#lower-footer {
+  background-color: #00acc1;
+  height: 4em;
+}
+#lower-footer p {
+  display: inline;
+  font-size: 1.2em;
+  margin-left: 2em;
+  color: #212121;
+}
+#lower-footer p > a {
+  color: #ff9800;
+  font-weight: 600;
+  margin-left: 0.3em;
+}
+#lower-footer p > a:hover {
+  color: #f57c00;
 }
 
-.controls button:hover {
-  opacity: 0.7;
+#about-tabata {
+  max-width: 38em;
+  margin-left: 3em;
 }
 
-.controls button:active {
-  background-color: var(--dark);
+#about-developer {
+  max-width: 38em;
+  float: right;
+  padding-right: 1em;
 }
 
-.prevent-scrolling {
-  height: 100%;
-  overflow: hidden;
+/* Media Queries
+====================================*/
+@media screen and (min-width: 1600px) {
+  #about-tabata {
+    margin-left: 11em;
+  }
+  #about-developer {
+    max-width: 38em;
+    padding-right: 1em;
+    margin-right: 7em;
+  }
 }
-
-.pop-up {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: none;
+@media screen and (max-width: 1400px) {
+  .option-input {
+    width: 107%;
+  }
 }
-.pop-up.active {
-  display: block;
-  position: fixed;
+@media screen and (max-width: 1215px) {
+  .adjust-minus {
+    margin-left: -0.4em;
+  }
+  .adjust-plus {
+    margin-left: -0.8em;
+  }
+  .option-input p {
+    margin-left: 0.2em;
+    margin-right: 0.6em;
+  }
+  #about-tabata {
+    max-width: 32em;
+    margin-left: 3em;
+  }
+  #about-developer {
+    max-width: 32em;
+    float: right;
+    padding-right: 1em;
+  }
 }
-.pop-up > .pop-up-content {
-  position: relative;
-  z-index: 5;
+@media screen and (max-width: 992px) {
+  .adjust-minus {
+    margin-left: -0.2em;
+  }
+  .adjust-plus {
+    margin-left: -0.7em;
+  }
+  .option-input p {
+    margin-left: 0.8em;
+    margin-right: 0.8em;
+  }
+  #about-tabata {
+    width: 30em;
+    margin-left: 2em;
+  }
 }
-.pop-up .overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1 !important;
+@media screen and (max-width: 915px) {
+  #about-tabata {
+    max-width: 27em;
+    margin-left: 2em;
+  }
+  #about-developer {
+    max-width: 27em;
+    float: right;
+    padding-right: 1em;
+  }
 }
-.pop-up .configure-pop-up-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  background-color: #fff;
-  z-index: 2;
-  border-radius: 20px;
+@media screen and (max-width: 840px) {
+  .adjust-minus {
+    margin-left: -0.6em;
+  }
+  .adjust-plus {
+    margin-left: -1.1em;
+  }
+  .option-input p {
+    margin-left: 0em;
+    margin-right: 1.2em;
+  }
+  #about-tabata {
+    max-width: 25em;
+    margin-left: 1em;
+  }
+  #about-developer {
+    max-width: 25em;
+    float: right;
+    padding-right: 0.5em;
+  }
+  #css-switch {
+    margin-left: 80%;
+  }
 }
-.pop-up .txt-title-pop-up {
-  text-align: center;
+@media screen and (max-width: 765px) {
+  .option-input p {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: -0.2em;
+  }
+  .adjust-minus {
+    margin-left: -1.9em;
+    margin-top: 0.2em;
+  }
+  .adjust-plus {
+    margin-left: 1em;
+    margin-top: -0.8em;
+  }
+}
+@media screen and (max-width: 747px) {
+  #about-tabata {
+    width: 23em;
+    margin-left: 0.4em;
+  }
+  #about-developer {
+    width: 23em;
+    padding-right: 0.5em;
+  }
+}
+@media screen and (max-width: 670px) {
+  #about-tabata {
+    width: 20em;
+    margin-left: 0.2em;
+  }
+  #about-developer {
+    width: 20em;
+    padding-right: 0.2em;
+  }
+}
+@media screen and (max-width: 600px) {
+  footer {
+    margin-top: 24em;
+  }
+  #current-timer {
+    border-right: 5px solid #212121;
+    height: 12em;
+  }
+  #current-timer h3 {
+    margin-top: 0em;
+    margin-bottom: -0.5em;
+  }
+  #app-wrapper {
+    display: block;
+    left: 0;
+    right: 0;
+    height: 12.7em;
+    background-color: white;
+  }
+  #round {
+    height: 12em;
+  }
+  #round h4 {
+    margin-top: 0.2em;
+    margin-bottom: -0.6em;
+  }
+  #options {
+    border: 5px solid #212121;
+  }
+  .option-input {
+    width: 100%;
+    height: 4.5em;
+  }
+  .option-input p {
+    display: block;
+    text-align: center;
+    font-weight: 500;
+    width: auto;
+    margin-top: 0.3em;
+    margin-bottom: -0.1em;
+  }
+  .switch {
+    height: 4.5em;
+    font-weight: 500;
+  }
+  .switch p {
+    margin-top: 0.2em;
+  }
+  .adjust-minus {
+    margin-left: -2.5em;
+  }
+  .adjust-plus {
+    margin-left: 0.9em;
+  }
+  #about-tabata,
+  #about-developer {
+    display: block;
+    left: 0;
+    right: 0;
+    position: relative;
+    width: 30em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    float: none;
+  }
+  #about-tabata h4,
+  #about-developer h4 {
+    padding-top: 0.5em;
+    margin-bottom: -1em;
+  }
+  #top-bar h5 {
+    font-size: 1.3em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+  }
+}
+@media screen and (max-width: 500px) {
+  #round h4 {
+    margin-top: 0.6em;
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+  }
+  #round-numbers {
+    font-size: 2.5em;
+  }
+  #current-timer h3 {
+    margin-top: 0.1em;
+    margin-bottom: -0.2em;
+  }
+  .time-left-numbers {
+    font-size: 3.5em;
+  }
+  #lower-footer {
+    height: 4em;
+  }
+  #lower-footer p {
+    font-size: 1em;
+    margin-left: 0.7em;
+  }
+  #lower-footer p > a {
+    font-weight: 600;
+    margin-left: 0.3em;
+  }
+  #css-switch {
+    margin-left: 79%;
+  }
+  #top-bar h3 {
+    padding-top: 0.5em;
+    font-size: 2.5em;
+  }
+}
+@media screen and (max-width: 410px) {
+  #about-tabata,
+  #about-developer {
+    width: 22em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+  }
+  #lower-footer {
+    height: 6em;
+  }
+  #lower-footer p {
+    font-size: 1em;
+    margin-left: 0.7em;
+    display: block;
+  }
+  #lower-footer p > a {
+    font-weight: 600;
+    margin-left: 0.3em;
+  }
+  #css-switch {
+    position: relative;
+    display: block;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -1em;
+  }
+}
+@media screen and (max-width: 370px) {
+  #round h4 {
+    font-size: 1.6em;
+    margin-bottom: 0.5em;
+  }
+}
+@media screen and (max-width: 350px) {
+  #about-tabata,
+  #about-developer {
+    width: 18em;
+  }
+}
+.row {
+  margin-right: 15% !important;
 }/*# sourceMappingURL=stopwatch.css.map */
