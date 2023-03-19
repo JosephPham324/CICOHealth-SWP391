@@ -51,7 +51,7 @@
                                             <label for="firstName">Password</label>
                                             <input type="password" name="password"
                                                    value="000" class="form-control"
-                                                   id="id_password" onblur="passwordBlur(${originPass})">
+                                                   id="id_password">
                                             <i class="far fa-eye" id="togglePassword"
                                                onclick="getPassword(${originPass})"
                                                data-passwordHash="${l.passwordHash}"></i>

@@ -22,7 +22,6 @@ function getPassword(originPass) {
         type = "password";
         password.setAttribute('type', type);
     }
-    originPass = originPass.toString();
 }
 
 function confirm(originPass) {
