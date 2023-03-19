@@ -69,6 +69,25 @@ public class ExerciseProgramController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String URI = request.getRequestURI();
+        if (URI.matches(".*/data(/.*)*")) {
+            serveData(URI, request, response);
+        }
+        serveView(URI, request, response);
+
+        //Default
+        List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
+        request.setAttribute("listProgram", list);
+        request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
+    }
+
+    private void serveData(String URI, HttpServletRequest request, HttpServletResponse response) {
+        if (URI.endsWith("/data")){
+            if (URI.matches(".*/workouts(/.*)*")) {
+            }
+        }
+    }
+
+    private void serveView(String URI, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (URI.matches(".*/create(/.*)*")) {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.html").forward(request, response);
             return;
@@ -80,7 +99,6 @@ public class ExerciseProgramController extends HttpServlet {
             request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
             return;
         }
-
         if (URI.matches(".*/detail(/.*)*")) {
             String ID = request.getParameter("id");
             if (ID != null) {
@@ -90,16 +108,10 @@ public class ExerciseProgramController extends HttpServlet {
                 return;
             }
         }
-
         if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {
             return;
         }
-
-        
-        //Default
-        List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
-        request.setAttribute("listProgram", list);
-        request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
+        return;
     }
 
     /**

@@ -42,12 +42,15 @@
     });
     function fetchWorkouts(dateStr) {
       // Fetch workouts for the selected date
-      fetch(`/exerciseProgram/workouts/${dateStr}`)
+      fetch(`/exerciseProgram/workouts/data?date=${dateStr}`)
         .then((response) => response.json())
         .then((data) => {
           // Display the workouts
           displayWorkouts(data);
         });
+    }
+    function displayWorkouts(data){
+
     }
   </script>
 </html>
