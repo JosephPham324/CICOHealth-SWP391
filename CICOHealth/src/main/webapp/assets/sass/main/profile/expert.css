@@ -55,11 +55,11 @@
   align-items: normal;
   justify-content: normal;
   margin-bottom: 2rem;
+  margin-top: 2%;
 }
 .profile-header .profile-picture {
   width: 8rem;
   height: 8rem;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: normal;
@@ -78,17 +78,45 @@
      object-fit: cover;
   border-radius: 50%;
 }
+.profile-header .profile-picture button {
+  background-color: rgb(131, 184, 46);
+  color: white;
+  margin-top: 15px;
+}
+.profile-header .profile-picture button:hover {
+  background-color: yellow;
+  color: black;
+}
 .profile-header .profile-info {
   margin-left: 2rem;
   width: 100%;
+  text-align: center;
 }
 .profile-header .profile-info .profile-name {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
+.profile-header .profile-info .form-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-header .profile-info .form-group label {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+.profile-header .profile-info .form-group textarea {
+  margin-left: 10px;
+  width: 100%;
+  resize: none;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
 .profile-header .profile-info .profile-bio {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  text-align: center !important;
 }
 .profile-header .profile-info .upload-picture-button {
   padding: 0.5rem 1rem;
@@ -99,6 +127,27 @@
 }
 .profile-header .profile-info .picture-upload-input {
   display: none;
+}
+.profile-header .profile-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile-header .profile-actions button {
+  margin-left: 15px;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: rgb(131, 184, 46);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.profile-header .profile-actions button:hover {
+  background-color: yellow;
+  color: black;
 }
 
 /* Certifications */
@@ -136,6 +185,17 @@
   background-color: #333;
   color: #fff;
   cursor: pointer;
+}
+.certifications ul li cert-wrapper .cert-info .cert-name {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.certifications ul li cert-wrapper .cert-info .cert-issuer, .certifications ul li cert-wrapper .cert-info .cert-date {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.certifications ul li cert-wrapper .cert-info .cert-issuer span, .certifications ul li cert-wrapper .cert-info .cert-date span {
+  font-weight: bold;
 }
 
 /* Certification Details Popup */
@@ -183,6 +243,22 @@
   margin-bottom: 1rem;
 }
 
+button {
+  margin-left: 15px;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: rgb(131, 184, 46) !important;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+button:hover {
+  background-color: yellow !important;
+  color: black;
+}
+
 .frm-collapse {
   transform-origin: left top;
   transform: scaleY(0);
@@ -205,4 +281,8 @@
   flex-direction: row;
   align-items: normal;
   justify-content: space-around;
+}
+
+#cert-update {
+  width: 500px;
 }/*# sourceMappingURL=expert.css.map */
