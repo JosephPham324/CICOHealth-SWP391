@@ -1,6 +1,7 @@
 function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 }
@@ -30,7 +31,10 @@ function addNewWorkout() {
                             </div>
                             <div class="col-9 form-item-input">
                                 <input id="txtWorkoutName-${newID}" name="txtWorkoutName" placeholder="Enter workout name"
-                                    type="text" required = "required">
+                                    type="text" required = "required" onblur="document.querySelector('#error-workout-name-${newID}').style.display=this.value!=''?'none':'block'">
+                            </div>
+                            <div class="row col-12 error-message"id="error-workout-name-${newID}" style="display:none;">
+                                <span style="color:red;">(*)Please not be empty</span>
                             </div>
                         </div>
                         <div class="form-item row">
@@ -55,7 +59,10 @@ function addNewWorkout() {
                             </div>
                             <div class="col-9 form-item-input">
                                 <textarea name="txtWorkoutDescription" id="txtWorkoutDescription-${newID}" cols="30" rows="5"
-                                    placeholder="Enter workout description" required></textarea>
+                                    placeholder="Enter workout description" required onblur="document.querySelector('#error-workout-description-${newID}').style.display=this.value!=''?'none':'block'"></textarea>
+                            </div>
+                            <div class="row col-12 error-message"id="error-workout-description-${newID}"  style="display:none;">
+                                <span style="color:red;">(*)Please not be empty</span>
                             </div>
                         </div>
                         <hr>
@@ -121,7 +128,9 @@ function fetchExerciseList() {
     .then((data) => {
       let exerciseList = data;
       let selectExercise = document.querySelector("#select-exercise");
-      let selectExerciseUpdate = document.querySelector("#select-exercise-update");
+      let selectExerciseUpdate = document.querySelector(
+        "#select-exercise-update"
+      );
       selectExercise.innerHTML = "";
       console.log(exerciseList);
       for (let exerciseID in exerciseList) {
@@ -163,16 +172,8 @@ function ExerciseListRowHtml(
         <td>${duration}</td>
         <td>${instruction}</td>
         <td>
-        <a class="btn" id = "btn-edit-${id}-exercise-${
-    rowID
-  }" data-target = "#workout-${id}-exercise-${
-    rowID
-  }" onclick = "fillEditExerciseForm(this)">Edit</a>
-        <a class="btn" id = "btn-delete-${id}-exercise-${
-    rowID
-  }" data-target = "#workout-${id}-exercise-${
-    rowID
-  }" onclick = "deleteExercise(this)">Delete</a>
+        <a class="btn" id = "btn-edit-${id}-exercise-${rowID}" data-target = "#workout-${id}-exercise-${rowID}" onclick = "fillEditExerciseForm(this)">Edit</a>
+        <a class="btn" id = "btn-delete-${id}-exercise-${rowID}" data-target = "#workout-${id}-exercise-${rowID}" onclick = "deleteExercise(this)">Delete</a>
         </td>
     </tr>
     `;
@@ -182,7 +183,7 @@ function ExerciseListRowHtml(
 function fillEditExerciseForm(element) {
   //Get target
   let target = element.getAttribute("data-target");
-  console.log(target)
+  console.log(target);
   //Get row
   let row = document.querySelector(target);
   //Fill form with data
@@ -209,33 +210,33 @@ function fillEditExerciseForm(element) {
 //-----------------------------------------------------------------------
 let updateForm = document.querySelector("#update-exercise-form");
 updateForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    //Get data from form
-    let rowID = document.querySelector("#target-row").value;
-    updateExerciseRow(rowID);
-    //Close pop up
-    document.querySelector("#update-exercise-pop-up .overlay").click();
+  event.preventDefault();
+  //Get data from form
+  let rowID = document.querySelector("#target-row").value;
+  updateExerciseRow(rowID);
+  //Close pop up
+  document.querySelector("#update-exercise-pop-up .overlay").click();
 });
-function updateExerciseRow(rowId){
-    let exerciseOrder = document.querySelector("#txtExerciseOrderUpdate").value;
-    let set = document.querySelector("#txtSetUpdate").value;
-    let rep = document.querySelector("#txtRepUpdate").value;
-    let weight = document.querySelector("#txtWeightUpdate").value;
-    let duration = document.querySelector("#txtDurationUpdate").value;
-    let instruction = document.querySelector("#txtInstructionUpdate").value;
-    let exerciseSelect = document.querySelector("#select-exercise-update");
-    let exerciseName = exerciseSelect[exerciseSelect.selectedIndex].innerHTML;
-    let exerciseId = exerciseSelect.value;
-    //Update row cells
-    let row = document.querySelector(rowId);
-    row.children[0].innerHTML = exerciseName;
-    row.children[0].setAttribute("data-id", exerciseId);
-    row.children[1].innerHTML = exerciseOrder;
-    row.children[2].innerHTML = set;
-    row.children[3].innerHTML = rep;
-    row.children[4].innerHTML = weight;
-    row.children[5].innerHTML = duration;
-    row.children[6].innerHTML = instruction;
+function updateExerciseRow(rowId) {
+  let exerciseOrder = document.querySelector("#txtExerciseOrderUpdate").value;
+  let set = document.querySelector("#txtSetUpdate").value;
+  let rep = document.querySelector("#txtRepUpdate").value;
+  let weight = document.querySelector("#txtWeightUpdate").value;
+  let duration = document.querySelector("#txtDurationUpdate").value;
+  let instruction = document.querySelector("#txtInstructionUpdate").value;
+  let exerciseSelect = document.querySelector("#select-exercise-update");
+  let exerciseName = exerciseSelect[exerciseSelect.selectedIndex].innerHTML;
+  let exerciseId = exerciseSelect.value;
+  //Update row cells
+  let row = document.querySelector(rowId);
+  row.children[0].innerHTML = exerciseName;
+  row.children[0].setAttribute("data-id", exerciseId);
+  row.children[1].innerHTML = exerciseOrder;
+  row.children[2].innerHTML = set;
+  row.children[3].innerHTML = rep;
+  row.children[4].innerHTML = weight;
+  row.children[5].innerHTML = duration;
+  row.children[6].innerHTML = instruction;
 }
 //-----------------------------------------------------------------------
 function deleteExercise(btnElement) {
@@ -290,6 +291,18 @@ function submitProgramCreationForm() {
   let programDescription = document.querySelector(
     "#txtProgramDescription"
   ).value;
+  //Check if program name or description is empty
+  if (programName == "") {
+    document.getElementById("error_txtProgramName").style.display = "block";
+    alert("Please fill in all fields");
+    return;
+  }
+  if (programDescription == "") {
+    document.getElementById("error_txtProgramDescription").style.display =
+      "block";
+    alert("Please fill in all fields");
+    return;
+  }
 
   // Create a new object to represent the program
   let program = {
@@ -303,6 +316,8 @@ function submitProgramCreationForm() {
   let workoutElements = document.querySelectorAll(".workout");
   //Loop through workout elements
   workoutElements.forEach((workoutElement) => {
+    //Validate workout element
+    checkWorkoutElement(workoutElement);
     //Get workout id
     let workoutId = workoutElement.dataset.id;
     let workout = createWorkoutObject(workoutId);
@@ -310,7 +325,22 @@ function submitProgramCreationForm() {
   });
   // Log the completed program object to the console
   console.log(program);
-  post("/CICOHealth/exercise-programs/create", {program:JSON.stringify(program)});
+  post("/CICOHealth/exercise-programs/create", {
+    program: JSON.stringify(program),
+  });
+}
+function checkWorkoutElement(workoutElement) {
+  let workoutName = workoutElement.querySelector(
+    "input[name='txtWorkoutName']"
+  ).value;
+  let workoutDescriptions = workoutElement.querySelector(
+    "textarea[name='txtWorkoutDescription']"
+  ).value;
+  //Check if any of the fields are empty
+  if (workoutName == "" || workoutDescriptions == "") {
+    alert("Please fill in all fields");
+    throw "Please fill in all fields";
+  }
 }
 //-----------------------------------------------------------------------
 /**
@@ -324,13 +354,13 @@ function submitProgramCreationForm() {
  * @returns {object} An object that represents the workout.
  */
 function createWorkoutObject(id) {
-    // Get the workout name, date, and description from the form
+  // Get the workout name, date, and description from the form
   let workoutName = document.querySelector(`#txtWorkoutName-${id}`).value;
   let workoutDate = document.querySelector(`#txtWorkoutDate-${id}`).value;
   let workoutDescription = document.querySelector(
     `#txtWorkoutDescription-${id}`
   ).value;
-  
+
   // Create a new object to represent the workout
   let workout = {
     workoutName: workoutName,
@@ -372,9 +402,9 @@ function createWorkoutObject(id) {
       set: exerciseSet,
       rep: exerciseRep,
       weight: exerciseWeight,
-      duration: exerciseDuration === ""? "0": exerciseDuration,
+      duration: exerciseDuration === "" ? "0" : exerciseDuration,
       instruction: exerciseInstruction,
-      workoutExercisesPK: {exerciseID: exerciseID},
+      workoutExercisesPK: { exerciseID: exerciseID },
     };
     // console.log(exercise)
     // Push the exercise object onto the workout's exercises array
