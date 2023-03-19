@@ -56,15 +56,6 @@
         <filter-name>RequestFilter</filter-name>
         <filter-class>filter.RequestFilter</filter-class>
     </filter>
-    <!--    <servlet>
-        <servlet-name>CentralController</servlet-name>
-        <servlet-class>controller.CentralController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CentralController</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>-->
-    <!--Register-->
     <!--Register-->
     <filter-mapping>
         <filter-name>RequestFilter</filter-name>

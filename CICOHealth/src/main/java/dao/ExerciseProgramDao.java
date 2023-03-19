@@ -93,10 +93,11 @@ public class ExerciseProgramDao extends BaseDao {
         }
         return programs;
     }
-    
-     public ExerciseProgram getProgramsByID(String id) {
-        ExerciseProgram program = new ExerciseProgram();
+
+    public ExerciseProgram getProgramsByID(String id) throws SQLException{
+        ExerciseProgram program = null;
         try {
+            program = new ExerciseProgram();
             connection = new DBContext().getConnection();
             String sql = "select * from ExerciseProgram where programID=? ";
             preparedStatement = connection.prepareStatement(sql);
@@ -111,16 +112,13 @@ public class ExerciseProgramDao extends BaseDao {
                 program.setProgramName(resultSet.getString("programName"));
                 program.setProgramDescription(resultSet.getString("programDescription"));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ExerciseProgramDao.class.getName()).log(Level.SEVERE, null, ex);
+            program.setWorkoutCollection(new WorkoutDao().getWorkoutByProgramID(id));
         } finally {
             closeConnections();
         }
         return program;
     }
-     public static void main(String[] args) {
-         System.out.println(new ExerciseProgramDao().getProgramsByID("EXPG000001"));
-    }
+
     public void deleteProgram(String programID) throws SQLException {
         // Delete all the workouts associated with the program
         // Delete the program
@@ -132,7 +130,5 @@ public class ExerciseProgramDao extends BaseDao {
         preparedStatement.executeUpdate();
         closeConnections();
     }
-    
-    
-    
+
 }

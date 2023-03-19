@@ -79,16 +79,23 @@ public class WorkoutDao extends BaseDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, ID);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Workout workout = new Workout(resultSet.getString("programID"), resultSet.getString("workoutID"), resultSet.getString("workoutName"), resultSet.getString("workoutDate"), resultSet.getString("workoutDescription"));
+            while (resultSet.next()) {
+                Workout workout = new Workout(
+                        resultSet.getString("programID"), 
+                        resultSet.getString("workoutID"),
+                        resultSet.getString("workoutName"),
+                        resultSet.getString("workoutDate"),
+                        resultSet.getString("workoutDescription"));
+                workout.setWorkoutExercisesCollection(new WorkoutExerciseDao().getExerciseByWorkoutID(workout.getWorkoutID()));
                 workouts.add(workout);
             }
         } catch (SQLException ex) {
             Logger.getLogger(WorkoutDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return workouts;
     }
+
     public static void main(String[] args) {
         List<Workout> list = new WorkoutDao().getWorkoutByProgramID("EXPG000001");
         for (Workout workout : list) {
