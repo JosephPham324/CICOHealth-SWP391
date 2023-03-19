@@ -1,5 +1,7 @@
 @use "../../modules/popup";
 @use "../../mixins/common";
+$primary-color: rgb(131, 184, 46);
+$secondary-color: yellow;
 
 .button {
   padding: 0.5rem 1rem;
@@ -9,29 +11,33 @@
   cursor: pointer;
   height: auto;
 }
-.pop-up{
-    .pop-up-content{
-        padding: 20px;
-        width: auto;
-        background-color: #fff;
-        border-radius: 20px;
-    }
+
+.pop-up {
+  .pop-up-content {
+    padding: 20px;
+    width: auto;
+    background-color: #fff;
+    border-radius: 20px;
+  }
 }
 
 /* Profile Header */
 .profile-header {
   @include common.flex-display();
   margin-bottom: 2rem;
+  margin-top: 2%;
 
   .profile-picture {
     @include common.dimension(8rem, 8rem);
-    overflow: hidden;
-    @include common.flex-display(column, normal,normal);
-    .img-wrapper{
-        overflow: hidden;
-        border-radius: 50%;
-        min-height: 80%;
+    // overflow: hidden;
+    @include common.flex-display(column, normal, normal);
+
+    .img-wrapper {
+      overflow: hidden;
+      border-radius: 50%;
+      min-height: 80%;
     }
+    
     img {
       display: block;
       width: 100%;
@@ -39,21 +45,58 @@
       object-fit: cover;
       border-radius: 50%;
     }
+    
+    button {
+      background-color: $primary-color;
+      color: white;
+      margin-top: 15px;
+    
+      &:hover {
+        background-color: $secondary-color;
+        color: black;
+      }
+    }
+    
+
   }
 
   .profile-info {
     margin-left: 2rem;
     width: 100%;
+    text-align: center;
+
     .profile-name {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
-
+    
+    .form-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    
+      label {
+        font-size: 1.2rem;
+        margin-right: 1rem;
+      }
+    
+      textarea {
+        margin-left: 10px;
+        width: 100%;
+        resize: none;
+        font-size: 1.2rem;
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+      }
+    }
+    
+    
     .profile-bio {
       font-size: 1.2rem;
       margin-bottom: 1rem;
+      text-align: center !important;
     }
-
+    
     .upload-picture-button {
       padding: 0.5rem 1rem;
       border: none;
@@ -61,9 +104,34 @@
       color: #fff;
       cursor: pointer;
     }
-
+    
     .picture-upload-input {
       display: none;
+    }
+  }    
+
+  .profile-actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      margin-left: 15px;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: $primary-color;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      
+    
+      &:hover {
+        background-color: $secondary-color;
+        color: black;
+      }
     }
   }
 }
@@ -110,6 +178,23 @@
         cursor: pointer;
       }
     }
+    li{
+      cert-wrapper{
+        .cert-info{
+          .cert-name{
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+          }
+          .cert-issuer, .cert-date{
+            font-size: 1.2rem;
+            margin: 0;
+            span {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -119,7 +204,7 @@
   z-index: 999;
 
   .certification-details-header {
-    @include common.flex-display(row,center,normal);
+    @include common.flex-display(row, center, normal);
     justify-content: space-between;
     padding: 1rem;
     background-color: #fff;
@@ -159,20 +244,44 @@
   }
 }
 
-.frm-collapse{
-    transform-origin: left top;
-    transform:scaleY(0);
-    overflow:hidden;
-    transition: all 0.5s ease-in-out;
-    &.show{
-        transform:scaleY(1);
-    }
-    #frm-add-cert{
-        @include common.flex-display(column,center,normal);
-        gap:10px;
-    }
+button {
+  margin-left: 15px;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: $primary-color !important;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  
+
+  &:hover {
+    background-color: $secondary-color !important;
+    color: black;
+  }
 }
 
-.cert-wrapper{
-  @include common.flex-display(row,normal,space-around);
+.frm-collapse {
+  transform-origin: left top;
+  transform: scaleY(0);
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+
+  &.show {
+    transform: scaleY(1);
+  }
+
+  #frm-add-cert {
+    @include common.flex-display(column, center, normal);
+    gap: 10px;
+  }
+}
+
+.cert-wrapper {
+  @include common.flex-display(row, normal, space-around);
+}
+
+#cert-update{
+  width: 500px;
 }

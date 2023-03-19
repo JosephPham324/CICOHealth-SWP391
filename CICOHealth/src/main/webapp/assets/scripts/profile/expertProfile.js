@@ -186,7 +186,7 @@ btnUploadPfp.addEventListener("click", async () => {
 
 //Display the form to add a new certification
 btnAddCert.addEventListener("click", () => {
-  let collapse = document.getElementsByClassName("collapse")[0];
+  let collapse = document.getElementsByClassName("frm-collapse")[0];
   collapse.classList.toggle("show");
   if (collapse.classList.contains("show")) {
     btnAddCert.innerHTML = "Cancel";
