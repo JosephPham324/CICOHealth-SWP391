@@ -55,7 +55,7 @@
                                                    value="000" class="form-control"
                                                    id="id_password">
                                             <i class="far fa-eye" id="togglePassword"
-                                               onclick="getPassword(${originPass})"
+                                               onclick="getPassword('${originPass}')"
                                                data-passwordHash="${l.passwordHash}"></i>
                                         </div>
                                         <div class="form-group">
@@ -74,7 +74,7 @@
                                     <div class="card-footer text-right">
                                         <input type="hidden" value="PUT" name="_method">
                                         <input type="text" name="btnUpdate" value="updateLogin" hidden="true">
-                                        <button id="btnUpdate" class="btn btnUpdate" onclick="confirm(${originPass})">Save</button>
+                                        <button id="btnUpdate" class="btn btnUpdate" onclick="confirm(`${originPass}`)">Save</button>
                                     </div>
                                 </div>
                             </form>
