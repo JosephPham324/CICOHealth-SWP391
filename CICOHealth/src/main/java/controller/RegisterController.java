@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.AuthenticationLogic;
+import util.Utility;
 
 /**
  *
@@ -79,20 +80,35 @@ public class RegisterController extends HttpServlet {
         //Check if user has filled the health register form
         String registerHealth = request.getParameter("healthReg");
         if (registerHealth == null) {
-            response.sendRedirect("/register");
+            response.sendRedirect(Utility.appendStatus("/CICOHealth/register", "error", "Please register your health information!"));
             return;
         }
         if (registerHealth.equals("true")) {//If the parameter is set to true, forward to health register page
             String username = request.getParameter("txtUsername");
+            String googleID = request.getParameter("googleID");
             try {
-                if (new LoginDao().getLoginInfoByUsername(username) != null) {
-                    response.sendRedirect("/CICOHealth/register?error=duplicateUsername");
+                if (new LoginDao().getLoginInfoByUsername(username) != null && googleID == null) {
+                    response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "error", "This username already exists!"));
                     return;
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "failure", "An internal error ocurred!"));
+                return;
+            }
+            if (googleID != null && !googleID.isEmpty()) {
+                try {
+                    if (new LoginDao().getLoginInfoByGoogle(googleID) != null) {
+                        response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "error", "You already registered using this Google Account!"));
+                        return;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "failure", "An internal error ocurred!"));
+                }
             }
             request.setAttribute("txtUsername", username);
+            request.setAttribute("googleID", googleID);
             request.getRequestDispatcher("/view/general/authentication/healthRegister.jsp").forward(request, response);
         } else {//If user has filled both forms, process registration request
             //Login info parameters
@@ -125,11 +141,12 @@ public class RegisterController extends HttpServlet {
                 try {
                     if (loginDao.getLoginInfoByGoogle(googleID) != null) {
                         System.out.println("HERE");
-                        response.sendRedirect("/CICOHealth/register?error=duplicateGoogle");
+                        response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "error", "You already registered using this Google Account!"));
                         return;
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "failure", "An internal error ocurred!"));
                 }
             }
             //Create a Member ID
@@ -149,9 +166,10 @@ public class RegisterController extends HttpServlet {
                 passwordHash = authLogic.encryptPassword(password, passwordSalt);//Encrypt password using salt
             } catch (Exception ex) {
                 Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "failure", "An internal error ocurred!"));
             }
             if (passwordHash == null) {
-                response.sendRedirect("/CICOHealth/register?error=hashfailure");
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "error", "Couldn't save your account credentials! Consider changing your password"));
                 return;
             }
             login = new Login(userID, username, passwordHash, passwordSalt, googleID, false);
@@ -161,7 +179,7 @@ public class RegisterController extends HttpServlet {
                 healthDao.insertHealthInfo(healthInfo);
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
-                response.sendRedirect("/CICOHealth/register?error=databasefailure");
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/register", "failure", "An internal error ocurred!"));
                 return;
             }
             response.sendRedirect("/CICOHealth/login");
