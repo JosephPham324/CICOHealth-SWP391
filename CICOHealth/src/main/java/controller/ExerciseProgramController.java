@@ -96,7 +96,7 @@ public class ExerciseProgramController extends HttpServlet {
             request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
             return;
         }
-        if (URI.matches(".*/detail(/.*)*")) {
+        if (URI.matches(".*/detail(/.*)*") || URI.matches(".*/update(/.*)*")) {
             String ID = request.getParameter("id");
             if (ID != null) {
                 try {
@@ -106,9 +106,12 @@ public class ExerciseProgramController extends HttpServlet {
                     Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
                     response.sendRedirect(util.Utility.appendStatus("/CICOHealth/exercise-programs", "error", "Couldn't fetch data for program " + ID));
                 }
-                System.out.println("hello");
-                request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
-                return;
+                if (URI.matches(".*/detail(/.*)*")){
+                    request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
+                    return;
+                }
+                request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramUpdate.jsp").forward(request, response);
+                    return;
             }
         }
         if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {

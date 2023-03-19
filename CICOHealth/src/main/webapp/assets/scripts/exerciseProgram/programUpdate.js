@@ -407,3 +407,18 @@ function uuidv4() {
   
   //Add event listener to button add workout
   btnAddWorkout.addEventListener("click", addNewWorkout);
+
+  //Initialize workout name inputs
+  let workoutNameInputs = document.querySelectorAll("input[name='txtWorkoutName']");
+  console.log(workoutNameInputs)
+  workoutNameInputs.forEach((workoutNameInput) => {
+    workoutNameInput.addEventListener("input", (event) => {
+      //Extract id of input
+      let workoutID = (event.target.id).split("-")[1];
+      let workoutName = event.target.value;
+      let workoutNameLabel = document.querySelector(
+        `.card-header[data-target="#workout-${workoutID}"]`
+      );
+      workoutNameLabel.innerHTML = workoutName;
+    });
+  });

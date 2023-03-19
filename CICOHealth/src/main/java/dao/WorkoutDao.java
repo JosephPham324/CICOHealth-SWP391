@@ -58,6 +58,7 @@ public class WorkoutDao extends BaseDao {
         preparedStatement.setString(index++, id);
         preparedStatement.setString(index++, workout.getWorkoutName());
         preparedStatement.setString(index++, workout.getWorkoutDate());
+        System.out.println("");
         preparedStatement.setString(index++, workout.getWorkoutDescription());
 
         preparedStatement.executeUpdate();
@@ -86,6 +87,7 @@ public class WorkoutDao extends BaseDao {
                         resultSet.getString("workoutName"),
                         resultSet.getString("workoutDate"),
                         resultSet.getString("workoutDescription"));
+                System.out.println(workout.getWorkoutDescription());
                 workout.setWorkoutExercisesCollection(new WorkoutExerciseDao().getExerciseByWorkoutID(workout.getWorkoutID()));
                 workouts.add(workout);
             }
