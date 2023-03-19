@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,21 +85,23 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
 //        processRequest(request, response);\
         LoginDao loginDao = new LoginDao(); // Instantiate the LoginDao class to interact with login-related data
-
         String googleID = request.getParameter("googleID"); // Get the "googleID" parameter from the HTTP request
         String redirectUrl;
         if (googleID != null) { // If the "googleID" parameter is present, the user is trying to log in with Google
             try {
                 String userID = null;
                 userID = loginDao.getLoginInfoByGoogle(googleID); // Get the user's ID from the database using their Google ID
-
+                if (request.getParameter("remember") == null) {
+                    Cookie remember = new Cookie("googleID", googleID);
+                    remember.setMaxAge(60 * 60 * 24 * 3);
+                    response.addCookie(remember);
+                }
                 // Check if the user is banned
                 if (userID == null) { // If the user doesn't exist
                     redirectUrl = Utility.appendStatus("/CICOHealth/login", "error", "This account doesn't exist!");
                     response.sendRedirect(redirectUrl);
                     return; // Stop the execution of the method
                 }
-
                 request.getSession().setAttribute("user", new UserDao().getUser(userID)); // Store the user's details in the session
                 response.sendRedirect("/CICOHealth/"); // Redirect the user to the home page
                 return; // Stop the execution of the method
@@ -105,7 +109,8 @@ public class LoginController extends HttpServlet {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex); // Log the error
                 response.sendRedirect("/CICOHealth/login?error=database"); // Redirect the user to the login page with an error message
             }
-        } else { // If the "googleID" parameter is not present, the user is trying to log in with a username and password
+        } else {
+            // If the "googleID" parameter is not present, the user is trying to log in with a username and password
             String username = request.getParameter("txtUsername"); // Get the "txtUsername" parameter from the HTTP request
             String password = request.getParameter("txtPassword"); // Get the "txtPassword" parameter from the HTTP request
             UserDao userDao = new UserDao(); // Instantiate the UserDao class to interact with user-related data
@@ -136,6 +141,13 @@ public class LoginController extends HttpServlet {
                 // Verify the user's login credentials
                 response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
                 if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())) {
+                    if (request.getParameter("remember") != null) {
+                        Cookie remember = new Cookie("UserName", username);
+                        remember.setMaxAge(60 * 60 * 24 * 3);
+                        response.addCookie(remember);
+
+                    }
+
                     request.getSession().setAttribute("originPass", password);
                     // Get the user's information and store it in the session
                     User user = userDao.getUser(login.getUserID());

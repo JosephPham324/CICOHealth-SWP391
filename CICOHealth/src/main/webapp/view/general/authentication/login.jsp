@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-item">
                             <div class="checkbox">
-                                <input type="checkbox" id="rememberMeCheckbox" checked>
+                                <input type="checkbox" id="rememberMeCheckbox" name="remember">
                                 <label for="rememberMeCheckbox" class="checkboxLabel">Remember me</label>
                             </div>
                         </div>
