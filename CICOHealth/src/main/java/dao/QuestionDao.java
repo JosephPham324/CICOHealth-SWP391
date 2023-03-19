@@ -28,9 +28,6 @@ public class QuestionDao extends BaseDao {
     private final String UPDATE = "UPDATE question SET submittedBy = ?, questionTopic = ?, questionContent = ? WHERE questionID = ?";
     private final String DELETE = "DELETE FROM question WHERE questionID = ?";
 
-    // connection to the database
-    private Connection connection;
-
     public QuestionDao() {
         connection = new DBContext().getConnection();
     }

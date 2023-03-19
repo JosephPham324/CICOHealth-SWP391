@@ -248,6 +248,7 @@ public class ProfileController extends HttpServlet {
                     return;
                 }
                 response.sendRedirect("/CICOHealth/user/profile/expert-info?userid=" + userID);
+                
                 break;
             default:
                 response.sendRedirect("/CICOHealth/user/profile/user-info" + userID);
