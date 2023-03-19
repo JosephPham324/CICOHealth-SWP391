@@ -5,18 +5,20 @@
 package dao;
 
 import bean.HealthInfo;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  *
  * @author Pham Nhat Quang CE170036 (FPTU CANTHO)
  */
 public class HealthInfoDaoTest {
-    
+
     public HealthInfoDaoTest() {
     }
 
@@ -49,17 +51,55 @@ public class HealthInfoDaoTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of insertHealthInfo method, of class HealthInfoDao.
-     */
     @Test
-    public void testInsertHealthInfo() throws Exception {
-        System.out.println("insertHealthInfo");
-        HealthInfo healthInfo = null;
+    public void testInsertHealthInfo() throws SQLException {
+        HealthInfo info = new HealthInfo();
+        //Valid values
+        info.setUserID("USME000001");
+        info.setWeight(70);
+        info.setHeight(170);
+        info.setAge(25);
+        info.setGender(true);
         HealthInfoDao instance = new HealthInfoDao();
-        instance.insertHealthInfo(healthInfo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        // Test valid input
+        //UTC13
+        try {
+            instance.insertHealthInfo(info);
+        } catch (SQLException e) {
+            fail("Should not have thrown SQLException with valid input");
+        }
+
+        // Test null userID
+        //UTCID01
+        info.setUserID(null);
+        try {
+            instance.insertHealthInfo(info);
+            fail("Should have thrown SQLException with null userID");
+        } catch (SQLException e) {
+            assertEquals("UserID is null!", e.getMessage());
+        }
+
+        //Test invalid weight below boundary
+        //UTCID05
+        info.setUserID("USME000001");
+        info.setWeight(0);
+        try {
+            instance.insertHealthInfo(info);
+            fail("Should have thrown SQLException with invalid weight");
+        } catch (SQLException e) {
+            assertEquals("Weight must be greater than 1", e.getMessage());
+        }
+        //Test invalid height beyond boundary
+        //UTCID09
+        info.setWeight(70);
+        info.setHeight(401);
+        try {
+            instance.insertHealthInfo(info);
+            fail("Should have thrown SQLException with invalid weight");
+        } catch (SQLException e) {
+            assertEquals("Height must be less than than 400", e.getMessage());
+        }
     }
 
     /**
@@ -200,5 +240,5 @@ public class HealthInfoDaoTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

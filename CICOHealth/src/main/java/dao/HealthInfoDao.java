@@ -81,25 +81,45 @@ public class HealthInfoDao extends BaseDao {
         String QUERY_INSERT = "INSERT INTO healthInfo (userID, healthInfoID, gender, height, weight, age, activeness, tdee, dailyCalorie, dailyProtein, dailyFat, dailyCarb)\n"
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-//        System.out.println(healthInfo);
+        java.util.logging.Logger logger = java.util.logging.Logger.getLogger(this.getClass().getName());
+        if (healthInfo.getUserID() == null) {
+            throw new SQLException("UserID is null!");
+        }
+        if (healthInfo.getWeight() < 5) {
+            throw new SQLException("Weight must be greater than 1");
+        }
+        if (healthInfo.getWeight() > 600) {
+            throw new SQLException("Weight must be less than than 600");
+
+        }
+        if (healthInfo.getHeight() < 15) {
+            throw new SQLException("Height must be greater than 15");
+        }
+        if (healthInfo.getHeight() > 400) {
+            throw new SQLException("Height must be less than than 400");
+        }
+        if (healthInfo.getAge() < 1) {
+            throw new SQLException("Age must be greater than 1");
+        }
+        if (healthInfo.getAge() > 200) {
+            throw new SQLException("Age must be less than 200");
+        }
         String id = this.createID();
         connection = new DBContext().getConnection();
         preparedStatement = connection.prepareStatement(QUERY_INSERT);
-        int index = 1;
-        //Health info
-        preparedStatement.setString(index++, healthInfo.getUserID());
-        preparedStatement.setString(index++, id);
-        preparedStatement.setString(index++, (healthInfo.getGender() ? 0 + "" : 1 + ""));
-        preparedStatement.setString(index++, healthInfo.getHeight() + "");
-        preparedStatement.setString(index++, healthInfo.getWeight() + "");
-        preparedStatement.setString(index++, healthInfo.getAge() + "");
-        preparedStatement.setString(index++, healthInfo.getActiveness() + "");
-        //Nutrition goal
-        preparedStatement.setString(index++, healthInfo.getTdee() + "");
-        preparedStatement.setString(index++, healthInfo.getDailyCalorie() + "");
-        preparedStatement.setString(index++, healthInfo.getDailyProtein() + "");
-        preparedStatement.setString(index++, healthInfo.getDailyFat() + "");
-        preparedStatement.setString(index++, healthInfo.getDailyCarb() + "");
+        int i = 1;
+        preparedStatement.setString(i++, healthInfo.getUserID());
+        preparedStatement.setString(i++, id);
+        preparedStatement.setString(i++, (healthInfo.getGender() ? 0 + "" : 1 + ""));
+        preparedStatement.setString(i++, healthInfo.getHeight() + "");
+        preparedStatement.setString(i++, healthInfo.getWeight() + "");
+        preparedStatement.setString(i++, healthInfo.getAge() + "");
+        preparedStatement.setString(i++, healthInfo.getActiveness() + "");
+        preparedStatement.setString(i++, healthInfo.getTdee() + "");
+        preparedStatement.setString(i++, healthInfo.getDailyCalorie() + "");
+        preparedStatement.setString(i++, healthInfo.getDailyProtein() + "");
+        preparedStatement.setString(i++, healthInfo.getDailyFat() + "");
+        preparedStatement.setString(i++, healthInfo.getDailyCarb() + "");
 
         preparedStatement.executeUpdate();
 

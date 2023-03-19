@@ -90,6 +90,11 @@ public class HealthInfo implements Serializable {
     }
 
     public HealthInfo() {
+        this.activeness = 0;
+        this.dailyCalorie = 0;
+        this.dailyCarb = 0;
+        this.dailyFat = 0;
+        this.dailyProtein = 0;
     }
 
     public HealthInfo(String userID) {
@@ -110,7 +115,6 @@ public class HealthInfo implements Serializable {
         this.dailyCarb = dailyCarb;
     }
 
-    
     public HealthInfo(String healthInfoID, String userID, boolean gender, double height, double weight, int age, int activeness, int tdee, double dailyCalorie, double dailyProtein, double dailyFat, double dailyCarb) {
         this.healthInfoID = healthInfoID;
         this.userID = userID;
