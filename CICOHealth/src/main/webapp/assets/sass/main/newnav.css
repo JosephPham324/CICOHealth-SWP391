@@ -5,6 +5,7 @@
 body {
   margin: 0px;
   font-family: "segoe ui";
+  overflow-x: hidden;
 }
 
 ul {
@@ -64,8 +65,10 @@ ul {
   background-color: rgb(99, 146, 24);
 }
 .nav .nav-links ul li .menu-admin {
-  position: absolute;
   left: -67px;
+}
+.nav .nav-links ul li .menu-user {
+  left: -85px;
 }
 .nav #nav-check {
   display: none;

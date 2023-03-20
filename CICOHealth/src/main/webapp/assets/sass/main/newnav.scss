@@ -10,6 +10,7 @@ $dark-primary-color: rgb(99, 146, 24);
 body {
     margin: 0px;
     font-family: 'segoe ui';
+    overflow-x: hidden;
 }
 
 ul{
@@ -74,8 +75,11 @@ ul{
                 }
 
                 .menu-admin{
-                    position: absolute;
                     left: -67px;
+                }
+
+                .menu-user{
+                    left: -85px;
                 }
             }
         }

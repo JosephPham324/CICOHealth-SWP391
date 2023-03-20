@@ -79,7 +79,7 @@
                                 aria-expanded="false">
                                 User
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu menu-user">
                                 <li>
                                     <a class="dropdown-item" href="/CICOHealth/user/profile">Profile</a>
                                 </li>
