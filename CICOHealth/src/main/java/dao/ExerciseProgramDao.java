@@ -93,7 +93,7 @@ public class ExerciseProgramDao extends BaseDao {
         }
         return programs;
     }
-    
+
     public List<ExerciseProgram> getProgramsByUserID(String userID) {
         List<ExerciseProgram> programs = new ArrayList<>();
         try {
@@ -120,25 +120,25 @@ public class ExerciseProgramDao extends BaseDao {
         return programs;
     }
 
-    public ExerciseProgram getProgramsByID(String id) throws SQLException{
+    public ExerciseProgram getProgramsByID(String id) throws SQLException {
         ExerciseProgram program = null;
         try {
-            program = new ExerciseProgram();
+            program = null;
             connection = new DBContext().getConnection();
             String sql = "select * from ExerciseProgram where programID=? ";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
             // Iterate through the result set and create ExerciseProgram objects for each row
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 program = new ExerciseProgram();
                 program.setProgramID(resultSet.getString("programID"));
                 String userID = resultSet.getString("createdBy");
                 program.setCreatedBy(new UserDao().getUser(userID));
                 program.setProgramName(resultSet.getString("programName"));
                 program.setProgramDescription(resultSet.getString("programDescription"));
+                program.setWorkoutCollection(new WorkoutDao().getWorkoutByProgramID(id));
             }
-            program.setWorkoutCollection(new WorkoutDao().getWorkoutByProgramID(id));
         } finally {
             closeConnections();
         }

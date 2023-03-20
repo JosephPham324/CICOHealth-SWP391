@@ -72,22 +72,21 @@ Admin --%>
                 <h1>Exercise Program Details</h1>
             </div>
             <form
-                action="create-exercise-program"
-                method="post"
+                onsubmit="event.preventDefault();"
                 name="create-exercise-program-form"
                 class="create-exercise-program-form"
                 id="create-exercise-program-form"
                 >
                 <div class="create-exercise-program-form-content">
-                    <button style="position:sticky;right:0;top:0;z-index:100;" class="btn-use">
-                        Use this program
+                    <button data-remove="${inventory!=null?true:false}" data-id="${program.programID}" id="btn-use" style="position:sticky;right:0;top:0;z-index:100;" class="btn-use ${inventory!=null?"remove":""}">
+                        ${inventory!=null?"Remove from Inventory":"Use this program"}
                     </button>
                     <div class="form-item row">
                         <div class="offset-2 col-2">
                             <label for="txtUsername">Program Name</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <input id="program-name" name="txtProgramName" placeholder="Enter program name" type="text" readonly>
+                            <input value="${program.programName}" id="program-name" name="txtProgramName" placeholder="Enter program name" type="text" readonly>
                         </div>
                     </div>
                     <div class="form-item row">
@@ -247,7 +246,7 @@ Admin --%>
                 </div>
             </footer>
         </div>
-        <!-- <script src="/CICOHealth/assets/scripts/formhandling.js"></script> -->
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script> 
         <!-- <script src="/CICOHealth/assets/scripts/popup.js"></script> -->
         <!-- <script src="/CICOHealth/assets/scripts/exerciseProgram/programDetails.js"></script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -256,5 +255,18 @@ Admin --%>
             rel="stylesheet"
             href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
             />
+        <script>
+                    document.getElementById("btn-use").addEventListener("click", () => {
+                        let id = event.target.dataset.id;
+                        let remove = event.target.dataset.remove === "true";
+                        console.log(remove)
+                        let formParams = {
+                            "programID" : id,
+                            "type" : "inventory",
+                            "remove": remove
+                        }
+                        post("/CICOHealth/exercise-programs",formParams)
+                    })
+        </script>
     </body>
 </html>

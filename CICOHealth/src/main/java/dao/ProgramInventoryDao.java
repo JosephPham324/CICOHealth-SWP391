@@ -47,19 +47,50 @@ public class ProgramInventoryDao extends BaseDao {
         }
     }
 
+    public ProgramInventory getInventory(String userID, String programID) throws SQLException {
+        String QUERY_SELECT = "SELECT * FROM [ProgramInventory] WHERE userID = ? AND programID = ?";
+        // Open connection to database
+        connection = new DBContext().getConnection();
+
+        preparedStatement = connection.prepareStatement(QUERY_SELECT);
+        preparedStatement.setString(1, userID);
+        preparedStatement.setString(2, programID);
+        resultSet = preparedStatement.executeQuery();
+        ProgramInventory inventory = null;
+        if (resultSet.next()) {
+            inventory = new ProgramInventory(resultSet.getString("programID"),resultSet.getString("userID"));
+        }
+        closeConnections();
+        return inventory;
+    }
+
+    public void removeInventory(String userID, String programID) throws SQLException {
+        System.out.println(userID);
+        String QUERY_DELETE = "DELETE FROM [ProgramInventory] WHERE userID = ? AND programID = ?";
+// Open connection to database
+        connection = new DBContext().getConnection();
+        
+        preparedStatement = connection.prepareStatement(QUERY_DELETE);
+        preparedStatement.setString(1, userID);
+        preparedStatement.setString(2, programID);
+        preparedStatement.executeUpdate();
+        closeConnections();
+    }
+
     public List<String> getUserInventory(String userID) throws SQLException {
         String QUERY_SELECT = "SELECT * FROM [ProgramInventory] WHERE USERID = ?";
         // Open connection to database
         connection = new DBContext().getConnection();
-        
+
         preparedStatement = connection.prepareStatement(QUERY_SELECT);
-        
+
         preparedStatement.setString(1, userID);
         resultSet = preparedStatement.executeQuery();
         List result = new ArrayList();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             result.add(resultSet.getString("programID"));
         }
+        closeConnections();
         return result;
     }
 
