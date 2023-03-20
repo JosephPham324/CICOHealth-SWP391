@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  font-family: "segoe ui";
+}
+
+ul {
+  list-style: none;
+  display: flex;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.nav {
+  height: 50px;
+  width: 100%;
+  background-color: rgb(131, 184, 46);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav .nav-header {
+  display: inline;
+}
+.nav .nav-header .nav-title {
+  font-size: 30px;
+  color: #fff;
+  font-weight: 800;
+}
+.nav .nav-header .nav-title a {
+  text-decoration: none;
+  color: #fff;
+}
+.nav .nav-header .nav-title span {
+  color: yellow;
+}
+.nav .nav-btn {
+  display: none;
+}
+.nav .nav-links {
+  display: inline;
+  float: right;
+  font-size: 18px;
+}
+.nav .nav-links ul li a {
+  display: inline-block;
+  padding: 13px 10px 13px 10px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+.nav .nav-links ul li a:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: yellow;
+}
+.nav .nav-links ul li .dropdown-menu {
+  margin-top: -1%;
+  background-color: rgb(99, 146, 24);
+}
+.nav .nav-links ul li .menu-admin {
+  position: absolute;
+  left: -67px;
+}
+.nav #nav-check {
+  display: none;
+}
+
+@media (max-width: 705px) {
+  .nav > .nav-btn {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  .nav > .nav-btn > label {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    padding: 13px;
+  }
+  .nav > .nav-btn > label:hover,
+  .nav #nav-check:checked ~ .nav-btn > label {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .nav > .nav-btn > label > span {
+    display: block;
+    width: 25px;
+    height: 10px;
+    border-top: 2px solid #eee;
+    cursor: pointer;
+  }
+  .nav > .nav-links {
+    position: absolute;
+    display: block;
+    width: 100%;
+    background-color: rgb(131, 184, 46);
+    height: 0px;
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 50px;
+    left: 0px;
+  }
+  .nav > .nav-links > ul {
+    flex-direction: column;
+  }
+  .nav > .nav-links > ul > li > a {
+    display: block;
+    width: 100%;
+  }
+  .nav > #nav-check:not(:checked) ~ .nav-links {
+    height: 0px;
+  }
+  .nav > #nav-check:checked ~ .nav-links {
+    height: calc(100vh - 0px);
+    overflow-y: auto;
+  }
+}
+.footer {
+  background-color: rgb(131, 184, 46) !important;
+}
+.footer .footer-bottom {
+  background-color: rgb(98, 137, 36) !important;
+  color: white;
+}
+.footer .footer-content .footer-item {
+  margin-top: 15px;
+}
+.footer .footer-content .footer-item .footer-title {
+  color: white;
+}
+.footer .footer-content .footer-item .school-name {
+  color: yellow;
+}
+.footer .footer-content .footer-item p {
+  color: white;
+}/*# sourceMappingURL=newnav.css.map */
