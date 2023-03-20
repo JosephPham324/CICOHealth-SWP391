@@ -323,6 +323,7 @@ function submitProgramCreationForm() {
     let workout = createWorkoutObject(workoutId);
     program.workoutCollection.push(workout);
   });
+
   // Log the completed program object to the console
   console.log(program);
   post("/CICOHealth/exercise-programs/create", {
@@ -431,8 +432,8 @@ let formAddExercise = document.querySelector("#create-exercise-form");
 //Add event listener to button submit program
 let btnSubmitProgram = document.querySelector("#btn-submit-program");
 btnSubmitProgram.addEventListener("click", (event) => {
-  submitProgramCreationForm();
   event.preventDefault();
+  submitProgramCreationForm();
 });
 
 //Add event listener to button add workout

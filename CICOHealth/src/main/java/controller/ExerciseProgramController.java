@@ -21,7 +21,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,6 +169,42 @@ public class ExerciseProgramController extends HttpServlet {
             }
         }
         if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {
+            String userID
+                    = //                    (User)request.getSession().getAttribute("user");
+                    "USFE000001";
+            DayOfWeek dayOfWeek
+                    = DayOfWeek.from(LocalDate.now());
+            System.out.println(dayOfWeek.getValue());
+            List<List<Workout>> todayWorkouts = new ArrayList();
+            List<String> programs = null;
+            try {
+                programs = new ProgramInventoryDao().getUserInventory(userID);
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+            }
+            System.out.println(programs.toString());
+            for (String program : programs) {
+                System.out.println("");
+                List<Workout> programWorkouts = null;
+                try {
+                    programWorkouts = new WorkoutDao().getProgramWorkoutsByWeekDay(program, dayOfWeek.getValue());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(util.Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+                }
+                if (programWorkouts != null) {
+                    todayWorkouts.add(programWorkouts);
+                }
+            }
+            System.out.println(todayWorkouts.size());
+            if (todayWorkouts.isEmpty()){
+                request.setAttribute("noSchedule", true);
+            }
+            else {
+                request.setAttribute("workouts", todayWorkouts);
+            }
+            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseSchedule.jsp").forward(request, response);
             return;
         }
 
@@ -194,7 +234,7 @@ public class ExerciseProgramController extends HttpServlet {
                 = new User("USFE000001");
 //                (User) request.getSession().getAttribute("user");
         String type = request.getParameter("type");
-        if (type.equalsIgnoreCase("inventory")) {
+        if (type != null && type.equalsIgnoreCase("inventory")) {
             String programID = request.getParameter("programID");
             String remove = request.getParameter("remove");
             System.out.println(remove);
@@ -220,6 +260,7 @@ public class ExerciseProgramController extends HttpServlet {
 
         // Get the exercise program data from the request
         String program = request.getParameter("program");
+        System.out.println(program);
 //        response.getWriter().write(program.toString());
 
         // Parse the exercise program data as a JSON object using the Gson library

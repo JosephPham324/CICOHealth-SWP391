@@ -47,6 +47,7 @@
                         </div>
                         <div class="col-6 form-item-input">
                             <input id="txtProgramName" name="txtProgramName" placeholder="Enter program name" type="text" required >
+                            <i  id="error_txtProgramName" style="color: red ; display: none">(*)Please not be empty</i>
                         </div>
                     </div>
                     <div class="form-item row">
@@ -56,6 +57,7 @@
                         <div class="col-6 form-item-input">
                             <textarea name="txtProgramDescription" id="txtProgramDescription" cols="30" rows="5"
                                       placeholder="Enter description"></textarea>
+                                      <i  id="error_txtProgramDescription" style="color: red ; display: none">(*)Please not be empty</i>
                         </div>
                     </div>
                     <hr>
@@ -220,6 +222,7 @@
 
         <%@include file = "/view/general/footer.jsp"%>
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
         <script src="/CICOHealth/assets/scripts/exerciseProgram/programCreate.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
