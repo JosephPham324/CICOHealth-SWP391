@@ -41,8 +41,29 @@ Admin --%>
             rel="stylesheet"
             href="/CICOHealth/assets/sass/main/createexerciseprogram.css"
             />
+        <style>
+            .btn-use{
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+            .btn-use.remove{
+                background-color: orange; /* Green */
+            }
+            .btn-use:hover{
+                box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+            }
+            .btn-use:active{
+                transform:scale(0.98);
+            }
+        </style>
 
-        <title>Create Program</title>
+        <title>Program Details</title>
     </head>
 
     <body>
@@ -58,12 +79,15 @@ Admin --%>
                 id="create-exercise-program-form"
                 >
                 <div class="create-exercise-program-form-content">
+                    <button style="position:sticky;right:0;top:0;z-index:100;" class="btn-use">
+                        Use this program
+                    </button>
                     <div class="form-item row">
                         <div class="offset-2 col-2">
                             <label for="txtUsername">Program Name</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <h3 id="program-name">${program.programName}</h3>
+                            <input id="program-name" name="txtProgramName" placeholder="Enter program name" type="text" readonly>
                         </div>
                     </div>
                     <div class="form-item row">
@@ -71,7 +95,8 @@ Admin --%>
                             <label for="txtProgramDescription">Description</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <p id="program-description">${program.programDescription}</p>
+                            <textarea name="txtProgramDescription" id="program-description" cols="30" rows="5"
+                                      placeholder="Enter description" readonly>${program.programDescription}</textarea>
                         </div>
                     </div>
                     <hr />
@@ -108,6 +133,7 @@ Admin --%>
                                             type="text"
                                             required="required"
                                             value="${workout.workoutName}"
+                                            readonly
                                             />
                                     </div>
                                 </div>
@@ -120,6 +146,7 @@ Admin --%>
                                             id="txtWorkoutDate-${workout.workoutID}"
                                             name="txtWorkoutDate"
                                             class="col-12"
+                                            disabled
                                             >
                                             <option value="1" ${workout.workoutDate == 1 ? "selected": ""}>Monday</option>
                                             <option value="2" ${workout.workoutDate == 2 ? "selected": ""}>Tuesday</option>
@@ -137,6 +164,7 @@ Admin --%>
                                     </div>
                                     <div class="col-9 form-item-input">
                                         <textarea
+                                            readonly
                                             name="txtWorkoutDescription"
                                             id="txtWorkoutDescription-${workout.workoutID}"
                                             cols="30"

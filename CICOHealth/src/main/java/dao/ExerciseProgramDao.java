@@ -93,6 +93,32 @@ public class ExerciseProgramDao extends BaseDao {
         }
         return programs;
     }
+    
+    public List<ExerciseProgram> getProgramsByUserID(String userID) {
+        List<ExerciseProgram> programs = new ArrayList<>();
+        try {
+            connection = new DBContext().getConnection();
+            String sql = "select * from ExerciseProgram WHERE createdBy = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, userID);
+            resultSet = preparedStatement.executeQuery();
+            // Iterate through the result set and create ExerciseProgram objects for each row
+            while (resultSet.next()) {
+                ExerciseProgram program = new ExerciseProgram();
+                program.setProgramID(resultSet.getString("programID"));
+//                String userID = resultSet.getString("createdBy");
+                program.setCreatedBy(new UserDao().getUser(userID));
+                program.setProgramName(resultSet.getString("programName"));
+                program.setProgramDescription(resultSet.getString("programDescription"));
+                programs.add(program);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseProgramDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
+        }
+        return programs;
+    }
 
     public ExerciseProgram getProgramsByID(String id) throws SQLException{
         ExerciseProgram program = null;
