@@ -111,7 +111,7 @@ CREATE TABLE Workout (
   programID varchar(10) NOT NULL,
   workoutID varchar(10) NOT NULL,
   workoutName varchar(255) NOT NULL,
-  workoutDate text NOT NULL,
+  workoutDate varchar(1) NOT NULL,
   workoutDescription text NOT NULL,
   PRIMARY KEY (workoutID),
   FOREIGN KEY (programID) REFERENCES ExerciseProgram(programID) ON DELETE CASCADE
@@ -132,8 +132,8 @@ CREATE TABLE WorkoutExercises (
   FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID) ON DELETE CASCADE
 );
 CREATE TABLE ProgramInventory (
-  userID varchar(10) NOT NULL REFERENCES [user](userID),
-  programID varchar(10) NOT NULL REFERENCES [exerciseProgram](programID),
+  userID varchar(10) NOT NULL REFERENCES [user](userID) ON DELETE CASCADE,
+  programID varchar(10) NOT NULL REFERENCES [exerciseProgram](programID) ON DELETE CASCADE,
   PRIMARY KEY (userID, programID)
 );
 
