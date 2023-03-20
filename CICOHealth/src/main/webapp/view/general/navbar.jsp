@@ -18,7 +18,7 @@
 
         <div class="nav-header">
             <div class="nav-title">
-                <a href="#">CICO<span class="color-tlt">Health</span></a>
+                <a href="/CICOHealth/">CICO<span class="color-tlt">Health</span></a>
             </div>
         </div>
 

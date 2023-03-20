@@ -41,6 +41,22 @@ $secondary-color: yellow;
                 font-size: 20px;
                 transition: .1s all ease;
             }
+
+            button {
+                border: none;
+                background-color: white;
+
+                a {
+                    background-color: $primary-color;
+                    color: white;
+                }
+                a:hover {
+                    background-color: yellow;
+                    color: black;
+                }
+            }
+
+
         }
     }
 }

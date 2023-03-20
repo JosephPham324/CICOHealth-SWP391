@@ -36,6 +36,17 @@
   box-sizing: border-box;
 }
 
+.btn {
+  background-color: rgb(131, 184, 46);
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.btn:hover {
+  background-color: yellow;
+  color: black;
+}
+
 .pop-up .create-exercise-pop-up-content {
   position: fixed;
   top: 50%;
