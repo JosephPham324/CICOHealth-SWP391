@@ -63,7 +63,7 @@ public class WorkoutDao extends BaseDao {
         preparedStatement.setString(index++, workout.getWorkoutDescription());
 
         preparedStatement.executeUpdate();
-
+        closeConnections();
         //Insert workout exercises
         for (WorkoutExercises exercise : workout.getWorkoutExercisesCollection()) {
             System.out.println(exercise.getWorkoutExercisesPK());
@@ -96,6 +96,7 @@ public class WorkoutDao extends BaseDao {
             workout.setWorkoutExercisesCollection(new WorkoutExerciseDao().getExerciseByWorkoutID(workout.getWorkoutID()));
             res.add(workout);
         }
+        closeConnections();
         return res;
     }
 
@@ -121,9 +122,44 @@ public class WorkoutDao extends BaseDao {
             }
         } catch (SQLException ex) {
             Logger.getLogger(WorkoutDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
         }
 
         return workouts;
+    }
+
+    public void updateWorkout(Workout workout) throws SQLException {
+        String SQL_UPDATE = "UPDATE [workout] set "
+                + "workoutName = ?,"
+                + "workoutDescription = ?,"
+                + "workoutDate = ? "
+                + "WHERE workoutID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(SQL_UPDATE);
+        int i = 1;
+        preparedStatement.setString(i++, workout.getWorkoutName());
+        preparedStatement.setString(i++, workout.getWorkoutDescription());
+        preparedStatement.setString(i++, workout.getWorkoutDate());
+        preparedStatement.setString(i++, workout.getWorkoutID());
+        preparedStatement.executeUpdate();
+        closeConnections();
+        for (WorkoutExercises exercise : workout.getWorkoutExercisesCollection()) {
+            if (exercise.getAction().equalsIgnoreCase("update")) {
+                new WorkoutExerciseDao().updateWorkoutExercise(exercise);
+            } else {
+                new WorkoutExerciseDao().removeWorkoutExercise(exercise.getWorkoutExercisesPK());
+            }
+        }
+    }
+
+    public void removeWorkout(String workoutID) throws SQLException {
+        String SQL_DELETE = "DELETE FROM [workout] WHERE workoutID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(SQL_DELETE);
+        preparedStatement.setString(1, workoutID);
+        preparedStatement.executeUpdate();
+        closeConnections();
     }
 
     public static void main(String[] args) {

@@ -71,6 +71,8 @@ Admin --%>
     </head>
 
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
+
         <div class="container">
             <div class="create-exercise-program-header">
                 <h1>Exercise Program Details</h1>
@@ -265,11 +267,11 @@ Admin --%>
                         let remove = event.target.dataset.remove === "true";
                         console.log(remove)
                         let formParams = {
-                            "programID" : id,
-                            "type" : "inventory",
+                            "programID": id,
+                            "type": "inventory",
                             "remove": remove
                         }
-                        post("/CICOHealth/exercise-programs",formParams)
+                        post("/CICOHealth/exercise-programs", formParams)
                     })
         </script>
     </body>

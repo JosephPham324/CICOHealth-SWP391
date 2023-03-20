@@ -24,7 +24,7 @@ public class WorkoutExerciseDao extends BaseDao {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    void insertExercise(WorkoutExercises exercise) throws SQLException {
+    public void insertExercise(WorkoutExercises exercise) throws SQLException {
         String QUERY_INSERT = "INSERT INTO WorkoutExercises (workoutID, exerciseID, exerciseOrder, [set], reps, weight, duration, instruction)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         System.out.println(exercise.getReps());
@@ -41,6 +41,39 @@ public class WorkoutExerciseDao extends BaseDao {
         preparedStatement.setString(index++, exercise.getInstruction());
 
         preparedStatement.executeUpdate();
+        closeConnections();
+    }
+
+    public void updateWorkoutExercise(WorkoutExercises exercise) throws SQLException {
+        String QUERY_UPDATE = "UPDATE [workoutExercises] SET "
+                + "instruction = ?,"
+                + "order = ?,"
+                + "set = ?,"
+                + "reps = ?,"
+                + "weight = ? "
+                + "WHERE workoutID = ? AND exerciseID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(QUERY_UPDATE);
+        int i = 1;
+        preparedStatement.setString(i++, exercise.getInstruction());
+        preparedStatement.setString(i++, exercise.getExerciseOrder() + "");
+        preparedStatement.setString(i++, exercise.getSet() + "");
+        preparedStatement.setString(i++, exercise.getReps() + "");
+        preparedStatement.setString(i++, exercise.getWeight());
+        preparedStatement.setString(i++, exercise.getWorkoutExercisesPK().getWorkoutID());
+        preparedStatement.setString(i++, exercise.getWorkoutExercisesPK().getExerciseID());
+        preparedStatement.executeUpdate();
+        closeConnections();
+    }
+
+    public void removeWorkoutExercise(WorkoutExercisesPK exercisePK) throws SQLException {
+        String QUERY_DELETE = "DELETE FROM [workoutExercises] WHERE workoutID = ? AND exerciseID = ?";
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(QUERY_DELETE);
+        preparedStatement.setString(1, exercisePK.getWorkoutID());
+        preparedStatement.setString(2, exercisePK.getExerciseID());
+        preparedStatement.executeUpdate();
+        closeConnections();
     }
 
     public List<WorkoutExercises> getExerciseByWorkoutID(String id) {
@@ -70,6 +103,8 @@ public class WorkoutExerciseDao extends BaseDao {
             }
         } catch (SQLException ex) {
             Logger.getLogger(WorkoutExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnections();
         }
         return workoutExercies;
     }

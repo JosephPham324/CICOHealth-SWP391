@@ -256,6 +256,21 @@ function addExerciseToWorkout() {
   let exerciseSelect = document.querySelector("#select-exercise");
   let exerciseName = exerciseSelect[exerciseSelect.selectedIndex].innerHTML;
   let exerciseId = exerciseSelect.value;
+
+  //Check if exercise has already been added
+  let exerciseList = document.querySelectorAll(
+    `#create-table-${selectedWorkoutIndex} tbody tr`
+  );
+  let duplicateFlag = false;
+  exerciseList.forEach((exercise) => {
+    if (exercise.children[0].getAttribute("data-id") == exerciseId) {
+      alert("This exercise has already been added");
+      duplicateFlag = true;
+      return;
+    }
+  });
+  if (duplicateFlag) return;
+
   let exerciseListRow = ExerciseListRowHtml(
     selectedWorkoutIndex,
     exerciseOrder,
@@ -399,7 +414,7 @@ function createWorkoutObject(id) {
     ).dataset.id;
 
     let exercise = {
-      order: exerciseOrder,
+      exerciseOrder: exerciseOrder,
       set: exerciseSet,
       reps: exerciseRep,
       weight: exerciseWeight,

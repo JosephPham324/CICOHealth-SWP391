@@ -61,6 +61,23 @@ public class Workout implements Serializable {
     private ExerciseProgram programID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "workout")
     private Collection<WorkoutExercises> workoutExercisesCollection;
+    private String action;
+
+    public String getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(String programId) {
+        this.programId = programId;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public Workout() {
     }

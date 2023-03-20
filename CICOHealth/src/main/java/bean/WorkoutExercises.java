@@ -57,6 +57,16 @@ public class WorkoutExercises implements Serializable {
     @JoinColumn(name = "workoutID", referencedColumnName = "workoutID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Workout workout;
+    
+    private String action;
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public WorkoutExercises() {
     }

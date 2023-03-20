@@ -42,28 +42,32 @@ Admin --%>
             href="/CICOHealth/assets/sass/main/createexerciseprogram.css"
             />
 
-        <title>Create Program</title>
+        <title>Update program</title>
     </head>
 
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
+
         <div class="container">
             <div class="create-exercise-program-header">
-                <h1>Exercise Program Details</h1>
+                <h1>Update Program</h1>
             </div>
             <form
+                onsubmit="event.preventDefault();"
                 action="create-exercise-program"
                 method="post"
                 name="create-exercise-program-form"
                 class="create-exercise-program-form"
                 id="create-exercise-program-form"
                 >
-                <div class="create-exercise-program-form-content">
+                <div class="create-exercise-program-form-content" data-id="${program.programID}">
                     <div class="form-item row">
                         <div class="offset-2 col-2">
                             <label for="txtUsername">Program Name</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <h3 id="program-name">${program.programName}</h3>
+                            <input value ="${program.programName}" id="txtProgramName" name="txtProgramName" placeholder="Enter program name" type="text" required >
+                            <i  id="error_txtProgramName" style="color: red ; display: none">(*)Please not be empty</i>
                         </div>
                     </div>
                     <div class="form-item row">
@@ -71,7 +75,9 @@ Admin --%>
                             <label for="txtProgramDescription">Description</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <p id="program-description">${program.programDescription}</p>
+                            <textarea name="txtProgramDescription" id="txtProgramDescription" cols="30" rows="5"
+                                      placeholder="Enter description">${program.programDescription}</textarea>
+                            <i  id="error_txtProgramDescription" style="color: red ; display: none">(*)Please not be empty</i>
                         </div>
                     </div>
                     <hr />
@@ -81,7 +87,7 @@ Admin --%>
                         </div>
                     </div>
                     <c:forEach var="workout" items="${program.workoutCollection}">
-                        <div class="card list-exercise-program-item">
+                        <div class="card list-exercise-program-item" data-id="${workout.workoutID}" data-action="update">
                             <div
                                 class="card-header btn"
                                 data-toggle="collapse"
@@ -90,6 +96,7 @@ Admin --%>
                                 ${workout.workoutName}
                             </div>
                             <div
+                                data-action = "update"
                                 class="card-body collapse workout"
                                 data-toggle="collapse"
                                 aria-expanded="false"
@@ -172,7 +179,7 @@ Admin --%>
                                     </thead>
                                     <tbody class="pop-up-body-table">
                                         <c:forEach var="workoutExercise" items="${workout.workoutExercisesCollection}">
-                                            <tr id = "workout-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}">
+                                            <tr data-id="${workoutExercise.workoutExercisesPK.exerciseID}" data-action="update" id = "workout-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}">
                                                 <td data-id = "${workoutExercise.workoutExercisesPK.exerciseID}">${workoutExercise.workoutExercisesPK.exercise.exerciseName}</td>
                                                 <td>${workoutExercise.exerciseOrder}</td>
                                                 <td>${workoutExercise.set}</td>
@@ -194,13 +201,14 @@ Admin --%>
                                         class="btn btn-create-exercise-pop-up"
                                         id="btn-create-exercise-pop-up-${workout.workoutID}"
                                         data-target="#workout-${workout.workoutID}"
+                                        onclick="selectedWorkoutIndex = '${workout.workoutID}';displayPopUp('create-exercise-pop-up');"
                                         >Add exercise</a
                                     >
                                 </div>
                                 <div>
                                     <a
                                         href="#"
-                                        class="btn btn-create-exercise-pop-up"
+                                        class="btn btn-danger"
                                         id="btn-delete-workout"
                                         data-target="#workout-${workout.workoutID}"
                                         onclick="removeWorkout(this)"

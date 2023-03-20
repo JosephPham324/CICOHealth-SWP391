@@ -1,17 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/navbar.css" /> -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/newnav.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/newnav.css" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/card.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sass/main/card.css" />
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Homepage.css" />
-    <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/card.css"> -->
-    <c:set var="user" value="${sessionScope.user}"></c:set>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Homepage.css" />
+<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/card.css"> -->
+<c:set var="user" value="${sessionScope.user}"></c:set>
 
     <div class="nav">
         <input type="checkbox" id="nav-check">
@@ -44,78 +44,102 @@
                         <li><a class="dropdown-item" href="/CICOHealth/utilities/timer">Timer</a></li>
                     </ul>
                 </li>
-                <c:choose>
-                    <c:when test="${user!=null && user.getUserRole() == 'AD'}">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                FAQ
-                            </a>
+            <c:choose>
+                <c:when test="${user!=null && user.getUserRole() == 'AD'}">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            FAQ
+                        </a>
 
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/CICOHealth/faq/questions">Question</a></li>
-                                <li><a class="dropdown-item" href="/CICOHealth/faq/answers">Answer</a></li>
-                            </ul>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="/CICOHealth/faq">FAQ</a></li>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/CICOHealth/faq/questions">Question</a></li>
+                            <li><a class="dropdown-item" href="/CICOHealth/faq/answers">Answer</a></li>
+                        </ul>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="/CICOHealth/faq">FAQ</a></li>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
                     <c:when test="${user!=null}">
-                        <li><a href="/CICOHealth/exercise-programs">Programs</a></li>
-                    </c:when>
-                </c:choose>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Programs
+                        </a>
+                        <ul class="dropdown-menu menu-user">
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/exercise-programs">Listings</a>
+                            </li>
+                            <c:if test="${user.getUserRole() == 'FE' || user.getUserRole() == 'AD'}">
+                                <li>
+                                    <a class="dropdown-item" href="/CICOHealth/exercise-programs/create">Create</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/CICOHealth/exercise-programs/my-programs">My programs</a>
+                                </li>
+                            </c:if>
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/exercise-programs/inventory">Inventory</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/exercise-programs/exercise-schedule">Schedule</a>
+                            </li>
+                        </ul>
+                    </li>
+                </c:when>
+            </c:choose>
 
-                <c:choose>
-                    <c:when test="${user == null}">
-                        <li><a href="/CICOHealth/login">Login</a></li>
-                        <li><a href="/CICOHealth/register">Register</a></li>
+            <c:choose>
+                <c:when test="${user == null}">
+                    <li><a href="/CICOHealth/login">Login</a></li>
+                    <li><a href="/CICOHealth/register">Register</a></li>
                     </c:when>
                     <c:otherwise>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            User
+                        </a>
+                        <ul class="dropdown-menu menu-user">
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/user/profile">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/user/meal-logs">Meals Log</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/user/exercise-logs">Exericse Log</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/user/statistics">Statistics</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/CICOHealth/log-out">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <c:if test="${user.getUserRole() == 'AD'}">
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                User
+                               aria-expanded="false">
+                                Admin
                             </a>
-                            <ul class="dropdown-menu menu-user">
+                            <ul class="dropdown-menu menu-admin">
                                 <li>
-                                    <a class="dropdown-item" href="/CICOHealth/user/profile">Profile</a>
+                                    <a class="dropdown-item" href="/CICOHealth/user/profile">Manage Users</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/CICOHealth/user/meal-logs">Meals Log</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/CICOHealth/user/exercise-logs">Exericse Log</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/CICOHealth/user/statistics">Statistics</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/CICOHealth/log-out">Log out</a>
+                                    <a class="dropdown-item" href="/CICOHealth/user/meal-logs">Manage Exercises</a>
                                 </li>
                             </ul>
                         </li>
-                        <c:if test="${user.getUserRole() == 'AD'}">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Admin
-                                </a>
-                                <ul class="dropdown-menu menu-admin">
-                                    <li>
-                                        <a class="dropdown-item" href="/CICOHealth/user/profile">Manage Users</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="/CICOHealth/user/meal-logs">Manage Exercises</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
+                    </c:if>
+                </c:otherwise>
+            </c:choose>
+        </ul>
     </div>
-    <%@include file="/view/segments/message.jsp" %>
+</div>
+<%@include file="/view/segments/message.jsp" %>

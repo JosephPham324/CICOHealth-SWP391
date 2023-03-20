@@ -157,4 +157,27 @@ public class ExerciseProgramDao extends BaseDao {
         closeConnections();
     }
 
+    
+    public void updateProgram(ExerciseProgram program) throws SQLException{
+        String QUERY_UPDATE = "UPDATE [exerciseProgram] SET programName = ?, programDescription = ? WHERE programID = ?";
+        connection = new DBContext().getConnection();
+        
+        preparedStatement = connection.prepareStatement(QUERY_UPDATE);
+        preparedStatement.setString(1, program.getProgramName());
+        preparedStatement.setString(2, program.getProgramDescription());
+        preparedStatement.setString(3, program.getProgramID());
+        preparedStatement.executeUpdate();
+        
+        closeConnections();
+        
+        for (Workout workout: program.getWorkoutCollection()){
+            String action = workout.getAction();
+            if (action.equalsIgnoreCase("update")){
+                new WorkoutDao().updateWorkout(workout);
+            } else{
+                new WorkoutDao().removeWorkout(workout.getWorkoutID());
+            }
+        }
+        
+    }
 }

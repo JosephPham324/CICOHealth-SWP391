@@ -68,6 +68,7 @@ Admin --%>
     </head>
 
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
         <jsp:useBean id="now" class="java.util.Date"/>    
         <div class="container">
             <div class="create-exercise-program-header">
@@ -175,7 +176,7 @@ Admin --%>
                                                 <label for="txtListExercises">List Exercises</label>
                                             </div>
                                         </div>
-        
+
                                         <table
                                             id="create-table-${workout1.workoutID}"
                                             class="hover table-content"
@@ -212,19 +213,19 @@ Admin --%>
                         </div>
                     </c:forEach>
                 </div>
-                </div>
-            </form>
         </div>
-        <!-- footer -->
-        <%@include file="/view/general/footer.jsp" %>
-        <script src="/CICOHealth/assets/scripts/formhandling.js"></script> 
-        <!-- <script src="/CICOHealth/assets/scripts/popup.js"></script> -->
-        <!-- <script src="/CICOHealth/assets/scripts/exerciseProgram/programDetails.js"></script> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link
-            rel="stylesheet"
-            href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
-            />
-    </body>
+    </form>
+</div>
+<!-- footer -->
+<%@include file="/view/general/footer.jsp" %>
+<script src="/CICOHealth/assets/scripts/formhandling.js"></script> 
+<!-- <script src="/CICOHealth/assets/scripts/popup.js"></script> -->
+<!-- <script src="/CICOHealth/assets/scripts/exerciseProgram/programDetails.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
+    />
+</body>
 </html>
