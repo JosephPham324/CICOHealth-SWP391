@@ -5,11 +5,13 @@
 package controller;
 
 import bean.ExerciseProgram;
+import bean.ProgramInventory;
 import bean.User;
 import bean.Workout;
 import bean.WorkoutExercises;
 import com.google.gson.Gson;
 import dao.ExerciseProgramDao;
+import dao.ProgramInventoryDao;
 import dao.WorkoutDao;
 import dao.WorkoutExerciseDao;
 import java.io.IOException;
@@ -19,6 +21,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,11 +81,10 @@ public class ExerciseProgramController extends HttpServlet {
         }
         serveView(URI, request, response);
 
-        
     }
 
     private void serveData(String URI, HttpServletRequest request, HttpServletResponse response) {
-        if (URI.endsWith("/data")){
+        if (URI.endsWith("/data")) {
             if (URI.matches(".*/workouts(/.*)*")) {
             }
         }
@@ -89,6 +95,43 @@ public class ExerciseProgramController extends HttpServlet {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.jsp").forward(request, response);
             return;
         }
+        if (URI.matches(".*/my-programs(/.*)*")) {
+            String userID
+                    = //                    (User)request.getSession().getAttribute("user");
+                    "USFE000001";
+            List<ExerciseProgram> list = new ExerciseProgramDao().getProgramsByUserID(userID);
+            request.setAttribute("listProgram", list);
+            request.getRequestDispatcher("/view/general/exerciseProgram/myPrograms.jsp").forward(request, response);
+        }
+        if (URI.matches(".*/inventory(/.*)*")) {
+            String userID
+                    = //                    (User)request.getSession().getAttribute("user");
+                    "USFE000001";
+            List<String> programsID;
+            try {
+                programsID = new ProgramInventoryDao().getUserInventory(userID);
+            } catch (SQLException ex) {
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs", "error", ex.getMessage()));
+                Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
+
+            List<ExerciseProgram> list = new ArrayList();
+            if (programsID != null) {
+                ExerciseProgramDao dao = new ExerciseProgramDao();
+                for (String id : programsID) {
+                    try {
+                        list.add(dao.getProgramsByID(id));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs", "error", ex.getMessage()));
+                    }
+                }
+            }
+            request.setAttribute("listProgram", list);
+            request.getRequestDispatcher("/view/general/exerciseProgram/programsInUse.jsp").forward(request, response);
+        }
+
         if (URI.matches(".*/detail/workout(/.*)*")) {
             String workoutID = request.getParameter("workoutid");
             List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
@@ -98,26 +141,73 @@ public class ExerciseProgramController extends HttpServlet {
         }
         if (URI.matches(".*/detail(/.*)*") || URI.matches(".*/update(/.*)*")) {
             String ID = request.getParameter("id");
+            String userID
+                    = //                    (User)request.getSession().getAttribute("user");
+                    "USFE000001";
             if (ID != null) {
+                ExerciseProgram program = null;
+                ProgramInventory inventory = null;
                 try {
-                    ExerciseProgram program = new ExerciseProgramDao().getProgramsByID(ID);
+                    program = new ExerciseProgramDao().getProgramsByID(ID);
                     request.setAttribute("program", program);
+                    inventory = new ProgramInventoryDao().getInventory(userID, ID);
+                    request.setAttribute("inventory", inventory);
                 } catch (SQLException ex) {
                     Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
                     response.sendRedirect(util.Utility.appendStatus("/CICOHealth/exercise-programs", "error", "Couldn't fetch data for program " + ID));
                 }
-                if (URI.matches(".*/detail(/.*)*")){
+                if (program == null) {
+                    response.sendError(404);
+                    return;
+                }
+                if (URI.matches(".*/detail(/.*)*")) {
                     request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
                     return;
                 }
                 request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramUpdate.jsp").forward(request, response);
-                    return;
+                return;
             }
         }
         if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {
+            String userID
+                    = //                    (User)request.getSession().getAttribute("user");
+                    "USFE000001";
+            DayOfWeek dayOfWeek
+                    = DayOfWeek.from(LocalDate.now());
+            System.out.println(dayOfWeek.getValue());
+            List<List<Workout>> todayWorkouts = new ArrayList();
+            List<String> programs = null;
+            try {
+                programs = new ProgramInventoryDao().getUserInventory(userID);
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+            }
+            System.out.println(programs.toString());
+            for (String program : programs) {
+                System.out.println("");
+                List<Workout> programWorkouts = null;
+                try {
+                    programWorkouts = new WorkoutDao().getProgramWorkoutsByWeekDay(program, dayOfWeek.getValue());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(util.Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+                }
+                if (programWorkouts != null) {
+                    todayWorkouts.add(programWorkouts);
+                }
+            }
+            System.out.println(todayWorkouts.size());
+            if (todayWorkouts.isEmpty()){
+                request.setAttribute("noSchedule", true);
+            }
+            else {
+                request.setAttribute("workouts", todayWorkouts);
+            }
+            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseSchedule.jsp").forward(request, response);
             return;
         }
-        
+
         //Default
         List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
         request.setAttribute("listProgram", list);
@@ -140,19 +230,43 @@ public class ExerciseProgramController extends HttpServlet {
         if (method != null && method.equalsIgnoreCase("delete")) {
             doDelete(request, response);
         }
+        User user
+                = new User("USFE000001");
+//                (User) request.getSession().getAttribute("user");
+        String type = request.getParameter("type");
+        if (type != null && type.equalsIgnoreCase("inventory")) {
+            String programID = request.getParameter("programID");
+            String remove = request.getParameter("remove");
+            System.out.println(remove);
+            if (remove.equalsIgnoreCase("true")) {
+                try {
+                    new ProgramInventoryDao().removeInventory(user.getUserID(), programID);
+                    response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "success", "This program is no longer in your inventory!"));
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "error", "Couldn't process your request!"));
+                }
+                return;
+            }
+            try {
+                new ProgramInventoryDao().insertProgramInventory(new ProgramInventory(programID, user.getUserID()));
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "success", "This program is now in your inventory!"));
+            } catch (SQLException ex) {
+                Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "error", "Couldn't put this program in your inventory"));
+            }
+            return;
+        }
 
         // Get the exercise program data from the request
         String program = request.getParameter("program");
+        System.out.println(program);
 //        response.getWriter().write(program.toString());
 
         // Parse the exercise program data as a JSON object using the Gson library
         Gson gson = new Gson();
         ExerciseProgram programObject = gson.fromJson(program, ExerciseProgram.class);
 
-        // Get the current user from the session, and set them as the creator of the exercise program
-        User user = 
-                new User("USFE000001");
-//                (User) request.getSession().getAttribute("user");
         programObject.setCreatedBy(user);
 
         // Debugging output to the console

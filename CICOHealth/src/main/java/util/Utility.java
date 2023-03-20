@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.WeekFields;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -117,8 +118,10 @@ public class Utility {
      * @return An integer representing the week date of the input LocalDate
      * object.
      */
-    public static int getWeekDate(LocalDate date) {
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        return date.get(weekFields.dayOfWeek()) == 7 ? 0 : date.get(weekFields.dayOfWeek());
+    public static int getWeekDate(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        return dayOfWeek;
     }
 }

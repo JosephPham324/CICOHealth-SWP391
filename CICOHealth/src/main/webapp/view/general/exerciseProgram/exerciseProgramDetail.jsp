@@ -41,8 +41,29 @@ Admin --%>
             rel="stylesheet"
             href="/CICOHealth/assets/sass/main/createexerciseprogram.css"
             />
+        <style>
+            .btn-use{
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+            .btn-use.remove{
+                background-color: orange; /* Green */
+            }
+            .btn-use:hover{
+                box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+            }
+            .btn-use:active{
+                transform:scale(0.98);
+            }
+        </style>
 
-        <title>Create Program</title>
+        <title>Program Details</title>
     </head>
 
     <body>
@@ -51,19 +72,21 @@ Admin --%>
                 <h1>Exercise Program Details</h1>
             </div>
             <form
-                action="create-exercise-program"
-                method="post"
+                onsubmit="event.preventDefault();"
                 name="create-exercise-program-form"
                 class="create-exercise-program-form"
                 id="create-exercise-program-form"
                 >
                 <div class="create-exercise-program-form-content">
+                    <button data-remove="${inventory!=null?true:false}" data-id="${program.programID}" id="btn-use" style="position:sticky;right:0;top:0;z-index:100;" class="btn-use ${inventory!=null?"remove":""}">
+                        ${inventory!=null?"Remove from Inventory":"Use this program"}
+                    </button>
                     <div class="form-item row">
                         <div class="offset-2 col-2">
                             <label for="txtUsername">Program Name</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <h3 id="program-name">${program.programName}</h3>
+                            <input value="${program.programName}" id="program-name" name="txtProgramName" placeholder="Enter program name" type="text" readonly>
                         </div>
                     </div>
                     <div class="form-item row">
@@ -71,7 +94,8 @@ Admin --%>
                             <label for="txtProgramDescription">Description</label>
                         </div>
                         <div class="col-6 form-item-input">
-                            <p id="program-description">${program.programDescription}</p>
+                            <textarea name="txtProgramDescription" id="program-description" cols="30" rows="5"
+                                      placeholder="Enter description" readonly>${program.programDescription}</textarea>
                         </div>
                     </div>
                     <hr />
@@ -108,6 +132,7 @@ Admin --%>
                                             type="text"
                                             required="required"
                                             value="${workout.workoutName}"
+                                            readonly
                                             />
                                     </div>
                                 </div>
@@ -120,6 +145,7 @@ Admin --%>
                                             id="txtWorkoutDate-${workout.workoutID}"
                                             name="txtWorkoutDate"
                                             class="col-12"
+                                            disabled
                                             >
                                             <option value="1" ${workout.workoutDate == 1 ? "selected": ""}>Monday</option>
                                             <option value="2" ${workout.workoutDate == 2 ? "selected": ""}>Tuesday</option>
@@ -137,6 +163,7 @@ Admin --%>
                                     </div>
                                     <div class="col-9 form-item-input">
                                         <textarea
+                                            readonly
                                             name="txtWorkoutDescription"
                                             id="txtWorkoutDescription-${workout.workoutID}"
                                             cols="30"
@@ -219,7 +246,7 @@ Admin --%>
                 </div>
             </footer>
         </div>
-        <!-- <script src="/CICOHealth/assets/scripts/formhandling.js"></script> -->
+        <script src="/CICOHealth/assets/scripts/formhandling.js"></script> 
         <!-- <script src="/CICOHealth/assets/scripts/popup.js"></script> -->
         <!-- <script src="/CICOHealth/assets/scripts/exerciseProgram/programDetails.js"></script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -228,5 +255,18 @@ Admin --%>
             rel="stylesheet"
             href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"
             />
+        <script>
+                    document.getElementById("btn-use").addEventListener("click", () => {
+                        let id = event.target.dataset.id;
+                        let remove = event.target.dataset.remove === "true";
+                        console.log(remove)
+                        let formParams = {
+                            "programID" : id,
+                            "type" : "inventory",
+                            "remove": remove
+                        }
+                        post("/CICOHealth/exercise-programs",formParams)
+                    })
+        </script>
     </body>
 </html>
