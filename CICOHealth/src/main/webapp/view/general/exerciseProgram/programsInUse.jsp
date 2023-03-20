@@ -38,7 +38,7 @@
                 background-color: greenyellow;
             }
         </style>
-        <title>List of Programs</title>
+        <title>${sessionScope.user.firstName} ${sessionScope.user.lastName}'s Programs Inventory | ${initParam.webappName}</title>
     </head>
     <body>
         <%@include file="/view/general/navbar.jsp" %>
@@ -75,6 +75,15 @@
                                     <td>
                                         <button><a class="see-detail"
                                                    href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details<i class="fa-solid fa-eye"></i></a></button>
+                                        <form action="/CICOHealth/exercise-programs" method="post" style="display:inline;">
+                                            <input type="hidden" value="update"
+                                                   name="_method">
+                                            <input type="hidden" value="inventory"
+                                                   name="type">
+                                            <input type="hidden" value="${program.programID}"
+                                                   name="programID">
+                                            <input type="submit" value="Remove">
+                                        </form>
                                     </td>
                                 </tr>
                             </c:forEach>

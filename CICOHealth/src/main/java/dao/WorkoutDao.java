@@ -1,5 +1,6 @@
 package dao;
 
+import bean.ExerciseProgram;
 import bean.Workout;
 import bean.WorkoutExercises;
 import java.sql.SQLException;
@@ -71,6 +72,33 @@ public class WorkoutDao extends BaseDao {
         }
     }
 
+    public List<Workout> getProgramWorkoutsByWeekDay(String programID, int weekDay) throws SQLException {
+        if (weekDay < 1 || weekDay > 7) {
+            throw new SQLException("Weekday is out of range!");
+        }
+        String SQL_SELECT = "SELECT * FROM [Workout] WHERE programID = ? AND WorkoutDate = ?";
+        List<Workout> res = null;
+        connection = new DBContext().getConnection();
+        preparedStatement = connection.prepareStatement(SQL_SELECT);
+        preparedStatement.setString(1, programID);
+        preparedStatement.setString(2, weekDay + "");
+        resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            if (res == null) {
+                res = new ArrayList();
+            }
+            Workout workout = new Workout();
+            workout.setProgramID(new ExerciseProgram(programID));
+            workout.setWorkoutID(resultSet.getString("workoutID"));
+            workout.setWorkoutDate(resultSet.getString("workoutDate"));
+            workout.setWorkoutName(resultSet.getString("workoutName"));
+            workout.setWorkoutDescription(resultSet.getString("workoutDescription"));
+            workout.setWorkoutExercisesCollection(new WorkoutExerciseDao().getExerciseByWorkoutID(workout.getWorkoutID()));
+            res.add(workout);
+        }
+        return res;
+    }
+
     public List<Workout> getWorkoutByProgramID(String ID) {
         List<Workout> workouts = new ArrayList<>();
         String sql = "select * from Workout \n"
@@ -82,7 +110,7 @@ public class WorkoutDao extends BaseDao {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Workout workout = new Workout(
-                        resultSet.getString("programID"), 
+                        resultSet.getString("programID"),
                         resultSet.getString("workoutID"),
                         resultSet.getString("workoutName"),
                         resultSet.getString("workoutDate"),
