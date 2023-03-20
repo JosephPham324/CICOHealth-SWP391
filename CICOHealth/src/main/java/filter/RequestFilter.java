@@ -5,6 +5,8 @@
 package filter;
 
 import bean.User;
+import dao.LoginDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -16,9 +18,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -248,8 +254,41 @@ public class RequestFilter implements Filter {
             log("RequestFilter:doFilter()");
         }
         doBeforeProcessing(request, response);
+
+        //Check login cookie
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
+        if (httpRequest.getSession().getAttribute("user") == null) {//If user hasn't logged in, check if there's a cookie present
+            Cookie[] cookies = httpRequest.getCookies(); // get all cookies in the request
+            if (cookies != null) { // make sure there are cookies
+                for (Cookie cookie : cookies) { // iterate through each cookie
+                    if (cookie.getName().equals("userID") || cookie.getName().equals("googleID")) { // check if it's the cookie you want
+                        String cookieValue = cookie.getValue(); // retrieve the cookie value
+                        // do something with the cookie value
+                        switch (cookie.getName()) {
+                            case "userID": {
+                                try {
+                                    User user = new UserDao().getUser(cookieValue);
+                                    httpRequest.getSession().setAttribute("user", user);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(RequestFilter.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            break;
+                            case "googleID":
+                            try {
+                                String useriD = new LoginDao().getLoginInfoByGoogle(cookieValue);
+                                User user = new UserDao().getUser(useriD);
+                                httpRequest.getSession().setAttribute("user", user);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(RequestFilter.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         String requestedUrl = httpRequest.getRequestURI().substring(1);
         String contextPath = httpRequest.getContextPath();

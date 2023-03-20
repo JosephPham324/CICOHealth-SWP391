@@ -141,19 +141,20 @@ public class LoginController extends HttpServlet {
                 // Verify the user's login credentials
                 response.getWriter().write("" + authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt()));
                 if (authentication.verifyLogin(password, login.getPasswordHash(), login.getPasswordSalt())) {
-                    if (request.getParameter("remember") != null) {
-                        Cookie remember = new Cookie("UserName", username);
-                        remember.setMaxAge(60 * 60 * 24 * 3);
-                        response.addCookie(remember);
-
-                    }
 
                     request.getSession().setAttribute("originPass", password);
                     // Get the user's information and store it in the session
                     User user = userDao.getUser(login.getUserID());
+                    if (request.getParameter("remember") != null) {
+                        Cookie remember = new Cookie("userID", user.getUserID());
+                        remember.setMaxAge(60 * 60 * 24 * 3);
+                        response.addCookie(remember);
+
+                    }
                     request.getSession().setAttribute("user", user);
                     // Redirect to the home page
                     response.sendRedirect("/CICOHealth/");
+
                     return;
                 }
                 // Redirect to the login page if the user's credentials are incorrect
