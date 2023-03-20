@@ -74,8 +74,8 @@
                                         
                                     </td>
                                     <td>
-                                        <button><a class="see-detail"
-                                                   href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details<i class="fa-solid fa-eye"></i></a></button>
+                                        <button><a class="btn"
+                                                   href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details <i class="fa-solid fa-eye"></i></a></button>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -31,4 +31,16 @@
   color: blue !important;
   font-size: 20px;
   transition: 0.1s all ease;
+}
+.container table tbody button {
+  border: none;
+  background-color: white;
+}
+.container table tbody button a {
+  background-color: rgb(131, 184, 46);
+  color: white;
+}
+.container table tbody button a:hover {
+  background-color: yellow;
+  color: black;
 }/*# sourceMappingURL=exerciseProgram.css.map */

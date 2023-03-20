@@ -182,7 +182,6 @@ public class ExerciseProgramController extends HttpServlet {
                 Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
                 response.sendRedirect(util.Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
             }
-            System.out.println(programs.toString());
             for (String program : programs) {
                 System.out.println("");
                 List<Workout> programWorkouts = null;

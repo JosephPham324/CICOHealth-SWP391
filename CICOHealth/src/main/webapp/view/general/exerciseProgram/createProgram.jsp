@@ -34,6 +34,8 @@
     </head>
 
     <body>
+        <%@include file="/view/general/navbar.jsp" %>
+
         <div class="container">
             <div class="create-exercise-program-header">
                 <h1>Create Exercise Program</h1>

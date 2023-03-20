@@ -34,8 +34,8 @@
                 z-index: 0;
             }
 
-            .btn {
-                background-color: greenyellow;
+            .btn-edit{
+                background-color: rgba(1, 158, 179, 0.692) !important;
             }
         </style>
         <title>${sessionScope.user.firstName} ${sessionScope.user.lastName}'s Programs | ${initParam.webappName}</title>
@@ -73,15 +73,15 @@
                                             value="${program.createdBy.firstName} ${program.createdBy.lastName}" />
                                     </td>
                                     <td>
-                                        <button><a class="see-detail"
-                                                   href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details<i class="fa-solid fa-eye"></i></a></button>
-                                        <button><a class="see-detail"
+                                        <button><a class="btn"
+                                                   href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details <i class="fa-solid fa-eye"></i></a></button>
+                                        <button><a class="btn btn-edit"
                                                    href="/CICOHealth/exercise-programs/update?id=${program.programID}">Update</a></button>
                                         <form action="/CICOHealth/exercise-programs" method="post" style="display:inline;">
                                             <input type="hidden" value="${program.programID}"
                                                    name="programID">
                                             <input type="hidden" value="delete" name="_method">
-                                            <input type="submit" value="Delete">
+                                            <input type="submit" value="Delete" class="btn btn-danger">
                                         </form>
                                     </td>
                                 </tr>

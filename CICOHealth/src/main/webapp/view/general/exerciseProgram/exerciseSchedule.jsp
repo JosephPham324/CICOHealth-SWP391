@@ -88,10 +88,10 @@ Admin --%>
                                     <label for="txtUsername">Program ID</label>
                                 </div>
                                 <div class="col-6 form-item-input">
-                                    <input value="${workout.programID.programID}" id="program-name" name="txtProgramName" placeholder="Enter program name" type="text" readonly>
+                                    <input value="${workoutGroup.get(0).programID.programID}" id="program-name" name="txtProgramName" placeholder="Enter program name" type="text" readonly>
                                 </div>
                                 <div class="col-2">
-                                    <a class="btn btn-primary" href="/CICOHealth/exercise-programs/detail?id=${workout.programID.programID}">Program Details</a>
+                                    <a class="btn btn-primary" href="/CICOHealth/exercise-programs/detail?id=${workoutGroup.get(0).programID.programID}">Program Details</a>
                                 </div>
                             </div>
                             <hr />

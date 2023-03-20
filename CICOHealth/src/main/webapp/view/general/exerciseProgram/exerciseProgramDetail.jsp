@@ -43,7 +43,7 @@ Admin --%>
             />
         <style>
             .btn-use{
-                background-color: #4CAF50; /* Green */
+                background-color: rgb(131, 184, 46) !important;
                 border: none;
                 color: white;
                 padding: 15px 32px;
@@ -51,6 +51,10 @@ Admin --%>
                 text-decoration: none;
                 display: inline-block;
                 font-size: 16px;
+            }
+            .btn-use:hover{
+                background-color: yellow !important;
+                color: black;
             }
             .btn-use.remove{
                 background-color: orange; /* Green */

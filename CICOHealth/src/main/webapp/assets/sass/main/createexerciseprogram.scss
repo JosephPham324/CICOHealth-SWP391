@@ -1,9 +1,22 @@
 @use "../mixins/common";
 @use "../modules/popup";
-
+$primary-color: rgb(131, 184, 46);
+$secondary-color: yellow;
 * {
   box-sizing: border-box;
 }
+
+.btn{
+  background-color: $primary-color;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+  &:hover{
+    background-color: $secondary-color;
+    color: black;
+  }
+}
+
 
 
 .pop-up {
