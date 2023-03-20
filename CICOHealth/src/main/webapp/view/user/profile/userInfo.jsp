@@ -72,6 +72,7 @@ Author     : vhqua
                 </div>
             </main>
         </div>
+        <%@include file="/view/general/footer.jsp" %>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/CICOHealth/assets/scripts/sidebar.js"></script>

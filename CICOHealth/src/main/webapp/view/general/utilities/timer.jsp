@@ -21,7 +21,7 @@
         <script
         src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/stopwatch.css">
-        <title>Timer</title>
+        <title>Timer  | ${initParam.webappName}</title>
     </head>
     <body>
         <%@include file="/view/general/navbar.jsp" %>
