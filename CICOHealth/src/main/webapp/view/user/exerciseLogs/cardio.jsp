@@ -18,7 +18,7 @@
                 z-index: 0;
             }
         </style>
-        <title>Document</title>
+        <title>Cardio Exercise Logs | ${initParam.webappName}</title>
     </head>
 
     <body>

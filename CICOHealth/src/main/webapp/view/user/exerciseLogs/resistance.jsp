@@ -19,7 +19,7 @@
                 z-index: 0;
             }
         </style>
-        <title>Document</title>
+        <title>Resistance Exercise Logs | ${initParam.webappName}</title>
     </head>
 
     <body>

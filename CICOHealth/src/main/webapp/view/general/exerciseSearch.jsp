@@ -24,9 +24,7 @@
             <div class="pop-up-content"></div>
         </div>
         <div class="nav">
-            <a class="button" style="vertical-align:middle" href="/view/general/index.jsp"><span>Back
-                </span></a>
-            <h1 class="navbar-brand nav-title-exercise-search mx-auto">VIEW EXERCISE</h1>
+            <h1 class="navbar-brand nav-title-exercise-search mx-auto">SEARCH EXERCISE</h1>
         </div>
         <div class="container">
             <table id="info-table" class="hover" style="width:100%">

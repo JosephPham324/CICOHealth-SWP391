@@ -32,7 +32,7 @@ displayData();
 //Add statistics table skeleton
 let tableStructure = `
     <div class="container">
-      <table id="statistics-tb" class="statistics-tb">
+      <table id="stats-table" class="statistics-tb">
         <thead>
           <tr>
             <th>No.</th>
@@ -53,6 +53,12 @@ let tableStructure = `
 document.querySelector(".statistics-table").innerHTML = tableStructure;
 
 function fillStatisticsTable(analyzedNutritionData) {
+  //If table has datatable
+  if ($.fn.dataTable.isDataTable("#stats-table")) {
+    $("#stats-table").DataTable().destroy();
+  }
+
+
   let tableBody = document.querySelector(".statistics-table tbody");
   tableBody.innerHTML = "";
   for (let i in analyzedNutritionData) {
@@ -71,6 +77,9 @@ function fillStatisticsTable(analyzedNutritionData) {
     row.innerHTML = HTML;
     tableBody.appendChild(row);
   }
+
+  //Initialize datatable
+  $("#stats-table").DataTable();
 }
 
 let displayDataTypes = {

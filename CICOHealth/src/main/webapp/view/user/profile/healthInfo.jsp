@@ -26,7 +26,7 @@
             rel="stylesheet"
             />
         <link rel="stylesheet" href="/CICOHealth/assets/css/healthInfo.css"/>
-        <title>Health Information</title>
+        <title>Health Information  | ${initParam.webappName}</title>
     </head>
     <body>
         <%@include file="/view/general/navbar.jsp" %>

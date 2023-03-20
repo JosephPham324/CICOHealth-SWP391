@@ -118,5 +118,4 @@
             </ul>
         </div>
     </div>
-
     <%@include file="/view/segments/message.jsp" %>

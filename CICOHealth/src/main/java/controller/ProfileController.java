@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.AuthenticationLogic;
+import util.Utility;
 
 /**
  *
@@ -51,8 +52,13 @@ public class ProfileController extends HttpServlet {
         User user
                 = session.getAttribute("user") != null ? (User) session.getAttribute("user") : null;
         String userIDRequest = request.getParameter("userid");
-        if (userIDRequest != null && new UserDao().getUser(userIDRequest) == null) {
-            response.sendError(404);
+        try {
+            if (userIDRequest != null && new UserDao().getUser(userIDRequest) == null) {
+                response.sendError(404);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
         }
         // Check if the URI matches the "/expert-info" pattern
         if (URI.matches(".*/expert-info(/.*)*")) {
@@ -71,37 +77,57 @@ public class ProfileController extends HttpServlet {
             } catch (SQLException ex) {
                 // Log the error and redirect to the homepage
                 Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("/");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
             }
             try {
                 certs = new CertificationDao().getUserCertifications(userIDRequest);
             } catch (SQLException ex) {
                 // Log the error and redirect to the homepage
                 Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("/");
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
             }
 
-            // Set the request attributes and forward to the JSP page
-            request.setAttribute("user", new UserDao().getUser(userIDRequest));
+            try {
+                // Set the request attributes and forward to the JSP page
+                request.setAttribute("user", new UserDao().getUser(userIDRequest));
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+            }
             request.setAttribute("expertProfile", expertProfile);
             request.setAttribute("certifications", certs);
             request.setAttribute("allowUpdate", allowUpdate);
             request.getRequestDispatcher("/view/user/profile/expertProfile.jsp").forward(request, response);
             return;
+            //-----------------------------------------------------------------------------------------
         }
         // Get the user role and handle different profile paths
         String role = user.getUserRole();
         if (URI.endsWith("/profile") || URI.endsWith("/user-info")) {
-            // Set the request attributes and forward to the JSP page
-            request.setAttribute("user", new UserDao().getUser(user.getUserID()));
+            try {
+                //User info
+                // Set the request attributes and forward to the JSP page
+                request.setAttribute("user", new UserDao().getUser(user.getUserID()));
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+            }
             if (("AD").equalsIgnoreCase(role)) {
-                request.setAttribute("user", new UserDao().getUser(userIDRequest));
+                try {
+                    request.setAttribute("user", new UserDao().getUser(userIDRequest));
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                    response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+                    return;
+                }
             } else if (!(user.getUserID().equalsIgnoreCase(userIDRequest))) {
                 // Redirect to the user's own profile page
                 response.sendRedirect("/CICOHealth/user/profile/user-info?userid=" + user.getUserID());
                 return;
             }
             request.getRequestDispatcher("/view/user/profile/userInfo.jsp").forward(request, response);
+            return;
+            //-----------------------------------------------------------------------------------------
         } else if (URI.endsWith("/login-info")) {
             // Get the login info for the user and set the request attributes
             request.setAttribute("loginInfo", new LoginDao().getLoginInfoByID(user.getUserID()));
@@ -113,6 +139,8 @@ public class ProfileController extends HttpServlet {
                 return;
             }
             request.getRequestDispatcher("/view/user/profile/loginInfo.jsp").forward(request, response);
+            return;
+            //-----------------------------------------------------------------------------------------
         } else if (URI.endsWith("/health-info")) {
             // Get the health info for the user and set the request attributes
             String userID = user.getUserID();
@@ -138,6 +166,7 @@ public class ProfileController extends HttpServlet {
             request.setAttribute("history", history);
             request.getRequestDispatcher("/view/user/profile/healthInfo.jsp").forward(request, response);
             return;
+            //-----------------------------------------------------------------------------------------
         }
         response.sendRedirect("user/profile/user-info?userid=" + userIDRequest);
     }
@@ -220,9 +249,18 @@ public class ProfileController extends HttpServlet {
                 String email = request.getParameter("email");
                 String phone = request.getParameter("phone");
                 User user = new User(userID, firstName, lastName, email, phone);
-                userDao.updateUserInfo(user);
+                 {
+                    try {
+                        userDao.updateUserInfo(user);
+                        request.getSession().setAttribute("user", user);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                        response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+                    }
+                }
                 response.sendRedirect("/CICOHealth/user/profile/user-info?userid=" + userID);
                 return;
+
             case "updateExpertProfile":
                 Gson gson = new Gson();
                 String expertProfileJson = request.getParameter("expertProfile");
@@ -248,7 +286,7 @@ public class ProfileController extends HttpServlet {
                     return;
                 }
                 response.sendRedirect("/CICOHealth/user/profile/expert-info?userid=" + userID);
-                
+
                 break;
             default:
                 response.sendRedirect("/CICOHealth/user/profile/user-info" + userID);

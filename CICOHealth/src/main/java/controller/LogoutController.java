@@ -6,6 +6,7 @@ package controller;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,6 +30,16 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies(); // get all cookies in the request
+        if (cookies != null) { // make sure there are cookies
+            for (Cookie cookie : cookies) { // iterate through each cookie
+                if (cookie.getName().matches("googleID|userID")) { // check if it's the cookie you want
+                    cookie.setValue(""); // set the cookie's value to an empty string
+                    cookie.setMaxAge(0); // set the cookie's maxAge to 0
+                    response.addCookie(cookie); // add the updated cookie to the response
+                }
+            }
+        }
         // Invalidate the current user session
         HttpSession session = request.getSession();
         session.invalidate();

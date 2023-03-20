@@ -69,8 +69,9 @@
                                         <c:out value="${program.programDescription}" />
                                     </td>
                                     <td>
-                                        <c:out
-                                            value="${program.createdBy.firstName} ${program.createdBy.lastName}" />
+                                        <a href="/CICOHealth/user/profile/expert-info?userid=${program.createdBy.userID}"><c:out
+                                            value="${program.createdBy.firstName} ${program.createdBy.lastName}" /></a>
+                                        
                                     </td>
                                     <td>
                                         <button><a class="btn"

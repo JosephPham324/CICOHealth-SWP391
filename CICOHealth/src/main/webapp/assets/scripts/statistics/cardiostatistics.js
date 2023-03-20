@@ -31,7 +31,7 @@ displayData();
 
 //Add statistics table skeleton
 let tableStructure = `
-        <table>
+        <table id = "stats-table">
           <thead>
           </thead>
           <tbody>
@@ -41,11 +41,15 @@ let tableStructure = `
 document.querySelector(".statistics-table").innerHTML = tableStructure;
 
 function fillStatisticsTable(tableType, analyzedNutritionData) {
+  //If table has datatable
+  if ($.fn.dataTable.isDataTable("#stats-table")) {
+    $("#stats-table").DataTable().destroy();
+  }
   let tableBody = document.querySelector(".statistics-table tbody");
   let tableHead = document.querySelector(".statistics-table thead");
   tableHead.innerHTML = "";
   switch (tableType) {
-    case "Exercises":
+    case "Summary":
     default:
       tableHead.innerHTML = `
             <tr>
@@ -80,10 +84,11 @@ function fillStatisticsTable(tableType, analyzedNutritionData) {
     row.innerHTML = HTML;
     tableBody.appendChild(row);
   }
+  $("#stats-table").DataTable();
 }
 
 let displayDataTypes = {
-  table: ["Exercises"],
+  table: ["Summary"],
   chart: ["Calories and time", "Exercises Performance", "Exercise Frequency"],
 };
 
