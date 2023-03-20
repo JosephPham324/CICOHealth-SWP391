@@ -10,7 +10,7 @@
         ${initParam.Bootstrap}
         ${initParam.FontAwesome}
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/foodsearch.css" />
-        <title>Food Search</title>
+        <title>Food Search | ${initParam.webappName}</title>
     </head>
 
     <body>

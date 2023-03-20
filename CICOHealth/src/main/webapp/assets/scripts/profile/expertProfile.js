@@ -242,11 +242,11 @@ btnSaveChanges.addEventListener("click", () => {
       .textContent.substring(9);
     let certImg = cert.querySelector(".cert-photo img").src;
     certList.push({
-      certID: certID,
-      certName: certName,
-      certDate: certDate,
-      certIssuer: certIssuer,
-      certPhoto: certImg,
+      certID: certID.trim(),
+      certName: certName.trim(),
+      certDate: certDate.trim(),
+      certIssuer: certIssuer.trim(),
+      certPhoto: certImg.trim(),
     });
   });
   let userId = getRequestParameter("userid");

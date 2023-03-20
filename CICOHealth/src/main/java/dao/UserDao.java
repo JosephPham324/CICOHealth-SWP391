@@ -109,8 +109,7 @@ public class UserDao extends BaseDao {
         closeConnections();
     }
 
-    public User getUser(String userID) {
-        try {
+    public User getUser(String userID) throws SQLException {
             String query = "SELECT *\n"
                     + "FROM [user]\n"
                     + "WHERE userID = ?";
@@ -127,10 +126,6 @@ public class UserDao extends BaseDao {
                         resultSet.getString("phone"));
             };
             return user;
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
     public List<User> getAllUser() {
@@ -156,8 +151,7 @@ public class UserDao extends BaseDao {
         return list;
     }
 
-    public void updateUserInfo(User user) {
-        try {
+    public void updateUserInfo(User user) throws SQLException {
             // Open a connection
             connection = new DBContext().getConnection();
 
@@ -174,21 +168,7 @@ public class UserDao extends BaseDao {
 
             // Execute the SQL statement
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.getMessage();
-        } finally {
-            try {
-                // Close the statement and connection
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.getMessage();
-            }
-        }
+            closeConnections();
     }
 
 }

@@ -17,16 +17,18 @@ main .choices {
   margin-bottom: 20px;
 }
 main .choices label {
-  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1.2rem;
   margin-right: 10px;
   margin-bottom: 5px;
 }
 main .choices select,
 main .choices input[type=date] {
   padding: 5px;
-  border-radius: 5px 50% 50% 50%;
+  border-radius: 10px 10px 10px 10px;
   border: none;
   background-color: #eee;
+  font-size: 1.2rem;
 }
 main .choices select:focus,
 main .choices input[type=date]:focus {
@@ -52,7 +54,7 @@ main #statistics-container .statistics-table table {
   width: 100%;
   margin-bottom: 20px;
 }
-main #statistics-container .statistics-table table td {
+main #statistics-container .statistics-table table td, main #statistics-container .statistics-table table th {
   padding: 5px;
   border: 1px solid #ddd;
   text-align: center;
@@ -86,7 +88,7 @@ main #statistics-container .statistics-chart {
   }
 }
 
-.statistics-tb thead {
+.statistics-table thead {
   background-color: rgb(131, 184, 46);
   color: #fff;
   text-align: center;

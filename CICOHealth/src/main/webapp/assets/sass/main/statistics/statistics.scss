@@ -1,6 +1,6 @@
-@use '../../mixins/common';
-  $primary-color: rgb(131, 184, 46);
-  $secondary-color: yellow;
+@use "../../mixins/common";
+$primary-color: rgb(131, 184, 46);
+$secondary-color: yellow;
 // Main container
 main {
   @include common.flex-display(column, center, normal);
@@ -15,7 +15,8 @@ main {
 
     // Choice labels
     label {
-      font-weight: bold;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 1.2rem;
       margin-right: 10px;
       margin-bottom: 5px;
     }
@@ -24,10 +25,10 @@ main {
     select,
     input[type="date"] {
       padding: 5px;
-      @include common.round-corner(5px);
+      @include common.round-corner(10px,10px,10px,10px);
       border: none;
       background-color: #eee;
-
+      font-size: 1.2rem;
       &:focus {
         outline: none;
         box-shadow: 0px 0px 5px #888;
@@ -44,16 +45,17 @@ main {
 
     // Statistics table
     .statistics-table {
-      table{
+      table {
         border-collapse: collapse;
         width: 100%;
         margin-bottom: 20px;
 
-        td{
-            padding: 5px;
-            border: 1px solid #ddd;
-            text-align: center;
+        td,th{
+          padding: 5px;
+          border: 1px solid #ddd;
+          text-align: center;
         }
+
       }
       width: 100%;
       overflow-x: auto;
@@ -92,7 +94,7 @@ main {
   }
 }
 
-.statistics-tb{
+.statistics-table {
   thead {
     background-color: $primary-color;
     color: #fff;

@@ -12,11 +12,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         ${initParam.Bootstrap}   
-
         ${initParam.FontAwesome}
 
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/statistics/statistics.css">
-        <title>Resistance Statistics</title>
+        <title>Resistance Statistics | ${initParam.webappName}</title>
     </head>
     <body>
         <jsp:include page="mainStructure.jsp" />

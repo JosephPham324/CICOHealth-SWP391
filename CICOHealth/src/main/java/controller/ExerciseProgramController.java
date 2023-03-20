@@ -23,9 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,22 +89,28 @@ public class ExerciseProgramController extends HttpServlet {
     }
 
     private void serveView(String URI, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+
+        //Program creation
         if (URI.matches(".*/create(/.*)*")) {
             request.getRequestDispatcher("/view/general/exerciseProgram/createProgram.jsp").forward(request, response);
             return;
         }
+
+        //Created programs
         if (URI.matches(".*/my-programs(/.*)*")) {
             String userID
-                    = //                    (User)request.getSession().getAttribute("user");
-                    "USFE000001";
+                    = user.getUserID();
+//                    "USFE000001";
             List<ExerciseProgram> list = new ExerciseProgramDao().getProgramsByUserID(userID);
             request.setAttribute("listProgram", list);
             request.getRequestDispatcher("/view/general/exerciseProgram/myPrograms.jsp").forward(request, response);
         }
+
+        //Program inventory
         if (URI.matches(".*/inventory(/.*)*")) {
             String userID
-                    = //                    (User)request.getSession().getAttribute("user");
-                    "USFE000001";
+                    = user.getUserID();
             List<String> programsID;
             try {
                 programsID = new ProgramInventoryDao().getUserInventory(userID);
@@ -132,18 +136,11 @@ public class ExerciseProgramController extends HttpServlet {
             request.getRequestDispatcher("/view/general/exerciseProgram/programsInUse.jsp").forward(request, response);
         }
 
-        if (URI.matches(".*/detail/workout(/.*)*")) {
-            String workoutID = request.getParameter("workoutid");
-            List<WorkoutExercises> workout = new WorkoutExerciseDao().getExerciseByWorkoutID(workoutID);
-            request.setAttribute("workout", workout);
-            request.getRequestDispatcher("/view/general/exerciseProgram/workoutDetail.jsp").forward(request, response);
-            return;
-        }
+        //Details or update a program
         if (URI.matches(".*/detail(/.*)*") || URI.matches(".*/update(/.*)*")) {
             String ID = request.getParameter("id");
             String userID
-                    = //                    (User)request.getSession().getAttribute("user");
-                    "USFE000001";
+                    = user.getUserID();
             if (ID != null) {
                 ExerciseProgram program = null;
                 ProgramInventory inventory = null;
@@ -160,18 +157,20 @@ public class ExerciseProgramController extends HttpServlet {
                     response.sendError(404);
                     return;
                 }
-                if (URI.matches(".*/detail(/.*)*")) {
+                if (URI.matches(".*/detail(/.*)*")) {//Details
                     request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramDetail.jsp").forward(request, response);
                     return;
                 }
+                //Update
                 request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgramUpdate.jsp").forward(request, response);
                 return;
             }
         }
+
+        //Exercise schedule (daily)
         if (URI.matches(".*/exercise-programs/exercise-schedule(/.*)*")) {
             String userID
-                    = //                    (User)request.getSession().getAttribute("user");
-                    "USFE000001";
+                    = user.getUserID();
             DayOfWeek dayOfWeek
                     = DayOfWeek.from(LocalDate.now());
             System.out.println(dayOfWeek.getValue());
@@ -197,21 +196,26 @@ public class ExerciseProgramController extends HttpServlet {
                     todayWorkouts.add(programWorkouts);
                 }
             }
-            System.out.println(todayWorkouts.size());
-            if (todayWorkouts.isEmpty()){
+
+            if (todayWorkouts.isEmpty()) {
                 request.setAttribute("noSchedule", true);
-            }
-            else {
+            } else {
                 request.setAttribute("workouts", todayWorkouts);
             }
             request.getRequestDispatcher("/view/general/exerciseProgram/exerciseSchedule.jsp").forward(request, response);
             return;
         }
 
-        //Default
-        List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
-        request.setAttribute("listProgram", list);
-        request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
+        if (URI.matches("/CICOHealth/exercise-programs/*")) {
+            //Index (default view)
+            List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
+            request.setAttribute("listProgram", list);
+            request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
+            return;
+        } else {
+            response.sendRedirect("/CICOHealth/exercise-programs");
+        }
+
     }
 
     /**
