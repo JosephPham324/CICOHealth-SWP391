@@ -175,7 +175,7 @@ public class ExerciseProgramController extends HttpServlet {
                     = user.getUserID();
             DayOfWeek dayOfWeek
                     = DayOfWeek.from(LocalDate.now());
-            System.out.println(dayOfWeek.getValue());
+
             List<List<Workout>> todayWorkouts = new ArrayList();
             List<String> programs = null;
             try {
@@ -186,7 +186,6 @@ public class ExerciseProgramController extends HttpServlet {
                 return;
             }
             for (String program : programs) {
-                System.out.println("");
                 List<Workout> programWorkouts = null;
                 try {
                     programWorkouts = new WorkoutDao().getProgramWorkoutsByWeekDay(program, dayOfWeek.getValue());
@@ -244,10 +243,13 @@ public class ExerciseProgramController extends HttpServlet {
                 //                = new User("USFE000001");
                 = (User) request.getSession().getAttribute("user");
         String type = request.getParameter("type");
+        
+        //Putting in / removing from inventory
         if (type != null && type.equalsIgnoreCase("inventory")) {
             String programID = request.getParameter("programID");
             String remove = request.getParameter("remove");
-            System.out.println(remove);
+
+            //Removing inventory
             if (remove.equalsIgnoreCase("true")) {
                 try {
                     new ProgramInventoryDao().removeInventory(user.getUserID(), programID);
@@ -262,7 +264,7 @@ public class ExerciseProgramController extends HttpServlet {
                     response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "error", "Couldn't process your request!"));
                 }
                 return;
-            }
+            }//Putting in inventory
             try {
                 new ProgramInventoryDao().insertProgramInventory(new ProgramInventory(programID, user.getUserID()));
                 response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "success", "This program is now in your inventory!"));

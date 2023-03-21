@@ -17,7 +17,6 @@
     </head>
 
     <body>
-
         <jsp:include page="mainStructure.jsp" />
         <script type="module" src="/CICOHealth/assets/scripts/statistics/nutritionstatistics.js"></script>
     </body>

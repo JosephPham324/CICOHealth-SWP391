@@ -148,27 +148,26 @@ public class RequestFilter implements Filter {
      * requested URL
      */
     private boolean isUserAuthorized(HttpServletRequest httpRequest, String[] pathParts) {
-//        Object user = httpRequest.getSession().getAttribute("user");
-//        // Check if the user is authorized to access the requested URL
-//        String userType = user == null ? null : ((User) user).getUserRole();
-//
-//        if (userType == null) {
-//            // If the user is not logged in, only allow access to the public pages
-//            return isPublicUrl(pathParts);
-//        } else if (userType.equals("ME")) {
-//            // If the user is a member, allow access to member pages and public pages
-//            return isPublicUrl(pathParts) || isMemberUrl(pathParts);
-//        } else if (userType.equals("FE")) {
-//            // If the user is a fitness expert, allow access to fitness expert pages, member pages, and public pages
-//            return isPublicUrl(pathParts) || isMemberUrl(pathParts) || isFitnessExpertUrl(pathParts);
-//        } else if (userType.equals("AD")) {
-//            // If the user is an administrator, allow access to all pages
-//            return true;
-//        } else {
-//            // If the user type is not recognized, deny access
-//            return false;
-//        }
-        return true;
+        Object user = httpRequest.getSession().getAttribute("user");
+        // Check if the user is authorized to access the requested URL
+        String userType = user == null ? null : ((User) user).getUserRole();
+
+        if (userType == null) {
+            // If the user is not logged in, only allow access to the public pages
+            return isPublicUrl(pathParts);
+        } else if (userType.equals("ME")) {
+            // If the user is a member, allow access to member pages and public pages
+            return isPublicUrl(pathParts) || isMemberUrl(pathParts);
+        } else if (userType.equals("FE")) {
+            // If the user is a fitness expert, allow access to fitness expert pages, member pages, and public pages
+            return isPublicUrl(pathParts) || isMemberUrl(pathParts) || isFitnessExpertUrl(pathParts);
+        } else if (userType.equals("AD")) {
+            // If the user is an administrator, allow access to all pages
+            return true;
+        } else {
+            // If the user type is not recognized, deny access
+            return false;
+        }
     }
 
     /**
@@ -210,7 +209,8 @@ public class RequestFilter implements Filter {
                     return true;
                 } else if (pathParts.length == 3) {
                     String action = pathParts[2];
-                    return action.equals("detail");
+                    //Get access to details, schedule and inventory
+                    return action.equals("detail") || action.equals("exercise-schedule") || action.equals("inventory");
                 }
             }
         }
@@ -228,8 +228,7 @@ public class RequestFilter implements Filter {
         // Check if the requested URL is a fitness expert page
         if (pathParts.length >= 3) {
             String section = pathParts[1];
-            String action = pathParts[2];
-            return section.equals("exercise-programs") && (action.equals("create") || action.equals("edit"));
+            return section.equals("exercise-programs");//Get access to all exercise program
         } else {
             return false;
         }
