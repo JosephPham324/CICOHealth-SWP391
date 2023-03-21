@@ -327,21 +327,29 @@ function submitProgramCreationForm() {
   // Loop through each workout on the form and create an object to represent it
   //Get workout elements
   let workoutElements = document.querySelectorAll(".workout");
+  
   //Loop through workout elements
   workoutElements.forEach((workoutElement) => {
     //Get workout id
     let workoutId = workoutElement.dataset.id;
     let workout = createWorkoutObject(workoutId);
     workout.action = workoutElement.dataset.action;
-    workout.workoutId = workoutId;
+    workout.workoutID= workoutId;
     program.workoutCollection.push(workout);
   });
+  program.programID = document.getElementById("programID").value;
+  program.createdBy = {userID : document.getElementById("createdBy").value};
   let formParams = {
     _method: "PUT",
     programUpdate: JSON.stringify(program),
   }
+
+  let formParams2 = {
+    _method: "PUT",
+    programUpdate: program,
+  }
   // Log the completed program object to the console
-  console.log(formParams);
+  console.log(formParams2);
   post("/CICOHealth/exercise-programs/update", formParams);
 }
 //-----------------------------------------------------------------------

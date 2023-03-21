@@ -60,6 +60,8 @@ Admin --%>
                 class="create-exercise-program-form"
                 id="create-exercise-program-form"
                 >
+                <input type="text" id="programID" value="${program.programID}" hidden>
+                <input type="text" id="createdBy" value="${program.createdBy.userID}" hidden>
                 <div class="create-exercise-program-form-content" data-id="${program.programID}">
                     <div class="form-item row">
                         <div class="offset-2 col-2">

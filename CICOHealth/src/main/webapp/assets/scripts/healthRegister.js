@@ -58,3 +58,43 @@ numWeight.addEventListener("change", updateNutritionGoal);
 numHeight.addEventListener("change", updateNutritionGoal);
 radGender.forEach((item) => item.addEventListener("change", updateNutritionGoal));
 activityLevel.addEventListener("change", updateNutritionGoal);
+
+// health-register-form
+
+$(function () {
+  $("#health-register-form").validate({
+    rules: {
+      numAge: {
+        required: true,
+        min: 1,
+        max: 120,
+        cnum: true
+      },
+      numHeight:{
+          required: true,
+          cnum: true
+      },
+      numWeight:{
+          required: true,
+          cnum: true
+      }
+    },
+    messages: {
+     numAge: {
+      required: "Please enter your age",
+      min: "Please enter a valid age",
+      max: "Please enter a valid age"
+     },
+     numWeight:{
+          required: "Please enter your weight",
+      },
+      numHeight:{
+          required: "Please enter your height",
+      }
+    }
+  });
+  $.validator.addMethod("cnum", function (value, element) {
+      return isNaN(value);
+  }, "Please enter a number");
+
+});

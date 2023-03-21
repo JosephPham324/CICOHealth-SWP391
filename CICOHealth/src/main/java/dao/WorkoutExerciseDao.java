@@ -47,8 +47,8 @@ public class WorkoutExerciseDao extends BaseDao {
     public void updateWorkoutExercise(WorkoutExercises exercise) throws SQLException {
         String QUERY_UPDATE = "UPDATE [workoutExercises] SET "
                 + "instruction = ?,"
-                + "order = ?,"
-                + "set = ?,"
+                + "[exerciseOrder] = ?,"
+                + "[set] = ?,"
                 + "reps = ?,"
                 + "weight = ? "
                 + "WHERE workoutID = ? AND exerciseID = ?";
@@ -60,6 +60,7 @@ public class WorkoutExerciseDao extends BaseDao {
         preparedStatement.setString(i++, exercise.getSet() + "");
         preparedStatement.setString(i++, exercise.getReps() + "");
         preparedStatement.setString(i++, exercise.getWeight());
+        
         preparedStatement.setString(i++, exercise.getWorkoutExercisesPK().getWorkoutID());
         preparedStatement.setString(i++, exercise.getWorkoutExercisesPK().getExerciseID());
         preparedStatement.executeUpdate();

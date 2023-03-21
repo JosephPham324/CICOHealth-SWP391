@@ -3,6 +3,7 @@ package dao;
 import bean.ExerciseProgram;
 import bean.Workout;
 import bean.WorkoutExercises;
+import bean.WorkoutExercisesPK;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,9 +146,16 @@ public class WorkoutDao extends BaseDao {
         preparedStatement.executeUpdate();
         closeConnections();
         for (WorkoutExercises exercise : workout.getWorkoutExercisesCollection()) {
+            WorkoutExercisesPK pk = exercise.getWorkoutExercisesPK();
+            pk.setWorkoutID(workout.getWorkoutID());
+            exercise.setWorkoutExercisesPK(pk);
+            
             if (exercise.getAction().equalsIgnoreCase("update")) {
                 new WorkoutExerciseDao().updateWorkoutExercise(exercise);
-            } else {
+            }else if(exercise.getAction().equalsIgnoreCase("add")) {
+                new WorkoutExerciseDao().insertExercise(exercise);
+            }
+            else {
                 new WorkoutExerciseDao().removeWorkoutExercise(exercise.getWorkoutExercisesPK());
             }
         }
