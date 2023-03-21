@@ -171,10 +171,14 @@ public class ExerciseProgramDao extends BaseDao {
         closeConnections();
         
         for (Workout workout: program.getWorkoutCollection()){
+            workout.setProgramID(program);
             String action = workout.getAction();
             if (action.equalsIgnoreCase("update")){
                 new WorkoutDao().updateWorkout(workout);
-            } else{
+            } else if(action.equalsIgnoreCase("add")){
+                new WorkoutDao().insertWorkout(workout);
+            }
+            else{
                 new WorkoutDao().removeWorkout(workout.getWorkoutID());
             }
         }

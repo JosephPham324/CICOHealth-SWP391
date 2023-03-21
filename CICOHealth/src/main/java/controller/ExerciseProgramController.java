@@ -8,12 +8,10 @@ import bean.ExerciseProgram;
 import bean.ProgramInventory;
 import bean.User;
 import bean.Workout;
-import bean.WorkoutExercises;
 import com.google.gson.Gson;
 import dao.ExerciseProgramDao;
 import dao.ProgramInventoryDao;
 import dao.WorkoutDao;
-import dao.WorkoutExerciseDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -309,7 +307,12 @@ public class ExerciseProgramController extends HttpServlet {
         String programUpdateJson = request.getParameter("programUpdate");
         Gson gson = new Gson();
         ExerciseProgram programUpdate = gson.fromJson(programUpdateJson, ExerciseProgram.class);
-        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "error", "Update success!"));
+        try {
+            new ExerciseProgramDao().updateProgram(programUpdate);
+        } catch (SQLException ex) {
+        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "error", "Update unsuccess!"));
+        }
+        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "success", "Update success!"));
     }
 
     /**
