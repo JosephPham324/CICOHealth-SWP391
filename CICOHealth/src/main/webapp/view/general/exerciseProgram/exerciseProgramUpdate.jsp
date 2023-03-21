@@ -188,8 +188,8 @@ Admin --%>
                                                 <td>${workoutExercise.duration}</td>
                                                 <td>${workoutExercise.instruction}</td>
                                                 <td>
-                                                    <a class="btn" id = "btn-edit-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" data-target = "#workout-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" onclick = "fillEditExerciseForm(this)">Edit</a>
-                                                    <a class="btn" id = "btn-delete-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" data-target = "#workout-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" onclick = "deleteExercise(this)">Delete</a>
+                                                    <a class="btn btn-info" id = "btn-edit-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" data-target = "#workout-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" onclick = "fillEditExerciseForm(this)">Edit</a>
+                                                    <a class="btn btn-danger" id = "btn-delete-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" data-target = "#workout-${workout.workoutID}-exercise-${workoutExercise.workoutExercisesPK.exerciseID}" onclick = "deleteExercise(this)">Delete</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -219,13 +219,13 @@ Admin --%>
                         </div>
                     </c:forEach>
                     <div class="btn-add" id="btn-add-workout">
-                        <a name="submit" class="btn">Add workout</a>
+                        <a name="submit" class="btn btn-success">Add workout</a>
                     </div>
                     <div class="btn-submit" id="btn-submit">
                         <button
                             name="submit"
                             type="submit"
-                            class="btn"
+                            class="btn btn-primary"
                             id="btn-submit-program"
                             >
                             Submit

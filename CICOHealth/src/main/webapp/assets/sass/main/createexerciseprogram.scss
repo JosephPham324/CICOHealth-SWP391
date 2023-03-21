@@ -6,16 +6,16 @@ $secondary-color: yellow;
   box-sizing: border-box;
 }
 
-.btn{
-  background-color: $primary-color;
-  color: white;
-  text-transform: uppercase;
-  font-weight: 800;
-  &:hover{
-    background-color: $secondary-color;
-    color: black;
-  }
-}
+// .btn{
+//   background-color: $primary-color;
+//   color: white;
+//   text-transform: uppercase;
+//   font-weight: 800;
+//   &:hover{
+//     background-color: $secondary-color;
+//     color: black;
+//   }
+// }
 
 
 
@@ -42,7 +42,7 @@ $secondary-color: yellow;
     overflow-x: hidden;
 
     .btn-submit {
-      background-color: rgb(131, 184, 46) !important;
+      // background-color: rgb(131, 184, 46) !important;
       font-weight: bold;
     }
 
@@ -73,7 +73,7 @@ $secondary-color: yellow;
 
     .btn {
       font-weight: bold;
-      background-color: rgb(131, 184, 46) !important;
+      // background-color: rgb(131, 184, 46) !important;
     }
 
     .btn:hover {

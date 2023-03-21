@@ -7,15 +7,8 @@
   margin-top: 2%;
 }
 
-.btn-add-program {
-  background-color: rgb(131, 184, 46) !important;
-  color: white !important;
-  margin: 15px 0;
-}
-
-.btn-add-program:hover {
-  background-color: yellow !important;
-  color: black !important;
+a {
+  text-decoration: none;
 }
 
 .container table thead {
@@ -31,16 +24,4 @@
   color: blue !important;
   font-size: 20px;
   transition: 0.1s all ease;
-}
-.container table tbody button {
-  border: none;
-  background-color: white;
-}
-.container table tbody button a {
-  background-color: rgb(131, 184, 46);
-  color: white;
-}
-.container table tbody button a:hover {
-  background-color: yellow;
-  color: black;
 }/*# sourceMappingURL=exerciseProgram.css.map */

@@ -89,11 +89,11 @@ function addNewWorkout() {
                             </tbody>
                         </table>
                         <div class="btn-add-exericse">
-                            <a href="#" class="btn btn-create-exercise-pop-up" id="btn-create-exercise-pop-up-${newID}" data-target = "#workout-${newID}" >Add
+                            <a href="#" class="btn btn-success btn-create-exercise-pop-up" id="btn-create-exercise-pop-up-${newID}" data-target = "#workout-${newID}" >Add
                                 exercise</a>
                         </div>
                         <div>
-                        <a href="#" class="btn btn-create-exercise-pop-up" id="btn-delete-workout" data-target = "#workout-${newID}" onclick="removeWorkout(this)">Remove
+                        <a href="#" class="btn btn-danger btn-create-exercise-pop-up" id="btn-delete-workout" data-target = "#workout-${newID}" onclick="removeWorkout(this)">Remove
                             Workout</a>
                         </div>
                     </div>
@@ -172,8 +172,8 @@ function ExerciseListRowHtml(
         <td>${duration}</td>
         <td>${instruction}</td>
         <td>
-        <a class="btn" id = "btn-edit-${id}-exercise-${rowID}" data-target = "#workout-${id}-exercise-${rowID}" onclick = "fillEditExerciseForm(this)">Edit</a>
-        <a class="btn" id = "btn-delete-${id}-exercise-${rowID}" data-target = "#workout-${id}-exercise-${rowID}" onclick = "deleteExercise(this)">Delete</a>
+        <a class="btn btn-info" id = "btn-edit-${id}-exercise-${rowID}" data-target = "#workout-${id}-exercise-${rowID}" onclick = "fillEditExerciseForm(this)">Edit</a>
+        <a class="btn btn-danger" id = "btn-delete-${id}-exercise-${rowID}" data-target = "#workout-${id}-exercise-${rowID}" onclick = "deleteExercise(this)">Delete</a>
         </td>
     </tr>
     `;

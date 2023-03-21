@@ -69,10 +69,10 @@
                         </div>
                     </div>
                     <div class="btn-add" id = "btn-add-workout">
-                        <a name="submit" class="btn">Add workout</a>
+                        <a name="submit" class="btn btn-success">Add workout</a>
                     </div>
                     <div class="btn-submit" id = "btn-submit">
-                        <button name="submit" type="submit" class="btn" id = "btn-submit-program">Submit</button>
+                        <button name="submit" type="submit" class="btn btn-primary" id = "btn-submit-program">Submit</button>
                     </div>
                 </div>
             </form>
@@ -130,7 +130,7 @@
                             <div class="col-7">
                                 <input id="txtDurationPopUp" name="txtDurationPopUp" type="text" class="form-control"
                                        placeholder="Enter duration">
-                                <i id="error-exercise-duration" style="color: red ; display: none"></i>
+                                <i id="error-exercise-duration" style="color: red; display: none"></i>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -143,11 +143,11 @@
                         </div>
                         <div class="form-group row">
                             <div class="offset-5 col-2">
-                                <button name="btn-submit" type="submit" class="btn btn-submit"
+                                <button name="btn-submit" type="submit" class="btn btn-primary btn-submit"
                                         id="btn-submit">Submit</button>
                             </div>
                             <div class="col-2">
-                                <input type="reset" value="Clear" class="btn btn-submit">
+                                <input type="reset" value="Clear" class="btn btn-info btn-submit">
                             </div>
                         </div>
                     </form>
@@ -213,7 +213,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="offset-5 col-2">
-                                <button name="btn-submit" type="submit" class="btn btn-submit"
+                                <button name="btn-submit" type="submit" class="btn btn-primary btn-submit"
                                         id="btn-submit">Submit</button>
                             </div>
                         </div>

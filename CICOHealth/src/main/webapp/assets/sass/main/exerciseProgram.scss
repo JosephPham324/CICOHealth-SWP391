@@ -10,15 +10,19 @@ $secondary-color: yellow;
     margin-top: 2%;
 }
 
-.btn-add-program {
-    background-color: $primary-color !important;
-    color: white !important;
-    margin: 15px 0;
-}
+// .btn-add-program {
+//     background-color: $primary-color !important;
+//     color: white !important;
+//     margin: 15px 0;
+// }
 
-.btn-add-program:hover {
-    background-color: $secondary-color !important;
-    color: black !important;
+// .btn-add-program:hover {
+//     background-color: $secondary-color !important;
+//     color: black !important;
+// }
+a{
+    // color: white;
+    text-decoration: none;
 }
 
 .container {
@@ -42,19 +46,19 @@ $secondary-color: yellow;
                 transition: .1s all ease;
             }
 
-            button {
-                border: none;
-                background-color: white;
+            // button {
+            //     border: none;
+            //     background-color: white;
 
-                a {
-                    background-color: $primary-color;
-                    color: white;
-                }
-                a:hover {
-                    background-color: yellow;
-                    color: black;
-                }
-            }
+            //     a {
+            //         background-color: $primary-color;
+            //         color: white;
+            //     }
+            //     a:hover {
+            //         background-color: yellow;
+            //         color: black;
+            //     }
+            // }
 
 
         }

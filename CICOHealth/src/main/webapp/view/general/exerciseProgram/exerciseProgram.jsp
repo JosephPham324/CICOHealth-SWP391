@@ -33,10 +33,6 @@
                 position: relative;
                 z-index: 0;
             }
-
-            .btn {
-                background-color: greenyellow;
-            }
         </style>
         <title>List of Programs</title>
     </head>
@@ -71,17 +67,16 @@
                                     <td>
                                         <a href="/CICOHealth/user/profile/expert-info?userid=${program.createdBy.userID}"><c:out
                                             value="${program.createdBy.firstName} ${program.createdBy.lastName}" /></a>
-                                        
                                     </td>
                                     <td>
-                                        <button><a class="btn"
+                                        <button class="btn btn-info"><a 
                                                    href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details <i class="fa-solid fa-eye"></i></a></button>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
-                    <a href="/CICOHealth/exercise-programs/create" class="btn btn-add-program">Add new
+                    <a href="/CICOHealth/exercise-programs/create" class="btn btn-success btn-add-program">Add new
                         program</a>
 
                 </div>

@@ -33,17 +33,13 @@
                 position: relative;
                 z-index: 0;
             }
-
-            .btn {
-                background-color: greenyellow;
-            }
         </style>
         <title>${sessionScope.user.firstName} ${sessionScope.user.lastName}'s Programs Inventory | ${initParam.webappName}</title>
     </head>
     <body>
         <%@include file="/view/general/navbar.jsp" %>
         <main>
-            <h1 class="page-tlt">Exercise Programs</h1>
+            <h1 class="page-tlt">Programs Inventory</h1>
             <c:if test="${not empty listProgram}">
                 <div class="container">
                     <table id="info-table" class="hover" style="width:100%">
@@ -73,7 +69,7 @@
                                             value="${program.createdBy.firstName} ${program.createdBy.lastName}" />
                                     </td>
                                     <td>
-                                        <button><a class="see-detail"
+                                        <button class=" btn btn-info"><a class="see-detail"
                                                    href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details<i class="fa-solid fa-eye"></i></a></button>
                                         <form action="/CICOHealth/exercise-programs" method="post" style="display:inline;">
                                             <input type="hidden" value="update"
@@ -82,14 +78,14 @@
                                                    name="type">
                                             <input type="hidden" value="${program.programID}"
                                                    name="programID">
-                                            <input type="submit" value="Remove">
+                                            <input class = "btn btn-danger"type="submit" value="Remove">
                                         </form>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
-                    <a href="/CICOHealth/exercise-programs/create" class="btn btn-add-program">Add new
+                    <a href="/CICOHealth/exercise-programs/" class="btn btn-success btn-add-program">Add new
                         program</a>
 
                 </div>
