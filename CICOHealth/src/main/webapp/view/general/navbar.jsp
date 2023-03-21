@@ -129,10 +129,10 @@
                             </a>
                             <ul class="dropdown-menu menu-admin">
                                 <li>
-                                    <a class="dropdown-item" href="/CICOHealth/user/profile">Manage Users</a>
+                                    <a class="dropdown-item" href="/CICOHealth/admin/user-management">Manage Users</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/CICOHealth/user/meal-logs">Manage Exercises</a>
+                                    <a class="dropdown-item" href="/CICOHealth/admin/exercise-management">Manage Exercises</a>
                                 </li>
                             </ul>
                         </li>

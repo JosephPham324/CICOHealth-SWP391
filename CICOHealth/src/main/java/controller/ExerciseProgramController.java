@@ -76,6 +76,7 @@ public class ExerciseProgramController extends HttpServlet {
         String URI = request.getRequestURI();
         if (URI.matches(".*/data(/.*)*")) {
             serveData(URI, request, response);
+            return;
         }
         serveView(URI, request, response);
 
@@ -152,6 +153,7 @@ public class ExerciseProgramController extends HttpServlet {
                 } catch (SQLException ex) {
                     Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
                     response.sendRedirect(util.Utility.appendStatus("/CICOHealth/exercise-programs", "error", "Couldn't fetch data for program " + ID));
+                    return;
                 }
                 if (program == null) {
                     response.sendError(404);
@@ -181,6 +183,7 @@ public class ExerciseProgramController extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
                 response.sendRedirect(util.Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
+                return;
             }
             for (String program : programs) {
                 System.out.println("");
@@ -210,7 +213,6 @@ public class ExerciseProgramController extends HttpServlet {
             List<ExerciseProgram> list = new ExerciseProgramDao().getAllPrograms();
             request.setAttribute("listProgram", list);
             request.getRequestDispatcher("/view/general/exerciseProgram/exerciseProgram.jsp").forward(request, response);
-            return;
         } else {
             response.sendRedirect("/CICOHealth/exercise-programs");
         }
@@ -234,8 +236,8 @@ public class ExerciseProgramController extends HttpServlet {
             doDelete(request, response);
         }
         User user
-                = new User("USFE000001");
-//                (User) request.getSession().getAttribute("user");
+//                = new User("USFE000001");
+                = (User) request.getSession().getAttribute("user");
         String type = request.getParameter("type");
         if (type != null && type.equalsIgnoreCase("inventory")) {
             String programID = request.getParameter("programID");

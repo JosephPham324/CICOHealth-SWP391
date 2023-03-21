@@ -14,6 +14,10 @@
 
         <link rel="stylesheet" href="/CICOHealth/assets/css/sidebar.css" />
         <link rel="stylesheet" href="/CICOHealth/assets/sass/main/mealLog.css" />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+            rel="stylesheet"
+            />
         <!--Functions scripts-->
         <script src="/CICOHealth/assets/scripts/popup.js"></script>
         <title>Meal Logs</title>
@@ -28,108 +32,64 @@
                     <input type="date" id="date-picker" class="datepicker" />
                 </div>
 
-                        <table id="meal-logs-table" class="hover table-content" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Time</th>
-                                    <th>Name</th>
-                                    <th>Protein</th>
-                                    <th>Fat</th>
-                                    <th>Carbs</th>
-                                    <th>Calories</th>
-                                    <th>Note</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
-                        <hr />
+                <table id="meal-logs-table" class="hover table-content" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Time</th>
+                            <th>Name</th>
+                            <th>Protein</th>
+                            <th>Fat</th>
+                            <th>Carbs</th>
+                            <th>Calories</th>
+                            <th>Note</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                        <div class="total" id="day-total">
-                            <div class="txt-title-total">
-                                <h2>Total of day</h2>
-                            </div>
-                            <div class="table-head row">
-                                <div class="title-total col-3">
-                                    <p>Protein</p>
-                                </div>
-                                <div class="title-total col-3">
-                                    <p>Fat</p>
-                                </div>
-                                <div class="title-total col-3">
-                                    <p>Carbs</p>
-                                </div>
-                                <div class="title-total col-3">
-                                    <p>Calories</p>
-                                </div>
-                            </div>
+                    </tbody>
+                </table>
+                <hr />
 
-                            <div class="table-body row">
-                                <div class="total-content col-3">
-                                    <p id="protein-value">30.0</p>
-                                </div>
-                                <div class="total-content col-3">
-                                    <p id="fat-value">377.5</p>
-                                </div>
-                                <div class="total-content col-3">
-                                    <p id="carbs-value">30.0</p>
-                                </div>
-                                <div class="total-content col-3">
-                                    <p id="calories-value">377.5</p>
-                                </div>
-                            </div>
+                <div class="total" id="day-total">
+                    <div class="txt-title-total">
+                        <h2>Total of day</h2>
+                    </div>
+                    <div class="table-head row">
+                        <div class="title-total col-3">
+                            <p>Protein</p>
+                        </div>
+                        <div class="title-total col-3">
+                            <p>Fat</p>
+                        </div>
+                        <div class="title-total col-3">
+                            <p>Carbs</p>
+                        </div>
+                        <div class="title-total col-3">
+                            <p>Calories</p>
                         </div>
                     </div>
-                </main>
 
-                <!-- pop-up-edit -->
-                <div class="pop-up edit-pop-up" id="edit-pop-up">
-                    <div class="edit-overlay overlay" id="overlay"></div>
-                    <div class="pop-up-content edit-pop-up-content">
-                        <form action="meal-log" method="post" name="edit-meal-log-form" class="edit-meal-log-form"
-                            id="edit-meal-log-form">
-                            <h2 class="txt-title-pop-up">Edit Meal Logs</h2>
-                            <table id="edit-table" class="hover table-content" style="width: 100%">
-                                <thead class="pop-up-thead-table">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Protein</th>
-                                        <th>Fat</th>
-                                        <th>Carbs</th>
-                                        <th>Calories</th>
-                                        <th>Mass(g)</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="pop-up-body-table">
-
-                                </tbody>
-                                <tfoot class="pop-up-foot-table">
-
-                                </tfoot>
-                            </table>
-
-                            <div class="form-group row">
-                                <div class="offset-4 col-2">
-                                    <button name="btn-submit" type="submit" class="btn" id="btn-submit">
-                                        Submit
-                                    </button>
-                                </div>
-                                <div class="col-2">
-                                    <a name="btn-cancel" class="btn"> Cancel </a>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="table-body row">
+                        <div class="total-content col-3">
+                            <p id="protein-value">30.0</p>
+                        </div>
+                        <div class="total-content col-3">
+                            <p id="fat-value">377.5</p>
+                        </div>
+                        <div class="total-content col-3">
+                            <p id="carbs-value">30.0</p>
+                        </div>
+                        <div class="total-content col-3">
+                            <p id="calories-value">377.5</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
         <!-- pop-up-edit -->
-
         <div class="pop-up edit-pop-up" id="edit-pop-up">
             <div class="edit-overlay overlay" id="overlay"></div>
             <div class="pop-up-content edit-pop-up-content">
@@ -148,17 +108,11 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="pop-up-body-table"></tbody>
+                        <tbody class="pop-up-body-table">
+
+                        </tbody>
                         <tfoot class="pop-up-foot-table">
-                            <tr>
-                                <td>Breakfast</td>
-                                <td>45.4</td>
-                                <td>66.0</td>
-                                <td>6.4</td>
-                                <td>787.8</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+
                         </tfoot>
                     </table>
 
@@ -175,45 +129,94 @@
                 </form>
             </div>
         </div>
+    </div>
+</main>
 
-        <!-- pop-up-notes -->
-        <form action="meal-logs" method="post" class="edit-meal-log-note-form"
-              id="edit-meals-log-note">
-            <div class="pop-up note-pop-up" id="note-pop-up">
-                <div class="note-overlay overlay" id="overlay"></div>
-                <div class="pop-up-content note-pop-up-content">
-                    <!-- <div class="note-pop-up"> -->
-                    <h2 class="txt-title-pop-up">Notes Meal Logs</h2>
-                    <div class="form-group row">
-                        <div class="offset-1 col-10">
-                            <textarea id="txtNote" name="txtNote" type="text" class="form-control"></textarea>
-                        </div>
-                    </div>
+<!-- pop-up-edit -->
 
-                    <div class="form-group row">
-                        <div class="offset-4 col-2">
-                            <button name="btn-submit" type="submit" class="btn" id="btn-submit">
-                                Submit
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <a name="btn-cancel" class="btn"> Cancel</a>
-                        </div>
-                    </div>
-                    <!-- </div> -->
+<div class="pop-up edit-pop-up" id="edit-pop-up">
+    <div class="edit-overlay overlay" id="overlay"></div>
+    <div class="pop-up-content edit-pop-up-content">
+        <form action="meal-log" method="post" name="edit-meal-log-form" class="edit-meal-log-form"
+              id="edit-meal-log-form">
+            <h2 class="txt-title-pop-up">Edit Meal Logs</h2>
+            <table id="edit-table" class="hover table-content" style="width: 100%">
+                <thead class="pop-up-thead-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Protein</th>
+                        <th>Fat</th>
+                        <th>Carbs</th>
+                        <th>Calories</th>
+                        <th>Mass(g)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="pop-up-body-table"></tbody>
+                <tfoot class="pop-up-foot-table">
+                    <tr>
+                        <td>Breakfast</td>
+                        <td>45.4</td>
+                        <td>66.0</td>
+                        <td>6.4</td>
+                        <td>787.8</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="form-group row">
+                <div class="offset-4 col-2">
+                    <button name="btn-submit" type="submit" class="btn" id="btn-submit">
+                        Submit
+                    </button>
+                </div>
+                <div class="col-2">
+                    <a name="btn-cancel" class="btn"> Cancel </a>
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- pop-up-notes -->
+<form action="meal-logs" method="post" class="edit-meal-log-note-form"
+      id="edit-meals-log-note">
+    <div class="pop-up note-pop-up" id="note-pop-up">
+        <div class="note-overlay overlay" id="overlay"></div>
+        <div class="pop-up-content note-pop-up-content">
+            <!-- <div class="note-pop-up"> -->
+            <h2 class="txt-title-pop-up">Notes Meal Logs</h2>
+            <div class="form-group row">
+                <div class="offset-1 col-10">
+                    <textarea id="txtNote" name="txtNote" type="text" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="offset-4 col-2">
+                    <button name="btn-submit" type="submit" class="btn" id="btn-submit">
+                        Submit
+                    </button>
+                </div>
+                <div class="col-2">
+                    <a name="btn-cancel" class="btn"> Cancel</a>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+</form>
 
 
-        <!-- footer -->
-        <%@include file="/view/general/footer.jsp" %>
+<!-- footer -->
+<%@include file="/view/general/footer.jsp" %>
 
-    </body>
-    <script src="/CICOHealth/assets/scripts/navbar.js"></script>
-    <script src="/CICOHealth/assets/scripts/formLog.js"></script>
-    <script src="/CICOHealth/assets/scripts/sidebar.js"></script>
-    <script src="/CICOHealth/assets/scripts/formhandling.js"></script>
-    <script src="/CICOHealth/assets/scripts/meallogs.js"></script>
+</body>
+<script src="/CICOHealth/assets/scripts/formLog.js"></script>
+<script src="/CICOHealth/assets/scripts/sidebar.js"></script>
+<script src="/CICOHealth/assets/scripts/formhandling.js"></script>
+<script src="/CICOHealth/assets/scripts/meallogs.js"></script>
 
 </html>
