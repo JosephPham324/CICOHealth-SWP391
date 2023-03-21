@@ -257,7 +257,7 @@ public class ProfileController extends HttpServlet {
                         Logger.getLogger(ProfileController.class.getName()).log(Level.SEVERE, null, ex);
                         response.sendRedirect(Utility.appendStatus("/CICOHealth/", "error", "Couldn't process your request"));
                     }
-                }
+                }   
                 response.sendRedirect("/CICOHealth/user/profile/user-info?userid=" + userID);
                 return;
 

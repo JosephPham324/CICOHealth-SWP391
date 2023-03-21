@@ -73,9 +73,9 @@
                                             value="${program.createdBy.firstName} ${program.createdBy.lastName}" />
                                     </td>
                                     <td>
-                                        <button><a class="btn"
+                                        <button class="btn btn-info"><a class=""
                                                    href="/CICOHealth/exercise-programs/detail?id=${program.programID}">Details <i class="fa-solid fa-eye"></i></a></button>
-                                        <button><a class="btn btn-edit"
+                                        <button class="btn btn-primary"><a style="color:white"
                                                    href="/CICOHealth/exercise-programs/update?id=${program.programID}">Update</a></button>
                                         <form action="/CICOHealth/exercise-programs" method="post" style="display:inline;">
                                             <input type="hidden" value="${program.programID}"
@@ -88,7 +88,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <a href="/CICOHealth/exercise-programs/create" class="btn btn-add-program">Add new
+                    <a href="/CICOHealth/exercise-programs/create" class="btn btn-success btn-add-program">Add new
                         program</a>
 
                 </div>

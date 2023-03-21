@@ -214,6 +214,8 @@ crtDelete.forEach((btn) => {
       cert.id="";
       console.log(cert.innerHTML)
       cert.style.display="none";
+      //Update action
+      action.value = "delete";
     }
   });
 });
