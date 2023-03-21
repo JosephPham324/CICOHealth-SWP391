@@ -1,5 +1,6 @@
 package util;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -72,8 +73,8 @@ public class Utility {
 
     /**
      * Appends the given status and message parameters to a URL string and
-     * returns the resulting string. The new parameters are added to the URL
-     * string as query parameters following the original ones.
+     * returns the resulting string.The new parameters are added to the URL
+ string as query parameters following the original ones.
      *
      * @param url The URL string to append the status and message parameters to.
      * @param status The value of the "status" parameter to be appended to the
@@ -82,8 +83,9 @@ public class Utility {
      * URL string.
      * @return A new string representing the updated URL with the appended
      * parameters.
+     * @throws java.io.UnsupportedEncodingException
      */
-    public static String appendStatus(String url, String status, String message) {
+    public static String appendStatus(String url, String status, String message) throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder(url);
         if (url.contains("?")) {
             sb.append("&");
@@ -91,7 +93,7 @@ public class Utility {
             sb.append("?");
         }
         sb.append("status=").append(status);
-        sb.append("&message=").append(URLEncoder.encode(message, StandardCharsets.UTF_8));
+        sb.append("&message=").append(URLEncoder.encode(message, "UTF-8"));
         return sb.toString();
     }
 
