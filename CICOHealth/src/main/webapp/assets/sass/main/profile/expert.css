@@ -186,16 +186,53 @@
   color: #fff;
   cursor: pointer;
 }
-.certifications ul li cert-wrapper .cert-info .cert-name {
+.certifications ul li .cert-wrapper .cert-info .cert-name {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
-.certifications ul li cert-wrapper .cert-info .cert-issuer, .certifications ul li cert-wrapper .cert-info .cert-date {
+.certifications ul li .cert-wrapper .cert-info .cert-issuer, .certifications ul li .cert-wrapper .cert-info .cert-date {
   font-size: 1.2rem;
   margin: 0;
 }
-.certifications ul li cert-wrapper .cert-info .cert-issuer span, .certifications ul li cert-wrapper .cert-info .cert-date span {
+.certifications ul li .cert-wrapper .cert-info .cert-issuer span, .certifications ul li .cert-wrapper .cert-info .cert-date span {
   font-weight: bold;
+}
+
+#frm-add-cert {
+  display: flex;
+  flex-direction: column;
+}
+#frm-add-cert input, #frm-add-cert img {
+  width: 300px;
+}
+#frm-add-cert .button-submit {
+  margin-bottom: 20px;
+  text-align: center;
+  justify-content: center;
+}
+#frm-add-cert .button-submit input {
+  width: 100px;
+}
+#frm-add-cert .button-upload {
+  margin: 10px 0;
+  text-align: center;
+  justify-content: center;
+}
+
+.certs .cert-list .cert {
+  display: flex;
+  justify-content: space-between;
+}
+.certs .cert-list .cert .cert-wrapper img {
+  max-width: 450px;
+  max-height: 300px;
+  margin-right: 10% !important;
+}
+.certs .cert-list .cert .cert-wrapper .cert-info-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Certification Details Popup */

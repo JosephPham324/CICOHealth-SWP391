@@ -136,6 +136,10 @@ body {
     padding: 0;
     margin: 0;
 }
+.list-unstyled{
+    display: flex;
+    flex-direction: column;
+}
 
 .sidebar-wrapper a {
     text-decoration: none;
