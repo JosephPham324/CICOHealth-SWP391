@@ -337,11 +337,12 @@ function submitProgramCreationForm() {
     program.workoutCollection.push(workout);
   });
   let formParams = {
-    programUpdate: program,
+    _method: "PUT",
+    programUpdate: JSON.stringify(program),
   }
   // Log the completed program object to the console
   console.log(formParams);
-  // post("/CICOHealth/exercise-programs/create", {program:JSON.stringify(program)});
+  post("/CICOHealth/exercise-programs/update", formParams);
 }
 //-----------------------------------------------------------------------
 /**

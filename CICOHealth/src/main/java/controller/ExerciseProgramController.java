@@ -234,9 +234,14 @@ public class ExerciseProgramController extends HttpServlet {
         String method = request.getParameter("_method");
         if (method != null && method.equalsIgnoreCase("delete")) {
             doDelete(request, response);
+            return;
+        }
+        if (method != null && method.equalsIgnoreCase("put")) {
+            doPut(request, response);
+            return;
         }
         User user
-//                = new User("USFE000001");
+                //                = new User("USFE000001");
                 = (User) request.getSession().getAttribute("user");
         String type = request.getParameter("type");
         if (type != null && type.equalsIgnoreCase("inventory")) {
@@ -246,7 +251,12 @@ public class ExerciseProgramController extends HttpServlet {
             if (remove.equalsIgnoreCase("true")) {
                 try {
                     new ProgramInventoryDao().removeInventory(user.getUserID(), programID);
-                    response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "success", "This program is no longer in your inventory!"));
+                    String referer = request.getHeader("referer");
+                    if (referer.endsWith("inventory")) {
+                        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/inventory", "success", "This program is no longer in your inventory!"));
+                    } else {
+                        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "success", "This program is no longer in your inventory!"));
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(ExerciseProgramController.class.getName()).log(Level.SEVERE, null, ex);
                     response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/detail?id=" + programID, "error", "Couldn't process your request!"));
@@ -282,16 +292,24 @@ public class ExerciseProgramController extends HttpServlet {
             new ExerciseProgramDao().insertProgram(programObject);
 
             // Redirect to the create exercise program page with a success message
-            String redirectUrl = Utility.appendStatus("/CICOHealth/exercise-programs/create", "insert", "Program created successfully!");
+            String redirectUrl = Utility.appendStatus("/CICOHealth/exercise-programs/create", "success", "Program created successfully!");
             response.sendRedirect(redirectUrl);
         } catch (Exception ex) {
             response.getWriter().write(programObject.toString());
 
             // Redirect to the create exercise program page with a failure message
-            String redirectUrl = Utility.appendStatus("/CICOHealth/exercise-programs/create", "insert", "Failed creating program!");
+            String redirectUrl = Utility.appendStatus("/CICOHealth/exercise-programs/create", "error", "Failed creating program!");
             response.sendRedirect(redirectUrl);
         }
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String programUpdateJson = request.getParameter("programUpdate");
+        Gson gson = new Gson();
+        ExerciseProgram programUpdate = gson.fromJson(programUpdateJson, ExerciseProgram.class);
+        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "error", "Update success!"));
     }
 
     /**

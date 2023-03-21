@@ -78,6 +78,8 @@
                                                    name="type">
                                             <input type="hidden" value="${program.programID}"
                                                    name="programID">
+                                            <input type="hidden" value="true"
+                                                   name="remove">
                                             <input class = "btn btn-danger"type="submit" value="Remove">
                                         </form>
                                     </td>
