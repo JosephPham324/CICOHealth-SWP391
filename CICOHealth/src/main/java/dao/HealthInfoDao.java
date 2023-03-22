@@ -48,30 +48,6 @@ public class HealthInfoDao extends BaseDao {
         return null;
     }
 
-//    @Override
-//    public String createID() {
-//        //Query to get the latest ID
-//        String query = "SELECT TOP 1 healthInfoID\n"
-//                + "from [healthInfo] \n"
-//                + "ORDER BY healthInfoID DESC ";
-//        try {
-//            connection = new DBContext().getConnection();
-//            preparedStatement = connection.prepareStatement(query);
-//            resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {//If there is a record in the table
-//                //Generate new ID based on the record
-//                closeConnections();
-//                return "HLTH" + String.format("%06d", Integer.parseInt(resultSet.getString("healthInfoID").substring(4)) + 1);
-//            }
-//            //If not return the lowest ID
-//            closeConnections();
-//            return "HLTH000001";
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        closeConnections();
-//        return null;
-//    }
     @Override
     public String createID(String type) {
         return new UserDao().createID(type);
@@ -85,18 +61,22 @@ public class HealthInfoDao extends BaseDao {
         if (healthInfo.getUserID() == null) {
             throw new SQLException("UserID is null!");
         }
+        if (new UserDao().getUser(healthInfo.getUserID()) == null){
+            throw new SQLException("UserID doesn't exist");
+        }
+        
         if (healthInfo.getWeight() < 5) {
             throw new SQLException("Weight must be greater than 1");
         }
         if (healthInfo.getWeight() > 600) {
-            throw new SQLException("Weight must be less than than 600");
+            throw new SQLException("Weight must be less than 600");
 
         }
         if (healthInfo.getHeight() < 15) {
             throw new SQLException("Height must be greater than 15");
         }
         if (healthInfo.getHeight() > 400) {
-            throw new SQLException("Height must be less than than 400");
+            throw new SQLException("Height must be less than 400");
         }
         if (healthInfo.getAge() < 1) {
             throw new SQLException("Age must be greater than 1");
@@ -122,8 +102,8 @@ public class HealthInfoDao extends BaseDao {
         preparedStatement.setString(i++, healthInfo.getDailyCarb() + "");
 
         preparedStatement.executeUpdate();
-
         closeConnections();
+        logger.fine("success");
     }
 
     public HealthInfo getHealthInfo(String userID) {
