@@ -68,15 +68,19 @@ $(function () {
         required: true,
         min: 1,
         max: 120,
-        cnum: true
+        number: true
       },
       numHeight:{
           required: true,
-          cnum: true
+          number: true,
+          min:15,
+          max:400
       },
       numWeight:{
           required: true,
-          cnum: true
+          number: true,
+          min:1,
+          max:600
       }
     },
     messages: {
