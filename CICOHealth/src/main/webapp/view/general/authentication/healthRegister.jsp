@@ -37,6 +37,7 @@ pageEncoding="UTF-8" %>
 
   <body>
     <form action="register" method="post" id="health-register-form">
+        <div class="form-group row"><h1>Register Health Information</h1></div>
       <%@include file="../../user/formHealthInfor.jsp" %>
       <input
         type="hidden"

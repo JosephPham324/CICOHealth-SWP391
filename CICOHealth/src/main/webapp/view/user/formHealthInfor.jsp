@@ -4,6 +4,7 @@
     int active = healthinfo == null ? 0 : healthinfo.getActiveness();
     boolean gender = healthinfo == null ? true : healthinfo.getGender();
 %>
+
 <div class="form-group row">
     <label for="numHeight" class="col-4 col-form-label">Age</label>
     <div class="col-8">

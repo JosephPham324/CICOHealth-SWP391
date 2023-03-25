@@ -60,7 +60,7 @@
                         <label for="txtName" class="offset-1 col-3 col-form-label">Question content</label>
                         <div class="col-7">
                             <textarea id="txtQuestionContent" name="txtQuestionContent" cols="10" rows="3" class="form-control"
-                                      readonly>
+                                      >
                             </textarea>
                         </div>
                     </div>

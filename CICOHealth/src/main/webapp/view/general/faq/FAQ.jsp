@@ -59,7 +59,7 @@
         <div class="pop-up question-pop-up" id="question-pop-up">
             <div class="question-overlay overlay" id="overlay"></div>
             <div class="pop-up-content question-pop-up-content">
-                <form action="question-log" method="post" name="question-form" class="question-form">
+                <form action="/CICOHealth/faq" method="post" name="question-form" class="question-form">
                     <h2 class="txt-title-pop-up">Edit Question</h2>
                     <div class="form-group row">
                         <label for="txtQuestionTopic" class="offset-1 col-3 col-form-label">Question topic</label>
