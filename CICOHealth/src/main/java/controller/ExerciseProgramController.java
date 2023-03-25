@@ -227,6 +227,7 @@ public class ExerciseProgramController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String referer = request.getHeader("referer");
         // Check if the HTTP method is DELETE, and call doDelete() if it is
         String method = request.getParameter("_method");
         if (method != null && method.equalsIgnoreCase("delete")) {
@@ -241,7 +242,7 @@ public class ExerciseProgramController extends HttpServlet {
                 //                = new User("USFE000001");
                 = (User) request.getSession().getAttribute("user");
         String type = request.getParameter("type");
-        
+
         //Putting in / removing from inventory
         if (type != null && type.equalsIgnoreCase("inventory")) {
             String programID = request.getParameter("programID");
@@ -312,7 +313,7 @@ public class ExerciseProgramController extends HttpServlet {
         try {
             new ExerciseProgramDao().updateProgram(programUpdate);
         } catch (SQLException ex) {
-        response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "error", "Update unsuccess!"));
+            response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "error", "Update unsuccess!"));
         }
         response.sendRedirect(Utility.appendStatus("/CICOHealth/exercise-programs/my-programs", "success", "Update success!"));
     }
@@ -326,13 +327,15 @@ public class ExerciseProgramController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String referer = request.getHeader("referer");
         try {
-            String id = req.getParameter("programID");
+            String id = request.getParameter("programID");
             ExerciseProgramDao exerciseProgramDao = new ExerciseProgramDao();
             exerciseProgramDao.deleteProgram(id);
-            resp.sendRedirect("/CICOHealth/exercise-programs?delelte=successfully");
+            response.sendRedirect(util.Utility.appendStatus(referer, "success", "Delete success"));
         } catch (SQLException ex) {
+            response.sendRedirect(util.Utility.appendStatus(referer, "error", "Failed delete"));
             Logger.getLogger(ExerciseLogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

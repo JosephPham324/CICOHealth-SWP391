@@ -175,7 +175,7 @@ public class FAQController extends HttpServlet {
                 User user = (User) session.getAttribute("user");
                 // insert the new answer into the database
                 new AnswerDao().insertAnswer(new Answer(answerID, user.getUserID(), questionTopic, questionContent, answerContent));
-                response.sendRedirect("/CICOHealth/faq/questions?create=sucess");
+                response.sendRedirect(util.Utility.appendStatus("/CICOHealth/faq/questions", "success", "Create answer success!"));
             }
         } else {
             String submittedBy = request.getParameter("submittedBy");
@@ -188,7 +188,8 @@ public class FAQController extends HttpServlet {
             // insert the new question into the database
             new QuestionDao().insertQuestion(question);
             // redirect the user to a confirmation page
-            response.sendRedirect("/CICOHealth/faq/answers?submit=success");
+            
+            response.sendRedirect(util.Utility.appendStatus("/CICOHealth/faq/answers", "success", "Submit question success!"));
         }
     }
 
